@@ -1,0 +1,25 @@
+{
+  "clone_url": "https://github.com/keycloak/keycloak.git",
+  "commit": "05116f7951a9e1413c0a90c24b4648ee4a81ef4d",
+  "jdk": 17,
+  "commands": [],
+  "artifacts": [],
+  "sources": [
+    {
+      "from": "src/services/src/main/java/org/keycloak/utils/SearchQueryUtils.java",
+      "to": "src/main/java/org/keycloak/utils/SearchQueryUtils.java",
+      "sha256": "b46665f9866abb8deb2cd0d34d5771bc26857a490d03d021bb91c04ce77a781d"
+    }
+  ],
+  "fixed": {
+    "jars": [
+      {
+        "coords": "org.keycloak:keycloak-services:26.0.6",
+        "sha256": "7874874a0b53ae09df7cd5a285c7a637fa947bf0d94e2d2811335d645d58edfb"
+      }
+    ],
+    "drop": "^classes$"
+  },
+  "tools": "git; the fixture's own Maven build (JDK 17) compiles the copied file.",
+  "notes": "No library jar: the fixture's pom compiles the vulnerable commit's services/src/main/java/org/keycloak/utils/SearchQueryUtils.java (it uses only java.util), copied unchanged into the fixture's src/main/java; it is the only class in target/classes. The same file is in the keycloak-services 26.0.5 sources jar. Fixed version: keycloak-services 26.0.6, the first 26.x release with the fix; its SearchQueryUtils needs nothing else at run time. The drop regex removes target/classes (file name 'classes'), the vendored copy, from the fuzz test's class path; the fixed jar alone replaces it."
+}

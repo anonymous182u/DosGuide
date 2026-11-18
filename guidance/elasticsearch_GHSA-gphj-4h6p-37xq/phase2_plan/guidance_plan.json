@@ -1,0 +1,64 @@
+{
+  "plans": [
+    {
+      "target": "V1",
+      "signals": [
+        {
+          "name": "allocRequestedBytes",
+          "quantity": "bytes the NEWARRAY int instruction in IntBlockBuilder.<init> is asked to allocate, computed as (long)initialSize * Integer.BYTES using long arithmetic to avoid the very overflow that is the vulnerability",
+          "aggregation": "max",
+          "locations": [
+            "IntBlockBuilder#<init>(int, BlockFactory)"
+          ],
+          "technique": "bytecode",
+          "storage": "ThreadLocal<long[]> in AllocCounter (field ALLOC, index 0)",
+          "reset": "AllocCounter.reset() called in V1Guidance.getInput() before returning the input stream",
+          "read": "AllocCounter.getAlloc() called in V1Guidance.handleResult()"
+        }
+      ],
+      "retention": "Primary: retain inputs whose allocRequestedBytes exceeds the current corpus maximum (hill-climb). Secondary: when allocRequestedBytes is zero or does not improve, retain 10% of inputs randomly to maintain exploration diversity and escape the breaker-trips trough (estimatedSize ~153M-536M). Corpus capped at 100 entries; on overflow, replace the lowest-signal entry. Prioritize parents for mutation proportionally to signal + 1.",
+      "retention_signals": [
+        "allocRequestedBytes"
+      ],
+      "mutation": [
+        "byte-level: random byte flip at random position in the 8-byte input",
+        "byte-level: random byte overwrite at random position",
+        "byte-level: arithmetic increment/decrement on a random 4-byte field (big-endian int add/subtract random delta 1..256)",
+        "byte-level: replace one 4-byte field (bytes 0-3 or bytes 4-7) with a random int value",
+        "repetition ([R45a]): copy bytes 4-7 (estimatedSize) to bytes 0-3 (numAppends) or vice versa; for longer inputs double a random chunk",
+        "dictionary ([R45b]): overwrite a random 4-byte-aligned position with a token from {0x00000002 (literal 2 from Math.max), 0x00000004 (Integer.BYTES), 0x00000010 (NUM_BYTES_ARRAY_HEADER=16), 0x7FFFFFFF (Integer.MAX_VALUE), 0x00000000 (zero)}",
+        "no encoder needed ([R45c]): input is raw big-endian ints, no compression or checksum"
+      ]
+    },
+    {
+      "target": "V2",
+      "signals": [
+        {
+          "name": "allocRequestedBytes",
+          "quantity": "bytes the NEWARRAY long instruction in LongBlockBuilder.<init> is asked to allocate, computed as (long)initialSize * Long.BYTES using long arithmetic",
+          "aggregation": "max",
+          "locations": [
+            "LongBlockBuilder#<init>(int, BlockFactory)"
+          ],
+          "technique": "bytecode",
+          "storage": "ThreadLocal<long[]> in AllocCounter (field ALLOC, index 0)",
+          "reset": "AllocCounter.reset() called in V2Guidance.getInput() before returning the input stream",
+          "read": "AllocCounter.getAlloc() called in V2Guidance.handleResult()"
+        }
+      ],
+      "retention": "Primary: retain inputs whose allocRequestedBytes exceeds the current corpus maximum (hill-climb). Secondary: when allocRequestedBytes is zero or does not improve, retain 10% of inputs randomly to maintain exploration diversity and escape the breaker-trips trough (estimatedSize ~76M-268M). Corpus capped at 100 entries; on overflow, replace the lowest-signal entry. Prioritize parents for mutation proportionally to signal + 1.",
+      "retention_signals": [
+        "allocRequestedBytes"
+      ],
+      "mutation": [
+        "byte-level: random byte flip at random position in the 8-byte input",
+        "byte-level: random byte overwrite at random position",
+        "byte-level: arithmetic increment/decrement on a random 4-byte field (big-endian int add/subtract random delta 1..256)",
+        "byte-level: replace one 4-byte field (bytes 0-3 or bytes 4-7) with a random int value",
+        "repetition ([R45a]): copy bytes 4-7 (estimatedSize) to bytes 0-3 (numAppends) or vice versa; for longer inputs double a random chunk",
+        "dictionary ([R45b]): overwrite a random 4-byte-aligned position with a token from {0x00000002 (literal 2 from Math.max), 0x00000008 (Long.BYTES), 0x00000010 (NUM_BYTES_ARRAY_HEADER=16), 0x7FFFFFFF (Integer.MAX_VALUE), 0x00000000 (zero)}",
+        "no encoder needed ([R45c]): input is raw big-endian ints, no compression or checksum"
+      ]
+    }
+  ]
+}

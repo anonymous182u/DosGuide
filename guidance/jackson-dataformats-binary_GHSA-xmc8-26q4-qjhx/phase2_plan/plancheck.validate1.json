@@ -1,0 +1,380 @@
+{
+  "tool": "checkpath",
+  "version": "1.0.0",
+  "source_root": "projects/jackson-dataformats-binary_GHSA-xmc8-26q4-qjhx",
+  "index": {
+    "files_parsed": 139,
+    "files_failed": 0,
+    "methods": 2379,
+    "harness_fuzz_methods": [
+      "CBORFuzzTest.fuzzCBORParserNextTokenFloatValues(InputStream)",
+      "CBORFuzzTest.fuzzCBORParserNextTokenScalarValues(InputStream)",
+      "CBORFuzzTest.fuzzObjectMapperReadTree(InputStream)"
+    ],
+    "index_seconds": 1.4,
+    "max_gap": 2,
+    "sink_depth": 6,
+    "symbol_resolution": true
+  },
+  "ok": true,
+  "targets": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "entrypoint": "CBORFuzzTest.fuzzCBORParserNextTokenScalarValues(InputStream) → CBORParser.nextToken() → CBORParser.getBinaryValue() → CBORParser._finishToken() → CBORParser._finishBytes(int)",
+      "source_path": "cbor/src/main/java/com/fasterxml/jackson/dataformat/cbor/CBORParser.java",
+      "start_ok": true,
+      "harness_entry": "com.fasterxml.jackson.fuzz.harness.CBORFuzzTest#fuzzCBORParserNextTokenScalarValues",
+      "end_ok": true,
+      "end": {
+        "sink_file": "cbor/src/main/java/com/fasterxml/jackson/dataformat/cbor/CBORParser.java",
+        "ok": true,
+        "evidence": "hop 5 CBORParser#_finishBytes(int) is declared in cbor/src/main/java/com/fasterxml/jackson/dataformat/cbor/CBORParser.java:2430",
+        "level": "method",
+        "sink_method": "CBORParser#_finishBytes",
+        "sink_evidence": "hop 5 is CBORParser#_finishBytes(int)"
+      },
+      "hops": [
+        {
+          "index": 1,
+          "raw": "CBORFuzzTest.fuzzCBORParserNextTokenScalarValues(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "com.fasterxml.jackson.fuzz.harness.CBORFuzzTest#fuzzCBORParserNextTokenScalarValues(InputStream)",
+              "location": "harness/src/test/java/com/fasterxml/jackson/fuzz/harness/CBORFuzzTest.java:58"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "raw": "CBORParser.nextToken()",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "com.fasterxml.jackson.dataformat.cbor.CBORParser#nextToken()",
+              "location": "cbor/src/main/java/com/fasterxml/jackson/dataformat/cbor/CBORParser.java:580"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "raw": "CBORParser.getBinaryValue()",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "com.fasterxml.jackson.dataformat.cbor.CBORParser#getBinaryValue(Base64Variant)",
+              "location": "cbor/src/main/java/com/fasterxml/jackson/dataformat/cbor/CBORParser.java:1653"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "raw": "CBORParser._finishToken()",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "com.fasterxml.jackson.dataformat.cbor.CBORParser#_finishToken()",
+              "location": "cbor/src/main/java/com/fasterxml/jackson/dataformat/cbor/CBORParser.java:2080"
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "raw": "CBORParser._finishBytes(int)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "com.fasterxml.jackson.dataformat.cbor.CBORParser#_finishBytes(int)",
+              "location": "cbor/src/main/java/com/fasterxml/jackson/dataformat/cbor/CBORParser.java:2430"
+            }
+          ]
+        }
+      ],
+      "path_signature": [
+        "com.fasterxml.jackson.fuzz.harness.CBORFuzzTest#fuzzCBORParserNextTokenScalarValues(InputStream)",
+        "com.fasterxml.jackson.dataformat.cbor.CBORParser#nextToken()",
+        "com.fasterxml.jackson.dataformat.cbor.CBORParser#getBinaryValue(Base64Variant)",
+        "com.fasterxml.jackson.dataformat.cbor.CBORParser#_finishToken()",
+        "com.fasterxml.jackson.dataformat.cbor.CBORParser#_finishBytes(int)"
+      ],
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "written": "CBORFuzzTest.fuzzCBORParserNextTokenScalarValues(InputStream)",
+          "provenance": "agent",
+          "method": "com.fasterxml.jackson.fuzz.harness.CBORFuzzTest#fuzzCBORParserNextTokenScalarValues(InputStream)",
+          "location": "harness/src/test/java/com/fasterxml/jackson/fuzz/harness/CBORFuzzTest.java:58"
+        },
+        {
+          "kind": "connection",
+          "type": "DISPATCH",
+          "evidence": "CBORFuzzTest#fuzzCBORParserNextTokenScalarValues(InputStream) calls nextToken on a com.fasterxml.jackson.core.JsonParser (outside the source tree, not resolved) at harness/src/test/java/com/fasterxml/jackson/fuzz/harness/CBORFuzzTest.java:62, which may dispatch to CBORParser#nextToken() (cbor/src/main/java/com/fasterxml/jackson/dataformat/cbor/CBORParser.java:580); CBORParser's supertype com.fasterxml.jackson.core.base.ParserMinimalBase could not be resolved, so CBORParser is not confirmed to be a com.fasterxml.jackson.core.JsonParser (unresolved ancestor)",
+          "site": "harness/src/test/java/com/fasterxml/jackson/fuzz/harness/CBORFuzzTest.java:62"
+        },
+        {
+          "kind": "hop",
+          "written": "CBORParser.nextToken()",
+          "provenance": "agent",
+          "method": "com.fasterxml.jackson.dataformat.cbor.CBORParser#nextToken()",
+          "location": "cbor/src/main/java/com/fasterxml/jackson/dataformat/cbor/CBORParser.java:580"
+        },
+        {
+          "kind": "connection",
+          "type": "DATAFLOW",
+          "evidence": "CBORParser#nextToken() (cbor/src/main/java/com/fasterxml/jackson/dataformat/cbor/CBORParser.java:580) writes field `_binaryValue`, which CBORParser#getBinaryValue(Base64Variant) (cbor/src/main/java/com/fasterxml/jackson/dataformat/cbor/CBORParser.java:1653) reads",
+          "site": "cbor/src/main/java/com/fasterxml/jackson/dataformat/cbor/CBORParser.java:580"
+        },
+        {
+          "kind": "hop",
+          "written": "CBORParser.getBinaryValue()",
+          "provenance": "agent",
+          "method": "com.fasterxml.jackson.dataformat.cbor.CBORParser#getBinaryValue(Base64Variant)",
+          "location": "cbor/src/main/java/com/fasterxml/jackson/dataformat/cbor/CBORParser.java:1653"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "CBORParser#getBinaryValue(Base64Variant) calls CBORParser#_finishToken() at cbor/src/main/java/com/fasterxml/jackson/dataformat/cbor/CBORParser.java:1656 (resolved)",
+          "site": "cbor/src/main/java/com/fasterxml/jackson/dataformat/cbor/CBORParser.java:1656"
+        },
+        {
+          "kind": "hop",
+          "written": "CBORParser._finishToken()",
+          "provenance": "agent",
+          "method": "com.fasterxml.jackson.dataformat.cbor.CBORParser#_finishToken()",
+          "location": "cbor/src/main/java/com/fasterxml/jackson/dataformat/cbor/CBORParser.java:2080"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "CBORParser#_finishToken() calls CBORParser#_finishBytes(int) at cbor/src/main/java/com/fasterxml/jackson/dataformat/cbor/CBORParser.java:2090 (resolved)",
+          "site": "cbor/src/main/java/com/fasterxml/jackson/dataformat/cbor/CBORParser.java:2090"
+        },
+        {
+          "kind": "hop",
+          "written": "CBORParser._finishBytes(int)",
+          "provenance": "agent",
+          "method": "com.fasterxml.jackson.dataformat.cbor.CBORParser#_finishBytes(int)",
+          "location": "cbor/src/main/java/com/fasterxml/jackson/dataformat/cbor/CBORParser.java:2430"
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "status": "DISPATCH",
+          "evidence": "CBORFuzzTest#fuzzCBORParserNextTokenScalarValues(InputStream) calls nextToken on a com.fasterxml.jackson.core.JsonParser (outside the source tree, not resolved) at harness/src/test/java/com/fasterxml/jackson/fuzz/harness/CBORFuzzTest.java:62, which may dispatch to CBORParser#nextToken() (cbor/src/main/java/com/fasterxml/jackson/dataformat/cbor/CBORParser.java:580); CBORParser's supertype com.fasterxml.jackson.core.base.ParserMinimalBase could not be resolved, so CBORParser is not confirmed to be a com.fasterxml.jackson.core.JsonParser (unresolved ancestor)"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "status": "DATAFLOW",
+          "evidence": "CBORParser#nextToken() (cbor/src/main/java/com/fasterxml/jackson/dataformat/cbor/CBORParser.java:580) writes field `_binaryValue`, which CBORParser#getBinaryValue(Base64Variant) (cbor/src/main/java/com/fasterxml/jackson/dataformat/cbor/CBORParser.java:1653) reads"
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "status": "CALL",
+          "evidence": "CBORParser#getBinaryValue(Base64Variant) calls CBORParser#_finishToken() at cbor/src/main/java/com/fasterxml/jackson/dataformat/cbor/CBORParser.java:1656 (resolved)"
+        },
+        {
+          "from": 4,
+          "to": 5,
+          "status": "CALL",
+          "evidence": "CBORParser#_finishToken() calls CBORParser#_finishBytes(int) at cbor/src/main/java/com/fasterxml/jackson/dataformat/cbor/CBORParser.java:2090 (resolved)"
+        }
+      ],
+      "diagnostics": [],
+      "warnings": [
+        "Edge 1→2 rests on an unconfirmed dispatch: CBORParser's supertype com.fasterxml.jackson.core.base.ParserMinimalBase is outside the source tree and could not be resolved, so CBORParser#nextToken() is taken to be what the call to nextToken on a com.fasterxml.jackson.core.JsonParser at harness/src/test/java/com/fasterxml/jackson/fuzz/harness/CBORFuzzTest.java:62 runs because its name and parameter count match."
+      ]
+    },
+    {
+      "target": "PkgRisk1",
+      "status": "PASS",
+      "entrypoint": "CBORFuzzTest.fuzzObjectMapperReadTree(InputStream) → ObjectMapper.readTree(byte[]) → BaseNodeDeserializer.deserializeArray(JsonParser, DeserializationContext, JsonNodeFactory) → CBORParser.nextToken()",
+      "source_path": "cbor/src/main/java/com/fasterxml/jackson/dataformat/cbor/CBORParser.java",
+      "start_ok": true,
+      "harness_entry": "com.fasterxml.jackson.fuzz.harness.CBORFuzzTest#fuzzObjectMapperReadTree",
+      "end_ok": true,
+      "end": {
+        "sink_file": "cbor/src/main/java/com/fasterxml/jackson/dataformat/cbor/CBORParser.java",
+        "ok": true,
+        "evidence": "hop 4 CBORParser#nextToken() is declared in cbor/src/main/java/com/fasterxml/jackson/dataformat/cbor/CBORParser.java:580",
+        "level": "method",
+        "sink_method": "BaseNodeDeserializer#deserializeArray",
+        "sink_evidence": "hop 3 names BaseNodeDeserializer#deserializeArray (outside the source tree)"
+      },
+      "hops": [
+        {
+          "index": 1,
+          "raw": "CBORFuzzTest.fuzzObjectMapperReadTree(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "com.fasterxml.jackson.fuzz.harness.CBORFuzzTest#fuzzObjectMapperReadTree(InputStream)",
+              "location": "harness/src/test/java/com/fasterxml/jackson/fuzz/harness/CBORFuzzTest.java:86"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "raw": "ObjectMapper.readTree(byte[])",
+          "status": "EXTERNAL",
+          "candidates": [],
+          "external": [
+            "ObjectMapper.readTree(byte[])"
+          ]
+        },
+        {
+          "index": 3,
+          "raw": "BaseNodeDeserializer.deserializeArray(JsonParser, DeserializationContext, JsonNodeFactory)",
+          "status": "EXTERNAL",
+          "candidates": [],
+          "external": [
+            "BaseNodeDeserializer.deserializeArray(JsonParser, DeserializationContext, JsonNodeFactory)"
+          ]
+        },
+        {
+          "index": 4,
+          "raw": "CBORParser.nextToken()",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "com.fasterxml.jackson.dataformat.cbor.CBORParser#nextToken()",
+              "location": "cbor/src/main/java/com/fasterxml/jackson/dataformat/cbor/CBORParser.java:580"
+            }
+          ]
+        }
+      ],
+      "path_signature": [
+        "com.fasterxml.jackson.fuzz.harness.CBORFuzzTest#fuzzObjectMapperReadTree(InputStream)",
+        "external:readTree",
+        "external:deserializeArray",
+        "com.fasterxml.jackson.dataformat.cbor.CBORParser#nextToken()"
+      ],
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "written": "CBORFuzzTest.fuzzObjectMapperReadTree(InputStream)",
+          "provenance": "agent",
+          "method": "com.fasterxml.jackson.fuzz.harness.CBORFuzzTest#fuzzObjectMapperReadTree(InputStream)",
+          "location": "harness/src/test/java/com/fasterxml/jackson/fuzz/harness/CBORFuzzTest.java:86"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "CBORFuzzTest#fuzzObjectMapperReadTree(InputStream) calls ObjectMapper.readTree(byte[]) at harness/src/test/java/com/fasterxml/jackson/fuzz/harness/CBORFuzzTest.java:88",
+          "site": "harness/src/test/java/com/fasterxml/jackson/fuzz/harness/CBORFuzzTest.java:88"
+        },
+        {
+          "kind": "hop",
+          "written": "ObjectMapper.readTree(byte[])",
+          "provenance": "agent",
+          "method": "ObjectMapper.readTree(byte[])",
+          "location": "outside the source tree"
+        },
+        {
+          "kind": "connection",
+          "type": "UNCHECKED",
+          "evidence": "hop 2 is outside the source tree, so calls made inside it cannot be inspected"
+        },
+        {
+          "kind": "hop",
+          "written": "BaseNodeDeserializer.deserializeArray(JsonParser, DeserializationContext, JsonNodeFactory)",
+          "provenance": "agent",
+          "method": "BaseNodeDeserializer.deserializeArray(JsonParser, DeserializationContext, JsonNodeFactory)",
+          "location": "outside the source tree"
+        },
+        {
+          "kind": "connection",
+          "type": "UNCHECKED",
+          "evidence": "hop 3 is outside the source tree, so calls made inside it cannot be inspected"
+        },
+        {
+          "kind": "hop",
+          "written": "CBORParser.nextToken()",
+          "provenance": "agent",
+          "method": "com.fasterxml.jackson.dataformat.cbor.CBORParser#nextToken()",
+          "location": "cbor/src/main/java/com/fasterxml/jackson/dataformat/cbor/CBORParser.java:580"
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "status": "CALL",
+          "evidence": "CBORFuzzTest#fuzzObjectMapperReadTree(InputStream) calls ObjectMapper.readTree(byte[]) at harness/src/test/java/com/fasterxml/jackson/fuzz/harness/CBORFuzzTest.java:88"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "status": "UNCHECKED",
+          "evidence": "hop 2 is outside the source tree, so calls made inside it cannot be inspected"
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "status": "UNCHECKED",
+          "evidence": "hop 3 is outside the source tree, so calls made inside it cannot be inspected"
+        }
+      ],
+      "diagnostics": [],
+      "warnings": [
+        "Hop 2: `ObjectMapper.readTree(byte[])` belongs to a class outside the source tree; its body is not analyzed",
+        "Hop 3: `BaseNodeDeserializer.deserializeArray(JsonParser, DeserializationContext, JsonNodeFactory)` belongs to a class outside the source tree; its body is not analyzed",
+        "Edge 2→3 not checked: hop 2 is outside the source tree, so calls made inside it cannot be inspected",
+        "Edge 3→4 not checked: hop 3 is outside the source tree, so calls made inside it cannot be inspected"
+      ]
+    }
+  ],
+  "plan_ok": true,
+  "plans": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "signals": [
+        {
+          "name": "declaredLen",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "CBORParser#_finishBytes where new byte[len] allocates the attacker-controlled size",
+              "status": "RESOLVED",
+              "method": "com.fasterxml.jackson.dataformat.cbor.CBORParser#_finishBytes",
+              "declared_at": "cbor/src/main/java/com/fasterxml/jackson/dataformat/cbor/CBORParser.java:2430",
+              "relation": "on_path"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    },
+    {
+      "target": "PkgRisk1",
+      "status": "PASS",
+      "signals": [
+        {
+          "name": "maxNestingDepth",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "BaseNodeDeserializer#deserializeArray where recursive array deserialization consumes stack frames",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "BaseNodeDeserializer#deserializeObject where recursive object deserialization consumes stack frames",
+              "status": "EXTERNAL",
+              "relation": "library"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    }
+  ]
+}

@@ -1,0 +1,1001 @@
+{
+  "ok": true,
+  "launch": [],
+  "build": {
+    "ok": true
+  },
+  "targets": [
+    {
+      "tool": "ValidateArtifact",
+      "target": "V1",
+      "checks": [
+        {
+          "name": "contract",
+          "status": "pass",
+          "detail": "factory, lastSignals() and fuzz test found"
+        },
+        {
+          "name": "runs",
+          "status": "pass",
+          "detail": "91 executions completed"
+        },
+        {
+          "name": "plan_signals",
+          "status": "pass",
+          "detail": "lastSignals() returns every planned signal [allocBytes]"
+        },
+        {
+          "name": "signal_varies",
+          "status": "pass",
+          "detail": "varying: [allocBytes] (on the guidance's own inputs: [allocBytes])"
+        },
+        {
+          "name": "reset",
+          "status": "pass",
+          "detail": "re-running inputs reproduced their values"
+        },
+        {
+          "name": "depends_on_execution",
+          "status": "pass",
+          "detail": "signals stay near zero when the target does not run"
+        },
+        {
+          "name": "instrumentation",
+          "status": "pass",
+          "detail": "rewrote [org.apache.activemq.openwire.v12.BaseDataStreamMarshaller]"
+        },
+        {
+          "name": "input_limit",
+          "status": "pass",
+          "detail": "with jqf.ei.MAX_INPUT_SIZE=16 the 20 generated inputs were at most 16 bytes"
+        },
+        {
+          "name": "input_growth",
+          "status": "pass",
+          "detail": "the guidance generated a 14-byte input after 543 ms (1 executions); the target needs 14"
+        },
+        {
+          "name": "progress",
+          "status": "skip",
+          "detail": "not compared: no signal grows along the series"
+        }
+      ],
+      "max_input_bytes": 10240,
+      "example_inputs": 3,
+      "executions": {
+        "own": 40,
+        "repeat": 5,
+        "random": 40,
+        "example": 6,
+        "probe": 3
+      },
+      "test_failures_not_used": 3,
+      "signals": {
+        "allocBytes": {
+          "min": 0.0,
+          "max": 1073741823.0,
+          "distinct": 23
+        }
+      },
+      "signals_by_kind": {
+        "example": {
+          "allocBytes": {
+            "max": 1048576.0,
+            "distinct": 2,
+            "min": 0.0
+          }
+        },
+        "own": {
+          "allocBytes": {
+            "max": 1073741823.0,
+            "distinct": 19,
+            "min": 1048576.0
+          }
+        },
+        "random": {
+          "allocBytes": {
+            "max": 1073741823.0,
+            "distinct": 13,
+            "min": 0.0
+          }
+        },
+        "repeat": {
+          "allocBytes": {
+            "max": 1073741823.0,
+            "distinct": 5,
+            "min": 752368539.0
+          }
+        }
+      },
+      "transformed_classes": [
+        "org.apache.activemq.openwire.v12.BaseDataStreamMarshaller"
+      ],
+      "ok": true,
+      "input_limit_probe": {
+        "max_input_bytes": 16,
+        "longest_input": 16,
+        "executions": {
+          "own": 20
+        }
+      },
+      "growth_probe": {
+        "needed_input_bytes": 14,
+        "longest_input": 14,
+        "executions": {
+          "own": 1
+        },
+        "growth": [
+          {
+            "ms": 543,
+            "execution": 1,
+            "bytes": 14
+          }
+        ]
+      },
+      "hard_ok": true,
+      "progress_probe": {
+        "own_ms": 120032,
+        "executions": 2606,
+        "longest_input": 56,
+        "phase": "series",
+        "series_inputs": 6,
+        "comparison": {},
+        "measurements": {
+          "budget_ms": 120000,
+          "own_ms": 120032,
+          "executions": 2606,
+          "longest_input": 56,
+          "phase": "series",
+          "own_best": {
+            "allocBytes": [
+              [
+                14,
+                2147483647.0,
+                5688
+              ],
+              [
+                28,
+                2147483647.0,
+                19764
+              ],
+              [
+                56,
+                1006632960.0,
+                16265
+              ]
+            ]
+          },
+          "series": [
+            {
+              "bytes": 14,
+              "signals": {
+                "allocBytes": 1048576.0
+              }
+            },
+            {
+              "bytes": 14,
+              "signals": {
+                "allocBytes": 4194304.0
+              }
+            },
+            {
+              "bytes": 14,
+              "signals": {
+                "allocBytes": 16777216.0
+              }
+            },
+            {
+              "bytes": 14,
+              "signals": {
+                "allocBytes": 67108864.0
+              }
+            },
+            {
+              "bytes": 14,
+              "signals": {
+                "allocBytes": 134217728.0
+              }
+            },
+            {
+              "bytes": 14,
+              "signals": {
+                "allocBytes": 268435456.0
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "tool": "ValidateArtifact",
+      "target": "V2",
+      "checks": [
+        {
+          "name": "contract",
+          "status": "pass",
+          "detail": "factory, lastSignals() and fuzz test found"
+        },
+        {
+          "name": "runs",
+          "status": "pass",
+          "detail": "91 executions completed"
+        },
+        {
+          "name": "plan_signals",
+          "status": "pass",
+          "detail": "lastSignals() returns every planned signal [throwableDepth]"
+        },
+        {
+          "name": "signal_varies",
+          "status": "pass",
+          "detail": "varying: [throwableDepth] (on the guidance's own inputs: [throwableDepth])"
+        },
+        {
+          "name": "reset",
+          "status": "pass",
+          "detail": "re-running inputs reproduced their values"
+        },
+        {
+          "name": "depends_on_execution",
+          "status": "pass",
+          "detail": "signals stay near zero when the target does not run"
+        },
+        {
+          "name": "instrumentation",
+          "status": "pass",
+          "detail": "rewrote [org.apache.activemq.openwire.v12.BaseDataStreamMarshaller]"
+        },
+        {
+          "name": "input_limit",
+          "status": "pass",
+          "detail": "with jqf.ei.MAX_INPUT_SIZE=16 the 20 generated inputs were at most 16 bytes"
+        },
+        {
+          "name": "input_growth",
+          "status": "pass",
+          "detail": "the guidance generated a 10240-byte input after 628 ms (13 executions); the target needs 10240"
+        },
+        {
+          "name": "progress",
+          "status": "pass",
+          "ratio": 0.9950492239541869,
+          "detail": "`throwableDepth` reached 100% of the series at 10240 bytes"
+        }
+      ],
+      "max_input_bytes": 10240,
+      "example_inputs": 3,
+      "executions": {
+        "own": 40,
+        "repeat": 5,
+        "random": 40,
+        "example": 6,
+        "probe": 3
+      },
+      "test_failures_not_used": 0,
+      "signals": {
+        "throwableDepth": {
+          "min": 0.0,
+          "max": 2046.0,
+          "distinct": 38
+        }
+      },
+      "signals_by_kind": {
+        "example": {
+          "throwableDepth": {
+            "min": 0.0,
+            "distinct": 2,
+            "max": 9.0
+          }
+        },
+        "own": {
+          "throwableDepth": {
+            "min": 6.0,
+            "distinct": 22,
+            "max": 2046.0
+          }
+        },
+        "random": {
+          "throwableDepth": {
+            "min": 0.0,
+            "distinct": 24,
+            "max": 2046.0
+          }
+        },
+        "repeat": {
+          "throwableDepth": {
+            "min": 84.0,
+            "distinct": 5,
+            "max": 2046.0
+          }
+        }
+      },
+      "transformed_classes": [
+        "org.apache.activemq.openwire.v12.BaseDataStreamMarshaller"
+      ],
+      "ok": true,
+      "input_limit_probe": {
+        "max_input_bytes": 16,
+        "longest_input": 16,
+        "executions": {
+          "own": 20
+        }
+      },
+      "growth_probe": {
+        "needed_input_bytes": 10240,
+        "longest_input": 10240,
+        "executions": {
+          "own": 13
+        },
+        "growth": [
+          {
+            "ms": 492,
+            "execution": 1,
+            "bytes": 95
+          },
+          {
+            "ms": 495,
+            "execution": 2,
+            "bytes": 260
+          },
+          {
+            "ms": 501,
+            "execution": 7,
+            "bytes": 400
+          },
+          {
+            "ms": 504,
+            "execution": 9,
+            "bytes": 540
+          },
+          {
+            "ms": 628,
+            "execution": 13,
+            "bytes": 10240
+          }
+        ]
+      },
+      "hard_ok": true,
+      "progress_probe": {
+        "own_ms": 120010,
+        "executions": 5731,
+        "longest_input": 10240,
+        "phase": "series",
+        "series_inputs": 4,
+        "comparison": {
+          "throwableDepth": {
+            "exponent": 1.01,
+            "series_longest": [
+              2515,
+              501.0
+            ],
+            "best": [
+              10240,
+              2046.0,
+              577
+            ],
+            "compared_at": 10240,
+            "series_at_best": 2056.179685131034,
+            "ratio": 0.9950492239541869
+          }
+        },
+        "measurements": {
+          "budget_ms": 120000,
+          "own_ms": 120010,
+          "executions": 5731,
+          "longest_input": 10240,
+          "phase": "series",
+          "own_best": {
+            "throwableDepth": [
+              [
+                20,
+                2.0,
+                1607
+              ],
+              [
+                25,
+                3.0,
+                10878
+              ],
+              [
+                30,
+                4.0,
+                30803
+              ],
+              [
+                35,
+                5.0,
+                7381
+              ],
+              [
+                40,
+                6.0,
+                3674
+              ],
+              [
+                45,
+                7.0,
+                8078
+              ],
+              [
+                50,
+                8.0,
+                3534
+              ],
+              [
+                55,
+                9.0,
+                1742
+              ],
+              [
+                60,
+                10.0,
+                1460
+              ],
+              [
+                65,
+                11.0,
+                1817
+              ],
+              [
+                75,
+                13.0,
+                18333
+              ],
+              [
+                80,
+                14.0,
+                5588
+              ],
+              [
+                90,
+                16.0,
+                10945
+              ],
+              [
+                95,
+                17.0,
+                471
+              ],
+              [
+                105,
+                19.0,
+                6001
+              ],
+              [
+                115,
+                21.0,
+                807
+              ],
+              [
+                125,
+                23.0,
+                3534
+              ],
+              [
+                135,
+                25.0,
+                4080
+              ],
+              [
+                150,
+                28.0,
+                9967
+              ],
+              [
+                165,
+                31.0,
+                807
+              ],
+              [
+                180,
+                34.0,
+                5862
+              ],
+              [
+                195,
+                37.0,
+                4975
+              ],
+              [
+                215,
+                41.0,
+                5862
+              ],
+              [
+                230,
+                44.0,
+                3740
+              ],
+              [
+                255,
+                49.0,
+                2829
+              ],
+              [
+                275,
+                53.0,
+                36470
+              ],
+              [
+                301,
+                58.0,
+                9894
+              ],
+              [
+                330,
+                64.0,
+                812
+              ],
+              [
+                360,
+                70.0,
+                1816
+              ],
+              [
+                391,
+                76.0,
+                1461
+              ],
+              [
+                430,
+                84.0,
+                11773
+              ],
+              [
+                465,
+                91.0,
+                479
+              ],
+              [
+                510,
+                100.0,
+                27213
+              ],
+              [
+                555,
+                109.0,
+                1817
+              ],
+              [
+                605,
+                119.0,
+                2158
+              ],
+              [
+                660,
+                130.0,
+                24242
+              ],
+              [
+                720,
+                142.0,
+                80826
+              ],
+              [
+                785,
+                155.0,
+                14180
+              ],
+              [
+                916,
+                91.0,
+                805
+              ],
+              [
+                10240,
+                2046.0,
+                577
+              ]
+            ]
+          },
+          "series": [
+            {
+              "bytes": 335,
+              "signals": {
+                "throwableDepth": 65.0
+              }
+            },
+            {
+              "bytes": 655,
+              "signals": {
+                "throwableDepth": 129.0
+              }
+            },
+            {
+              "bytes": 1295,
+              "signals": {
+                "throwableDepth": 257.0
+              }
+            },
+            {
+              "bytes": 2515,
+              "signals": {
+                "throwableDepth": 501.0
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "tool": "ValidateArtifact",
+      "target": "V3",
+      "checks": [
+        {
+          "name": "contract",
+          "status": "pass",
+          "detail": "factory, lastSignals() and fuzz test found"
+        },
+        {
+          "name": "runs",
+          "status": "pass",
+          "detail": "91 executions completed"
+        },
+        {
+          "name": "plan_signals",
+          "status": "pass",
+          "detail": "lastSignals() returns every planned signal [nestingDepth]"
+        },
+        {
+          "name": "signal_varies",
+          "status": "pass",
+          "detail": "varying: [nestingDepth] (on the guidance's own inputs: [nestingDepth])"
+        },
+        {
+          "name": "reset",
+          "status": "pass",
+          "detail": "re-running inputs reproduced their values"
+        },
+        {
+          "name": "depends_on_execution",
+          "status": "pass",
+          "detail": "signals stay near zero when the target does not run"
+        },
+        {
+          "name": "instrumentation",
+          "status": "pass",
+          "detail": "rewrote [org.apache.activemq.openwire.v12.BaseDataStreamMarshaller]"
+        },
+        {
+          "name": "input_limit",
+          "status": "pass",
+          "detail": "with jqf.ei.MAX_INPUT_SIZE=16 the 20 generated inputs were at most 16 bytes"
+        },
+        {
+          "name": "input_growth",
+          "status": "pass",
+          "detail": "the guidance generated a 10240-byte input after 599 ms (17 executions); the target needs 10240"
+        },
+        {
+          "name": "progress",
+          "status": "pass",
+          "ratio": 0.99793425568934,
+          "detail": "`nestingDepth` reached 100% of the series at 10234 bytes"
+        }
+      ],
+      "max_input_bytes": 10240,
+      "example_inputs": 3,
+      "executions": {
+        "own": 40,
+        "repeat": 5,
+        "random": 40,
+        "example": 6,
+        "probe": 3
+      },
+      "test_failures_not_used": 0,
+      "signals": {
+        "nestingDepth": {
+          "min": 0.0,
+          "max": 930.0,
+          "distinct": 28
+        }
+      },
+      "signals_by_kind": {
+        "example": {
+          "nestingDepth": {
+            "max": 9.0,
+            "distinct": 2,
+            "min": 0.0
+          }
+        },
+        "own": {
+          "nestingDepth": {
+            "max": 930.0,
+            "distinct": 12,
+            "min": 17.0
+          }
+        },
+        "random": {
+          "nestingDepth": {
+            "max": 930.0,
+            "distinct": 21,
+            "min": 0.0
+          }
+        },
+        "repeat": {
+          "nestingDepth": {
+            "max": 930.0,
+            "distinct": 5,
+            "min": 81.0
+          }
+        }
+      },
+      "transformed_classes": [
+        "org.apache.activemq.openwire.v12.BaseDataStreamMarshaller"
+      ],
+      "ok": true,
+      "input_limit_probe": {
+        "max_input_bytes": 16,
+        "longest_input": 16,
+        "executions": {
+          "own": 20
+        }
+      },
+      "growth_probe": {
+        "needed_input_bytes": 10240,
+        "longest_input": 10240,
+        "executions": {
+          "own": 17
+        },
+        "growth": [
+          {
+            "ms": 572,
+            "execution": 1,
+            "bytes": 191
+          },
+          {
+            "ms": 579,
+            "execution": 3,
+            "bytes": 10234
+          },
+          {
+            "ms": 599,
+            "execution": 17,
+            "bytes": 10240
+          }
+        ]
+      },
+      "hard_ok": true,
+      "progress_probe": {
+        "own_ms": 120000,
+        "executions": 502670,
+        "longest_input": 10240,
+        "phase": "series",
+        "series_inputs": 4,
+        "comparison": {
+          "nestingDepth": {
+            "exponent": 1.0,
+            "series_longest": [
+              2215,
+              201.0
+            ],
+            "best": [
+              10234,
+              930.0,
+              585
+            ],
+            "compared_at": 10234,
+            "series_at_best": 931.9251190125614,
+            "ratio": 0.99793425568934
+          }
+        },
+        "measurements": {
+          "budget_ms": 120000,
+          "own_ms": 120000,
+          "executions": 502670,
+          "longest_input": 10240,
+          "phase": "series",
+          "own_best": {
+            "nestingDepth": [
+              [
+                26,
+                2.0,
+                669
+              ],
+              [
+                37,
+                3.0,
+                690
+              ],
+              [
+                48,
+                4.0,
+                718
+              ],
+              [
+                59,
+                5.0,
+                918
+              ],
+              [
+                70,
+                6.0,
+                740
+              ],
+              [
+                81,
+                7.0,
+                665
+              ],
+              [
+                92,
+                8.0,
+                686
+              ],
+              [
+                103,
+                9.0,
+                626
+              ],
+              [
+                114,
+                10.0,
+                677
+              ],
+              [
+                125,
+                11.0,
+                747
+              ],
+              [
+                136,
+                12.0,
+                846
+              ],
+              [
+                147,
+                13.0,
+                590
+              ],
+              [
+                158,
+                14.0,
+                721
+              ],
+              [
+                180,
+                16.0,
+                705
+              ],
+              [
+                191,
+                17.0,
+                578
+              ],
+              [
+                213,
+                19.0,
+                820
+              ],
+              [
+                224,
+                20.0,
+                1298
+              ],
+              [
+                246,
+                22.0,
+                650
+              ],
+              [
+                279,
+                25.0,
+                1035
+              ],
+              [
+                301,
+                27.0,
+                1165
+              ],
+              [
+                323,
+                29.0,
+                992
+              ],
+              [
+                356,
+                32.0,
+                1066
+              ],
+              [
+                389,
+                35.0,
+                822
+              ],
+              [
+                422,
+                38.0,
+                749
+              ],
+              [
+                466,
+                42.0,
+                982
+              ],
+              [
+                510,
+                46.0,
+                1008
+              ],
+              [
+                554,
+                50.0,
+                994
+              ],
+              [
+                598,
+                54.0,
+                910
+              ],
+              [
+                653,
+                59.0,
+                826
+              ],
+              [
+                719,
+                65.0,
+                974
+              ],
+              [
+                785,
+                71.0,
+                746
+              ],
+              [
+                851,
+                77.0,
+                758
+              ],
+              [
+                895,
+                81.0,
+                615
+              ],
+              [
+                10234,
+                930.0,
+                585
+              ]
+            ]
+          },
+          "series": [
+            {
+              "bytes": 367,
+              "signals": {
+                "nestingDepth": 33.0
+              }
+            },
+            {
+              "bytes": 719,
+              "signals": {
+                "nestingDepth": 65.0
+              }
+            },
+            {
+              "bytes": 1423,
+              "signals": {
+                "nestingDepth": 129.0
+              }
+            },
+            {
+              "bytes": 2215,
+              "signals": {
+                "nestingDepth": 201.0
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "limits": {
+    "jvm_args": [
+      "-Xmx1g",
+      "-Xss1m"
+    ],
+    "timeout_ms": 20000,
+    "max_input_bytes": 10240
+  },
+  "hard_ok": true
+}

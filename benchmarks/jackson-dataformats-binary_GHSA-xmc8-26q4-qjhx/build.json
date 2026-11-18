@@ -1,0 +1,46 @@
+{
+  "clone_url": "https://github.com/FasterXML/jackson-dataformats-binary.git",
+  "commit": "961b128a100c6f0da36b1deaae3a4946b9321b90",
+  "jdk": 17,
+  "linux_only": false,
+  "commands": [
+    "rm -rf build && mkdir -p build/classes build/gen-src/com/fasterxml/jackson/dataformat/cbor deps",
+    "curl -sSfL --retry 3 -o deps/jackson-core-2.10.2.jar https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.10.2/jackson-core-2.10.2.jar",
+    "curl -sSfL --retry 3 -o deps/jackson-databind-2.10.2.jar https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.10.2/jackson-databind-2.10.2.jar",
+    "curl -sSfL --retry 3 -o deps/jackson-annotations-2.10.2.jar https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-annotations/2.10.2/jackson-annotations-2.10.2.jar",
+    "printf '%s\\n' 'package com.fasterxml.jackson.dataformat.cbor;' '' 'import com.fasterxml.jackson.core.Version;' 'import com.fasterxml.jackson.core.Versioned;' 'import com.fasterxml.jackson.core.util.VersionUtil;' '' 'public final class PackageVersion implements Versioned {' '    public final static Version VERSION = VersionUtil.parseVersion(' '        \"2.11.4-SNAPSHOT\", \"com.fasterxml.jackson.dataformat\", \"jackson-dataformat-cbor\");' '' '    @Override' '    public Version version() {' '        return VERSION;' '    }' '}' > build/gen-src/com/fasterxml/jackson/dataformat/cbor/PackageVersion.java",
+    "javac -nowarn -encoding UTF-8 -source 8 -target 8 -cp 'deps/*' -d build/classes -sourcepath src/cbor/src/main/java:build/gen-src build/gen-src/com/fasterxml/jackson/dataformat/cbor/PackageVersion.java $(find src/cbor/src/main/java -name '*.java' | LC_ALL=C sort)",
+    "jar cf build/jackson-dataformat-cbor.jar -C build/classes ."
+  ],
+  "artifacts": [
+    {
+      "built": "build/jackson-dataformat-cbor.jar",
+      "lib": "lib/jackson-dataformat-cbor-2.11.4-SNAPSHOT.jar",
+      "sha256": "046f863e78cde4dbe4da961d7c01d197b806fabe755ee52774b8c8a958f79e62",
+      "classes_sha256": "128482ad9bf26f66eaecfa5faeee942197d9eb728e9b2941d20003cb21e765e6"
+    }
+  ],
+  "fixed": {
+    "jars": [
+      {
+        "coords": "com.fasterxml.jackson.dataformat:jackson-dataformat-cbor:2.11.4",
+        "sha256": "5ee11635882a69c03da5da0cff53e977240186ed3fc8a75d4f056ff6232a06d8"
+      },
+      {
+        "coords": "com.fasterxml.jackson.core:jackson-core:2.11.4",
+        "sha256": "e1dda269f16f3be00578f3a46c754f098245c7a480b86e07030b6ee7087ee1f1"
+      },
+      {
+        "coords": "com.fasterxml.jackson.core:jackson-databind:2.11.4",
+        "sha256": "dc64fa3907bd299f29ad6116169e583333d04404b23a0f81ed679afa8e2a2ee8"
+      },
+      {
+        "coords": "com.fasterxml.jackson.core:jackson-annotations:2.11.4",
+        "sha256": "2ab76f64048673675f26ddd1008a32889855d8a126273edae2aeee516785a1ec"
+      }
+    ],
+    "drop": "^(jackson\\-dataformat\\-cbor|jackson\\-core|jackson\\-databind|jackson\\-annotations)-[0-9]"
+  },
+  "tools": "JDK 17 (javac, jar), curl",
+  "notes": "Only the cbor module: cbor/src/main/java of the vulnerable commit (2.11.4-SNAPSHOT, the parent of fix de072d3) compiled with javac -source 8 -target 8 against jackson-core, jackson-databind and jackson-annotations 2.10.2 (Maven Central, the versions the fixture pom uses) and packed with jar, as the evaluation's jar was made; the project's Maven build is not used. The tree has PackageVersion.java.in, which the Maven build turns into PackageVersion.java; the commands write the standard generated file for 2.11.4-SNAPSHOT (without the template's comment, as the evaluation's build did, so that the class is identical). Fixed: jackson-dataformat-cbor 2.11.4, the first release with de072d3, with jackson-core, jackson-databind and jackson-annotations 2.11.4."
+}

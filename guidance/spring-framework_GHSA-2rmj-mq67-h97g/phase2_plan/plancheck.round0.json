@@ -1,0 +1,272 @@
+{
+  "tool": "checkpath",
+  "version": "1.0.0",
+  "source_root": "projects/spring-framework_GHSA-2rmj-mq67-h97g",
+  "index": {
+    "files_parsed": 4231,
+    "files_failed": 0,
+    "methods": 39753,
+    "harness_fuzz_methods": [
+      "HttpHeadersFuzzTest.fuzzHttpHeadersGetIfNoneMatch(InputStream)",
+      "HttpHeadersFuzzTest.fuzzHttpHeadersGetAcceptLanguage(InputStream)"
+    ],
+    "index_seconds": 7.6,
+    "max_gap": 2,
+    "sink_depth": 6,
+    "symbol_resolution": true
+  },
+  "ok": true,
+  "targets": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "entrypoint": "HttpHeadersFuzzTest.fuzzHttpHeadersGetIfNoneMatch(InputStream) → HttpHeaders.getIfNoneMatch() → HttpHeaders.getETagValuesAsList(String) → java.util.regex.Matcher.find()",
+      "source_path": "spring-web/src/main/java/org/springframework/http/HttpHeaders.java",
+      "start_ok": true,
+      "harness_entry": "com.fuzzing.httpheaders.HttpHeadersFuzzTest#fuzzHttpHeadersGetIfNoneMatch",
+      "end_ok": true,
+      "end": {
+        "sink_file": "spring-web/src/main/java/org/springframework/http/HttpHeaders.java",
+        "ok": true,
+        "evidence": "hop 3 HttpHeaders#getETagValuesAsList(String) is declared in spring-web/src/main/java/org/springframework/http/HttpHeaders.java:1576",
+        "level": "method",
+        "sink_method": "java.util.regex.Matcher#find",
+        "sink_evidence": "hop 4 names java.util.regex.Matcher#find (outside the source tree)"
+      },
+      "hops": [
+        {
+          "index": 1,
+          "raw": "HttpHeadersFuzzTest.fuzzHttpHeadersGetIfNoneMatch(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "com.fuzzing.httpheaders.HttpHeadersFuzzTest#fuzzHttpHeadersGetIfNoneMatch(InputStream)",
+              "location": "harness/src/test/java/com/fuzzing/httpheaders/HttpHeadersFuzzTest.java:31"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "raw": "HttpHeaders.getIfNoneMatch()",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.springframework.http.HttpHeaders#getIfNoneMatch()",
+              "location": "spring-web/src/main/java/org/springframework/http/HttpHeaders.java:1231"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "raw": "HttpHeaders.getETagValuesAsList(String)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.springframework.http.HttpHeaders#getETagValuesAsList(String)",
+              "location": "spring-web/src/main/java/org/springframework/http/HttpHeaders.java:1576"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "raw": "java.util.regex.Matcher.find()",
+          "status": "EXTERNAL",
+          "candidates": [],
+          "external": [
+            "java.util.regex.Matcher.find()"
+          ]
+        }
+      ],
+      "path_signature": [
+        "com.fuzzing.httpheaders.HttpHeadersFuzzTest#fuzzHttpHeadersGetIfNoneMatch(InputStream)",
+        "org.springframework.http.HttpHeaders#getIfNoneMatch()",
+        "org.springframework.http.HttpHeaders#getETagValuesAsList(String)",
+        "external:find"
+      ],
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "written": "HttpHeadersFuzzTest.fuzzHttpHeadersGetIfNoneMatch(InputStream)",
+          "provenance": "agent",
+          "method": "com.fuzzing.httpheaders.HttpHeadersFuzzTest#fuzzHttpHeadersGetIfNoneMatch(InputStream)",
+          "location": "harness/src/test/java/com/fuzzing/httpheaders/HttpHeadersFuzzTest.java:31"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "HttpHeadersFuzzTest#fuzzHttpHeadersGetIfNoneMatch(InputStream) calls HttpHeaders#getIfNoneMatch() at harness/src/test/java/com/fuzzing/httpheaders/HttpHeadersFuzzTest.java:36 (resolved)",
+          "site": "harness/src/test/java/com/fuzzing/httpheaders/HttpHeadersFuzzTest.java:36"
+        },
+        {
+          "kind": "hop",
+          "written": "HttpHeaders.getIfNoneMatch()",
+          "provenance": "agent",
+          "method": "org.springframework.http.HttpHeaders#getIfNoneMatch()",
+          "location": "spring-web/src/main/java/org/springframework/http/HttpHeaders.java:1231"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "HttpHeaders#getIfNoneMatch() calls HttpHeaders#getETagValuesAsList(String) at spring-web/src/main/java/org/springframework/http/HttpHeaders.java:1232 (resolved)",
+          "site": "spring-web/src/main/java/org/springframework/http/HttpHeaders.java:1232"
+        },
+        {
+          "kind": "hop",
+          "written": "HttpHeaders.getETagValuesAsList(String)",
+          "provenance": "agent",
+          "method": "org.springframework.http.HttpHeaders#getETagValuesAsList(String)",
+          "location": "spring-web/src/main/java/org/springframework/http/HttpHeaders.java:1576"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "HttpHeaders#getETagValuesAsList(String) calls java.util.regex.Matcher.find() at spring-web/src/main/java/org/springframework/http/HttpHeaders.java:1583",
+          "site": "spring-web/src/main/java/org/springframework/http/HttpHeaders.java:1583"
+        },
+        {
+          "kind": "hop",
+          "written": "java.util.regex.Matcher.find()",
+          "provenance": "agent",
+          "method": "java.util.regex.Matcher.find()",
+          "location": "outside the source tree"
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "status": "CALL",
+          "evidence": "HttpHeadersFuzzTest#fuzzHttpHeadersGetIfNoneMatch(InputStream) calls HttpHeaders#getIfNoneMatch() at harness/src/test/java/com/fuzzing/httpheaders/HttpHeadersFuzzTest.java:36 (resolved)"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "status": "CALL",
+          "evidence": "HttpHeaders#getIfNoneMatch() calls HttpHeaders#getETagValuesAsList(String) at spring-web/src/main/java/org/springframework/http/HttpHeaders.java:1232 (resolved)"
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "status": "CALL",
+          "evidence": "HttpHeaders#getETagValuesAsList(String) calls java.util.regex.Matcher.find() at spring-web/src/main/java/org/springframework/http/HttpHeaders.java:1583"
+        }
+      ],
+      "diagnostics": [],
+      "warnings": [
+        "Hop 4: `java.util.regex.Matcher.find()` belongs to JDK class java.util.regex.Matcher; its body is not analyzed"
+      ]
+    }
+  ],
+  "plan_ok": true,
+  "plans": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "signals": [
+        {
+          "name": "regexSteps",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "java.util.regex.Pattern$Node#match",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "java.util.regex.Pattern$Curly#match",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "java.util.regex.Pattern$GroupCurly#match",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "java.util.regex.Pattern$CharProperty#match",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "java.util.regex.Pattern$BmpCharProperty#match",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "java.util.regex.Pattern$Slice#match",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "java.util.regex.Pattern$Start#match",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "java.util.regex.Pattern$Begin#match",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "java.util.regex.Pattern$End#match",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "java.util.regex.Pattern$Dollar#match",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "java.util.regex.Pattern$LastNode#match",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "java.util.regex.Pattern$Branch#match",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "java.util.regex.Pattern$BranchConn#match",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "java.util.regex.Pattern$GroupHead#match",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "java.util.regex.Pattern$GroupTail#match",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "java.util.regex.Pattern$Ques#match",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "java.util.regex.Pattern$Loop#match",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "java.util.regex.Pattern$Prolog#match",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "java.util.regex.Pattern$LazyLoop#match",
+              "status": "EXTERNAL",
+              "relation": "library"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    }
+  ]
+}

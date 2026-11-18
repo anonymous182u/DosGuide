@@ -1,0 +1,130 @@
+{
+  "ordered_targets": [
+    {
+      "slot": 1,
+      "id": "V1",
+      "name": "Unbounded CachedOutputStream.toString() in cleaner log messages",
+      "entrypoint": "CachedOutputStreamFuzzTest.fuzzCachedOutputStreamCleanerForceClean(InputStream) → DelayedCachedOutputStreamCleaner.forceClean() → DelayedCleanerImpl.clean(Collection) → CachedOutputStream.toString() → CachedOutputStream.writeCacheTo(StringBuilder, String)",
+      "source_path": "core/src/main/java/org/apache/cxf/io/CachedOutputStream.java",
+      "sink": "CachedOutputStream#writeCacheTo(StringBuilder, String)",
+      "mechanism": "When content exceeds the 1024-byte spill threshold, CachedOutputStream spills to a temp file and registers with the cleaner. forceClean() logs a warning that string-concatenates the COS object, triggering toString() which reads the entire file content into a StringBuilder without any size limit. The resulting log message grows linearly with input size.",
+      "resource": "heap memory: StringBuilder char[] allocation grows linearly with content bytes (one char per byte for ASCII content)",
+      "failure_mode": "out_of_memory",
+      "scale": "Measured: allocation is flat at 204 KB for inputs ≤1024 bytes (below spill threshold). At 2048 bytes, allocation jumps to 436 KB (fixed overhead ~200 KB for temp file/streams + ~4 bytes per content byte for StringBuilder/String duplication in toString()). Extrapolating to 10240-byte max input: ~500 KB total allocation, ~4 MB peak heap — far below the 1 GB heap limit, so actual OutOfMemoryError is unreachable. The concrete failure is the harness's AssertionError (undeclared throwable): any input > 1024 bytes triggers file spill, and the cleaner's log message (85 + content_length chars) always exceeds the 1024-char assertion threshold. Minimum triggering input: 1025 raw bytes.",
+      "input_bytes": 1025,
+      "cwe": "CWE-400",
+      "checkpath_status": "PASS",
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "method": "org.apache.cxf.io.fuzz.CachedOutputStreamFuzzTest#fuzzCachedOutputStreamCleanerForceClean(InputStream)",
+          "location": "harness/src/test/java/org/apache/cxf/io/fuzz/CachedOutputStreamFuzzTest.java:85"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "harness/src/test/java/org/apache/cxf/io/fuzz/CachedOutputStreamFuzzTest.java:94"
+        },
+        {
+          "kind": "hop",
+          "method": "org.apache.cxf.io.DelayedCachedOutputStreamCleaner#forceClean()",
+          "location": "core/src/main/java/org/apache/cxf/io/DelayedCachedOutputStreamCleaner.java:253"
+        },
+        {
+          "kind": "connection",
+          "type": "INDIRECT",
+          "evidence": "1 omitted call(s)"
+        },
+        {
+          "kind": "hop",
+          "provenance": "checkpath (omitted call)",
+          "method": "org.apache.cxf.io.DelayedCachedOutputStreamCleaner.DelayedCleanerImpl#forceClean()",
+          "location": "core/src/main/java/org/apache/cxf/io/DelayedCachedOutputStreamCleaner.java:106"
+        },
+        {
+          "kind": "hop",
+          "method": "org.apache.cxf.io.DelayedCachedOutputStreamCleaner.DelayedCleanerImpl#clean(Collection)",
+          "location": "core/src/main/java/org/apache/cxf/io/DelayedCachedOutputStreamCleaner.java:116"
+        },
+        {
+          "kind": "connection",
+          "type": "INDIRECT",
+          "evidence": "1 omitted call(s)"
+        },
+        {
+          "kind": "hop",
+          "provenance": "checkpath (omitted call)",
+          "method": "org.apache.cxf.transport.jms.MessageStreamUtil.SendingWriter#close()",
+          "location": "rt/transports/jms/src/main/java/org/apache/cxf/transport/jms/MessageStreamUtil.java:64"
+        },
+        {
+          "kind": "hop",
+          "method": "org.apache.cxf.io.CachedOutputStream#toString()",
+          "location": "core/src/main/java/org/apache/cxf/io/CachedOutputStream.java:423"
+        },
+        {
+          "kind": "connection",
+          "type": "DATAFLOW",
+          "evidence": "CachedOutputStream#toString() (core/src/main/java/org/apache/cxf/io/CachedOutputStream.java:423) writes field `skipFlushingFlowThroughStream`, which CachedOutputStream#writeCacheTo(StringBuilder,String) (core/src/main/java/org/apache/cxf/io/CachedOutputStream.java:385) reads (through helper calls)",
+          "site": "core/src/main/java/org/apache/cxf/io/CachedOutputStream.java:423"
+        },
+        {
+          "kind": "hop",
+          "method": "org.apache.cxf.io.CachedOutputStream#writeCacheTo(StringBuilder,String)",
+          "location": "core/src/main/java/org/apache/cxf/io/CachedOutputStream.java:385"
+        }
+      ],
+      "harness_entry": "org.apache.cxf.io.fuzz.CachedOutputStreamFuzzTest#fuzzCachedOutputStreamCleanerForceClean",
+      "scale_measurement": [
+        {
+          "value": 64,
+          "input_bytes": 64,
+          "outcome": "completed",
+          "cpu_ms": 4.312145,
+          "allocated_bytes": 208912,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "value": 128,
+          "input_bytes": 128,
+          "outcome": "completed",
+          "cpu_ms": 4.50345,
+          "allocated_bytes": 208912,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "value": 256,
+          "input_bytes": 256,
+          "outcome": "completed",
+          "cpu_ms": 3.140211,
+          "allocated_bytes": 208944,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "value": 512,
+          "input_bytes": 512,
+          "outcome": "completed",
+          "cpu_ms": 4.195669,
+          "allocated_bytes": 208944,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "value": 1024,
+          "input_bytes": 1024,
+          "outcome": "completed",
+          "cpu_ms": 8.104342,
+          "allocated_bytes": 208856,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "value": 2048,
+          "input_bytes": 2048,
+          "outcome": "completed",
+          "cpu_ms": 9.697557,
+          "allocated_bytes": 446848,
+          "peak_heap_bytes": 2097152
+        }
+      ]
+    }
+  ]
+}

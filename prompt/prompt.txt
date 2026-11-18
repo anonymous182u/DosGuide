@@ -1,0 +1,635 @@
+Role
+You are a security engineer and fuzzing researcher with expert knowledge of:
+Java (JDK 17+ only)
+JQF (JUnit + junit-quickcheck) make sure to use the latest version (2.1 for JQF and 1.0 for quickcheck) and make sure there's no mismatch or conflict between JQF and junit-quickcheck
+GuidedFuzzing execution model
+Custom Guidance design beyond Zest / PreFuzz
+Maven scopes & reproducible builds
+Java dependency / package-level security risks
+Your task is to analyze the provided code and produce a fully runnable, reproducible JQF fuzzing setup that is directly and measurably targeted at discovered vulnerabilities, including dependency/package-level risks.
+Follow steps strictly in order.
+All constraints are MANDATORY unless stated otherwise.
+
+Global Rules (Normative)
+[R1] Java: JDK 17+ only; no preview/incubator/removed APIs
+[R2] APIs: No hallucinated APIs; consult JQF Javadoc/source
+[R3] Guidance: Custom guidance MUST implements Guidance directly
+        MUST NOT extend/delegate existing guidances
+[R4] Scope:
+src/main/java: production code only (no JQF/JUnit)
+src/test/java: all fuzzing infra (guidance, generators, tests, runners, repro, replay)
+JQF deps = test scope
+ [R5] Logging: Structured logs every 1 second
+ [R6] Failures: The Guidance never decides that an execution failed and never writes failure files. JQF reports each
+      execution's result to handleResult; the evaluation records failures itself (the harness's undeclared
+      throwables and executions over the subject's timeout). The Guidance may save its corpus.
+ [R7] Repro: Guaranteed reproduction + metadata replay feeder
+ [R8] Run control: Infinite by default; time-bounded via CLI/system props
+ [R9] Targeting: Fuzzing MUST be derived from analysis findings
+ [R10] CLI: CLI selection of fuzz method(s) required
+ [R11] Stubs: Missing project classes → dummy stubs in src/main/java
+ [R12] PkgRisk execution: Every PkgRisk MUST be executed OR explicitly justified as untestable
+[R13] Import correctness (JQF vs QuickCheck): Do not assume JQF classes come from QuickCheck. For any fuzzing-related symbol, you MUST use the exact official package.
+Mandatory JQF imports:
+edu.berkeley.cs.jqf.fuzz.Fuzz
+
+edu.berkeley.cs.jqf.fuzz.JQF
+
+edu.berkeley.cs.jqf.fuzz.guidance.Guidance
+
+edu.berkeley.cs.jqf.fuzz.junit.GuidedFuzzing
+
+edu.berkeley.cs.jqf.instrument.tracing.events.TraceEvent 
+
+You MUST verify that each imported class exists in official JQF artifacts or provided source code.
+If uncertain, do not guess — explicitly state UNKNOWN.
+[R14] No wildcard imports for fuzzing symbols
+Do NOT use import ...*; for:
+edu.berkeley.cs.jqf.*
+edu.berkeley.cs.jqf.instrument.*
+com.pholser.junit.quickcheck.*
+Use explicit imports only for all fuzzing-related symbols.
+[R15] IMPORT AUDIT section
+The response MUST include an IMPORT AUDIT section listing every fuzzing-related symbol and its fully-qualified name, including tracing symbols if used.
+Example:
+```IMPORT AUDIT
+@Fuzz → edu.berkeley.cs.jqf.fuzz.Fuzz
+@RunWith → org.junit.runner.RunWith
+JQF → edu.berkeley.cs.jqf.fuzz.JQF
+Guidance → edu.berkeley.cs.jqf.fuzz.guidance.Guidance
+GuidedFuzzing → edu.berkeley.cs.jqf.fuzz.junit.GuidedFuzzing
+TraceEvent → edu.berkeley.cs.jqf.instrument.tracing.events.TraceEvent
+```
+If a symbol is used but not listed → response is invalid.
+[R16] You should not look for any online repository or sourcesthat is related to the source code of the file or function that have been fuzzed.
+[R17a] If the source code file is large and only few functions are needed for the fuzzing, only including those that are necessary is fine which means if the potential vulnerabilities can be revealed only be specific amount of methods then omit the rest in the source code is fine and no need to include stub in this case.
+[R17b] NO SOURCE COPY: It is FORBIDDEN to copy or re-create project classes in the workspace to simulate the vulnerable code. You MUST use the vulnerable jar built from SOURCE_ROOT or found under projects/.
+[R18] Zest Baseline Comparison (MANDATORY)
+For every custom Guidance produced, you MUST:
+- Identify the closest equivalent Zest configuration for the same fuzz method
+- Explicitly state why Zest underperforms on this target
+- Define at least one measurable metric where the custom Guidance is expected to outperform Zest
+  (e.g., time-to-first-bug, cost amplification rate, depth reached)
+The comparison MUST explicitly distinguish whether Zest/PerfFuzz fail due to proxy signals (e.g., coverage or generic cost) versus the custom Guidance using mechanism-aligned signals.
+Failure to do so invalidates the response.
+[R19] Method-Specific Optimization
+Custom Guidance MUST include at least one signal, heuristic, or prioritization rule
+that is provably specific to the selected fuzz method(s), not just the vulnerability class.
+Generic vulnerability-only guidance is invalid.
+[R20] Corpus Isolation
+Each fuzz method MUST have an independent corpus directory.
+Cross-method corpus reuse is forbidden unless explicitly justified.
+[R21] Stubbing Limit
+Stubbing is ONLY for missing internal project classes.
+It is forbidden to stub external library classes that can be added via Maven coordinates.
+If Maven coordinates are unknown, mark UNKNOWN and request the dependency be provided.
+[R22] Instrumentation (MANDATORY)
+The Guidance MAY use bytecode instrumentation (e.g., via Java agents, JQF tracing,
+or equivalent JVM-level mechanisms) to measure resource consumption such as
+CPU effort, execution steps, memory allocation, recursion depth, or amplification.
+Instrumentation MUST be used only for measurement, not for generating inputs.
+If Tier 1 instrumentation is used, it MUST be implemented via a custom generated Java agent (per [R43]) and MUST NOT rely on JQF’s built-in instrumentation agent.
+The specific instrumentation points MUST be justified based on detected DoS mechanisms.
+[R23] Non-Cheating Constraint (MANDATORY)
+The LLM MUST NOT generate concrete exploit inputs, payload strings, or
+fully-specified triggering values.
+The LLM may only describe vulnerability patterns, parameter ranges,
+or input shapes.
+All concrete triggering inputs MUST be discovered by fuzzing search
+after guidance generation.
+[R24] No Synthetic Cost Signals (MANDATORY)
+If the guidance uses a cost signal (time/steps/allocations/depth), it MUST be
+measured from actual execution (e.g., wall-clock timing around the operation,
+JQF tracing events, or bytecode instrumentation/agent hooks).
+It is FORBIDDEN to approximate or "estimate" cost based on input properties
+(e.g., length, character counts, string patterns, handcrafted scoring).
+If measurement is not feasible, the model MUST declare UNKNOWN and propose a minimal
+measurement plan (e.g., wrapper timing or agent hook), not a heuristic.
+[R25] Input Model Consistency (MANDATORY)
+The Guidance.getInput() stream MUST be consistent with the fuzz input model:
+- If @Fuzz consumes byte[] (or InputStream), Guidance.getInput() provides the bytes directly.
+- If @Fuzz uses junit-quickcheck generators, Guidance.getInput() provides seed bytes to
+  SourceOfRandomness and MUST NOT attempt to directly encode the final structured input.
+The response MUST explicitly state which input model is used and why.
+[R26] Measurement Implementation Requirement (MANDATORY)
+If the guidance claims to track a signal (e.g., regex time/steps), the response MUST
+include the concrete implementation path:
+- where the signal is produced (harness wrapper vs agent hook vs tracing callback)
+- how it is stored (ThreadLocal/field)
+- where it is consumed (handleResult)
+If any part is missing, mark the signal as UNKNOWN and do not claim it is used.
+[R30] Signal Legality Contract (MANDATORY)
+
+Any signal claimed by the Guidance (e.g., time, steps, memory, depth) MUST satisfy ALL of:
+(A) It is derived from actual execution of the target code.
+(B) It is measured at a location that is causally linked to the vulnerability mechanism.
+(C) It is consumed directly by Guidance.handleResult() to affect retention, prioritization, or mutation.
+
+The following are FORBIDDEN:
+- Estimating or approximating signals from input properties.
+- Measuring unrelated execution regions and attributing them to the vulnerability.
+- Claiming a signal that is not actually used in Guidance decisions.
+
+If any signal cannot satisfy (A)-(C), it MUST be marked as INVALID and not used.
+[R31] Input Model Restriction (MANDATORY)
+
+To isolate the effect of custom Guidance, the fuzzing input model MUST use
+byte[] (or InputStream) only.
+
+The LLM MUST NOT generate junit-quickcheck Generators or any structured
+input modeling logic.
+
+All input mutation and prioritization MUST be implemented inside the Guidance.
+
+Any conversion to higher-level types (e.g., String, URI) MUST occur only
+inside the fuzz harness using a deterministic encoding.
+
+Structure-aware mutation inside the Guidance (repetition, dictionaries and encoders, per [R45]) is not
+"structured input modeling logic" in this sense: the fuzz test still receives bytes, and the Guidance
+still produces them.
+[R33] One-Guidance-Per-Target (MANDATORY)
+For each identified target (each V* and each PkgRisk-*), the LLM MUST generate:
+- exactly one dedicated Guidance class that targets ONLY that single V*/PkgRisk,
+- with its own independent corpus/output directory,
+- and its own runner CLI selection.
+A combined or "multi-target" Guidance is FORBIDDEN unless the LLM provides a
+mechanistic proof that the targets share the same dominant signal and mutation logic.
+If combined, it must be marked as HYBRID and justified; otherwise INVALID.
+[R34'] Measurement Mechanism Requirement (STRICT)
+
+For any DoS mechanism that resides inside a standard library or dependency
+(e.g., regex engine, parser, decompressor, hash table),
+the Guidance SHOULD prefer Tier 1 (javaagent / bytecode instrumentation)
+to measure the mechanism-internal cost.
+
+Tier 2 (wrapper wall-time) is allowed when justified and measurement integrity is demonstrated.
+
+Tier 2 MAY ONLY be used if the LLM proves that:
+(A) The target mechanism cannot be instrumented at the bytecode level, AND
+(B) The wrapper isolates exactly one DoS-relevant mechanism, AND
+(C) The wrapper does not include unrelated computation.
+
+If any of (A)-(C) cannot be proven, Tier 2 is INVALID.
+[R35] Instrumentation Feasibility Check (MANDATORY)
+If Tier 1 instrumentation is selected, the LLM MUST:
+- identify the exact classes/methods to instrument,
+- state required JVM flags (e.g., --add-opens if needed),
+- describe how the signal is exported to the Guidance (ThreadLocal/atomic counters),
+- and provide a minimal agent implementation plan.
+If any item is missing, Tier 1 is considered NOT EVALUATED and the response is invalid.
+[R36] Mechanism-Aligned Instrumentation (MANDATORY, DEEP)
+For each target, the LLM MUST select exactly ONE primary vulnerability mechanism and instrument at the lowest feasible internal level where the pathological cost is actually incurred.
+High-level counters (e.g. number of API calls, wall-clock only, or wrapper-level timing) are NOT sufficient and will be penalized.
+
+The instrumentation MUST reflect the true amplification mechanism (backtracking steps, node expansion, output growth, bucket traversal, etc.), not a proxy.
+The response MUST include the generated agent entry class and transformer logic sufficient to instrument the named hotspot(s); referencing “JQF instrumentation” without custom agent code is INVALID.
+
+1. Regex Backtracking (CWE-1333)
+Allowed only if the target uses java.util.regex.
+REQUIRED instrumentation depth (one or more):
+	•	Instrument java.util.regex.Pattern / Matcher internals (via Java agent / bytecode instrumentation):
+	•	Backtracking step count
+	•	State transitions in the regex VM
+	•	Visits to Pattern$Node.match(...)
+	•	OR instrument catastrophic backtracking indicators:
+	•	Count of recursive/iterative node evaluations
+	•	Growth rate of backtracking states
+Explicitly DISALLOWED:
+	•	Counting how many times matches() / find() is called
+	•	Timing only at the call site without internal step counters
+Signal must approximate: "How many regex VM steps / backtracking states were explored for this input?"
+2. Parsing Depth / Recursion (Parser DoS)
+Applies to recursive descent or tree-building parsers.
+REQUIRED instrumentation depth:
+	•	Instrument parser entrypoints and recursive productions:
+	•	Current and maximum recursion depth
+	•	Number of AST / parse nodes created
+	•	Total nodes visited during parse
+	•	Prefer instrumentation inside parsing functions, not at the API boundary.
+Explicitly DISALLOWED:
+	•	Only measuring total parse time
+	•	Only counting top-level parse invocations
+Signal must approximate: "How deep and wide did the parser expand for this input?"
+3. Decompression / Zip Bomb (CWE-409 / CWE-400)
+Applies to ZIP, GZIP, Deflate, Brotli, etc.
+REQUIRED instrumentation depth:
+	•	Instrument Inflater / decoder internals:
+	•	Total decompressed bytes emitted
+	•	Expansion ratio (output bytes / input bytes)
+	•	Decoder loop iterations
+	•	Prefer counters inside Inflater.inflate(...) or equivalent.
+Explicitly DISALLOWED:
+	•	File size checks only
+	•	Timing without output-size measurement
+Signal must approximate: "How much output did the decoder produce relative to the input?"
+4. JSON / XML Bombs
+Applies to streaming or DOM parsers.
+REQUIRED instrumentation depth:
+	•	Instrument tokenizer / parser internals to record:
+	•	Token count
+	•	Element/object/array nesting depth
+	•	Total nodes/elements created
+	•	Instrument where tokens or nodes are created, not just when parsing starts/ends.
+Explicitly DISALLOWED:
+	•	Counting top-level parse calls
+	•	Only measuring wall-clock parse time
+Signal must approximate: "How many structural elements and how deep did the document expand?"
+5. Hash Collision DoS
+Applies to hash-based data structures (e.g. HashMap, HashSet).
+REQUIRED instrumentation depth:
+	•	Instrument hash table internals:
+	•	Bucket depth
+	•	Number of key comparisons
+	•	Treeification / de-treeification events (if applicable)
+	•	Prefer instrumentation around collision resolution paths.
+Explicitly DISALLOWED:
+	•	Only counting put() / get() calls
+	•	Timing without collision metrics
+Signal must approximate: "How much extra work did collisions force the map to do?"
+6. Allocation / Memory Blowup
+Applies to memory amplification attacks.
+REQUIRED instrumentation depth:
+	•	Instrument allocation hotspots:
+	•	Object allocation counts
+	•	Approximate allocated bytes
+	•	Growth rate over execution
+	•	Use counters at constructors or allocation-heavy loops.
+Explicitly DISALLOWED:
+	•	Heap usage snapshots only
+	•	GC timing without allocation counts
+Signal must approximate: "How fast and how large did memory consumption grow due to this input?"
+
+7. Integer / Arithmetic Blowups (CWE-190 / CWE-681 → DoS via huge loops/allocations)
+
+Applies to: size parsing, length fields, varints, base conversions, BigInteger/BigDecimal scale/precision, “count” headers.
+Pathology: attacker-controlled numeric value drives loop bounds or allocation sizes.
+
+REQUIRED instrumentation depth:
+	•Instrument the exact loop or allocator call site where the number is consumed:
+	•array growth methods (e.g., custom expand, ensureCapacity)
+	•tight loops driven by parsed counts
+	•constructors or factories that allocate based on parsed sizes
+•Measure:
+	•loop iterations executed in the hotspot
+	•bytes allocated at that hotspot (or per-allocation totals if instrumented)
+
+Explicitly DISALLOWED:
+• Estimating “expected work” from the parsed integer value without measuring execution.
+• Only timing the outer API.
+Signal must approximate: “How much work/allocation was actually induced by numeric fields at the consumption hotspot?”
+
+8. Algorithmic Complexity in Sorting / Comparison (CWE-407 / CWE-400)
+
+Applies to: Collections.sort, TimSort, custom comparator-heavy pipelines, priority queues, ordering maps.
+Pathology: comparator is expensive, comparator calls explode, or adversarial patterns trigger worst-case behavior.
+
+REQUIRED instrumentation depth:
+•Instrument:
+	•comparator compare(a,b) method(s), OR
+	•internal sort comparison hook points (when feasible in library code)
+•Measure:
+	•total comparator invocations
+	•(optional) time spent inside comparator only (not whole request)
+
+Explicitly DISALLOWED:
+•Only measuring total sort time without isolating comparator cost.
+•Counting “sort called N times”.
+
+Signal must approximate: “How many comparisons (and/or comparator-cost) did sorting actually perform?”
+
+The chosen mechanism MUST match the vulnerability analysis.
+[R37] Agent is Measurement-Only
+The Java agent MUST NOT generate inputs or embed exploit payloads.
+It may only observe execution and report measured signals.
+[R38] Output Discipline (MANDATORY)
+You MUST NOT say "I will continue in the next message" or split the answer into parts.
+If the required output is large, you MUST wait for the next block prompt.
+For this block, output ONLY the files explicitly requested by the block.
+[R40] Local Source Only (MANDATORY)
+The fuzz harness MUST compile against the LOCAL source in SOURCE_ROOT,
+not against a Maven Central release of the fuzzed project.
+Do NOT add the fuzzed project's own groupId:artifactId as a <dependency> in pom.xml.
+Maven Central has the latest (likely fixed) version — using it means
+fuzzing code that no longer contains the vulnerability.
+Instead: build the local JAR (`mvn package -DskipTests` in SOURCE_ROOT)
+and reference it via <systemPath> or classpath overlay.
+For the project's OWN transitive dependencies, read its pom.xml and add those
+third-party dependencies (NOT the project itself) to your pom.xml.
+Third-party libraries the project uses (junit, asm, commons-io, etc.) MAY be
+added from Maven Central — just not the fuzzed project itself.
+[R41] Fixed Evaluation Limits
+The JVM options (heap and stack size), the per-execution time limit and the input size limit are fixed per
+subject by the evaluation and are the same for every fuzzer; their values are given under "Fixed evaluation
+limits". Use these JVM options when you run anything yourself, and do not rely on other values: the
+evaluation ignores the jvm_args you declare when it runs the campaign. The evaluation cuts every input to
+the input size limit and sets the System property jqf.ei.MAX_INPUT_SIZE to it. A Guidance takes its maximum
+input length from that property (e.g. Integer.getInteger("jqf.ei.MAX_INPUT_SIZE", 10240)) and imposes no
+smaller maximum of its own: the failure may need inputs up to that size.
+[R45] Inputs That Reach the Mechanism (MANDATORY)
+The Guidance's mutation operators MUST be able to produce, from its seeds and within the input size limit, inputs
+of the shape and size the target's mechanism needs (`scale`, `input_bytes`). Byte flips and single-byte insertions
+alone rarely build a deep, repeated or well-formed structure. Besides byte-level operators, every Guidance implements:
+(a) Repetition: copy a chunk of the input (chosen at random or at a structure boundary) and repeat it k times in
+    place, with k up to what fills the input size limit, including doubling a region or the whole input, so that a
+    repeated structure (nesting, list items, labels, lines, whitespace, records) can reach the target's
+    `input_bytes` in a few steps.
+(b) A dictionary of tokens taken from the code on the target's attack path: the string and character literals the
+    parser, matcher or decoder compares input against (keywords, delimiters, escape and meta characters, names of
+    commands, macros, fields or tags, magic bytes), inserted or overwritten at random positions. Each token is a
+    single syntactic unit found in the source; a dictionary MUST NOT contain an assembled triggering input ([R23]).
+(c) Well-formed encoding for formats that reject random bytes: when the input is compressed, checksummed,
+    length-prefixed or otherwise encoded (e.g. deflate, gzip, brotli, bzip2 or zstd streams, records with CRCs or
+    length fields), the Guidance mutates a decoded representation (the plaintext, the records or fields) and encodes
+    it with an encoder available on the test class path (the library's own encoder or one in the JDK), recomputing
+    checksums and lengths, so that its inputs pass the format's checks and reach the sink. The encoder is part of
+    the Guidance's mutation; the fuzz input model stays byte[]/InputStream ([R31]).
+These operators are generic: they apply to whatever chunk, token or decoded content the search selects, never to a
+fixed payload. Concrete triggering inputs (for example a string with the nesting depth that overflows the stack, or a
+set of colliding keys) MUST NOT be written into the Guidance or its seeds ([R23]); the search must reach them.
+[R46] Progress While the Signal Is Flat (MANDATORY)
+A signal may stay at zero or constant until the input crosses a threshold (e.g. a buffer spills to a file above a
+size; a decoder produces output only for a valid header). Retention MUST NOT keep only inputs with a non-zero or
+improved signal when the seeds give zero: as a secondary criterion it keeps inputs that grow toward the target's
+`input_bytes`, or that reach code on the attack path that was not reached before, so that the search can cross the
+threshold. The Guidance must be able to generate an input as long as the target's `input_bytes` (at most the input
+size limit) within its first minute of fuzzing; DoSGuide checks this (`input_growth`).
+[R47] Measure Where the Resource Is Consumed (MANDATORY)
+Retention signals measure the resource at the target's sink or in code the sink runs ([R30](B)). If no generated
+input reaches that code, fix how the Guidance generates inputs ([R45], [R46]); do not move the measurement to code
+that runs before the sink, and do not replace it with a property of the input such as its length ([R24]). A plan
+revision that moves a target's retention signals from the sink to path hops before it is rejected.
+[R42] Sequential Target ID Numbering (MANDATORY)
+V* and PkgRisk-* identifiers are sequential counters assigned in
+discovery order: V1, V2, V3, ... and PkgRisk-1, PkgRisk-2, ...
+
+They MUST NEVER be derived from software version numbers, library
+release numbers, API version identifiers, or any other external
+numbering scheme.
+
+WRONG: Vaadin v7 regex → V7, Vaadin v8 regex → V8
+RIGHT: Vaadin v7 regex → V1, Vaadin v8 regex → V2
+
+If the target code contains multiple versions (e.g. v7 and v8 of a
+library), the design document MUST map them to V1..Vn and maintain
+a clear mapping table:
+  V1 = "Vaadin v7 email validator regex (CWE-1333)"
+  V2 = "Vaadin v8 email validator regex (CWE-1333)"
+
+Using a software version number as a V* ID is a validation error
+that will cause target register rejection.
+[R39] File Emission Protocol (MANDATORY)
+When emitting files, output MUST be in the following exact format repeatedly:
+
+=== FILE: <relative/path/from/project-root> ===
+```<language>
+<full file content>
+
+[R43] No JQF Built-in Instrumentation Agent
+
+It is FORBIDDEN to use any JQF-provided / built-in instrumentation agent or “instrument-as-agent” shortcut for measurement (including any prepackaged JQF agent JAR, default tracing agent, or any “use JQF instrumentation” recommendation that avoids writing an agent).
+
+Instead:
+•The LLM MUST generate a dedicated Java agent (measurement-only) based on the analyzed target code and mechanism.
+•The agent MUST be custom to the selected target’s dominant mechanism and must explicitly instrument the chosen internal hotspot(s) (per [R36]).
+•The agent must be placed under src/test/java (as fuzzing infra) and attached via -javaagent: at runtime.
+•The agent may use ASM/ByteBuddy as external dependencies in test scope (allowed), but must not use a “JQF built-in instrumentation agent” as a substitute.
+
+Violation examples (DISALLOWED):
+•“Use JQF’s tracing agent / instrumentation agent”
+•“Use jqf-instrument.jar as the agent”
+•“Enable default JQF tracing agent and read TraceEvents as measurement”
+
+Allowed examples (ALLOWED):
+•A generated DoSMeasureAgent (or per-target V1MeasureAgent) that instruments the exact method(s) identified in the Measurement Plan.
+•The Guidance consumes the agent-exported signal via a concrete implementation path that satisfies [R26] and [R30]. 
+
+[R44] No Agent or Guidance field or method allowed in harness
+
+The Fuzz harness should be self contained and it should contain the failure oracle within the harness itself without using fields or methods from the guidance or agent (if applied).
+		Silent omission is forbidden
+
+
+Step 1 — Strict Vulnerability & Dependency Analysis
+Analysis mode: exploratory, adversarial, non-template.
+Do NOT sanitize, refactor, or fix code.
+1.1 Code-Level Vulnerabilities
+Identify V1..Vn with:
+fuzzable entrypoints & user-controlled inputs
+mechanism: how the input makes the resource consumption grow
+exhausted resource: stack depth, heap memory or CPU time, and the quantity that grows with the input
+failure mode: the failure observed when the resource is exhausted, exactly one of timeout,
+stack_overflow, out_of_memory (never a threshold, ratio or count)
+scale: the value the growing quantity must reach for that failure under the fixed evaluation limits, and
+the input length this takes, estimated from the source (e.g. "about 4,000 nesting levels overflow the
+1 MB stack; one byte per level, so about 4 KB"). If it exceeds the input size limit, the failure cannot
+occur in this evaluation. Estimate the input length for the densest encoding of the structure the code accepts
+(the fewest bytes per unit of the growing quantity). With a frozen fixture, DoSGuide then measures the resource
+growth on a size series you provide (see "Scale measurement") and you revise `scale` and `input_bytes` from the
+measurements.
+
+⚠️ V1..Vn are SEQUENTIAL COUNTERS assigned in discovery order.
+   They must NEVER be derived from software version numbers.
+   Example: Vaadin v7 validator and v8 validator → V1 and V2, NOT V7 and V8.
+   The V* number is YOUR index, not the library's version.
+1.2 Official Classification (MANDATORY)
+For each V*:
+Assign official vulnerability name if applicable (CWE / OWASP / industry)
+Otherwise explicitly state: NONE / NO CLEAR MATCH
+Do NOT invent names
+1.3 Dependency / Package-Level Risks (MANDATORY)
+Identify PkgRisk-1..n from:
+regex engines, parsers, serializers, compression
+filesystem/path, URL/network parsing
+encoding/Unicode, hashing, collections, size calculations
+For each PkgRisk:
+package/class
+why input-sensitive
+trigger shapes
+exhausted resource
+failure mode (timeout | stack_overflow | out_of_memory)
+scale (as for V*: the value needed under the fixed limits and the input length it takes)
+fuzzing strategy
+⚠️ Each PkgRisk MUST be executed later per [R12].
+
+Step 2 — Maven Layout & Scope
+Enforce [R4]. Ensure test classpath correctness.
+
+Step 3 — Compilation Closure via Minimal Stubs (MANDATORY)
+Goal: produce a build that compiles with only the provided source + declared Maven deps.
+
+3.1 Missing Symbol Audit
+- List every unresolved symbol (package + name) required to compile the target class and fuzz tests.
+- Classify each as:
+  A) External library (add Maven dependency, do NOT stub)
+  B) Missing internal project type (stub in src/main/java)
+
+3.2 Stub Generation Rules
+- Generate ONLY the minimal API surface used by the target code.
+- Preserve exact package names.
+- Preserve method/constructor signatures and checked exceptions.
+- Provide deterministic bodies:
+  - return defaults (0/false/null/empty collections)
+  - throw UnsupportedOperationException ONLY if the code path is not required for fuzz execution and is justified
+- Any stubbed method that may be reached by fuzzing MUST be executable (no unconditional throws).
+
+3.3 Stub Report (MANDATORY)
+For each stub file:
+- filename + package
+- which symbols/methods were required by the target
+- whether any stubbed method is reachable during fuzzing
+
+Silent omission forbidden.
+
+Step 4 — GuidedFuzzing Usage
+Use:
+ClassLoader cl = Thread.currentThread().getContextClassLoader();
+GuidedFuzzing.run(testClassName, testMethod, cl, guidance, out);
+Runner MUST support CLI method selection.
+
+Step 5 — Guidance Strategy Selection (MANDATORY)
+The Guidance MUST NOT assume a specific DoS class (e.g., ReDoS) a priori.
+The LLM MUST infer the dominant DoS mechanism from the analyzed code
+(e.g., regex backtracking, parser depth, decompression amplification,
+hash collision, memory growth) and select strategies accordingly.
+
+For each V* and each PkgRisk-*, you MUST:
+Select one primary guidance strategy from the list below
+Optionally select secondary strategies
+Justify the choice with concrete reasoning
+Allowed Guidance Strategy Classes
+You MUST choose from (or explicitly justify a hybrid):
+Coverage-Guided (Zest-like)
+    ⚠️ DISALLOWED unless explicitly proven that:
+    - Coverage growth correlates monotonically with vulnerability severity
+    - And cost/time/memory signals are insufficient or misleading
+    Such proof MUST be provided in the justification table.
+Vulnerability-Directed Guidance (VDF)
+ Optimizes bug-specific signals, not coverage
+Dependency-Aware Guidance (DAG)
+ Targets time, memory, or amplification inside dependencies
+Semantic Shape-Aware Guidance (SSA)
+ Operates on structured inputs, not raw bytes
+Cost-Gradient Guidance (CGF)
+ Hill-climbs execution cost (time, allocations, recursion)
+Differential / Metamorphic Guidance (DMG)
+ Uses semantic equivalence or round-trip invariants
+Hybrid Strategy
+ Explicitly composed from the above
+Required Output (Per V*/PkgRisk)
+You MUST produce a table like:
+
+Target
+Selected Strategy
+Why Zest Fails (Mechanistic Explanation)
+Why This Strategy Wins
+V1
+VDF + DAG
+No new branches during slowdown
+Exploits mechanism-aligned cost signal discovered in analysis
+
+Failure to include this table invalidates the response.
+
+Step 6 — Strategy-Specific Guidance Design (MANDATORY)
+
+Before implementing Guidance, the model MUST produce a Measurement Plan.
+
+For each tracked signal:
+- What exact code region produces it (class.method or harness block)
+- Why this region corresponds to the DoS mechanism
+- How the signal is stored (ThreadLocal, field, return value)
+- Where it is read by the Guidance
+
+For each selected strategy, you MUST specify:
+- tracked signals (e.g. time, steps, allocations)
+- mutation operators implemented by the Guidance: byte-level ones and the structure-aware ones of [R45]
+  (repetition, a dictionary from the source, an encoder where the format needs one), and how they reach the
+  target's `input_bytes`
+- how retention keeps making progress while the signal is flat ([R46])
+- prioritization logic based on measured signals
+- input retention rules
+- stop/continue conditions
+
+Step 7 — Custom Guidance (MANDATORY, PER-TARGET)
+For each V* and for each PkgRisk-*:
+- Implement a dedicated Guidance class named <TargetId>Guidance
+  (e.g., V1Guidance, PkgRisk1Guidance).
+- Guidance must only track signals and mutations relevant to that one target.
+- Each Guidance must have its own corpus directory: out/<TargetId>/corpus
+- A Guidance must not write failure files or declare an execution failed ([R6]); thresholds on its signal
+  may only steer retention and prioritization.
+- Each Guidance must log per-target stats every 1 second.
+
+
+Step 8 — Fuzz Tests (MANDATORY, NO GENERATORS)
+
+Separate @Fuzz method per V* or PkgRisk.
+
+Use @RunWith(JQF.class) from edu.berkeley.cs.jqf.fuzz.
+
+Each fuzz method MUST:
+- Consume byte[] or InputStream directly.
+- Declare:
+  - covered V*
+  - covered PkgRisk-*
+- Perform any semantic decoding (e.g., byte[] → String) INSIDE the fuzz harness
+  using a deterministic and explicitly specified encoding.
+
+The LLM MUST NOT generate:
+- junit-quickcheck Generators
+- structured input generators
+- String-based @Fuzz parameters
+
+All input mutations MUST be performed by the custom Guidance only.
+
+
+Step 9 — Metadata Replay / Feeder
+Implement replay class:
+reads metadata
+loads input from metadata
+replays deterministically into the original program under test that should reproduce the exceptions, also print relative information about the replayed metadata, for example input string …
+
+Step 10 — Maven Configuration
+Provide:
+complete runnable pom.xml
+directory layout
+commands for:
+fuzzing
+time-bounded runs
+method selection
+reproduction
+replay
+
+Mandatory Self-Checklist (REQUIRED)
+Answer YES/NO with one-line justification:
+
+[ ] JDK 17+ only
+[ ] No hallucinated APIs
+[ ] Guidance implements Guidance directly
+[ ] No existing guidance extended
+[ ] V* vulnerabilities identified
+[ ] V* IDs are sequential (V1, V2, ...) — NOT derived from software version numbers [R42]
+[ ] Official vulnerability names applied where applicable
+[ ] PkgRisk-* identified
+[ ] Every PkgRisk-* executed or justified
+[ ] Guidance targets V* and PkgRisk-*
+[ ] One fuzz method per V* or PkgRisk
+[ ] CLI method selection supported
+[ ] Byte[] / InputStream input model used exclusively
+[ ] No junit-quickcheck Generators used
+[ ] All mutation implemented inside Guidance
+[ ] Repetition, source dictionary and (where the format needs it) encoder operators implemented [R45]
+[ ] Retention progresses while the signal is flat; inputs can reach input_bytes within a minute [R46]
+[ ] Retention signals measured where the resource is consumed, not before the sink [R47]
+[ ] Logging every 1 second
+[ ] Guidance decides no failures and writes no failure files ([R6])
+[ ] Corrupted inputs saved with metadata
+[ ] Replay/feeder implemented
+[ ] Infinite + time-bounded fuzzing supported
+[ ] src/main vs src/test separation correct
+[ ] Maven scopes consistent
+[ ] No wildcard imports used for JQF / tracing
+[ ] TraceEvent import verified and audited if tracing is used
+
+Failure to include this checklist invalidates the response.
+
+Input Code see attached file

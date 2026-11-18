@@ -1,0 +1,62 @@
+{
+  "plans": [
+    {
+      "target": "V1",
+      "signals": [
+        {
+          "name": "boundaryIterations",
+          "quantity": "number of MultipartStream.readBoundary() calls during one execution (boundary iterations of the multipart parser loop)",
+          "aggregation": "count",
+          "locations": [
+            "MultipartStream#readBoundary"
+          ],
+          "technique": "bytecode",
+          "storage": "ThreadLocal<long[]> in V1Counters, slot [0]",
+          "reset": "V1Counters.reset() called at the start of V1Guidance.getInput() before each execution",
+          "read": "V1Counters.getBoundaryIterations() called in V1Guidance.handleResult()"
+        },
+        {
+          "name": "headerBytes",
+          "quantity": "number of MultipartStream.readByte() calls made while MultipartStream.readHeaders() runs, during one execution (header bytes scanned one at a time)",
+          "aggregation": "count",
+          "locations": [
+            "MultipartStream#readHeaders",
+            "MultipartStream#readByte"
+          ],
+          "technique": "bytecode",
+          "storage": "ThreadLocal<long[]> in V1Counters, slot [1] for counter and slot [2] for inHeaders flag (0 or 1)",
+          "reset": "V1Counters.reset() called at the start of V1Guidance.getInput() before each execution",
+          "read": "V1Counters.getHeaderBytes() called in V1Guidance.handleResult()"
+        },
+        {
+          "name": "multipartWork",
+          "quantity": "multipart parser work s = alpha*(boundaryIterations/B_REF) + beta*(headerBytes/H_REF) with alpha = beta = 0.5, B_REF = 10 and H_REF = 512 (the fuzz test's PART_HEADER_SIZE_MAX), computed in handleResult from the two measured counters of the same execution",
+          "aggregation": "weighted",
+          "locations": [
+            "MultipartStream#readBoundary",
+            "MultipartStream#readHeaders",
+            "MultipartStream#readByte"
+          ],
+          "technique": "bytecode",
+          "storage": "computed in-line in V1Guidance.handleResult() from the two measured counters; the resulting double is stored with the corpus entry for retention/prioritization",
+          "reset": "recomputed from fresh counter values each execution (counters are reset in getInput())",
+          "read": "computed and consumed directly in V1Guidance.handleResult() for retention decisions and in lastSignals() for external reporting"
+        }
+      ],
+      "retention": "Keep the input if multipartWork exceeds the maximum multipartWork of the corpus. Choose parents for mutation with probability proportional to their multipartWork. Secondary (while multipartWork is flat): also retain inputs that are longer than the longest input in the corpus (growing toward input_bytes=527 and beyond up to the input size limit 10240), and with 10% probability retain any input longer than a randomly chosen corpus member, so that input length grows toward the target's input_bytes within the first minute even when readHeaders/readBoundary code paths are not yet reached.",
+      "retention_signals": [
+        "multipartWork"
+      ],
+      "mutation": [
+        "byte-flip: flip a random bit in a random byte of the input",
+        "byte-insert: insert a random byte at a random position",
+        "byte-delete: remove a byte at a random position",
+        "byte-overwrite: replace a byte at a random position with a random value",
+        "havoc: apply 1-8 randomly chosen byte-level mutations in sequence",
+        "repetition [R45a]: select a random region (1 byte to half the input), repeat it k times where k is chosen so the result approaches the input size limit (10240 bytes); this doubles or more the header content or replicates part structures to grow toward input_bytes rapidly",
+        "dictionary-insert [R45b]: insert or overwrite at a random position one of the 8 dictionary tokens extracted from the MultipartStream source: CR (0x0D), LF (0x0A), CRLF (0x0D0A), CRLFCRLF (0x0D0A0D0A), DASHDASH (0x2D2D), CRLF-DASHDASH (0x0D0A2D2D), COLON (0x3A), SPACE (0x20)",
+        "splice: given two corpus parents, take a prefix of one and a suffix of the other at random cut points"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "build": [
+    "mvn package -DskipTests -q",
+    "rm -rf target/agent-staging && mkdir -p target/agent-staging && cd target/agent-staging && jar xf ~/.m2/repository/org/ow2/asm/asm/9.6/asm-9.6.jar && jar xf ~/.m2/repository/org/ow2/asm/asm-commons/9.6/asm-commons-9.6.jar && rm -rf META-INF && mkdir -p fuzzing/agent && cp ../test-classes/fuzzing/agent/*.class fuzzing/agent/ && jar cfm ../dos-measure-agent.jar ../../src/test/resources/META-INF/MANIFEST.MF fuzzing/ org/"
+  ],
+  "classpath_command": "mvn -q dependency:build-classpath -DincludeScope=test -Dmdep.outputFile=/dev/stderr 2>&1 1>/dev/null | tr '\\n' ':' | sed 's/:$//' | sed 's|$|:target/test-classes:lib/json-20211205.jar|'",
+  "javaagent": {
+    "jar": "target/dos-measure-agent.jar",
+    "args": ""
+  },
+  "jvm_args": [],
+  "guidance_factory": "fuzzing.runner.FuzzRunner#createGuidance",
+  "targets": {
+    "V1": {
+      "test_class": "fuzzing.harness.JsonFuzzTest",
+      "method": "fuzzJSONObjectAndJSONArrayConstructors"
+    },
+    "V2": {
+      "test_class": "fuzzing.harness.JsonFuzzTest",
+      "method": "fuzzXMLToJSONObject"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+ "parameter": "declared STORED uncompressed size (bytes re-served from the stale buffer after EOF)",
+ "inputs": [
+  {
+   "file": "size32768.bin",
+   "value": 32768
+  },
+  {
+   "file": "size65536.bin",
+   "value": 65536
+  },
+  {
+   "file": "size131072.bin",
+   "value": 131072
+  },
+  {
+   "file": "size262144.bin",
+   "value": 262144
+  },
+  {
+   "file": "size524288.bin",
+   "value": 524288
+  },
+  {
+   "file": "size1048576.bin",
+   "value": 1048576
+  }
+ ]
+}

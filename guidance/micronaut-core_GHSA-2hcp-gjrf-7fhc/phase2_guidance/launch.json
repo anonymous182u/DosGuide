@@ -1,0 +1,18 @@
+{
+  "build": [
+    "mvn -q package -DskipTests",
+    "mkdir -p target/agent-manifest",
+    "printf 'Premain-Class: com.fuzzing.agent.V1MeasureAgent\\n' > target/agent-manifest/MANIFEST.MF",
+    "jar cfm target/v1-agent.jar target/agent-manifest/MANIFEST.MF -C target/test-classes com/fuzzing/agent/"
+  ],
+  "classpath": "target/test-classes:target/deps/*",
+  "javaagent": {"jar": "target/v1-agent.jar", "args": ""},
+  "jvm_args": [],
+  "guidance_factory": "com.fuzzing.runner.FuzzRunner#createGuidance",
+  "targets": {
+    "V1": {
+      "test_class": "com.fuzzing.harness.SanitizerFuzzTest",
+      "method": "fuzzHtmlErrorResponseBodyProviderBody"
+    }
+  }
+}

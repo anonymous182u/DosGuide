@@ -1,0 +1,39 @@
+{
+  "build": [
+    "mvn -q package -DskipTests",
+    "mvn -q dependency:build-classpath -DincludeScope=test -Dmdep.outputFile=target/cp.txt",
+    "mkdir -p target/boot-staging/org/keycloak/fuzzing/agent",
+    "cp target/test-classes/org/keycloak/fuzzing/agent/RegexStepCounter.class target/boot-staging/org/keycloak/fuzzing/agent/",
+    "jar cf target/regex-counter-boot.jar -C target/boot-staging .",
+    "mkdir -p target/agent-staging/META-INF target/agent-staging/org/keycloak/fuzzing/agent",
+    "cp target/test-classes/org/keycloak/fuzzing/agent/RegexStepCounter.class target/agent-staging/org/keycloak/fuzzing/agent/",
+    "cp target/test-classes/org/keycloak/fuzzing/agent/PatternNodeTransformer.class target/agent-staging/org/keycloak/fuzzing/agent/",
+    "bash -c 'cp target/test-classes/org/keycloak/fuzzing/agent/PatternNodeTransformer\\$*.class target/agent-staging/org/keycloak/fuzzing/agent/ 2>/dev/null || true'",
+    "cp target/test-classes/org/keycloak/fuzzing/agent/V1MeasureAgent.class target/agent-staging/org/keycloak/fuzzing/agent/",
+    "bash -c 'ASM_JAR=$(find $HOME/.m2/repository/org/ow2/asm/asm -name \"asm-9*.jar\" | sort -V | tail -1); cd target/agent-staging && jar xf \"$ASM_JAR\" org/'",
+    "printf 'Manifest-Version: 1.0\\nPremain-Class: org.keycloak.fuzzing.agent.V1MeasureAgent\\nBoot-Class-Path: regex-counter-boot.jar\\nCan-Retransform-Classes: true\\nCan-Redefine-Classes: true\\n' > target/agent-staging/META-INF/MANIFEST.MF",
+    "jar cfm target/v1-measure-agent.jar target/agent-staging/META-INF/MANIFEST.MF -C target/agent-staging ."
+  ],
+
+  "classpath_command": "echo -n target/classes:target/test-classes: && cat target/cp.txt",
+
+  "jvm_args": [
+    "-Xmx1g",
+    "-Xss1m",
+    "-Djqf.ei.MAX_INPUT_SIZE=10240"
+  ],
+
+  "javaagent": {
+    "jar": "target/v1-measure-agent.jar",
+    "args": ""
+  },
+
+  "guidance_factory": "org.keycloak.fuzzing.FuzzRunner#createGuidance",
+
+  "targets": {
+    "V1": {
+      "test_class": "org.keycloak.fuzzing.SearchQueryFuzzTest",
+      "method": "fuzzSearchQueryUtilsGetFields"
+    }
+  }
+}

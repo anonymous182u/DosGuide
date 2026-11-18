@@ -1,0 +1,88 @@
+{
+  "plans": [
+    {
+      "target": "V1",
+      "signals": [
+        {
+          "name": "compressedAllocBytes",
+          "quantity": "bytes requested by the compressed buffer allocation (new byte[chunkSize]) in hasNextChunk",
+          "aggregation": "max",
+          "locations": [
+            "SnappyInputStream#hasNextChunk"
+          ],
+          "technique": "bytecode",
+          "storage": "ThreadLocal<long[]> in AllocCounters, slot [0]; updated by injected call before 1st NEWARRAY T_BYTE in hasNextChunk (bytecode offset 164)",
+          "reset": "AllocCounters.reset() called in V1Guidance.getInput() before returning the input stream",
+          "read": "V1Guidance.handleResult() reads AllocCounters.COUNTERS.get()[0]"
+        }
+      ],
+      "retention": "Primary: keep input if compressedAllocBytes is a new maximum (higher than any previously retained input). Secondary (while signal is 0 or flat): keep if the input provides structural diversity (header bytes present, different chunkSize region). Seed is a valid 20-byte Snappy stream header + chunkSize=1, so signal is non-zero from the first execution. Inputs up to MAX_INPUT_SIZE (10240) are permitted; no smaller limit imposed.",
+      "retention_signals": [
+        "compressedAllocBytes"
+      ],
+      "mutation": [
+        "Byte-level: bit flips (1/2/4 bits), byte increment/decrement, random byte replacement, random byte insertion/deletion",
+        "Arithmetic on chunkSize field: read bytes 16-19 as big-endian int, add/subtract/multiply by random small factor, write back — specific to V1's mechanism where the 4-byte integer at position 16 drives allocation",
+        "Dictionary insertion: tokens from SnappyCodec/SnappyOutputStream source — magic header {0x82,0x53,0x4E,0x41,0x50,0x50,0x59,0x00}, version {0x00,0x00,0x00,0x01}, large-value bytes {0x7F}, {0xFF}, {0x00}",
+        "Repetition: copy a random region of the input and repeat it k times in place (k chosen to stay within MAX_INPUT_SIZE), including doubling the whole input",
+        "Encoder: ensures bytes 0-15 are the valid 16-byte Snappy stream header (magic + version + compatible_version) so that SnappyInputStream.readHeader() succeeds and execution reaches hasNextChunk(). Bytes 16+ are the chunk data (4-byte chunkSize + payload). This is format-preserving mutation per [R45](c)."
+      ]
+    },
+    {
+      "target": "V2",
+      "signals": [
+        {
+          "name": "uncompressedAllocBytes",
+          "quantity": "bytes requested by the uncompressed buffer allocation (new byte[uncompressedLength]) in hasNextChunk, where uncompressedLength comes from the snappy varint in the compressed chunk",
+          "aggregation": "max",
+          "locations": [
+            "SnappyInputStream#hasNextChunk"
+          ],
+          "technique": "bytecode",
+          "storage": "ThreadLocal<long[]> in AllocCounters, slot [1]; updated by injected call before 2nd NEWARRAY T_BYTE in hasNextChunk (bytecode offset 269)",
+          "reset": "AllocCounters.reset() called in V2Guidance.getInput() before returning the input stream",
+          "read": "V2Guidance.handleResult() reads AllocCounters.COUNTERS.get()[1]"
+        }
+      ],
+      "retention": "Primary: keep input if uncompressedAllocBytes is a new maximum. Secondary (while signal is 0 or flat): keep inputs that reach hasNextChunk (valid header) and have non-empty compressed data, preferring longer compressed chunks. Seed is 25 bytes: valid header + chunkSize=5 + 5 zero bytes, giving a small but non-zero signal from the first execution. Inputs up to MAX_INPUT_SIZE (10240) are permitted.",
+      "retention_signals": [
+        "uncompressedAllocBytes"
+      ],
+      "mutation": [
+        "Byte-level: bit flips, byte increment/decrement, random byte replacement",
+        "Varint arithmetic: parse the varint at position 20 (start of compressed chunk data), decode its value, increase it (multiply by 2, add random delta), re-encode as varint, and update chunkSize field at bytes 16-19 to match the new compressed data length — specific to V2's mechanism where the varint drives uncompressed allocation",
+        "Dictionary insertion: tokens from source — magic header bytes, varint continuation byte {0x80}, varint max data byte {0x7F}, varint full byte {0xFF}, small chunkSize {0x00,0x00,0x00,0x05}",
+        "Repetition: copy a random region of the input and repeat it k times, including doubling the compressed data section to grow the varint",
+        "Encoder: assembles valid Snappy stream header (16 bytes) + 4-byte big-endian chunkSize + chunkSize bytes of compressed data. When the compressed data is mutated, recomputes chunkSize to match actual length. This ensures inputs pass format checks and reach the uncompressedLength allocation."
+      ]
+    },
+    {
+      "target": "V3",
+      "signals": [
+        {
+          "name": "resultAllocBytes",
+          "quantity": "bytes requested by the result array allocation (new byte[Snappy.uncompressedLength(input)]) in Snappy.uncompress(byte[])",
+          "aggregation": "max",
+          "locations": [
+            "Snappy#uncompress(byte[])"
+          ],
+          "technique": "bytecode",
+          "storage": "ThreadLocal<long[]> in AllocCounters, slot [2]; updated by injected call before the single NEWARRAY T_BYTE in uncompress([B)[B (bytecode offset 4)",
+          "reset": "AllocCounters.reset() called in V3Guidance.getInput() before returning the input stream",
+          "read": "V3Guidance.handleResult() reads AllocCounters.COUNTERS.get()[2]"
+        }
+      ],
+      "retention": "Primary: keep input if resultAllocBytes is a new maximum. Secondary (while signal is 0): keep inputs that produce a parseable varint (non-zero signal) and grow toward longer varints. Seed is 5 bytes encoding varint(1) + padding, ensuring non-zero signal from the first execution. Inputs up to MAX_INPUT_SIZE (10240) are permitted.",
+      "retention_signals": [
+        "resultAllocBytes"
+      ],
+      "mutation": [
+        "Byte-level: bit flips, byte increment/decrement, random byte replacement",
+        "Varint arithmetic: parse the leading varint from the input, decode its value, increase it (multiply by 2, add random delta), re-encode as varint, replace the varint bytes — specific to V3's mechanism where the raw snappy varint drives result allocation",
+        "Dictionary insertion: tokens from Snappy source — varint continuation byte {0x80}, varint max byte {0xFF}, varint terminator max {0x7F}",
+        "Repetition: copy a random region and repeat it k times, including prepending 0x80 continuation bytes to extend the varint to 5 bytes",
+        "No container encoding needed: raw snappy data does not have a header format that rejects random bytes. The varint is the first bytes and Snappy.uncompressedLength() reads it directly."
+      ]
+    }
+  ]
+}

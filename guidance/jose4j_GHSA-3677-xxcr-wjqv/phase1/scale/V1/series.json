@@ -1,0 +1,29 @@
+{
+  "parameter": "decompressed_output_bytes",
+  "inputs": [
+    {
+      "file": "d512.bin",
+      "value": 512
+    },
+    {
+      "file": "d1024.bin",
+      "value": 1024
+    },
+    {
+      "file": "d2048.bin",
+      "value": 2048
+    },
+    {
+      "file": "d4096.bin",
+      "value": 4096
+    },
+    {
+      "file": "d8192.bin",
+      "value": 8192
+    },
+    {
+      "file": "d16384.bin",
+      "value": 16384
+    }
+  ]
+}

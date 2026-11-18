@@ -1,0 +1,67 @@
+{
+  "clone_url": "https://github.com/eclipse/jetty.project.git",
+  "commit": "238ec6997c7806b055319a6d11f8ae7564adc0de",
+  "jdk": 17,
+  "tools": "Apache Maven 3.9.x (the repository has no Maven wrapper; verified with 3.9.12)",
+  "commands": [
+    "cd src && MAVEN_OPTS=-Xmx2g mvn -B -DskipTests -pl jetty-util,jetty-io,jetty-http,jetty-http2/http2-hpack,jetty-http2/http2-common -am clean package"
+  ],
+  "artifacts": [
+    {
+      "built": "src/jetty-util/target/jetty-util-9.4.36.v20210114.jar",
+      "lib": "lib/jetty-util-9.4.36.v20210114.jar",
+      "sha256": "73491b5275b81eac1df4fdd97afe290d8fc08a35c852aeebd85510c2cea9bdbf",
+      "classes_sha256": "82c3db6be1bd5211cd97ad021dab14a329b6e6b4b46afedc642d334ec86d7018"
+    },
+    {
+      "built": "src/jetty-io/target/jetty-io-9.4.36.v20210114.jar",
+      "lib": "lib/jetty-io-9.4.36.v20210114.jar",
+      "sha256": "acf41b7b7849895ca0deada01afbfb550f47526330f182c4abc9d54e518704fc",
+      "classes_sha256": "866418564671e6fc847f14e044993e324c93bdd467855bd140dd8f77a0d66062"
+    },
+    {
+      "built": "src/jetty-http/target/jetty-http-9.4.36.v20210114.jar",
+      "lib": "lib/jetty-http-9.4.36.v20210114.jar",
+      "sha256": "77d62e47de431c10a884862872b7dc7895ca0afd4dcb8274d74615dc7738fb84",
+      "classes_sha256": "12f144fe3da0170d9b070816744dfb1a790d021cae932df0640cdcdefbc2ca3c"
+    },
+    {
+      "built": "src/jetty-http2/http2-hpack/target/http2-hpack-9.4.36.v20210114.jar",
+      "lib": "lib/http2-hpack-9.4.36.v20210114.jar",
+      "sha256": "e23b882f70c258000687d207dad008bca87d0340062ac3366b7f6dc65c0a7b12",
+      "classes_sha256": "8ab63b85315c513f582fa5325ac34a210b495b4944fc1c841b7ee94546c2616a"
+    },
+    {
+      "built": "src/jetty-http2/http2-common/target/http2-common-9.4.36.v20210114.jar",
+      "lib": "lib/http2-common-9.4.36.v20210114.jar",
+      "sha256": "7e496cfc76229c61f95a210c464986c5b579f5eb6c7cc50a852536ac3e728ddf",
+      "classes_sha256": "c7882213a334f40ab3f9268b47e9c61b0c0b58f8f0dfd25721cc626948efb56c"
+    }
+  ],
+  "fixed": {
+    "jars": [
+      {
+        "coords": "org.eclipse.jetty:jetty-util:9.4.37.v20210219",
+        "sha256": "067c4412e35d87b239fad22c72a46076775b7770e7071071d494a24b447085b0"
+      },
+      {
+        "coords": "org.eclipse.jetty:jetty-io:9.4.37.v20210219",
+        "sha256": "02cb4b4224a407aa128c0b5b2b34f223353de3401ce1f03cc3da0e73849ac0fe"
+      },
+      {
+        "coords": "org.eclipse.jetty:jetty-http:9.4.37.v20210219",
+        "sha256": "c3f1686e9cbb6f60bdaeb4a3182cd0aa0bf29c5065b315fc87243570453de928"
+      },
+      {
+        "coords": "org.eclipse.jetty.http2:http2-hpack:9.4.37.v20210219",
+        "sha256": "b93c1470e05b9f2eaebeca11f3cdc0edccdafc912ab34c285b40eac4aef35501"
+      },
+      {
+        "coords": "org.eclipse.jetty.http2:http2-common:9.4.37.v20210219",
+        "sha256": "17e7b03e3c6979578ae01ed6d683843bc9d1ef0fcc935503ac47dee7a4353f12"
+      }
+    ],
+    "drop": "^(jetty\\-util|jetty\\-io|jetty\\-http|http2\\-hpack|http2\\-common)-[0-9]"
+  },
+  "notes": "Commit = tag jetty-9.4.36.v20210114 (the tree carries the release version). The release was built with JDK 11; JDK 17 activates the same profiles (jdk9: maven-compiler <release>8</release>; jdk11: javadoc options only), so the classes are Java 8 bytecode against the Java 8 API, but javac 17 and javac 11 generate different bytes for some classes (constant-pool order, the synthetic enum $values()), so the class files are not byte-identical to the Central 9.4.36 jars; the classes on the PoC path (QuotedQualityCSV, QuotedCSV, QuotedCSVParser, HttpFields) are javap-equal. -am also builds build-resources, the parents, jetty-jmx and jetty-util-ajax, which are not used. jetty-http: the main jar of maven-jar-plugin (the shade execution's target/benchmarks.jar is not used). Fixed: the five artifacts at 9.4.37.v20210219."
+}

@@ -1,0 +1,23 @@
+{
+  "series_request": null,
+  "rounds": [
+    {
+      "round": 1,
+      "revision": {
+        "V1": {
+          "scale": "121 BigInteger iterations (precision=100, k≈20). Measured cost: ~65ms flat across all precision values (0ms/iteration above baseline). At maximum precision=100 the total is ~65ms, far below 20000ms timeout. The mechanism is correct but per-iteration BigInteger cost on ~90-bit numbers is negligible.",
+          "input_bytes": 9
+        },
+        "V2": {
+          "scale": "1074 fractional loop iterations (radix=2, subnormal d). Measured cost: ~65ms flat across 207-1074 iterations (0ms/iteration above baseline). Even at maximum 1074 iterations with d=0.1 (s2≈57), total is ~65ms, far below 20000ms timeout. The BigIntegers remain small because d=0.1 is a normal double with small s2.",
+          "input_bytes": 9
+        },
+        "V3": {
+          "scale": "715-bit 5^308 BigInteger (d≈1.7e308, precision=100). Measured cost: ~65ms flat across exponents 10-308 (0ms/exponent above baseline). At maximum d=MAX_VALUE, total is ~65ms, far below 20000ms timeout. The 100-iteration digit loop on ~715-bit BigIntegers completes in <1ms.",
+          "input_bytes": 10
+        }
+      },
+      "field_problems": {}
+    }
+  ]
+}

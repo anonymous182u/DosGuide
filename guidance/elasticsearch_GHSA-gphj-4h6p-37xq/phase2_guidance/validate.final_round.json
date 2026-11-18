@@ -1,0 +1,386 @@
+{
+  "ok": true,
+  "launch": [],
+  "build": {
+    "ok": true
+  },
+  "targets": [
+    {
+      "tool": "ValidateArtifact",
+      "target": "V1",
+      "checks": [
+        {
+          "name": "contract",
+          "status": "pass",
+          "detail": "factory, lastSignals() and fuzz test found"
+        },
+        {
+          "name": "runs",
+          "status": "pass",
+          "detail": "85 executions completed"
+        },
+        {
+          "name": "plan_signals",
+          "status": "pass",
+          "detail": "lastSignals() returns every planned signal [allocRequestedBytes]"
+        },
+        {
+          "name": "signal_varies",
+          "status": "pass",
+          "detail": "varying: [allocRequestedBytes] (on the guidance's own inputs: [allocRequestedBytes])"
+        },
+        {
+          "name": "reset",
+          "status": "pass",
+          "detail": "re-running inputs reproduced their values"
+        },
+        {
+          "name": "depends_on_execution",
+          "status": "pass",
+          "detail": "signals stay near zero when the target does not run"
+        },
+        {
+          "name": "instrumentation",
+          "status": "pass",
+          "detail": "rewrote [org.elasticsearch.compute.data.IntBlockBuilder]"
+        },
+        {
+          "name": "input_limit",
+          "status": "pass",
+          "detail": "with jqf.ei.MAX_INPUT_SIZE=16 the 20 generated inputs were at most 8 bytes"
+        },
+        {
+          "name": "input_growth",
+          "status": "pass",
+          "detail": "the guidance generated a 8-byte input after 1158 ms (1 executions); the target needs 8"
+        },
+        {
+          "name": "progress",
+          "status": "skip",
+          "detail": "not compared: no signal grows along the series"
+        }
+      ],
+      "max_input_bytes": 10240,
+      "example_inputs": 0,
+      "executions": {
+        "own": 40,
+        "repeat": 5,
+        "random": 40,
+        "example": 0,
+        "probe": 3
+      },
+      "test_failures_not_used": 24,
+      "signals": {
+        "allocRequestedBytes": {
+          "min": 0.0,
+          "max": 8589934588.0,
+          "distinct": 28
+        }
+      },
+      "signals_by_kind": {
+        "own": {
+          "allocRequestedBytes": {
+            "distinct": 19,
+            "max": 8589934588.0,
+            "min": 8.0
+          }
+        },
+        "random": {
+          "allocRequestedBytes": {
+            "distinct": 19,
+            "max": 8589934588.0,
+            "min": 0.0
+          }
+        },
+        "repeat": {
+          "allocRequestedBytes": {
+            "distinct": 5,
+            "max": 8589934588.0,
+            "min": 7113543672.0
+          }
+        }
+      },
+      "transformed_classes": [
+        "org.elasticsearch.compute.data.IntBlockBuilder"
+      ],
+      "ok": true,
+      "input_limit_probe": {
+        "max_input_bytes": 16,
+        "longest_input": 8,
+        "executions": {
+          "own": 20
+        }
+      },
+      "growth_probe": {
+        "needed_input_bytes": 8,
+        "longest_input": 8,
+        "executions": {
+          "own": 1
+        },
+        "growth": [
+          {
+            "ms": 1158,
+            "execution": 1,
+            "bytes": 8
+          }
+        ]
+      },
+      "hard_ok": true,
+      "progress_probe": {
+        "own_ms": 120000,
+        "executions": 1185,
+        "longest_input": 8,
+        "phase": "series",
+        "series_inputs": 6,
+        "comparison": {},
+        "measurements": {
+          "budget_ms": 120000,
+          "own_ms": 120000,
+          "executions": 1185,
+          "longest_input": 8,
+          "phase": "series",
+          "own_best": {
+            "allocRequestedBytes": [
+              [
+                8,
+                8589934588.0,
+                5738
+              ]
+            ]
+          },
+          "series": [
+            {
+              "bytes": 8,
+              "signals": {
+                "allocRequestedBytes": 4096.0
+              }
+            },
+            {
+              "bytes": 8,
+              "signals": {
+                "allocRequestedBytes": 16384.0
+              }
+            },
+            {
+              "bytes": 8,
+              "signals": {
+                "allocRequestedBytes": 65536.0
+              }
+            },
+            {
+              "bytes": 8,
+              "signals": {
+                "allocRequestedBytes": 262144.0
+              }
+            },
+            {
+              "bytes": 8,
+              "signals": {
+                "allocRequestedBytes": 1048576.0
+              }
+            },
+            {
+              "bytes": 8,
+              "signals": {
+                "allocRequestedBytes": 4194304.0
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "tool": "ValidateArtifact",
+      "target": "V2",
+      "checks": [
+        {
+          "name": "contract",
+          "status": "pass",
+          "detail": "factory, lastSignals() and fuzz test found"
+        },
+        {
+          "name": "runs",
+          "status": "pass",
+          "detail": "85 executions completed"
+        },
+        {
+          "name": "plan_signals",
+          "status": "pass",
+          "detail": "lastSignals() returns every planned signal [allocRequestedBytes]"
+        },
+        {
+          "name": "signal_varies",
+          "status": "pass",
+          "detail": "varying: [allocRequestedBytes] (on the guidance's own inputs: [allocRequestedBytes])"
+        },
+        {
+          "name": "reset",
+          "status": "pass",
+          "detail": "re-running inputs reproduced their values"
+        },
+        {
+          "name": "depends_on_execution",
+          "status": "pass",
+          "detail": "signals stay near zero when the target does not run"
+        },
+        {
+          "name": "instrumentation",
+          "status": "pass",
+          "detail": "rewrote [org.elasticsearch.compute.data.LongBlockBuilder]"
+        },
+        {
+          "name": "input_limit",
+          "status": "pass",
+          "detail": "with jqf.ei.MAX_INPUT_SIZE=16 the 20 generated inputs were at most 8 bytes"
+        },
+        {
+          "name": "input_growth",
+          "status": "pass",
+          "detail": "the guidance generated a 8-byte input after 1285 ms (1 executions); the target needs 8"
+        },
+        {
+          "name": "progress",
+          "status": "skip",
+          "detail": "not compared: no signal grows along the series"
+        }
+      ],
+      "max_input_bytes": 10240,
+      "example_inputs": 0,
+      "executions": {
+        "own": 40,
+        "repeat": 5,
+        "random": 40,
+        "example": 0,
+        "probe": 3
+      },
+      "test_failures_not_used": 23,
+      "signals": {
+        "allocRequestedBytes": {
+          "min": 0.0,
+          "max": 16696382488.0,
+          "distinct": 29
+        }
+      },
+      "signals_by_kind": {
+        "own": {
+          "allocRequestedBytes": {
+            "distinct": 21,
+            "max": 12113149968.0,
+            "min": 16.0
+          }
+        },
+        "random": {
+          "allocRequestedBytes": {
+            "distinct": 18,
+            "max": 16696382488.0,
+            "min": 0.0
+          }
+        },
+        "repeat": {
+          "allocRequestedBytes": {
+            "distinct": 5,
+            "max": 12113149968.0,
+            "min": 12079595536.0
+          }
+        }
+      },
+      "transformed_classes": [
+        "org.elasticsearch.compute.data.LongBlockBuilder"
+      ],
+      "ok": true,
+      "input_limit_probe": {
+        "max_input_bytes": 16,
+        "longest_input": 8,
+        "executions": {
+          "own": 20
+        }
+      },
+      "growth_probe": {
+        "needed_input_bytes": 8,
+        "longest_input": 8,
+        "executions": {
+          "own": 1
+        },
+        "growth": [
+          {
+            "ms": 1285,
+            "execution": 1,
+            "bytes": 8
+          }
+        ]
+      },
+      "hard_ok": true,
+      "progress_probe": {
+        "own_ms": 120000,
+        "executions": 1264,
+        "longest_input": 8,
+        "phase": "series",
+        "series_inputs": 6,
+        "comparison": {},
+        "measurements": {
+          "budget_ms": 120000,
+          "own_ms": 120000,
+          "executions": 1264,
+          "longest_input": 8,
+          "phase": "series",
+          "own_best": {
+            "allocRequestedBytes": [
+              [
+                8,
+                17179869176.0,
+                2684
+              ]
+            ]
+          },
+          "series": [
+            {
+              "bytes": 8,
+              "signals": {
+                "allocRequestedBytes": 8192.0
+              }
+            },
+            {
+              "bytes": 8,
+              "signals": {
+                "allocRequestedBytes": 32768.0
+              }
+            },
+            {
+              "bytes": 8,
+              "signals": {
+                "allocRequestedBytes": 131072.0
+              }
+            },
+            {
+              "bytes": 8,
+              "signals": {
+                "allocRequestedBytes": 524288.0
+              }
+            },
+            {
+              "bytes": 8,
+              "signals": {
+                "allocRequestedBytes": 2097152.0
+              }
+            },
+            {
+              "bytes": 8,
+              "signals": {
+                "allocRequestedBytes": 8388608.0
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "limits": {
+    "jvm_args": [
+      "-Xmx1g",
+      "-Xss1m"
+    ],
+    "timeout_ms": 20000,
+    "max_input_bytes": 10240
+  },
+  "hard_ok": true
+}

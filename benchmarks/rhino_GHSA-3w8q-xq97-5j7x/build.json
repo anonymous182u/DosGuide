@@ -1,0 +1,31 @@
+{
+  "clone_url": "https://github.com/mozilla/rhino.git",
+  "commit": "fc7024acf598e2499734ab4a708e5f4fb978f6a8",
+  "jdk": 17,
+  "commands": [
+    "rm -rf build && mkdir -p build/classes",
+    "find src/src -name '*.java' | sort > build/sources.txt",
+    "javac -nowarn -encoding UTF-8 --release 11 -d build/classes @build/sources.txt",
+    "jar cf build/rhino-1.7.14.jar -C build/classes .",
+    "jar uf build/rhino-1.7.14.jar -C src/src org/mozilla/javascript/resources/Messages.properties -C src/src org/mozilla/javascript/resources/Messages_en.properties -C src/src org/mozilla/javascript/resources/Messages_fr.properties"
+  ],
+  "artifacts": [
+    {
+      "built": "build/rhino-1.7.14.jar",
+      "lib": "lib/rhino-1.7.14.jar",
+      "sha256": "7dfccee8f5c42a2f54ab65395cf9ce08cf9dc3ffeb2ff5d35f88d40b6d49956b",
+      "classes_sha256": "f12d3071bb06f9061581ac539ac8d161b936f9c69c0fba146f61f7bfd51e1d47"
+    }
+  ],
+  "fixed": {
+    "jars": [
+      {
+        "coords": "org.mozilla:rhino:1.7.14.1",
+        "sha256": "407d4af6521494061d86b208e99804e0bf5c2fa38449c48f24b2f5a7154b4d8d"
+      }
+    ],
+    "drop": "^(rhino)-[0-9]"
+  },
+  "tools": "git, JDK 17 (javac, jar)",
+  "notes": "As the evaluation's jar was made: javac --release 11 of every .java file under the engine source directory src/ (no toolsrc/ or xmlimplsrc/; no dependencies), packed with jar cf, then the three message bundles org/mozilla/javascript/resources/Messages{,_en,_fr}.properties from src/ added with jar uf (Rhino throws MissingResourceException for any message without them); the project's Gradle build is not used. The commit is the 1.7.14 maintenance line (gradle.properties version=1.7.14), the parent of the fix. Fixed version: rhino 1.7.14.1, the first patched release of that line."
+}

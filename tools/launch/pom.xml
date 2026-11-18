@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>dosguide</groupId>
+  <artifactId>campaign-launcher</artifactId>
+  <version>1.0.0</version>
+  <packaging>jar</packaging>
+  <name>Campaign launcher: runs every engine on a fuzz test and decides failures the same way</name>
+
+  <properties>
+    <maven.compiler.release>17</maven.compiler.release>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <jqf.version>2.1</jqf.version>
+  </properties>
+
+  <dependencies>
+    <!-- Bundled: the launcher's class loader provides JQF to the fuzz test, as the JQF Maven plugin does. -->
+    <dependency>
+      <groupId>edu.berkeley.cs.jqf</groupId>
+      <artifactId>jqf-fuzz</artifactId>
+      <version>${jqf.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>edu.berkeley.cs.jqf</groupId>
+      <artifactId>jqf-instrument</artifactId>
+      <version>${jqf.version}</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <finalName>campaign-launcher</finalName>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.5.3</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals><goal>shade</goal></goals>
+            <configuration>
+              <createDependencyReducedPom>false</createDependencyReducedPom>
+              <!-- The launcher is the parent of the class loader that loads the subject's class path, and parents
+                   load first. So that the subject runs its own versions of these libraries (e.g. Jackson, ASM,
+                   SLF4J), the launcher's internal dependencies are relocated. Not relocated: what the harness
+                   and the guidance share with the launcher (JQF, JUnit, junit-quickcheck, Hamcrest) and janala,
+                   whose names JQF's instrumentation writes into the instrumented code. -->
+              <relocations>
+                <relocation><pattern>com.fasterxml.jackson</pattern><shadedPattern>dosguide.shaded.com.fasterxml.jackson</shadedPattern></relocation>
+                <relocation><pattern>org.objectweb.asm</pattern><shadedPattern>dosguide.shaded.org.objectweb.asm</shadedPattern></relocation>
+                <relocation><pattern>javassist</pattern><shadedPattern>dosguide.shaded.javassist</shadedPattern></relocation>
+                <relocation><pattern>org.eclipse.collections</pattern><shadedPattern>dosguide.shaded.org.eclipse.collections</shadedPattern></relocation>
+                <relocation><pattern>org.antlr</pattern><shadedPattern>dosguide.shaded.org.antlr</shadedPattern></relocation>
+                <relocation><pattern>org.slf4j</pattern><shadedPattern>dosguide.shaded.org.slf4j</shadedPattern></relocation>
+                <relocation><pattern>ognl</pattern><shadedPattern>dosguide.shaded.ognl</shadedPattern></relocation>
+                <relocation><pattern>org.jacoco</pattern><shadedPattern>dosguide.shaded.org.jacoco</shadedPattern></relocation>
+                <relocation><pattern>ru.vyarus</pattern><shadedPattern>dosguide.shaded.ru.vyarus</shadedPattern></relocation>
+                <relocation><pattern>org.javaruntype</pattern><shadedPattern>dosguide.shaded.org.javaruntype</shadedPattern></relocation>
+                <relocation><pattern>picocli</pattern><shadedPattern>dosguide.shaded.picocli</shadedPattern></relocation>
+              </relocations>
+              <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <mainClass>dosguide.campaign.Launch</mainClass>
+                </transformer>
+              </transformers>
+              <filters>
+                <filter>
+                  <artifact>*:*</artifact>
+                  <excludes>
+                    <exclude>META-INF/*.SF</exclude>
+                    <exclude>META-INF/*.DSA</exclude>
+                    <exclude>META-INF/*.RSA</exclude>
+                  </excludes>
+                </filter>
+              </filters>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>

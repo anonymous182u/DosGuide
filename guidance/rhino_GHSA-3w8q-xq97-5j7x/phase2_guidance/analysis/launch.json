@@ -1,0 +1,30 @@
+{
+  "build": [
+    "mvn -q package -DskipTests",
+    "rm -rf target/agent-staging && mkdir -p target/agent-staging/fuzz/agent",
+    "cp target/test-classes/fuzz/agent/DToAMeasureAgent.class target/test-classes/fuzz/agent/DToAClassTransformer*.class target/classes/fuzz/agent/DToACounters.class target/agent-staging/fuzz/agent/",
+    "printf 'Premain-Class: fuzz.agent.DToAMeasureAgent\\nCan-Retransform-Classes: true\\n' > target/agent-manifest.txt",
+    "jar cfm target/dos-agent.jar target/agent-manifest.txt -C target/agent-staging ."
+  ],
+  "classpath": "target/test-classes:target/classes:target/dependency/*:lib/rhino-1.7.14.jar",
+  "javaagent": {
+    "jar": "target/dos-agent.jar",
+    "args": ""
+  },
+  "jvm_args": [],
+  "guidance_factory": "fuzz.runner.DoSGuideFactory#createGuidance",
+  "targets": {
+    "V1": {
+      "test_class": "fuzz.harness.NativeNumberFuzzTest",
+      "method": "fuzzNumberToFixed"
+    },
+    "V2": {
+      "test_class": "fuzz.harness.NativeNumberFuzzTest",
+      "method": "fuzzNumberToStringRadix"
+    },
+    "V3": {
+      "test_class": "fuzz.harness.NativeNumberFuzzTest",
+      "method": "fuzzNumberFormatMethods"
+    }
+  }
+}

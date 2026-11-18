@@ -1,0 +1,75 @@
+{
+  "final_ok": true,
+  "repair_rounds": 3,
+  "fuzz_tests_fixed_at_round": 1,
+  "rounds": [
+    {
+      "round": 0,
+      "ok": false,
+      "error": null,
+      "launch": [
+        "\"build\" must be a list of shell commands"
+      ],
+      "build_ok": null,
+      "failing": [],
+      "progress_advisory": {},
+      "repair": {
+        "modified": [
+          "analysis/launch.json"
+        ]
+      }
+    },
+    {
+      "round": 1,
+      "ok": false,
+      "error": null,
+      "launch": [],
+      "build_ok": true,
+      "failing": [
+        "V1"
+      ],
+      "progress_advisory": {},
+      "repair": {
+        "modified": [
+          "analysis/launch.json",
+          "run.sh",
+          "src/test/java/org/keycloak/fuzzing/agent/V1MeasureAgent.java"
+        ]
+      }
+    },
+    {
+      "round": 2,
+      "ok": true,
+      "error": null,
+      "launch": [],
+      "build_ok": true,
+      "failing": [],
+      "progress_advisory": {
+        "V1": 0.01611486049213981
+      },
+      "repair": {
+        "modified": [
+          "src/test/java/org/keycloak/fuzzing/V1Guidance.java"
+        ]
+      }
+    },
+    {
+      "round": 3,
+      "ok": true,
+      "error": null,
+      "launch": [],
+      "build_ok": true,
+      "failing": [],
+      "progress_advisory": {},
+      "regressed": [
+        "V1"
+      ],
+      "reverted": {
+        "restored": [
+          "src/test/java/org/keycloak/fuzzing/V1Guidance.java"
+        ],
+        "removed": []
+      }
+    }
+  ]
+}

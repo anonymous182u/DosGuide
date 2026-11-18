@@ -1,0 +1,22 @@
+{
+  "build": [
+    "mvn -q compile test-compile",
+    "mkdir -p target/agent-build",
+    "bash -c 'ASM_JAR=$(find ~/.m2/repository/org/ow2/asm/asm/9.8 -name asm-9.8.jar | head -1); printf \"Premain-Class: com.powsybl.fuzzing.agent.RegexBacktrackAgent\\nCan-Retransform-Classes: true\\nBoot-Class-Path: regex-agent.jar %s\\n\" \"$ASM_JAR\" > target/agent-build/MANIFEST.MF'",
+    "jar cfm regex-agent.jar target/agent-build/MANIFEST.MF -C target/test-classes com/powsybl/fuzzing/agent -C target/test-classes com/powsybl/fuzzing/counter"
+  ],
+  "classpath_command": "bash -c 'echo -n target/test-classes; for j in lib/*.jar; do echo -n :$j; done; echo -n :; mvn -q dependency:build-classpath -DincludeScope=test -Dmdep.outputFile=/dev/stdout 2>/dev/null'",
+  "javaagent": {"jar": "regex-agent.jar", "args": ""},
+  "jvm_args": [],
+  "guidance_factory": "com.powsybl.fuzzing.runner.FuzzRunner#createGuidance",
+  "targets": {
+    "V1": {
+      "test_class": "com.powsybl.fuzzing.tests.RegexCriterionFuzzTest",
+      "method": "fuzzRegexCriterionFilter"
+    },
+    "PkgRisk1": {
+      "test_class": "com.powsybl.fuzzing.tests.RegexCriterionFuzzTest",
+      "method": "fuzzRegexCriterionFilter"
+    }
+  }
+}

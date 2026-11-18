@@ -1,0 +1,29 @@
+{
+  "parameter": "message_length",
+  "inputs": [
+    {
+      "file": "msg1.bin",
+      "value": 1
+    },
+    {
+      "file": "msg2.bin",
+      "value": 2
+    },
+    {
+      "file": "msg4.bin",
+      "value": 4
+    },
+    {
+      "file": "msg8.bin",
+      "value": 8
+    },
+    {
+      "file": "msg16.bin",
+      "value": 16
+    },
+    {
+      "file": "msg32.bin",
+      "value": 32
+    }
+  ]
+}

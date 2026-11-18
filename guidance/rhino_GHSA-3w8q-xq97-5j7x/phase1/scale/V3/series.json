@@ -1,0 +1,29 @@
+{
+  "parameter": "decimal exponent k (controls BigInteger size: 5^k bits \u2248 k*2.32)",
+  "inputs": [
+    {
+      "file": "d1e10.bin",
+      "value": 10
+    },
+    {
+      "file": "d1e20.bin",
+      "value": 20
+    },
+    {
+      "file": "d1e50.bin",
+      "value": 50
+    },
+    {
+      "file": "d1e100.bin",
+      "value": 100
+    },
+    {
+      "file": "d1e200.bin",
+      "value": 200
+    },
+    {
+      "file": "d1.7e308.bin",
+      "value": 308
+    }
+  ]
+}

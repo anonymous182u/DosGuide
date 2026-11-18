@@ -1,0 +1,490 @@
+{
+  "tool": "checkpath",
+  "version": "1.0.0",
+  "source_root": "projects/msgpack-java_GHSA-cw39-r4h6-8j3x",
+  "index": {
+    "files_parsed": 88,
+    "files_failed": 0,
+    "methods": 1122,
+    "harness_fuzz_methods": [
+      "MsgpackFuzzTest.fuzzMessageUnpackerUnpackValue(InputStream)",
+      "MsgpackFuzzTest.fuzzMessageUnpackerUnpackValue2(InputStream)",
+      "MsgpackFuzzTest.fuzzMessageUnpackerSkipValue(InputStream)"
+    ],
+    "index_seconds": 0.7,
+    "max_gap": 2,
+    "sink_depth": 6,
+    "symbol_resolution": true
+  },
+  "ok": true,
+  "targets": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "entrypoint": "MsgpackFuzzTest.fuzzMessageUnpackerUnpackValue(InputStream) → MessageUnpacker.unpackValue() → MessageUnpacker.unpackArrayHeader() → MessageUnpacker.unpackValue()",
+      "source_path": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java",
+      "start_ok": true,
+      "harness_entry": "fuzzing.MsgpackFuzzTest#fuzzMessageUnpackerUnpackValue",
+      "end_ok": true,
+      "end": {
+        "sink_file": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java",
+        "ok": true,
+        "evidence": "hop 4 MessageUnpacker#unpackValue() is declared in msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:606",
+        "level": "method",
+        "sink_method": "MessageUnpacker#unpackValue",
+        "sink_evidence": "hop 2 is MessageUnpacker#unpackValue()"
+      },
+      "hops": [
+        {
+          "index": 1,
+          "raw": "MsgpackFuzzTest.fuzzMessageUnpackerUnpackValue(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "fuzzing.MsgpackFuzzTest#fuzzMessageUnpackerUnpackValue(InputStream)",
+              "location": "harness/src/test/java/fuzzing/MsgpackFuzzTest.java:29"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "raw": "MessageUnpacker.unpackValue()",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.msgpack.core.MessageUnpacker#unpackValue()",
+              "location": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:606"
+            },
+            {
+              "method": "org.msgpack.core.MessageUnpacker#unpackValue(Variable)",
+              "location": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:669"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "raw": "MessageUnpacker.unpackArrayHeader()",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.msgpack.core.MessageUnpacker#unpackArrayHeader()",
+              "location": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:1336"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "raw": "MessageUnpacker.unpackValue()",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.msgpack.core.MessageUnpacker#unpackValue()",
+              "location": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:606"
+            },
+            {
+              "method": "org.msgpack.core.MessageUnpacker#unpackValue(Variable)",
+              "location": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:669"
+            }
+          ]
+        }
+      ],
+      "path_signature": [
+        "fuzzing.MsgpackFuzzTest#fuzzMessageUnpackerUnpackValue(InputStream)",
+        "org.msgpack.core.MessageUnpacker#unpackValue()",
+        "org.msgpack.core.MessageUnpacker#unpackArrayHeader()",
+        "org.msgpack.core.MessageUnpacker#unpackValue()"
+      ],
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "written": "MsgpackFuzzTest.fuzzMessageUnpackerUnpackValue(InputStream)",
+          "provenance": "agent",
+          "method": "fuzzing.MsgpackFuzzTest#fuzzMessageUnpackerUnpackValue(InputStream)",
+          "location": "harness/src/test/java/fuzzing/MsgpackFuzzTest.java:29"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "MsgpackFuzzTest#fuzzMessageUnpackerUnpackValue(InputStream) calls MessageUnpacker#unpackValue() at harness/src/test/java/fuzzing/MsgpackFuzzTest.java:33 (resolved)",
+          "site": "harness/src/test/java/fuzzing/MsgpackFuzzTest.java:33"
+        },
+        {
+          "kind": "hop",
+          "written": "MessageUnpacker.unpackValue()",
+          "provenance": "agent",
+          "method": "org.msgpack.core.MessageUnpacker#unpackValue()",
+          "location": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:606"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "MessageUnpacker#unpackValue() calls MessageUnpacker#unpackArrayHeader() at msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:637 (resolved)",
+          "site": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:637"
+        },
+        {
+          "kind": "hop",
+          "written": "MessageUnpacker.unpackArrayHeader()",
+          "provenance": "agent",
+          "method": "org.msgpack.core.MessageUnpacker#unpackArrayHeader()",
+          "location": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:1336"
+        },
+        {
+          "kind": "connection",
+          "type": "DATAFLOW",
+          "evidence": "MessageUnpacker#unpackArrayHeader() (msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:1336) writes field `buffer`, which MessageUnpacker#unpackValue() (msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:606) reads (through helper calls)",
+          "site": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:1336"
+        },
+        {
+          "kind": "hop",
+          "written": "MessageUnpacker.unpackValue()",
+          "provenance": "agent",
+          "method": "org.msgpack.core.MessageUnpacker#unpackValue()",
+          "location": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:606"
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "status": "CALL",
+          "evidence": "MsgpackFuzzTest#fuzzMessageUnpackerUnpackValue(InputStream) calls MessageUnpacker#unpackValue() at harness/src/test/java/fuzzing/MsgpackFuzzTest.java:33 (resolved)"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "status": "CALL",
+          "evidence": "MessageUnpacker#unpackValue() calls MessageUnpacker#unpackArrayHeader() at msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:637 (resolved)"
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "status": "DATAFLOW",
+          "evidence": "MessageUnpacker#unpackArrayHeader() (msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:1336) writes field `buffer`, which MessageUnpacker#unpackValue() (msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:606) reads (through helper calls)"
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    },
+    {
+      "target": "V2",
+      "status": "PASS",
+      "entrypoint": "MsgpackFuzzTest.fuzzMessageUnpackerUnpackValue(InputStream) → MessageUnpacker.unpackValue() → MessageUnpacker.unpackArrayHeader()",
+      "source_path": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java",
+      "start_ok": true,
+      "harness_entry": "fuzzing.MsgpackFuzzTest#fuzzMessageUnpackerUnpackValue",
+      "end_ok": true,
+      "end": {
+        "sink_file": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java",
+        "ok": true,
+        "evidence": "hop 3 MessageUnpacker#unpackArrayHeader() is declared in msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:1336",
+        "level": "method",
+        "sink_method": "MessageUnpacker#unpackValue",
+        "sink_evidence": "hop 2 is MessageUnpacker#unpackValue()"
+      },
+      "hops": [
+        {
+          "index": 1,
+          "raw": "MsgpackFuzzTest.fuzzMessageUnpackerUnpackValue(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "fuzzing.MsgpackFuzzTest#fuzzMessageUnpackerUnpackValue(InputStream)",
+              "location": "harness/src/test/java/fuzzing/MsgpackFuzzTest.java:29"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "raw": "MessageUnpacker.unpackValue()",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.msgpack.core.MessageUnpacker#unpackValue()",
+              "location": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:606"
+            },
+            {
+              "method": "org.msgpack.core.MessageUnpacker#unpackValue(Variable)",
+              "location": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:669"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "raw": "MessageUnpacker.unpackArrayHeader()",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.msgpack.core.MessageUnpacker#unpackArrayHeader()",
+              "location": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:1336"
+            }
+          ]
+        }
+      ],
+      "path_signature": [
+        "fuzzing.MsgpackFuzzTest#fuzzMessageUnpackerUnpackValue(InputStream)",
+        "org.msgpack.core.MessageUnpacker#unpackValue()",
+        "org.msgpack.core.MessageUnpacker#unpackArrayHeader()"
+      ],
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "written": "MsgpackFuzzTest.fuzzMessageUnpackerUnpackValue(InputStream)",
+          "provenance": "agent",
+          "method": "fuzzing.MsgpackFuzzTest#fuzzMessageUnpackerUnpackValue(InputStream)",
+          "location": "harness/src/test/java/fuzzing/MsgpackFuzzTest.java:29"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "MsgpackFuzzTest#fuzzMessageUnpackerUnpackValue(InputStream) calls MessageUnpacker#unpackValue() at harness/src/test/java/fuzzing/MsgpackFuzzTest.java:33 (resolved)",
+          "site": "harness/src/test/java/fuzzing/MsgpackFuzzTest.java:33"
+        },
+        {
+          "kind": "hop",
+          "written": "MessageUnpacker.unpackValue()",
+          "provenance": "agent",
+          "method": "org.msgpack.core.MessageUnpacker#unpackValue()",
+          "location": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:606"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "MessageUnpacker#unpackValue() calls MessageUnpacker#unpackArrayHeader() at msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:637 (resolved)",
+          "site": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:637"
+        },
+        {
+          "kind": "hop",
+          "written": "MessageUnpacker.unpackArrayHeader()",
+          "provenance": "agent",
+          "method": "org.msgpack.core.MessageUnpacker#unpackArrayHeader()",
+          "location": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:1336"
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "status": "CALL",
+          "evidence": "MsgpackFuzzTest#fuzzMessageUnpackerUnpackValue(InputStream) calls MessageUnpacker#unpackValue() at harness/src/test/java/fuzzing/MsgpackFuzzTest.java:33 (resolved)"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "status": "CALL",
+          "evidence": "MessageUnpacker#unpackValue() calls MessageUnpacker#unpackArrayHeader() at msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:637 (resolved)"
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    },
+    {
+      "target": "V3",
+      "status": "PASS",
+      "entrypoint": "MsgpackFuzzTest.fuzzMessageUnpackerUnpackValue(InputStream) → MessageUnpacker.unpackValue() → MessageUnpacker.unpackBinaryHeader() → MessageUnpacker.readPayload(int)",
+      "source_path": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java",
+      "start_ok": true,
+      "harness_entry": "fuzzing.MsgpackFuzzTest#fuzzMessageUnpackerUnpackValue",
+      "end_ok": true,
+      "end": {
+        "sink_file": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java",
+        "ok": true,
+        "evidence": "hop 4 MessageUnpacker#readPayload(int) is declared in msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:1646",
+        "level": "method",
+        "sink_method": "MessageUnpacker#readPayload",
+        "sink_evidence": "hop 4 is MessageUnpacker#readPayload(ByteBuffer)"
+      },
+      "hops": [
+        {
+          "index": 1,
+          "raw": "MsgpackFuzzTest.fuzzMessageUnpackerUnpackValue(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "fuzzing.MsgpackFuzzTest#fuzzMessageUnpackerUnpackValue(InputStream)",
+              "location": "harness/src/test/java/fuzzing/MsgpackFuzzTest.java:29"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "raw": "MessageUnpacker.unpackValue()",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.msgpack.core.MessageUnpacker#unpackValue()",
+              "location": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:606"
+            },
+            {
+              "method": "org.msgpack.core.MessageUnpacker#unpackValue(Variable)",
+              "location": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:669"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "raw": "MessageUnpacker.unpackBinaryHeader()",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.msgpack.core.MessageUnpacker#unpackBinaryHeader()",
+              "location": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:1510"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "raw": "MessageUnpacker.readPayload(int)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.msgpack.core.MessageUnpacker#readPayload(int)",
+              "location": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:1646"
+            }
+          ]
+        }
+      ],
+      "path_signature": [
+        "fuzzing.MsgpackFuzzTest#fuzzMessageUnpackerUnpackValue(InputStream)",
+        "org.msgpack.core.MessageUnpacker#unpackValue()",
+        "org.msgpack.core.MessageUnpacker#unpackBinaryHeader()",
+        "org.msgpack.core.MessageUnpacker#readPayload(int)"
+      ],
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "written": "MsgpackFuzzTest.fuzzMessageUnpackerUnpackValue(InputStream)",
+          "provenance": "agent",
+          "method": "fuzzing.MsgpackFuzzTest#fuzzMessageUnpackerUnpackValue(InputStream)",
+          "location": "harness/src/test/java/fuzzing/MsgpackFuzzTest.java:29"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "MsgpackFuzzTest#fuzzMessageUnpackerUnpackValue(InputStream) calls MessageUnpacker#unpackValue() at harness/src/test/java/fuzzing/MsgpackFuzzTest.java:33 (resolved)",
+          "site": "harness/src/test/java/fuzzing/MsgpackFuzzTest.java:33"
+        },
+        {
+          "kind": "hop",
+          "written": "MessageUnpacker.unpackValue()",
+          "provenance": "agent",
+          "method": "org.msgpack.core.MessageUnpacker#unpackValue()",
+          "location": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:606"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "MessageUnpacker#unpackValue() calls MessageUnpacker#unpackBinaryHeader() at msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:633 (resolved)",
+          "site": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:633"
+        },
+        {
+          "kind": "hop",
+          "written": "MessageUnpacker.unpackBinaryHeader()",
+          "provenance": "agent",
+          "method": "org.msgpack.core.MessageUnpacker#unpackBinaryHeader()",
+          "location": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:1510"
+        },
+        {
+          "kind": "connection",
+          "type": "DATAFLOW",
+          "evidence": "MessageUnpacker#unpackBinaryHeader() (msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:1510) writes field `buffer`, which MessageUnpacker#readPayload(int) (msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:1646) reads (through helper calls)",
+          "site": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:1510"
+        },
+        {
+          "kind": "hop",
+          "written": "MessageUnpacker.readPayload(int)",
+          "provenance": "agent",
+          "method": "org.msgpack.core.MessageUnpacker#readPayload(int)",
+          "location": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:1646"
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "status": "CALL",
+          "evidence": "MsgpackFuzzTest#fuzzMessageUnpackerUnpackValue(InputStream) calls MessageUnpacker#unpackValue() at harness/src/test/java/fuzzing/MsgpackFuzzTest.java:33 (resolved)"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "status": "CALL",
+          "evidence": "MessageUnpacker#unpackValue() calls MessageUnpacker#unpackBinaryHeader() at msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:633 (resolved)"
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "status": "DATAFLOW",
+          "evidence": "MessageUnpacker#unpackBinaryHeader() (msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:1510) writes field `buffer`, which MessageUnpacker#readPayload(int) (msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:1646) reads (through helper calls)"
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    }
+  ],
+  "plan_ok": true,
+  "plans": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "signals": [
+        {
+          "name": "maxDepth",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "MessageUnpacker#unpackValue",
+              "status": "RESOLVED",
+              "method": "org.msgpack.core.MessageUnpacker#unpackValue",
+              "declared_at": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:606",
+              "relation": "on_path"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    },
+    {
+      "target": "V2",
+      "status": "PASS",
+      "signals": [
+        {
+          "name": "declaredArraySize",
+          "technique": "static",
+          "locations": [
+            {
+              "written": "MessageUnpacker#unpackValue",
+              "status": "RESOLVED",
+              "method": "org.msgpack.core.MessageUnpacker#unpackValue",
+              "declared_at": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:606",
+              "relation": "on_path"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    },
+    {
+      "target": "V3",
+      "status": "PASS",
+      "signals": [
+        {
+          "name": "declaredPayloadBytes",
+          "technique": "static",
+          "locations": [
+            {
+              "written": "MessageUnpacker#readPayload",
+              "status": "RESOLVED",
+              "method": "org.msgpack.core.MessageUnpacker#readPayload",
+              "declared_at": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:1568",
+              "relation": "on_path"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "final_ok": true,
+  "repair_rounds": 1,
+  "fuzz_tests_fixed_at_round": 0,
+  "rounds": [
+    {
+      "round": 0,
+      "ok": false,
+      "error": null,
+      "launch": [],
+      "build_ok": true,
+      "failing": [
+        "V2"
+      ],
+      "progress_advisory": {},
+      "repair": {
+        "modified": [
+          "src/test/java/fuzzing/guidance/V1Guidance.java",
+          "src/test/java/fuzzing/guidance/V2Guidance.java"
+        ]
+      }
+    },
+    {
+      "round": 1,
+      "ok": true,
+      "error": null,
+      "launch": [],
+      "build_ok": true,
+      "failing": [],
+      "progress_advisory": {}
+    }
+  ]
+}

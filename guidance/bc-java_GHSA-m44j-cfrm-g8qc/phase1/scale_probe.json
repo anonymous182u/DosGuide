@@ -1,0 +1,97 @@
+{
+  "caps": {
+    "input_bytes": 2560,
+    "heap_bytes": 268435456,
+    "stack_bytes": 262144,
+    "time_ms": 2000
+  },
+  "targets": {
+    "V1": {
+      "problems": [],
+      "parameter": "message_length",
+      "inputs": [
+        {
+          "file": "msg1.bin",
+          "value": 1,
+          "input_bytes": 97,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 13.867911,
+          "wall_ms": 13.997193,
+          "allocated_bytes": 1267704,
+          "peak_heap_bytes": 2097152
+        },
+        {
+          "file": "msg2.bin",
+          "value": 2,
+          "input_bytes": 98,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 14.014267,
+          "wall_ms": 14.26235,
+          "allocated_bytes": 1267704,
+          "peak_heap_bytes": 2097152
+        },
+        {
+          "file": "msg4.bin",
+          "value": 4,
+          "input_bytes": 100,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 14.084013,
+          "wall_ms": 14.278915,
+          "allocated_bytes": 1267704,
+          "peak_heap_bytes": 2097152
+        },
+        {
+          "file": "msg8.bin",
+          "value": 8,
+          "input_bytes": 104,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 13.84343,
+          "wall_ms": 14.059267,
+          "allocated_bytes": 1261128,
+          "peak_heap_bytes": 2097152
+        },
+        {
+          "file": "msg16.bin",
+          "value": 16,
+          "input_bytes": 112,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 18.408586,
+          "wall_ms": 18.58516,
+          "allocated_bytes": 1261144,
+          "peak_heap_bytes": 2097152
+        },
+        {
+          "file": "msg32.bin",
+          "value": 32,
+          "input_bytes": 128,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 14.057567,
+          "wall_ms": 14.222155,
+          "allocated_bytes": 1267984,
+          "peak_heap_bytes": 2097152
+        }
+      ]
+    }
+  },
+  "build": {
+    "ok": true
+  }
+}

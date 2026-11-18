@@ -1,0 +1,52 @@
+{
+  "final_ok": true,
+  "repair_rounds": 2,
+  "fuzz_tests_fixed_at_round": 0,
+  "rounds": [
+    {
+      "round": 0,
+      "ok": false,
+      "error": null,
+      "launch": [],
+      "build_ok": true,
+      "failing": [
+        "V1"
+      ],
+      "repair": {
+        "added": [
+          "build-agent.sh"
+        ],
+        "modified": [
+          "analysis/launch.json",
+          "run.sh",
+          "src/test/java/org/opensearch/fuzz/agent/V1ParserTransformer.java",
+          "src/test/resources/v1-agent.mf"
+        ]
+      }
+    },
+    {
+      "round": 1,
+      "ok": false,
+      "error": null,
+      "launch": [],
+      "build_ok": true,
+      "failing": [
+        "V1"
+      ],
+      "repair": {
+        "modified": [
+          "src/test/java/org/opensearch/fuzz/agent/V1MeasureAgent.java",
+          "src/test/java/org/opensearch/fuzz/agent/V1ParserTransformer.java"
+        ]
+      }
+    },
+    {
+      "round": 2,
+      "ok": true,
+      "error": null,
+      "launch": [],
+      "build_ok": true,
+      "failing": []
+    }
+  ]
+}

@@ -1,0 +1,223 @@
+{
+  "tool": "checkpath",
+  "version": "1.0.0",
+  "source_root": "projects/kwik_GHSA-9f57-9rhg-4hvm",
+  "index": {
+    "files_parsed": 221,
+    "files_failed": 0,
+    "methods": 2409,
+    "harness_fuzz_methods": [
+      "KwikFuzzTest.fuzzServerConnectionRegistryRegisterAndDeregister(InputStream)",
+      "KwikFuzzTest.fuzzServerConnectionRegistryRegisterConnection(InputStream)"
+    ],
+    "index_seconds": 1.3,
+    "max_gap": 2,
+    "sink_depth": 6,
+    "symbol_resolution": true
+  },
+  "ok": true,
+  "targets": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "entrypoint": "KwikFuzzTest.fuzzServerConnectionRegistryRegisterConnection(InputStream) → KwikFuzzTest.processInitial(ServerConnectionRegistryImpl, byte[]) → ServerConnectionRegistryImpl.registerConnection(ServerConnectionProxy, byte[]) → ConcurrentHashMap.put(Object, Object) → ConnectionSource.equals(Object)",
+      "source_path": "core/src/main/java/tech/kwik/core/server/impl/ConnectionSource.java",
+      "start_ok": true,
+      "harness_entry": "tech.kwik.fuzz.harness.KwikFuzzTest#fuzzServerConnectionRegistryRegisterConnection",
+      "end_ok": true,
+      "end": {
+        "sink_file": "core/src/main/java/tech/kwik/core/server/impl/ConnectionSource.java",
+        "ok": true,
+        "evidence": "hop 5 ConnectionSource#equals(Object) is declared in core/src/main/java/tech/kwik/core/server/impl/ConnectionSource.java:39",
+        "level": "method",
+        "sink_method": "ConnectionSource#equals",
+        "sink_evidence": "hop 5 is ConnectionSource#equals(Object)"
+      },
+      "hops": [
+        {
+          "index": 1,
+          "raw": "KwikFuzzTest.fuzzServerConnectionRegistryRegisterConnection(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "tech.kwik.fuzz.harness.KwikFuzzTest#fuzzServerConnectionRegistryRegisterConnection(InputStream)",
+              "location": "harness/src/test/java/tech/kwik/fuzz/harness/KwikFuzzTest.java:94"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "raw": "KwikFuzzTest.processInitial(ServerConnectionRegistryImpl, byte[])",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "tech.kwik.fuzz.harness.KwikFuzzTest#processInitial(ServerConnectionRegistryImpl,byte[])",
+              "location": "harness/src/test/java/tech/kwik/fuzz/harness/KwikFuzzTest.java:125"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "raw": "ServerConnectionRegistryImpl.registerConnection(ServerConnectionProxy, byte[])",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "tech.kwik.core.server.impl.ServerConnectionRegistryImpl#registerConnection(ServerConnectionProxy,byte[])",
+              "location": "core/src/main/java/tech/kwik/core/server/impl/ServerConnectionRegistryImpl.java:56"
+            },
+            {
+              "method": "tech.kwik.core.server.ServerConnectionRegistry#registerConnection(ServerConnectionProxy,byte[])",
+              "location": "core/src/main/java/tech/kwik/core/server/ServerConnectionRegistry.java:27"
+            },
+            {
+              "method": "tech.kwik.core.cid.ConnectionIdManager$anon(ServerConnectionRegistry)#registerConnection(ServerConnectionProxy,byte[])",
+              "location": "core/src/main/java/tech/kwik/core/cid/ConnectionIdManager.java:127"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "raw": "ConcurrentHashMap.put(Object, Object)",
+          "status": "EXTERNAL",
+          "candidates": [],
+          "external": [
+            "ConcurrentHashMap.put(Object, Object)"
+          ]
+        },
+        {
+          "index": 5,
+          "raw": "ConnectionSource.equals(Object)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "tech.kwik.core.server.impl.ConnectionSource#equals(Object)",
+              "location": "core/src/main/java/tech/kwik/core/server/impl/ConnectionSource.java:39"
+            }
+          ]
+        }
+      ],
+      "path_signature": [
+        "tech.kwik.fuzz.harness.KwikFuzzTest#fuzzServerConnectionRegistryRegisterConnection(InputStream)",
+        "tech.kwik.fuzz.harness.KwikFuzzTest#processInitial(ServerConnectionRegistryImpl,byte[])",
+        "tech.kwik.core.server.impl.ServerConnectionRegistryImpl#registerConnection(ServerConnectionProxy,byte[])",
+        "external:put",
+        "tech.kwik.core.server.impl.ConnectionSource#equals(Object)"
+      ],
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "written": "KwikFuzzTest.fuzzServerConnectionRegistryRegisterConnection(InputStream)",
+          "provenance": "agent",
+          "method": "tech.kwik.fuzz.harness.KwikFuzzTest#fuzzServerConnectionRegistryRegisterConnection(InputStream)",
+          "location": "harness/src/test/java/tech/kwik/fuzz/harness/KwikFuzzTest.java:94"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "KwikFuzzTest#fuzzServerConnectionRegistryRegisterConnection(InputStream) calls KwikFuzzTest#processInitial(ServerConnectionRegistryImpl,byte[]) at harness/src/test/java/tech/kwik/fuzz/harness/KwikFuzzTest.java:98 (resolved)",
+          "site": "harness/src/test/java/tech/kwik/fuzz/harness/KwikFuzzTest.java:98"
+        },
+        {
+          "kind": "hop",
+          "written": "KwikFuzzTest.processInitial(ServerConnectionRegistryImpl, byte[])",
+          "provenance": "agent",
+          "method": "tech.kwik.fuzz.harness.KwikFuzzTest#processInitial(ServerConnectionRegistryImpl,byte[])",
+          "location": "harness/src/test/java/tech/kwik/fuzz/harness/KwikFuzzTest.java:125"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "KwikFuzzTest#processInitial(ServerConnectionRegistryImpl,byte[]) calls ServerConnectionRegistry#registerConnection(ServerConnectionProxy,byte[]) at harness/src/test/java/tech/kwik/fuzz/harness/KwikFuzzTest.java:129 (resolved)",
+          "site": "harness/src/test/java/tech/kwik/fuzz/harness/KwikFuzzTest.java:129"
+        },
+        {
+          "kind": "hop",
+          "written": "ServerConnectionRegistryImpl.registerConnection(ServerConnectionProxy, byte[])",
+          "provenance": "agent",
+          "method": "tech.kwik.core.server.impl.ServerConnectionRegistryImpl#registerConnection(ServerConnectionProxy,byte[])",
+          "location": "core/src/main/java/tech/kwik/core/server/impl/ServerConnectionRegistryImpl.java:56"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "ServerConnectionRegistryImpl#registerConnection(ServerConnectionProxy,byte[]) calls ConcurrentHashMap.put(Object, Object) at core/src/main/java/tech/kwik/core/server/impl/ServerConnectionRegistryImpl.java:57",
+          "site": "core/src/main/java/tech/kwik/core/server/impl/ServerConnectionRegistryImpl.java:57"
+        },
+        {
+          "kind": "hop",
+          "written": "ConcurrentHashMap.put(Object, Object)",
+          "provenance": "agent",
+          "method": "ConcurrentHashMap.put(Object, Object)",
+          "location": "outside the source tree"
+        },
+        {
+          "kind": "connection",
+          "type": "UNCHECKED",
+          "evidence": "hop 4 is outside the source tree, so calls made inside it cannot be inspected"
+        },
+        {
+          "kind": "hop",
+          "written": "ConnectionSource.equals(Object)",
+          "provenance": "agent",
+          "method": "tech.kwik.core.server.impl.ConnectionSource#equals(Object)",
+          "location": "core/src/main/java/tech/kwik/core/server/impl/ConnectionSource.java:39"
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "status": "CALL",
+          "evidence": "KwikFuzzTest#fuzzServerConnectionRegistryRegisterConnection(InputStream) calls KwikFuzzTest#processInitial(ServerConnectionRegistryImpl,byte[]) at harness/src/test/java/tech/kwik/fuzz/harness/KwikFuzzTest.java:98 (resolved)"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "status": "CALL",
+          "evidence": "KwikFuzzTest#processInitial(ServerConnectionRegistryImpl,byte[]) calls ServerConnectionRegistry#registerConnection(ServerConnectionProxy,byte[]) at harness/src/test/java/tech/kwik/fuzz/harness/KwikFuzzTest.java:129 (resolved)"
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "status": "CALL",
+          "evidence": "ServerConnectionRegistryImpl#registerConnection(ServerConnectionProxy,byte[]) calls ConcurrentHashMap.put(Object, Object) at core/src/main/java/tech/kwik/core/server/impl/ServerConnectionRegistryImpl.java:57"
+        },
+        {
+          "from": 4,
+          "to": 5,
+          "status": "UNCHECKED",
+          "evidence": "hop 4 is outside the source tree, so calls made inside it cannot be inspected"
+        }
+      ],
+      "diagnostics": [],
+      "warnings": [
+        "Hop 4: `ConcurrentHashMap.put(Object, Object)` belongs to JDK class java.util.concurrent.ConcurrentHashMap; its body is not analyzed",
+        "Edge 4→5 not checked: hop 4 is outside the source tree, so calls made inside it cannot be inspected"
+      ]
+    }
+  ],
+  "plan_ok": true,
+  "plans": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "signals": [
+        {
+          "name": "equalsCount",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "ConnectionSource#equals",
+              "status": "RESOLVED",
+              "method": "tech.kwik.core.server.impl.ConnectionSource#equals",
+              "declared_at": "core/src/main/java/tech/kwik/core/server/impl/ConnectionSource.java:39",
+              "relation": "on_path"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    }
+  ]
+}

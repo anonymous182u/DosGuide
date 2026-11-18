@@ -1,0 +1,1421 @@
+{
+  "tool": "checkpath",
+  "version": "1.0.0",
+  "source_root": "projects/rhino_GHSA-3w8q-xq97-5j7x",
+  "index": {
+    "files_parsed": 703,
+    "files_failed": 0,
+    "methods": 8571,
+    "harness_fuzz_methods": [
+      "NativeNumberFuzzTest.fuzzNumberToFixed(InputStream)",
+      "NativeNumberFuzzTest.fuzzNumberToStringRadix(InputStream)",
+      "NativeNumberFuzzTest.fuzzNumberFormatMethods(InputStream)"
+    ],
+    "index_seconds": 4.9,
+    "max_gap": 2,
+    "sink_depth": 6,
+    "symbol_resolution": true
+  },
+  "ok": true,
+  "targets": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "entrypoint": "NativeNumberFuzzTest.fuzzNumberToFixed(InputStream) → Context.evaluateString(Scriptable, String, String, int, Object) → InterpretedFunction.exec(Context, Scriptable) → InterpretedFunction.call(Context, Scriptable, Scriptable, Object[]) → Interpreter.interpretLoop(Context, CallFrame, Object) → IdFunctionObject.call(Context, Scriptable, Scriptable, Object[]) → NativeNumber.execIdCall(IdFunctionObject, Context, Scriptable, Scriptable, Object[]) → NativeNumber.num_to(double, Object[], int, int, int, int) → DToA.JS_dtostr(StringBuilder, int, int, double) → DToA.JS_dtoa(double, int, boolean, int, boolean[], StringBuilder)",
+      "source_path": "src/org/mozilla/javascript/DToA.java",
+      "start_ok": true,
+      "harness_entry": "fuzz.harness.NativeNumberFuzzTest#fuzzNumberToFixed",
+      "end_ok": true,
+      "end": {
+        "sink_file": "src/org/mozilla/javascript/DToA.java",
+        "ok": true,
+        "evidence": "hop 10 DToA#JS_dtoa(double,int,boolean,int,boolean[],StringBuilder) is declared in src/org/mozilla/javascript/DToA.java:442",
+        "level": "method",
+        "sink_method": "DToA#JS_dtoa",
+        "sink_evidence": "hop 10 is DToA#JS_dtoa(double,int,boolean,int,boolean[],StringBuilder)"
+      },
+      "hops": [
+        {
+          "index": 1,
+          "raw": "NativeNumberFuzzTest.fuzzNumberToFixed(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "fuzz.harness.NativeNumberFuzzTest#fuzzNumberToFixed(InputStream)",
+              "location": "harness/src/test/java/fuzz/harness/NativeNumberFuzzTest.java:45"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "raw": "Context.evaluateString(Scriptable, String, String, int, Object)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.mozilla.javascript.Context#evaluateString(Scriptable,String,String,int,Object)",
+              "location": "src/org/mozilla/javascript/Context.java:1133"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "raw": "InterpretedFunction.exec(Context, Scriptable)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.mozilla.javascript.InterpretedFunction#exec(Context,Scriptable)",
+              "location": "src/org/mozilla/javascript/InterpretedFunction.java:94"
+            },
+            {
+              "method": "org.mozilla.javascript.Script#exec(Context,Scriptable)",
+              "location": "src/org/mozilla/javascript/Script.java:39"
+            },
+            {
+              "method": "org.mozilla.javascript.SecurityController$anon(Script)#exec(Context,Scriptable)",
+              "location": "src/org/mozilla/javascript/SecurityController.java:159"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "raw": "InterpretedFunction.call(Context, Scriptable, Scriptable, Object[])",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.mozilla.javascript.InterpretedFunction#call(Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/InterpretedFunction.java:86"
+            },
+            {
+              "method": "org.mozilla.javascript.BaseFunction#call(Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/BaseFunction.java:380"
+            },
+            {
+              "method": "org.mozilla.javascript.Callable#call(Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/Callable.java:24"
+            },
+            {
+              "method": "org.mozilla.javascript.Function#call(Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/Function.java:32"
+            },
+            {
+              "method": "org.mozilla.javascript.Arguments$anon(BaseFunction)#call(Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/Arguments.java:410"
+            },
+            {
+              "method": "org.mozilla.javascript.MemberBox$anon(BaseFunction)#call(Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/MemberBox.java:126"
+            },
+            {
+              "method": "org.mozilla.javascript.MemberBox$anon(BaseFunction)#call(Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/MemberBox.java:162"
+            },
+            {
+              "method": "org.mozilla.javascript.ScriptRuntime$anon(BaseFunction)#call(Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/ScriptRuntime.java:53"
+            }
+          ],
+          "more_candidates": 2
+        },
+        {
+          "index": 5,
+          "raw": "Interpreter.interpretLoop(Context, CallFrame, Object)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.mozilla.javascript.Interpreter#interpretLoop(Context,CallFrame,Object)",
+              "location": "src/org/mozilla/javascript/Interpreter.java:1110"
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "raw": "IdFunctionObject.call(Context, Scriptable, Scriptable, Object[])",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.mozilla.javascript.IdFunctionObject#call(Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/IdFunctionObject.java:97"
+            },
+            {
+              "method": "org.mozilla.javascript.BaseFunction#call(Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/BaseFunction.java:380"
+            },
+            {
+              "method": "org.mozilla.javascript.Callable#call(Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/Callable.java:24"
+            },
+            {
+              "method": "org.mozilla.javascript.Function#call(Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/Function.java:32"
+            },
+            {
+              "method": "org.mozilla.javascript.Arguments$anon(BaseFunction)#call(Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/Arguments.java:410"
+            },
+            {
+              "method": "org.mozilla.javascript.MemberBox$anon(BaseFunction)#call(Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/MemberBox.java:126"
+            },
+            {
+              "method": "org.mozilla.javascript.MemberBox$anon(BaseFunction)#call(Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/MemberBox.java:162"
+            },
+            {
+              "method": "org.mozilla.javascript.ScriptRuntime$anon(BaseFunction)#call(Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/ScriptRuntime.java:53"
+            }
+          ],
+          "more_candidates": 2
+        },
+        {
+          "index": 7,
+          "raw": "NativeNumber.execIdCall(IdFunctionObject, Context, Scriptable, Scriptable, Object[])",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.mozilla.javascript.NativeNumber#execIdCall(IdFunctionObject,Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/NativeNumber.java:118"
+            },
+            {
+              "method": "org.mozilla.javascript.IdFunctionCall#execIdCall(IdFunctionObject,Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/IdFunctionCall.java:19"
+            },
+            {
+              "method": "org.mozilla.javascript.IdScriptableObject#execIdCall(IdFunctionObject,Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/IdScriptableObject.java:707"
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "raw": "NativeNumber.num_to(double, Object[], int, int, int, int)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.mozilla.javascript.NativeNumber#num_to(double,Object[],int,int,int,int)",
+              "location": "src/org/mozilla/javascript/NativeNumber.java:257"
+            }
+          ]
+        },
+        {
+          "index": 9,
+          "raw": "DToA.JS_dtostr(StringBuilder, int, int, double)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.mozilla.javascript.DToA#JS_dtostr(StringBuilder,int,int,double)",
+              "location": "src/org/mozilla/javascript/DToA.java:1130"
+            }
+          ]
+        },
+        {
+          "index": 10,
+          "raw": "DToA.JS_dtoa(double, int, boolean, int, boolean[], StringBuilder)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.mozilla.javascript.DToA#JS_dtoa(double,int,boolean,int,boolean[],StringBuilder)",
+              "location": "src/org/mozilla/javascript/DToA.java:442"
+            }
+          ]
+        }
+      ],
+      "path_signature": [
+        "fuzz.harness.NativeNumberFuzzTest#fuzzNumberToFixed(InputStream)",
+        "org.mozilla.javascript.Context#evaluateString(Scriptable,String,String,int,Object)",
+        "org.mozilla.javascript.InterpretedFunction#exec(Context,Scriptable)",
+        "org.mozilla.javascript.InterpretedFunction#call(Context,Scriptable,Scriptable,Object[])",
+        "org.mozilla.javascript.Interpreter#interpretLoop(Context,CallFrame,Object)",
+        "org.mozilla.javascript.IdFunctionObject#call(Context,Scriptable,Scriptable,Object[])",
+        "org.mozilla.javascript.NativeNumber#execIdCall(IdFunctionObject,Context,Scriptable,Scriptable,Object[])",
+        "org.mozilla.javascript.NativeNumber#num_to(double,Object[],int,int,int,int)",
+        "org.mozilla.javascript.DToA#JS_dtostr(StringBuilder,int,int,double)",
+        "org.mozilla.javascript.DToA#JS_dtoa(double,int,boolean,int,boolean[],StringBuilder)"
+      ],
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "written": "NativeNumberFuzzTest.fuzzNumberToFixed(InputStream)",
+          "provenance": "agent",
+          "method": "fuzz.harness.NativeNumberFuzzTest#fuzzNumberToFixed(InputStream)",
+          "location": "harness/src/test/java/fuzz/harness/NativeNumberFuzzTest.java:45"
+        },
+        {
+          "kind": "connection",
+          "type": "INDIRECT",
+          "evidence": "1 omitted call(s)"
+        },
+        {
+          "kind": "hop",
+          "written": null,
+          "provenance": "checkpath (omitted call)",
+          "method": "fuzz.harness.NativeNumberFuzzTest#evaluate(String,String)",
+          "location": "harness/src/test/java/fuzz/harness/NativeNumberFuzzTest.java:100"
+        },
+        {
+          "kind": "hop",
+          "written": "Context.evaluateString(Scriptable, String, String, int, Object)",
+          "provenance": "agent",
+          "method": "org.mozilla.javascript.Context#evaluateString(Scriptable,String,String,int,Object)",
+          "location": "src/org/mozilla/javascript/Context.java:1133"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "Context#evaluateString(Scriptable,String,String,int,Object) calls InterpretedFunction#exec(Context,Scriptable) at src/org/mozilla/javascript/Context.java:1137 (resolved)",
+          "site": "src/org/mozilla/javascript/Context.java:1137"
+        },
+        {
+          "kind": "hop",
+          "written": "InterpretedFunction.exec(Context, Scriptable)",
+          "provenance": "agent",
+          "method": "org.mozilla.javascript.InterpretedFunction#exec(Context,Scriptable)",
+          "location": "src/org/mozilla/javascript/InterpretedFunction.java:94"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "Script#exec(Context,Scriptable) calls BaseFunction#call(Context,Scriptable,Scriptable,Object[]) at src/org/mozilla/javascript/SecurityController.java:161 (resolved)",
+          "site": "src/org/mozilla/javascript/SecurityController.java:161"
+        },
+        {
+          "kind": "hop",
+          "written": "InterpretedFunction.call(Context, Scriptable, Scriptable, Object[])",
+          "provenance": "agent",
+          "method": "org.mozilla.javascript.InterpretedFunction#call(Context,Scriptable,Scriptable,Object[])",
+          "location": "src/org/mozilla/javascript/InterpretedFunction.java:86"
+        },
+        {
+          "kind": "connection",
+          "type": "INDIRECT",
+          "evidence": "1 omitted call(s)"
+        },
+        {
+          "kind": "hop",
+          "written": null,
+          "provenance": "checkpath (omitted call)",
+          "method": "org.mozilla.javascript.Interpreter#interpret(InterpretedFunction,Context,Scriptable,Scriptable,Object[])",
+          "location": "src/org/mozilla/javascript/Interpreter.java:1030"
+        },
+        {
+          "kind": "hop",
+          "written": "Interpreter.interpretLoop(Context, CallFrame, Object)",
+          "provenance": "agent",
+          "method": "org.mozilla.javascript.Interpreter#interpretLoop(Context,CallFrame,Object)",
+          "location": "src/org/mozilla/javascript/Interpreter.java:1110"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "Interpreter#interpretLoop(Context,CallFrame,Object) calls BaseFunction#call(Context,Scriptable,Scriptable,Object[]) at src/org/mozilla/javascript/Interpreter.java:1871 (resolved)",
+          "site": "src/org/mozilla/javascript/Interpreter.java:1871"
+        },
+        {
+          "kind": "hop",
+          "written": "IdFunctionObject.call(Context, Scriptable, Scriptable, Object[])",
+          "provenance": "agent",
+          "method": "org.mozilla.javascript.IdFunctionObject#call(Context,Scriptable,Scriptable,Object[])",
+          "location": "src/org/mozilla/javascript/IdFunctionObject.java:97"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "IdFunctionObject#call(Context,Scriptable,Scriptable,Object[]) calls IdFunctionCall#execIdCall(IdFunctionObject,Context,Scriptable,Scriptable,Object[]) at src/org/mozilla/javascript/IdFunctionObject.java:100 (resolved)",
+          "site": "src/org/mozilla/javascript/IdFunctionObject.java:100"
+        },
+        {
+          "kind": "hop",
+          "written": "NativeNumber.execIdCall(IdFunctionObject, Context, Scriptable, Scriptable, Object[])",
+          "provenance": "agent",
+          "method": "org.mozilla.javascript.NativeNumber#execIdCall(IdFunctionObject,Context,Scriptable,Scriptable,Object[])",
+          "location": "src/org/mozilla/javascript/NativeNumber.java:118"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "NativeNumber#execIdCall(IdFunctionObject,Context,Scriptable,Scriptable,Object[]) calls NativeNumber#num_to(double,Object[],int,int,int,int) at src/org/mozilla/javascript/NativeNumber.java:160 (resolved)",
+          "site": "src/org/mozilla/javascript/NativeNumber.java:160"
+        },
+        {
+          "kind": "hop",
+          "written": "NativeNumber.num_to(double, Object[], int, int, int, int)",
+          "provenance": "agent",
+          "method": "org.mozilla.javascript.NativeNumber#num_to(double,Object[],int,int,int,int)",
+          "location": "src/org/mozilla/javascript/NativeNumber.java:257"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "NativeNumber#num_to(double,Object[],int,int,int,int) calls DToA#JS_dtostr(StringBuilder,int,int,double) at src/org/mozilla/javascript/NativeNumber.java:281 (resolved)",
+          "site": "src/org/mozilla/javascript/NativeNumber.java:281"
+        },
+        {
+          "kind": "hop",
+          "written": "DToA.JS_dtostr(StringBuilder, int, int, double)",
+          "provenance": "agent",
+          "method": "org.mozilla.javascript.DToA#JS_dtostr(StringBuilder,int,int,double)",
+          "location": "src/org/mozilla/javascript/DToA.java:1130"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "DToA#JS_dtostr(StringBuilder,int,int,double) calls DToA#JS_dtoa(double,int,boolean,int,boolean[],StringBuilder) at src/org/mozilla/javascript/DToA.java:1142 (resolved)",
+          "site": "src/org/mozilla/javascript/DToA.java:1142"
+        },
+        {
+          "kind": "hop",
+          "written": "DToA.JS_dtoa(double, int, boolean, int, boolean[], StringBuilder)",
+          "provenance": "agent",
+          "method": "org.mozilla.javascript.DToA#JS_dtoa(double,int,boolean,int,boolean[],StringBuilder)",
+          "location": "src/org/mozilla/javascript/DToA.java:442"
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "status": "INDIRECT",
+          "evidence": "1 omitted call(s)",
+          "chain": [
+            "NativeNumberFuzzTest#fuzzNumberToFixed(InputStream)",
+            "NativeNumberFuzzTest#evaluate(String,String)",
+            "Context#evaluateString(Scriptable,String,String,int,Object)"
+          ]
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "status": "CALL",
+          "evidence": "Context#evaluateString(Scriptable,String,String,int,Object) calls InterpretedFunction#exec(Context,Scriptable) at src/org/mozilla/javascript/Context.java:1137 (resolved)"
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "status": "CALL",
+          "evidence": "Script#exec(Context,Scriptable) calls BaseFunction#call(Context,Scriptable,Scriptable,Object[]) at src/org/mozilla/javascript/SecurityController.java:161 (resolved)"
+        },
+        {
+          "from": 4,
+          "to": 5,
+          "status": "INDIRECT",
+          "evidence": "1 omitted call(s)",
+          "chain": [
+            "InterpretedFunction#call(Context,Scriptable,Scriptable,Object[])",
+            "Interpreter#interpret(InterpretedFunction,Context,Scriptable,Scriptable,Object[])",
+            "Interpreter#interpretLoop(Context,CallFrame,Object)"
+          ]
+        },
+        {
+          "from": 5,
+          "to": 6,
+          "status": "CALL",
+          "evidence": "Interpreter#interpretLoop(Context,CallFrame,Object) calls BaseFunction#call(Context,Scriptable,Scriptable,Object[]) at src/org/mozilla/javascript/Interpreter.java:1871 (resolved)"
+        },
+        {
+          "from": 6,
+          "to": 7,
+          "status": "CALL",
+          "evidence": "IdFunctionObject#call(Context,Scriptable,Scriptable,Object[]) calls IdFunctionCall#execIdCall(IdFunctionObject,Context,Scriptable,Scriptable,Object[]) at src/org/mozilla/javascript/IdFunctionObject.java:100 (resolved)"
+        },
+        {
+          "from": 7,
+          "to": 8,
+          "status": "CALL",
+          "evidence": "NativeNumber#execIdCall(IdFunctionObject,Context,Scriptable,Scriptable,Object[]) calls NativeNumber#num_to(double,Object[],int,int,int,int) at src/org/mozilla/javascript/NativeNumber.java:160 (resolved)"
+        },
+        {
+          "from": 8,
+          "to": 9,
+          "status": "CALL",
+          "evidence": "NativeNumber#num_to(double,Object[],int,int,int,int) calls DToA#JS_dtostr(StringBuilder,int,int,double) at src/org/mozilla/javascript/NativeNumber.java:281 (resolved)"
+        },
+        {
+          "from": 9,
+          "to": 10,
+          "status": "CALL",
+          "evidence": "DToA#JS_dtostr(StringBuilder,int,int,double) calls DToA#JS_dtoa(double,int,boolean,int,boolean[],StringBuilder) at src/org/mozilla/javascript/DToA.java:1142 (resolved)"
+        }
+      ],
+      "diagnostics": [],
+      "warnings": [
+        "Edge 1→2 is indirect: NativeNumberFuzzTest#fuzzNumberToFixed(InputStream) → NativeNumberFuzzTest#evaluate(String,String) → Context#evaluateString(Scriptable,String,String,int,Object)",
+        "Edge 4→5 is indirect: InterpretedFunction#call(Context,Scriptable,Scriptable,Object[]) → Interpreter#interpret(InterpretedFunction,Context,Scriptable,Scriptable,Object[]) → Interpreter#interpretLoop(Context,CallFrame,Object)"
+      ]
+    },
+    {
+      "target": "V2",
+      "status": "PASS",
+      "entrypoint": "NativeNumberFuzzTest.fuzzNumberToStringRadix(InputStream) → Context.evaluateString(Scriptable, String, String, int, Object) → InterpretedFunction.exec(Context, Scriptable) → InterpretedFunction.call(Context, Scriptable, Scriptable, Object[]) → Interpreter.interpretLoop(Context, CallFrame, Object) → IdFunctionObject.call(Context, Scriptable, Scriptable, Object[]) → NativeNumber.execIdCall(IdFunctionObject, Context, Scriptable, Scriptable, Object[]) → ScriptRuntime.numberToString(double, int) → DToA.JS_dtobasestr(int, double)",
+      "source_path": "src/org/mozilla/javascript/DToA.java",
+      "start_ok": true,
+      "harness_entry": "fuzz.harness.NativeNumberFuzzTest#fuzzNumberToStringRadix",
+      "end_ok": true,
+      "end": {
+        "sink_file": "src/org/mozilla/javascript/DToA.java",
+        "ok": true,
+        "evidence": "hop 9 DToA#JS_dtobasestr(int,double) is declared in src/org/mozilla/javascript/DToA.java:206",
+        "level": "method",
+        "sink_method": "DToA#JS_dtobasestr",
+        "sink_evidence": "hop 9 is DToA#JS_dtobasestr(int,double)"
+      },
+      "hops": [
+        {
+          "index": 1,
+          "raw": "NativeNumberFuzzTest.fuzzNumberToStringRadix(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "fuzz.harness.NativeNumberFuzzTest#fuzzNumberToStringRadix(InputStream)",
+              "location": "harness/src/test/java/fuzz/harness/NativeNumberFuzzTest.java:59"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "raw": "Context.evaluateString(Scriptable, String, String, int, Object)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.mozilla.javascript.Context#evaluateString(Scriptable,String,String,int,Object)",
+              "location": "src/org/mozilla/javascript/Context.java:1133"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "raw": "InterpretedFunction.exec(Context, Scriptable)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.mozilla.javascript.InterpretedFunction#exec(Context,Scriptable)",
+              "location": "src/org/mozilla/javascript/InterpretedFunction.java:94"
+            },
+            {
+              "method": "org.mozilla.javascript.Script#exec(Context,Scriptable)",
+              "location": "src/org/mozilla/javascript/Script.java:39"
+            },
+            {
+              "method": "org.mozilla.javascript.SecurityController$anon(Script)#exec(Context,Scriptable)",
+              "location": "src/org/mozilla/javascript/SecurityController.java:159"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "raw": "InterpretedFunction.call(Context, Scriptable, Scriptable, Object[])",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.mozilla.javascript.InterpretedFunction#call(Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/InterpretedFunction.java:86"
+            },
+            {
+              "method": "org.mozilla.javascript.BaseFunction#call(Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/BaseFunction.java:380"
+            },
+            {
+              "method": "org.mozilla.javascript.Callable#call(Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/Callable.java:24"
+            },
+            {
+              "method": "org.mozilla.javascript.Function#call(Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/Function.java:32"
+            },
+            {
+              "method": "org.mozilla.javascript.Arguments$anon(BaseFunction)#call(Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/Arguments.java:410"
+            },
+            {
+              "method": "org.mozilla.javascript.MemberBox$anon(BaseFunction)#call(Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/MemberBox.java:126"
+            },
+            {
+              "method": "org.mozilla.javascript.MemberBox$anon(BaseFunction)#call(Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/MemberBox.java:162"
+            },
+            {
+              "method": "org.mozilla.javascript.ScriptRuntime$anon(BaseFunction)#call(Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/ScriptRuntime.java:53"
+            }
+          ],
+          "more_candidates": 2
+        },
+        {
+          "index": 5,
+          "raw": "Interpreter.interpretLoop(Context, CallFrame, Object)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.mozilla.javascript.Interpreter#interpretLoop(Context,CallFrame,Object)",
+              "location": "src/org/mozilla/javascript/Interpreter.java:1110"
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "raw": "IdFunctionObject.call(Context, Scriptable, Scriptable, Object[])",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.mozilla.javascript.IdFunctionObject#call(Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/IdFunctionObject.java:97"
+            },
+            {
+              "method": "org.mozilla.javascript.BaseFunction#call(Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/BaseFunction.java:380"
+            },
+            {
+              "method": "org.mozilla.javascript.Callable#call(Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/Callable.java:24"
+            },
+            {
+              "method": "org.mozilla.javascript.Function#call(Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/Function.java:32"
+            },
+            {
+              "method": "org.mozilla.javascript.Arguments$anon(BaseFunction)#call(Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/Arguments.java:410"
+            },
+            {
+              "method": "org.mozilla.javascript.MemberBox$anon(BaseFunction)#call(Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/MemberBox.java:126"
+            },
+            {
+              "method": "org.mozilla.javascript.MemberBox$anon(BaseFunction)#call(Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/MemberBox.java:162"
+            },
+            {
+              "method": "org.mozilla.javascript.ScriptRuntime$anon(BaseFunction)#call(Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/ScriptRuntime.java:53"
+            }
+          ],
+          "more_candidates": 2
+        },
+        {
+          "index": 7,
+          "raw": "NativeNumber.execIdCall(IdFunctionObject, Context, Scriptable, Scriptable, Object[])",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.mozilla.javascript.NativeNumber#execIdCall(IdFunctionObject,Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/NativeNumber.java:118"
+            },
+            {
+              "method": "org.mozilla.javascript.IdFunctionCall#execIdCall(IdFunctionObject,Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/IdFunctionCall.java:19"
+            },
+            {
+              "method": "org.mozilla.javascript.IdScriptableObject#execIdCall(IdFunctionObject,Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/IdScriptableObject.java:707"
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "raw": "ScriptRuntime.numberToString(double, int)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.mozilla.javascript.ScriptRuntime#numberToString(double,int)",
+              "location": "src/org/mozilla/javascript/ScriptRuntime.java:1035"
+            }
+          ]
+        },
+        {
+          "index": 9,
+          "raw": "DToA.JS_dtobasestr(int, double)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.mozilla.javascript.DToA#JS_dtobasestr(int,double)",
+              "location": "src/org/mozilla/javascript/DToA.java:206"
+            }
+          ]
+        }
+      ],
+      "path_signature": [
+        "fuzz.harness.NativeNumberFuzzTest#fuzzNumberToStringRadix(InputStream)",
+        "org.mozilla.javascript.Context#evaluateString(Scriptable,String,String,int,Object)",
+        "org.mozilla.javascript.InterpretedFunction#exec(Context,Scriptable)",
+        "org.mozilla.javascript.InterpretedFunction#call(Context,Scriptable,Scriptable,Object[])",
+        "org.mozilla.javascript.Interpreter#interpretLoop(Context,CallFrame,Object)",
+        "org.mozilla.javascript.IdFunctionObject#call(Context,Scriptable,Scriptable,Object[])",
+        "org.mozilla.javascript.NativeNumber#execIdCall(IdFunctionObject,Context,Scriptable,Scriptable,Object[])",
+        "org.mozilla.javascript.ScriptRuntime#numberToString(double,int)",
+        "org.mozilla.javascript.DToA#JS_dtobasestr(int,double)"
+      ],
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "written": "NativeNumberFuzzTest.fuzzNumberToStringRadix(InputStream)",
+          "provenance": "agent",
+          "method": "fuzz.harness.NativeNumberFuzzTest#fuzzNumberToStringRadix(InputStream)",
+          "location": "harness/src/test/java/fuzz/harness/NativeNumberFuzzTest.java:59"
+        },
+        {
+          "kind": "connection",
+          "type": "INDIRECT",
+          "evidence": "1 omitted call(s)"
+        },
+        {
+          "kind": "hop",
+          "written": null,
+          "provenance": "checkpath (omitted call)",
+          "method": "fuzz.harness.NativeNumberFuzzTest#evaluate(String,String)",
+          "location": "harness/src/test/java/fuzz/harness/NativeNumberFuzzTest.java:100"
+        },
+        {
+          "kind": "hop",
+          "written": "Context.evaluateString(Scriptable, String, String, int, Object)",
+          "provenance": "agent",
+          "method": "org.mozilla.javascript.Context#evaluateString(Scriptable,String,String,int,Object)",
+          "location": "src/org/mozilla/javascript/Context.java:1133"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "Context#evaluateString(Scriptable,String,String,int,Object) calls InterpretedFunction#exec(Context,Scriptable) at src/org/mozilla/javascript/Context.java:1137 (resolved)",
+          "site": "src/org/mozilla/javascript/Context.java:1137"
+        },
+        {
+          "kind": "hop",
+          "written": "InterpretedFunction.exec(Context, Scriptable)",
+          "provenance": "agent",
+          "method": "org.mozilla.javascript.InterpretedFunction#exec(Context,Scriptable)",
+          "location": "src/org/mozilla/javascript/InterpretedFunction.java:94"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "Script#exec(Context,Scriptable) calls BaseFunction#call(Context,Scriptable,Scriptable,Object[]) at src/org/mozilla/javascript/SecurityController.java:161 (resolved)",
+          "site": "src/org/mozilla/javascript/SecurityController.java:161"
+        },
+        {
+          "kind": "hop",
+          "written": "InterpretedFunction.call(Context, Scriptable, Scriptable, Object[])",
+          "provenance": "agent",
+          "method": "org.mozilla.javascript.InterpretedFunction#call(Context,Scriptable,Scriptable,Object[])",
+          "location": "src/org/mozilla/javascript/InterpretedFunction.java:86"
+        },
+        {
+          "kind": "connection",
+          "type": "INDIRECT",
+          "evidence": "1 omitted call(s)"
+        },
+        {
+          "kind": "hop",
+          "written": null,
+          "provenance": "checkpath (omitted call)",
+          "method": "org.mozilla.javascript.Interpreter#interpret(InterpretedFunction,Context,Scriptable,Scriptable,Object[])",
+          "location": "src/org/mozilla/javascript/Interpreter.java:1030"
+        },
+        {
+          "kind": "hop",
+          "written": "Interpreter.interpretLoop(Context, CallFrame, Object)",
+          "provenance": "agent",
+          "method": "org.mozilla.javascript.Interpreter#interpretLoop(Context,CallFrame,Object)",
+          "location": "src/org/mozilla/javascript/Interpreter.java:1110"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "Interpreter#interpretLoop(Context,CallFrame,Object) calls BaseFunction#call(Context,Scriptable,Scriptable,Object[]) at src/org/mozilla/javascript/Interpreter.java:1871 (resolved)",
+          "site": "src/org/mozilla/javascript/Interpreter.java:1871"
+        },
+        {
+          "kind": "hop",
+          "written": "IdFunctionObject.call(Context, Scriptable, Scriptable, Object[])",
+          "provenance": "agent",
+          "method": "org.mozilla.javascript.IdFunctionObject#call(Context,Scriptable,Scriptable,Object[])",
+          "location": "src/org/mozilla/javascript/IdFunctionObject.java:97"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "IdFunctionObject#call(Context,Scriptable,Scriptable,Object[]) calls IdFunctionCall#execIdCall(IdFunctionObject,Context,Scriptable,Scriptable,Object[]) at src/org/mozilla/javascript/IdFunctionObject.java:100 (resolved)",
+          "site": "src/org/mozilla/javascript/IdFunctionObject.java:100"
+        },
+        {
+          "kind": "hop",
+          "written": "NativeNumber.execIdCall(IdFunctionObject, Context, Scriptable, Scriptable, Object[])",
+          "provenance": "agent",
+          "method": "org.mozilla.javascript.NativeNumber#execIdCall(IdFunctionObject,Context,Scriptable,Scriptable,Object[])",
+          "location": "src/org/mozilla/javascript/NativeNumber.java:118"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "NativeNumber#execIdCall(IdFunctionObject,Context,Scriptable,Scriptable,Object[]) calls ScriptRuntime#numberToString(double,int) at src/org/mozilla/javascript/NativeNumber.java:149 (resolved)",
+          "site": "src/org/mozilla/javascript/NativeNumber.java:149"
+        },
+        {
+          "kind": "hop",
+          "written": "ScriptRuntime.numberToString(double, int)",
+          "provenance": "agent",
+          "method": "org.mozilla.javascript.ScriptRuntime#numberToString(double,int)",
+          "location": "src/org/mozilla/javascript/ScriptRuntime.java:1035"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "ScriptRuntime#numberToString(double,int) calls DToA#JS_dtobasestr(int,double) at src/org/mozilla/javascript/ScriptRuntime.java:1049 (resolved)",
+          "site": "src/org/mozilla/javascript/ScriptRuntime.java:1049"
+        },
+        {
+          "kind": "hop",
+          "written": "DToA.JS_dtobasestr(int, double)",
+          "provenance": "agent",
+          "method": "org.mozilla.javascript.DToA#JS_dtobasestr(int,double)",
+          "location": "src/org/mozilla/javascript/DToA.java:206"
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "status": "INDIRECT",
+          "evidence": "1 omitted call(s)",
+          "chain": [
+            "NativeNumberFuzzTest#fuzzNumberToStringRadix(InputStream)",
+            "NativeNumberFuzzTest#evaluate(String,String)",
+            "Context#evaluateString(Scriptable,String,String,int,Object)"
+          ]
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "status": "CALL",
+          "evidence": "Context#evaluateString(Scriptable,String,String,int,Object) calls InterpretedFunction#exec(Context,Scriptable) at src/org/mozilla/javascript/Context.java:1137 (resolved)"
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "status": "CALL",
+          "evidence": "Script#exec(Context,Scriptable) calls BaseFunction#call(Context,Scriptable,Scriptable,Object[]) at src/org/mozilla/javascript/SecurityController.java:161 (resolved)"
+        },
+        {
+          "from": 4,
+          "to": 5,
+          "status": "INDIRECT",
+          "evidence": "1 omitted call(s)",
+          "chain": [
+            "InterpretedFunction#call(Context,Scriptable,Scriptable,Object[])",
+            "Interpreter#interpret(InterpretedFunction,Context,Scriptable,Scriptable,Object[])",
+            "Interpreter#interpretLoop(Context,CallFrame,Object)"
+          ]
+        },
+        {
+          "from": 5,
+          "to": 6,
+          "status": "CALL",
+          "evidence": "Interpreter#interpretLoop(Context,CallFrame,Object) calls BaseFunction#call(Context,Scriptable,Scriptable,Object[]) at src/org/mozilla/javascript/Interpreter.java:1871 (resolved)"
+        },
+        {
+          "from": 6,
+          "to": 7,
+          "status": "CALL",
+          "evidence": "IdFunctionObject#call(Context,Scriptable,Scriptable,Object[]) calls IdFunctionCall#execIdCall(IdFunctionObject,Context,Scriptable,Scriptable,Object[]) at src/org/mozilla/javascript/IdFunctionObject.java:100 (resolved)"
+        },
+        {
+          "from": 7,
+          "to": 8,
+          "status": "CALL",
+          "evidence": "NativeNumber#execIdCall(IdFunctionObject,Context,Scriptable,Scriptable,Object[]) calls ScriptRuntime#numberToString(double,int) at src/org/mozilla/javascript/NativeNumber.java:149 (resolved)"
+        },
+        {
+          "from": 8,
+          "to": 9,
+          "status": "CALL",
+          "evidence": "ScriptRuntime#numberToString(double,int) calls DToA#JS_dtobasestr(int,double) at src/org/mozilla/javascript/ScriptRuntime.java:1049 (resolved)"
+        }
+      ],
+      "diagnostics": [],
+      "warnings": [
+        "Edge 1→2 is indirect: NativeNumberFuzzTest#fuzzNumberToStringRadix(InputStream) → NativeNumberFuzzTest#evaluate(String,String) → Context#evaluateString(Scriptable,String,String,int,Object)",
+        "Edge 4→5 is indirect: InterpretedFunction#call(Context,Scriptable,Scriptable,Object[]) → Interpreter#interpret(InterpretedFunction,Context,Scriptable,Scriptable,Object[]) → Interpreter#interpretLoop(Context,CallFrame,Object)"
+      ]
+    },
+    {
+      "target": "V3",
+      "status": "PASS",
+      "entrypoint": "NativeNumberFuzzTest.fuzzNumberFormatMethods(InputStream) → Context.evaluateString(Scriptable, String, String, int, Object) → InterpretedFunction.exec(Context, Scriptable) → InterpretedFunction.call(Context, Scriptable, Scriptable, Object[]) → Interpreter.interpretLoop(Context, CallFrame, Object) → IdFunctionObject.call(Context, Scriptable, Scriptable, Object[]) → NativeNumber.execIdCall(IdFunctionObject, Context, Scriptable, Scriptable, Object[]) → NativeNumber.num_to(double, Object[], int, int, int, int) → DToA.JS_dtostr(StringBuilder, int, int, double) → DToA.JS_dtoa(double, int, boolean, int, boolean[], StringBuilder)",
+      "source_path": "src/org/mozilla/javascript/DToA.java",
+      "start_ok": true,
+      "harness_entry": "fuzz.harness.NativeNumberFuzzTest#fuzzNumberFormatMethods",
+      "end_ok": true,
+      "end": {
+        "sink_file": "src/org/mozilla/javascript/DToA.java",
+        "ok": true,
+        "evidence": "hop 10 DToA#JS_dtoa(double,int,boolean,int,boolean[],StringBuilder) is declared in src/org/mozilla/javascript/DToA.java:442",
+        "level": "method",
+        "sink_method": "DToA#JS_dtoa",
+        "sink_evidence": "hop 10 is DToA#JS_dtoa(double,int,boolean,int,boolean[],StringBuilder)"
+      },
+      "hops": [
+        {
+          "index": 1,
+          "raw": "NativeNumberFuzzTest.fuzzNumberFormatMethods(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "fuzz.harness.NativeNumberFuzzTest#fuzzNumberFormatMethods(InputStream)",
+              "location": "harness/src/test/java/fuzz/harness/NativeNumberFuzzTest.java:74"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "raw": "Context.evaluateString(Scriptable, String, String, int, Object)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.mozilla.javascript.Context#evaluateString(Scriptable,String,String,int,Object)",
+              "location": "src/org/mozilla/javascript/Context.java:1133"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "raw": "InterpretedFunction.exec(Context, Scriptable)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.mozilla.javascript.InterpretedFunction#exec(Context,Scriptable)",
+              "location": "src/org/mozilla/javascript/InterpretedFunction.java:94"
+            },
+            {
+              "method": "org.mozilla.javascript.Script#exec(Context,Scriptable)",
+              "location": "src/org/mozilla/javascript/Script.java:39"
+            },
+            {
+              "method": "org.mozilla.javascript.SecurityController$anon(Script)#exec(Context,Scriptable)",
+              "location": "src/org/mozilla/javascript/SecurityController.java:159"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "raw": "InterpretedFunction.call(Context, Scriptable, Scriptable, Object[])",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.mozilla.javascript.InterpretedFunction#call(Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/InterpretedFunction.java:86"
+            },
+            {
+              "method": "org.mozilla.javascript.BaseFunction#call(Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/BaseFunction.java:380"
+            },
+            {
+              "method": "org.mozilla.javascript.Callable#call(Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/Callable.java:24"
+            },
+            {
+              "method": "org.mozilla.javascript.Function#call(Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/Function.java:32"
+            },
+            {
+              "method": "org.mozilla.javascript.Arguments$anon(BaseFunction)#call(Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/Arguments.java:410"
+            },
+            {
+              "method": "org.mozilla.javascript.MemberBox$anon(BaseFunction)#call(Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/MemberBox.java:126"
+            },
+            {
+              "method": "org.mozilla.javascript.MemberBox$anon(BaseFunction)#call(Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/MemberBox.java:162"
+            },
+            {
+              "method": "org.mozilla.javascript.ScriptRuntime$anon(BaseFunction)#call(Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/ScriptRuntime.java:53"
+            }
+          ],
+          "more_candidates": 2
+        },
+        {
+          "index": 5,
+          "raw": "Interpreter.interpretLoop(Context, CallFrame, Object)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.mozilla.javascript.Interpreter#interpretLoop(Context,CallFrame,Object)",
+              "location": "src/org/mozilla/javascript/Interpreter.java:1110"
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "raw": "IdFunctionObject.call(Context, Scriptable, Scriptable, Object[])",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.mozilla.javascript.IdFunctionObject#call(Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/IdFunctionObject.java:97"
+            },
+            {
+              "method": "org.mozilla.javascript.BaseFunction#call(Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/BaseFunction.java:380"
+            },
+            {
+              "method": "org.mozilla.javascript.Callable#call(Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/Callable.java:24"
+            },
+            {
+              "method": "org.mozilla.javascript.Function#call(Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/Function.java:32"
+            },
+            {
+              "method": "org.mozilla.javascript.Arguments$anon(BaseFunction)#call(Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/Arguments.java:410"
+            },
+            {
+              "method": "org.mozilla.javascript.MemberBox$anon(BaseFunction)#call(Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/MemberBox.java:126"
+            },
+            {
+              "method": "org.mozilla.javascript.MemberBox$anon(BaseFunction)#call(Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/MemberBox.java:162"
+            },
+            {
+              "method": "org.mozilla.javascript.ScriptRuntime$anon(BaseFunction)#call(Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/ScriptRuntime.java:53"
+            }
+          ],
+          "more_candidates": 2
+        },
+        {
+          "index": 7,
+          "raw": "NativeNumber.execIdCall(IdFunctionObject, Context, Scriptable, Scriptable, Object[])",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.mozilla.javascript.NativeNumber#execIdCall(IdFunctionObject,Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/NativeNumber.java:118"
+            },
+            {
+              "method": "org.mozilla.javascript.IdFunctionCall#execIdCall(IdFunctionObject,Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/IdFunctionCall.java:19"
+            },
+            {
+              "method": "org.mozilla.javascript.IdScriptableObject#execIdCall(IdFunctionObject,Context,Scriptable,Scriptable,Object[])",
+              "location": "src/org/mozilla/javascript/IdScriptableObject.java:707"
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "raw": "NativeNumber.num_to(double, Object[], int, int, int, int)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.mozilla.javascript.NativeNumber#num_to(double,Object[],int,int,int,int)",
+              "location": "src/org/mozilla/javascript/NativeNumber.java:257"
+            }
+          ]
+        },
+        {
+          "index": 9,
+          "raw": "DToA.JS_dtostr(StringBuilder, int, int, double)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.mozilla.javascript.DToA#JS_dtostr(StringBuilder,int,int,double)",
+              "location": "src/org/mozilla/javascript/DToA.java:1130"
+            }
+          ]
+        },
+        {
+          "index": 10,
+          "raw": "DToA.JS_dtoa(double, int, boolean, int, boolean[], StringBuilder)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.mozilla.javascript.DToA#JS_dtoa(double,int,boolean,int,boolean[],StringBuilder)",
+              "location": "src/org/mozilla/javascript/DToA.java:442"
+            }
+          ]
+        }
+      ],
+      "path_signature": [
+        "fuzz.harness.NativeNumberFuzzTest#fuzzNumberFormatMethods(InputStream)",
+        "org.mozilla.javascript.Context#evaluateString(Scriptable,String,String,int,Object)",
+        "org.mozilla.javascript.InterpretedFunction#exec(Context,Scriptable)",
+        "org.mozilla.javascript.InterpretedFunction#call(Context,Scriptable,Scriptable,Object[])",
+        "org.mozilla.javascript.Interpreter#interpretLoop(Context,CallFrame,Object)",
+        "org.mozilla.javascript.IdFunctionObject#call(Context,Scriptable,Scriptable,Object[])",
+        "org.mozilla.javascript.NativeNumber#execIdCall(IdFunctionObject,Context,Scriptable,Scriptable,Object[])",
+        "org.mozilla.javascript.NativeNumber#num_to(double,Object[],int,int,int,int)",
+        "org.mozilla.javascript.DToA#JS_dtostr(StringBuilder,int,int,double)",
+        "org.mozilla.javascript.DToA#JS_dtoa(double,int,boolean,int,boolean[],StringBuilder)"
+      ],
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "written": "NativeNumberFuzzTest.fuzzNumberFormatMethods(InputStream)",
+          "provenance": "agent",
+          "method": "fuzz.harness.NativeNumberFuzzTest#fuzzNumberFormatMethods(InputStream)",
+          "location": "harness/src/test/java/fuzz/harness/NativeNumberFuzzTest.java:74"
+        },
+        {
+          "kind": "connection",
+          "type": "INDIRECT",
+          "evidence": "1 omitted call(s)"
+        },
+        {
+          "kind": "hop",
+          "written": null,
+          "provenance": "checkpath (omitted call)",
+          "method": "fuzz.harness.NativeNumberFuzzTest#evaluate(String,String)",
+          "location": "harness/src/test/java/fuzz/harness/NativeNumberFuzzTest.java:100"
+        },
+        {
+          "kind": "hop",
+          "written": "Context.evaluateString(Scriptable, String, String, int, Object)",
+          "provenance": "agent",
+          "method": "org.mozilla.javascript.Context#evaluateString(Scriptable,String,String,int,Object)",
+          "location": "src/org/mozilla/javascript/Context.java:1133"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "Context#evaluateString(Scriptable,String,String,int,Object) calls InterpretedFunction#exec(Context,Scriptable) at src/org/mozilla/javascript/Context.java:1137 (resolved)",
+          "site": "src/org/mozilla/javascript/Context.java:1137"
+        },
+        {
+          "kind": "hop",
+          "written": "InterpretedFunction.exec(Context, Scriptable)",
+          "provenance": "agent",
+          "method": "org.mozilla.javascript.InterpretedFunction#exec(Context,Scriptable)",
+          "location": "src/org/mozilla/javascript/InterpretedFunction.java:94"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "Script#exec(Context,Scriptable) calls BaseFunction#call(Context,Scriptable,Scriptable,Object[]) at src/org/mozilla/javascript/SecurityController.java:161 (resolved)",
+          "site": "src/org/mozilla/javascript/SecurityController.java:161"
+        },
+        {
+          "kind": "hop",
+          "written": "InterpretedFunction.call(Context, Scriptable, Scriptable, Object[])",
+          "provenance": "agent",
+          "method": "org.mozilla.javascript.InterpretedFunction#call(Context,Scriptable,Scriptable,Object[])",
+          "location": "src/org/mozilla/javascript/InterpretedFunction.java:86"
+        },
+        {
+          "kind": "connection",
+          "type": "INDIRECT",
+          "evidence": "1 omitted call(s)"
+        },
+        {
+          "kind": "hop",
+          "written": null,
+          "provenance": "checkpath (omitted call)",
+          "method": "org.mozilla.javascript.Interpreter#interpret(InterpretedFunction,Context,Scriptable,Scriptable,Object[])",
+          "location": "src/org/mozilla/javascript/Interpreter.java:1030"
+        },
+        {
+          "kind": "hop",
+          "written": "Interpreter.interpretLoop(Context, CallFrame, Object)",
+          "provenance": "agent",
+          "method": "org.mozilla.javascript.Interpreter#interpretLoop(Context,CallFrame,Object)",
+          "location": "src/org/mozilla/javascript/Interpreter.java:1110"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "Interpreter#interpretLoop(Context,CallFrame,Object) calls BaseFunction#call(Context,Scriptable,Scriptable,Object[]) at src/org/mozilla/javascript/Interpreter.java:1871 (resolved)",
+          "site": "src/org/mozilla/javascript/Interpreter.java:1871"
+        },
+        {
+          "kind": "hop",
+          "written": "IdFunctionObject.call(Context, Scriptable, Scriptable, Object[])",
+          "provenance": "agent",
+          "method": "org.mozilla.javascript.IdFunctionObject#call(Context,Scriptable,Scriptable,Object[])",
+          "location": "src/org/mozilla/javascript/IdFunctionObject.java:97"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "IdFunctionObject#call(Context,Scriptable,Scriptable,Object[]) calls IdFunctionCall#execIdCall(IdFunctionObject,Context,Scriptable,Scriptable,Object[]) at src/org/mozilla/javascript/IdFunctionObject.java:100 (resolved)",
+          "site": "src/org/mozilla/javascript/IdFunctionObject.java:100"
+        },
+        {
+          "kind": "hop",
+          "written": "NativeNumber.execIdCall(IdFunctionObject, Context, Scriptable, Scriptable, Object[])",
+          "provenance": "agent",
+          "method": "org.mozilla.javascript.NativeNumber#execIdCall(IdFunctionObject,Context,Scriptable,Scriptable,Object[])",
+          "location": "src/org/mozilla/javascript/NativeNumber.java:118"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "NativeNumber#execIdCall(IdFunctionObject,Context,Scriptable,Scriptable,Object[]) calls NativeNumber#num_to(double,Object[],int,int,int,int) at src/org/mozilla/javascript/NativeNumber.java:160 (resolved)",
+          "site": "src/org/mozilla/javascript/NativeNumber.java:160"
+        },
+        {
+          "kind": "hop",
+          "written": "NativeNumber.num_to(double, Object[], int, int, int, int)",
+          "provenance": "agent",
+          "method": "org.mozilla.javascript.NativeNumber#num_to(double,Object[],int,int,int,int)",
+          "location": "src/org/mozilla/javascript/NativeNumber.java:257"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "NativeNumber#num_to(double,Object[],int,int,int,int) calls DToA#JS_dtostr(StringBuilder,int,int,double) at src/org/mozilla/javascript/NativeNumber.java:281 (resolved)",
+          "site": "src/org/mozilla/javascript/NativeNumber.java:281"
+        },
+        {
+          "kind": "hop",
+          "written": "DToA.JS_dtostr(StringBuilder, int, int, double)",
+          "provenance": "agent",
+          "method": "org.mozilla.javascript.DToA#JS_dtostr(StringBuilder,int,int,double)",
+          "location": "src/org/mozilla/javascript/DToA.java:1130"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "DToA#JS_dtostr(StringBuilder,int,int,double) calls DToA#JS_dtoa(double,int,boolean,int,boolean[],StringBuilder) at src/org/mozilla/javascript/DToA.java:1142 (resolved)",
+          "site": "src/org/mozilla/javascript/DToA.java:1142"
+        },
+        {
+          "kind": "hop",
+          "written": "DToA.JS_dtoa(double, int, boolean, int, boolean[], StringBuilder)",
+          "provenance": "agent",
+          "method": "org.mozilla.javascript.DToA#JS_dtoa(double,int,boolean,int,boolean[],StringBuilder)",
+          "location": "src/org/mozilla/javascript/DToA.java:442"
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "status": "INDIRECT",
+          "evidence": "1 omitted call(s)",
+          "chain": [
+            "NativeNumberFuzzTest#fuzzNumberFormatMethods(InputStream)",
+            "NativeNumberFuzzTest#evaluate(String,String)",
+            "Context#evaluateString(Scriptable,String,String,int,Object)"
+          ]
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "status": "CALL",
+          "evidence": "Context#evaluateString(Scriptable,String,String,int,Object) calls InterpretedFunction#exec(Context,Scriptable) at src/org/mozilla/javascript/Context.java:1137 (resolved)"
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "status": "CALL",
+          "evidence": "Script#exec(Context,Scriptable) calls BaseFunction#call(Context,Scriptable,Scriptable,Object[]) at src/org/mozilla/javascript/SecurityController.java:161 (resolved)"
+        },
+        {
+          "from": 4,
+          "to": 5,
+          "status": "INDIRECT",
+          "evidence": "1 omitted call(s)",
+          "chain": [
+            "InterpretedFunction#call(Context,Scriptable,Scriptable,Object[])",
+            "Interpreter#interpret(InterpretedFunction,Context,Scriptable,Scriptable,Object[])",
+            "Interpreter#interpretLoop(Context,CallFrame,Object)"
+          ]
+        },
+        {
+          "from": 5,
+          "to": 6,
+          "status": "CALL",
+          "evidence": "Interpreter#interpretLoop(Context,CallFrame,Object) calls BaseFunction#call(Context,Scriptable,Scriptable,Object[]) at src/org/mozilla/javascript/Interpreter.java:1871 (resolved)"
+        },
+        {
+          "from": 6,
+          "to": 7,
+          "status": "CALL",
+          "evidence": "IdFunctionObject#call(Context,Scriptable,Scriptable,Object[]) calls IdFunctionCall#execIdCall(IdFunctionObject,Context,Scriptable,Scriptable,Object[]) at src/org/mozilla/javascript/IdFunctionObject.java:100 (resolved)"
+        },
+        {
+          "from": 7,
+          "to": 8,
+          "status": "CALL",
+          "evidence": "NativeNumber#execIdCall(IdFunctionObject,Context,Scriptable,Scriptable,Object[]) calls NativeNumber#num_to(double,Object[],int,int,int,int) at src/org/mozilla/javascript/NativeNumber.java:160 (resolved)"
+        },
+        {
+          "from": 8,
+          "to": 9,
+          "status": "CALL",
+          "evidence": "NativeNumber#num_to(double,Object[],int,int,int,int) calls DToA#JS_dtostr(StringBuilder,int,int,double) at src/org/mozilla/javascript/NativeNumber.java:281 (resolved)"
+        },
+        {
+          "from": 9,
+          "to": 10,
+          "status": "CALL",
+          "evidence": "DToA#JS_dtostr(StringBuilder,int,int,double) calls DToA#JS_dtoa(double,int,boolean,int,boolean[],StringBuilder) at src/org/mozilla/javascript/DToA.java:1142 (resolved)"
+        }
+      ],
+      "diagnostics": [],
+      "warnings": [
+        "Edge 1→2 is indirect: NativeNumberFuzzTest#fuzzNumberFormatMethods(InputStream) → NativeNumberFuzzTest#evaluate(String,String) → Context#evaluateString(Scriptable,String,String,int,Object)",
+        "Edge 4→5 is indirect: InterpretedFunction#call(Context,Scriptable,Scriptable,Object[]) → Interpreter#interpret(InterpretedFunction,Context,Scriptable,Scriptable,Object[]) → Interpreter#interpretLoop(Context,CallFrame,Object)"
+      ]
+    }
+  ],
+  "plan_ok": true,
+  "plans": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "signals": [
+        {
+          "name": "bigIntOps",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "DToA#JS_dtoa",
+              "status": "RESOLVED",
+              "method": "org.mozilla.javascript.DToA#JS_dtoa",
+              "declared_at": "src/org/mozilla/javascript/DToA.java:442",
+              "relation": "on_path"
+            },
+            {
+              "written": "DToA#pow5mult",
+              "status": "RESOLVED",
+              "method": "org.mozilla.javascript.DToA#pow5mult",
+              "declared_at": "src/org/mozilla/javascript/DToA.java:413",
+              "relation": "called_from_path",
+              "chain": [
+                "DToA#JS_dtoa(double,int,boolean,int,boolean[],StringBuilder)",
+                "DToA#pow5mult(BigInteger,int)"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "sinkTimeNs",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "DToA#JS_dtoa",
+              "status": "RESOLVED",
+              "method": "org.mozilla.javascript.DToA#JS_dtoa",
+              "declared_at": "src/org/mozilla/javascript/DToA.java:442",
+              "relation": "on_path"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    },
+    {
+      "target": "V2",
+      "status": "PASS",
+      "signals": [
+        {
+          "name": "bigIntOps",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "DToA#JS_dtobasestr",
+              "status": "RESOLVED",
+              "method": "org.mozilla.javascript.DToA#JS_dtobasestr",
+              "declared_at": "src/org/mozilla/javascript/DToA.java:206",
+              "relation": "on_path"
+            }
+          ]
+        },
+        {
+          "name": "sinkTimeNs",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "DToA#JS_dtobasestr",
+              "status": "RESOLVED",
+              "method": "org.mozilla.javascript.DToA#JS_dtobasestr",
+              "declared_at": "src/org/mozilla/javascript/DToA.java:206",
+              "relation": "on_path"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    },
+    {
+      "target": "V3",
+      "status": "PASS",
+      "signals": [
+        {
+          "name": "bigIntOps",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "DToA#JS_dtoa",
+              "status": "RESOLVED",
+              "method": "org.mozilla.javascript.DToA#JS_dtoa",
+              "declared_at": "src/org/mozilla/javascript/DToA.java:442",
+              "relation": "on_path"
+            },
+            {
+              "written": "DToA#JS_dtobasestr",
+              "status": "RESOLVED",
+              "method": "org.mozilla.javascript.DToA#JS_dtobasestr",
+              "declared_at": "src/org/mozilla/javascript/DToA.java:206",
+              "relation": "called_from_path",
+              "chain": [
+                "NativeNumber#execIdCall(IdFunctionObject,Context,Scriptable,Scriptable,Object[])",
+                "ScriptRuntime#numberToString(double,int)",
+                "DToA#JS_dtobasestr(int,double)"
+              ]
+            },
+            {
+              "written": "DToA#pow5mult",
+              "status": "RESOLVED",
+              "method": "org.mozilla.javascript.DToA#pow5mult",
+              "declared_at": "src/org/mozilla/javascript/DToA.java:413",
+              "relation": "called_from_path",
+              "chain": [
+                "DToA#JS_dtoa(double,int,boolean,int,boolean[],StringBuilder)",
+                "DToA#pow5mult(BigInteger,int)"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "sinkTimeNs",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "DToA#JS_dtoa",
+              "status": "RESOLVED",
+              "method": "org.mozilla.javascript.DToA#JS_dtoa",
+              "declared_at": "src/org/mozilla/javascript/DToA.java:442",
+              "relation": "on_path"
+            },
+            {
+              "written": "DToA#JS_dtobasestr",
+              "status": "RESOLVED",
+              "method": "org.mozilla.javascript.DToA#JS_dtobasestr",
+              "declared_at": "src/org/mozilla/javascript/DToA.java:206",
+              "relation": "called_from_path",
+              "chain": [
+                "NativeNumber#execIdCall(IdFunctionObject,Context,Scriptable,Scriptable,Object[])",
+                "ScriptRuntime#numberToString(double,int)",
+                "DToA#JS_dtobasestr(int,double)"
+              ]
+            },
+            {
+              "written": "DToA#JS_dtostr",
+              "status": "RESOLVED",
+              "method": "org.mozilla.javascript.DToA#JS_dtostr",
+              "declared_at": "src/org/mozilla/javascript/DToA.java:1130",
+              "relation": "on_path"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    }
+  ]
+}

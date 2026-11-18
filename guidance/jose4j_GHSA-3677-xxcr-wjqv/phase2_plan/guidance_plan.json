@@ -1,0 +1,46 @@
+{
+  "plans": [
+    {
+      "target": "V1",
+      "signals": [
+        {
+          "name": "inflatedBytes",
+          "quantity": "total decompressed output bytes from DeflateRFC1951CompressionAlgorithm.decompress()",
+          "aggregation": "sum",
+          "locations": [
+            "DeflateRFC1951CompressionAlgorithm#decompress"
+          ],
+          "technique": "bytecode",
+          "storage": "ThreadLocal<long[]> in InflateCounters (index 0)",
+          "reset": "InflateCounters.reset() called in V1Guidance.getInput() before each execution",
+          "read": "InflateCounters.get() called in V1Guidance.handleResult()"
+        },
+        {
+          "name": "inflateCallCount",
+          "quantity": "number of decompress() calls per execution",
+          "aggregation": "count",
+          "locations": [
+            "DeflateRFC1951CompressionAlgorithm#decompress"
+          ],
+          "technique": "bytecode",
+          "storage": "ThreadLocal<long[]> in InflateCounters (index 1)",
+          "reset": "InflateCounters.reset() called in V1Guidance.getInput() before each execution",
+          "read": "InflateCounters.get() called in V1Guidance.handleResult()"
+        }
+      ],
+      "retention": "Hill-climbing: retain inputs that achieve a new best inflatedBytes or a new maximum plaintext length; corpus capped at 32 entries, evicting the lowest-signal entry when full",
+      "retention_signals": [
+        "inflatedBytes"
+      ],
+      "mutation": [
+        "whole-input doubling (repetition [R45a]): doubles the plaintext to maximize compressibility and decompression output growth",
+        "chunk repeat (repetition [R45a]): selects a random chunk and repeats it k times (k in 2..32)",
+        "dictionary token insertion ([R45b]): inserts tokens from the attack path (0x00, 0x01, 0x03, 0x78, 0xFF, DEF, zip, alg, enc)",
+        "byte-level random insert: inserts 1-4 random bytes at a random position",
+        "byte-level bit flip: flips a random bit",
+        "byte-level random replace: replaces 1-4 bytes at a random position",
+        "DEFLATE encoder ([R45c]): all mutations operate on plaintext, then compress via Deflater(BEST_COMPRESSION, true) to produce valid raw DEFLATE streams that jose4j will accept"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,181 @@
+{
+  "tool": "checkpath",
+  "version": "1.0.0",
+  "source_root": "projects/commons-fileupload_GHSA-vv7r-c36w-3prj",
+  "index": {
+    "files_parsed": 35,
+    "files_failed": 0,
+    "methods": 283,
+    "harness_fuzz_methods": [
+      "MultipartFuzzTest.fuzzMultipartStreamReadHeaders(InputStream)",
+      "MultipartFuzzTest.fuzzMultipartStreamReadBodyData(InputStream)",
+      "MultipartFuzzTest.fuzzMultipartStreamDiscardBodyData(InputStream)"
+    ],
+    "index_seconds": 0.5,
+    "max_gap": 2,
+    "sink_depth": 6,
+    "symbol_resolution": true
+  },
+  "ok": true,
+  "targets": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "entrypoint": "MultipartFuzzTest.fuzzMultipartStreamReadHeaders(InputStream) → MultipartStream.readHeaders()",
+      "source_path": "src/main/java/org/apache/commons/fileupload/MultipartStream.java",
+      "start_ok": true,
+      "harness_entry": "com.fuzzing.harness.MultipartFuzzTest#fuzzMultipartStreamReadHeaders",
+      "end_ok": true,
+      "end": {
+        "sink_file": "src/main/java/org/apache/commons/fileupload/MultipartStream.java",
+        "ok": true,
+        "evidence": "hop 2 MultipartStream#readHeaders() is declared in src/main/java/org/apache/commons/fileupload/MultipartStream.java:901",
+        "level": "method",
+        "sink_method": "MultipartStream#readHeaders",
+        "sink_evidence": "hop 2 is MultipartStream#readHeaders()"
+      },
+      "hops": [
+        {
+          "index": 1,
+          "raw": "MultipartFuzzTest.fuzzMultipartStreamReadHeaders(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "com.fuzzing.harness.MultipartFuzzTest#fuzzMultipartStreamReadHeaders(InputStream)",
+              "location": "harness/src/test/java/com/fuzzing/harness/MultipartFuzzTest.java:100"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "raw": "MultipartStream.readHeaders()",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.apache.commons.fileupload.MultipartStream#readHeaders()",
+              "location": "src/main/java/org/apache/commons/fileupload/MultipartStream.java:901"
+            }
+          ]
+        }
+      ],
+      "path_signature": [
+        "com.fuzzing.harness.MultipartFuzzTest#fuzzMultipartStreamReadHeaders(InputStream)",
+        "org.apache.commons.fileupload.MultipartStream#readHeaders()"
+      ],
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "written": "MultipartFuzzTest.fuzzMultipartStreamReadHeaders(InputStream)",
+          "provenance": "agent",
+          "method": "com.fuzzing.harness.MultipartFuzzTest#fuzzMultipartStreamReadHeaders(InputStream)",
+          "location": "harness/src/test/java/com/fuzzing/harness/MultipartFuzzTest.java:100"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "MultipartFuzzTest#fuzzMultipartStreamReadHeaders(InputStream) calls MultipartStream#readHeaders() at harness/src/test/java/com/fuzzing/harness/MultipartFuzzTest.java:124 (resolved)",
+          "site": "harness/src/test/java/com/fuzzing/harness/MultipartFuzzTest.java:124"
+        },
+        {
+          "kind": "hop",
+          "written": "MultipartStream.readHeaders()",
+          "provenance": "agent",
+          "method": "org.apache.commons.fileupload.MultipartStream#readHeaders()",
+          "location": "src/main/java/org/apache/commons/fileupload/MultipartStream.java:901"
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "status": "CALL",
+          "evidence": "MultipartFuzzTest#fuzzMultipartStreamReadHeaders(InputStream) calls MultipartStream#readHeaders() at harness/src/test/java/com/fuzzing/harness/MultipartFuzzTest.java:124 (resolved)"
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    }
+  ],
+  "plan_ok": true,
+  "plans": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "signals": [
+        {
+          "name": "boundaryIterations",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "MultipartStream#readBoundary",
+              "status": "RESOLVED",
+              "method": "org.apache.commons.fileupload.MultipartStream#readBoundary",
+              "declared_at": "src/main/java/org/apache/commons/fileupload/MultipartStream.java:828",
+              "relation": "unrelated"
+            }
+          ]
+        },
+        {
+          "name": "headerBytes",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "MultipartStream#readHeaders",
+              "status": "RESOLVED",
+              "method": "org.apache.commons.fileupload.MultipartStream#readHeaders",
+              "declared_at": "src/main/java/org/apache/commons/fileupload/MultipartStream.java:901",
+              "relation": "on_path"
+            },
+            {
+              "written": "MultipartStream#readByte",
+              "status": "RESOLVED",
+              "method": "org.apache.commons.fileupload.MultipartStream#readByte",
+              "declared_at": "src/main/java/org/apache/commons/fileupload/MultipartStream.java:871",
+              "relation": "called_from_path",
+              "chain": [
+                "MultipartStream#readHeaders()",
+                "MultipartStream#readByte()"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "multipartWork",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "MultipartStream#readBoundary",
+              "status": "RESOLVED",
+              "method": "org.apache.commons.fileupload.MultipartStream#readBoundary",
+              "declared_at": "src/main/java/org/apache/commons/fileupload/MultipartStream.java:828",
+              "relation": "unrelated"
+            },
+            {
+              "written": "MultipartStream#readHeaders",
+              "status": "RESOLVED",
+              "method": "org.apache.commons.fileupload.MultipartStream#readHeaders",
+              "declared_at": "src/main/java/org/apache/commons/fileupload/MultipartStream.java:901",
+              "relation": "on_path"
+            },
+            {
+              "written": "MultipartStream#readByte",
+              "status": "RESOLVED",
+              "method": "org.apache.commons.fileupload.MultipartStream#readByte",
+              "declared_at": "src/main/java/org/apache/commons/fileupload/MultipartStream.java:871",
+              "relation": "called_from_path",
+              "chain": [
+                "MultipartStream#readHeaders()",
+                "MultipartStream#readByte()"
+              ]
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "warnings": [
+        "Target V1, signal `boundaryIterations`: no call chain of up to 6 calls connects location `MultipartStream#readBoundary` (src/main/java/org/apache/commons/fileupload/MultipartStream.java:828) with the target's attack path; check that the cost of this target is incurred there.",
+        "Target V1, signal `multipartWork`: no call chain of up to 6 calls connects location `MultipartStream#readBoundary` (src/main/java/org/apache/commons/fileupload/MultipartStream.java:828) with the target's attack path; check that the cost of this target is incurred there."
+      ]
+    }
+  ]
+}

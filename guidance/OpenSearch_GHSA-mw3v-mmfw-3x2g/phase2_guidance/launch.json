@@ -1,0 +1,15 @@
+{
+  "build": [
+    "mvn -q compile 2>&1 | tail -30",
+    "mvn -q dependency:build-classpath -Dmdep.outputFile=target/cp.txt 2>&1 | tail -30",
+    "mkdir -p target/test-classes && javac -d target/test-classes -cp \"target/classes:$(cat target/cp.txt)\" $(find src/test/java -name '*.java') 2>&1 | tail -30",
+    "bash build-agent.sh"
+  ],
+  "classpath_command": "echo \"target/test-classes:target/classes:$(cat target/cp.txt)\"",
+  "javaagent": {"jar": "target/v1-agent.jar", "args": ""},
+  "jvm_args": ["-Xmx1g", "-Xss1m"],
+  "guidance_factory": "org.opensearch.fuzz.runner.FuzzRunner#createGuidance",
+  "targets": {
+    "V1": {"test_class": "org.opensearch.fuzz.tests.QueryParserFuzzTest", "method": "fuzzQueryStringQueryBuilderToQuery"}
+  }
+}

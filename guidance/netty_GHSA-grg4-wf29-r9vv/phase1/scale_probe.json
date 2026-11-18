@@ -1,0 +1,64 @@
+{
+  "caps": {
+    "input_bytes": 2560,
+    "heap_bytes": 268435456,
+    "stack_bytes": 262144,
+    "time_ms": 2000
+  },
+  "targets": {
+    "V1": {
+      "problems": [],
+      "parameter": "number of maximum-size (900k BWT bytes, ~46.6 MB decompressed each) bzip2 blocks in one stream, all retained in the decoder out list during a single decode() call",
+      "inputs": [
+        {
+          "file": "blocks1.bin",
+          "value": 1,
+          "input_bytes": 80,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "time_cap"
+        },
+        {
+          "file": "blocks2.bin",
+          "value": 2,
+          "input_bytes": 112,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "time_cap"
+        },
+        {
+          "file": "blocks4.bin",
+          "value": 4,
+          "input_bytes": 176,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "time_cap"
+        },
+        {
+          "file": "blocks8.bin",
+          "value": 8,
+          "input_bytes": 305,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "time_cap"
+        },
+        {
+          "file": "blocks16.bin",
+          "value": 16,
+          "input_bytes": 561,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "time_cap"
+        }
+      ]
+    }
+  },
+  "build": {
+    "ok": true
+  }
+}

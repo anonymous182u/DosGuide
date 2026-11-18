@@ -1,0 +1,29 @@
+{
+  "parameter": "toFixed precision (BigInteger iterations = precision + k + 1, k\u224820)",
+  "inputs": [
+    {
+      "file": "p10.bin",
+      "value": 10
+    },
+    {
+      "file": "p20.bin",
+      "value": 20
+    },
+    {
+      "file": "p40.bin",
+      "value": 40
+    },
+    {
+      "file": "p60.bin",
+      "value": 60
+    },
+    {
+      "file": "p80.bin",
+      "value": 80
+    },
+    {
+      "file": "p100.bin",
+      "value": 100
+    }
+  ]
+}

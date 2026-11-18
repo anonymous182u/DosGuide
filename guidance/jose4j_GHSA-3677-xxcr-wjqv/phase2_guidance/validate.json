@@ -1,0 +1,74 @@
+{
+  "final_ok": true,
+  "repair_rounds": 3,
+  "fuzz_tests_fixed_at_round": 0,
+  "rounds": [
+    {
+      "round": 0,
+      "ok": false,
+      "error": null,
+      "launch": [],
+      "build_ok": true,
+      "failing": [
+        "V1"
+      ],
+      "progress_advisory": {},
+      "repair": {
+        "modified": [
+          "analysis/launch.json",
+          "run.sh",
+          "src/test/java/org/jose4j/fuzz/agent/V1MeasureAgent.java",
+          "src/test/resources/META-INF/MANIFEST.MF"
+        ]
+      }
+    },
+    {
+      "round": 1,
+      "ok": false,
+      "error": null,
+      "launch": [],
+      "build_ok": true,
+      "failing": [
+        "V1"
+      ],
+      "progress_advisory": {},
+      "repair": {
+        "added": [
+          "META-INF/MANIFEST.MF"
+        ],
+        "modified": [
+          "analysis/launch.json",
+          "run.sh",
+          "src/test/java/org/jose4j/fuzz/agent/InflateCounters.java",
+          "src/test/java/org/jose4j/fuzz/agent/InflaterTransformer.java",
+          "src/test/java/org/jose4j/fuzz/agent/V1MeasureAgent.java",
+          "src/test/java/org/jose4j/fuzz/guidance/V1Guidance.java",
+          "src/test/resources/META-INF/MANIFEST.MF"
+        ]
+      }
+    },
+    {
+      "round": 2,
+      "ok": false,
+      "error": null,
+      "launch": [],
+      "build_ok": true,
+      "failing": [
+        "V1"
+      ],
+      "progress_advisory": {},
+      "repair": {
+        "plan_revised": true
+      }
+    },
+    {
+      "round": 3,
+      "ok": true,
+      "error": null,
+      "launch": [],
+      "build_ok": true,
+      "failing": [],
+      "progress_advisory": {}
+    }
+  ]
+}

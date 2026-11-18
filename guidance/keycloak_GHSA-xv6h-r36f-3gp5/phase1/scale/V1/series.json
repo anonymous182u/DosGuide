@@ -1,0 +1,29 @@
+{
+  "parameter": "number of XML elements in decompressed output",
+  "inputs": [
+    {
+      "file": "n10000.bin",
+      "value": 10000
+    },
+    {
+      "file": "n20000.bin",
+      "value": 20000
+    },
+    {
+      "file": "n40000.bin",
+      "value": 40000
+    },
+    {
+      "file": "n80000.bin",
+      "value": 80000
+    },
+    {
+      "file": "n160000.bin",
+      "value": 160000
+    },
+    {
+      "file": "n320000.bin",
+      "value": 320000
+    }
+  ]
+}

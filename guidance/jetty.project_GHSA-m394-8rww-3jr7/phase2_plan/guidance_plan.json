@@ -1,0 +1,34 @@
+{
+  "plans": [
+    {
+      "target": "V1",
+      "signals": [
+        {
+          "name": "sortComparisons",
+          "quantity": "number of Double.compareTo(Double) invocations inside QuotedQualityCSV.sort(), each representing one iteration of the gnome-sort loop",
+          "aggregation": "count",
+          "locations": [
+            "QuotedQualityCSV#sort()"
+          ],
+          "technique": "bytecode",
+          "storage": "ThreadLocal<long[]> in V1Counters.SORT_COMPARISONS, with [0] holding the count",
+          "reset": "V1Counters.resetComparisons() called at the start of V1Guidance.getInput()",
+          "read": "V1Counters.getComparisons() called in V1Guidance.handleResult(), stored as sortComparisons signal and returned via lastSignals()"
+        }
+      ],
+      "retention": "Primary: retain input if sortComparisons exceeds the best seen so far, driving hill-climbing toward cubic-cost inputs. Secondary (flat signal): retain inputs longer than the current longest. Probabilistic 5% retention for diversity with non-zero signal.",
+      "retention_signals": [
+        "sortComparisons"
+      ],
+      "mutation": [
+        "Dense pair generator (25%): pick two random MIME values from a 15-entry vocabulary covering all 4 MOST_SPECIFIC_MIME_ORDERING levels (order 0: */*; order 1: text/*, image/*, b/*; order 2: b, c, text/html, image/png; order 3: ;d, ;e, ;f, ;g, b;y, c;z=1, text/html;level=1) and create an alternating 'v1,v2,v1,v2,...' pattern up to a random size in [maxInputSize/4, min(maxInputSize,6000)]. Hill-climbing selects mixed-order pairs with short values (1-2 bytes) for maximum density (~2.5 bytes/value), matching the series structure without encoding any specific failure-inducing input",
+        "CSV tile (15%): repeat the entire comma-separated input N times (joined by commas), growing value count while preserving existing patterns",
+        "CSV value insert (15%): split on commas, insert a complete MIME value from the vocabulary at a random boundary, rejoin",
+        "CSV replace (5%): replace a random comma-separated segment with a vocabulary MIME value, changing specificity and density",
+        "Byte-level repetition (10%): select random chunk, repeat k times",
+        "Dictionary insert (10%): tokens from CSV format syntax — comma, semicolon, equals, q, quote, backslash, tab",
+        "Byte-level flip/insert/delete (20%): random bit flip 8%, byte insert 6%, byte delete 6% for fine-grained exploration"
+      ]
+    }
+  ]
+}

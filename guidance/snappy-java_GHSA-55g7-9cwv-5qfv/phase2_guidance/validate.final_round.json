@@ -1,0 +1,933 @@
+{
+  "ok": true,
+  "launch": [],
+  "build": {
+    "ok": true
+  },
+  "targets": [
+    {
+      "tool": "ValidateArtifact",
+      "target": "V1",
+      "checks": [
+        {
+          "name": "contract",
+          "status": "pass",
+          "detail": "factory, lastSignals() and fuzz test found"
+        },
+        {
+          "name": "runs",
+          "status": "pass",
+          "detail": "85 executions completed"
+        },
+        {
+          "name": "plan_signals",
+          "status": "pass",
+          "detail": "lastSignals() returns every planned signal [compressedAllocBytes]"
+        },
+        {
+          "name": "signal_varies",
+          "status": "pass",
+          "detail": "varying: [compressedAllocBytes] (on the guidance's own inputs: [compressedAllocBytes])"
+        },
+        {
+          "name": "reset",
+          "status": "pass",
+          "detail": "re-running inputs reproduced their values"
+        },
+        {
+          "name": "depends_on_execution",
+          "status": "pass",
+          "detail": "signals stay near zero when the target does not run"
+        },
+        {
+          "name": "instrumentation",
+          "status": "pass",
+          "detail": "rewrote [org.xerial.snappy.Snappy, org.xerial.snappy.SnappyInputStream]"
+        },
+        {
+          "name": "input_limit",
+          "status": "pass",
+          "detail": "with jqf.ei.MAX_INPUT_SIZE=16 the 20 generated inputs were at most 16 bytes"
+        },
+        {
+          "name": "input_growth",
+          "status": "pass",
+          "detail": "the guidance generated a 21-byte input after 488 ms (1 executions); the target needs 20"
+        },
+        {
+          "name": "progress",
+          "status": "skip",
+          "detail": "not compared: no signal grows along the series"
+        }
+      ],
+      "max_input_bytes": 10240,
+      "example_inputs": 0,
+      "executions": {
+        "own": 40,
+        "repeat": 5,
+        "random": 40,
+        "example": 0,
+        "probe": 3
+      },
+      "test_failures_not_used": 5,
+      "signals": {
+        "compressedAllocBytes": {
+          "min": 0.0,
+          "max": 1073807358.0,
+          "distinct": 28
+        }
+      },
+      "signals_by_kind": {
+        "own": {
+          "compressedAllocBytes": {
+            "min": 2.0,
+            "max": 1073807358.0,
+            "distinct": 26
+          }
+        },
+        "random": {
+          "compressedAllocBytes": {
+            "min": 0.0,
+            "max": 1073806334.0,
+            "distinct": 9
+          }
+        },
+        "repeat": {
+          "compressedAllocBytes": {
+            "min": 548700159.0,
+            "max": 1073807358.0,
+            "distinct": 5
+          }
+        }
+      },
+      "transformed_classes": [
+        "org.xerial.snappy.Snappy",
+        "org.xerial.snappy.SnappyInputStream"
+      ],
+      "ok": true,
+      "input_limit_probe": {
+        "max_input_bytes": 16,
+        "longest_input": 16,
+        "executions": {
+          "own": 20
+        }
+      },
+      "growth_probe": {
+        "needed_input_bytes": 20,
+        "longest_input": 21,
+        "executions": {
+          "own": 1
+        },
+        "growth": [
+          {
+            "ms": 488,
+            "execution": 1,
+            "bytes": 21
+          }
+        ]
+      },
+      "hard_ok": true,
+      "progress_probe": {
+        "own_ms": 120008,
+        "executions": 10675,
+        "longest_input": 141,
+        "phase": "series",
+        "series_inputs": 8,
+        "comparison": {},
+        "measurements": {
+          "budget_ms": 120000,
+          "own_ms": 120008,
+          "executions": 10675,
+          "longest_input": 141,
+          "phase": "series",
+          "own_best": {
+            "compressedAllocBytes": [
+              [
+                17,
+                0.0,
+                9226
+              ],
+              [
+                19,
+                0.0,
+                883
+              ],
+              [
+                20,
+                2147483647.0,
+                6497
+              ],
+              [
+                22,
+                2147483647.0,
+                14056
+              ],
+              [
+                24,
+                2147483647.0,
+                7513
+              ],
+              [
+                26,
+                2147479304.0,
+                50963
+              ],
+              [
+                29,
+                2147483647.0,
+                9388
+              ],
+              [
+                30,
+                2147483647.0,
+                76423
+              ],
+              [
+                32,
+                2147483647.0,
+                99293
+              ],
+              [
+                37,
+                2147418302.0,
+                5848
+              ],
+              [
+                39,
+                2147418302.0,
+                63833
+              ],
+              [
+                42,
+                2147479304.0,
+                8732
+              ],
+              [
+                47,
+                2147418302.0,
+                29792
+              ],
+              [
+                52,
+                2147479296.0,
+                78124
+              ],
+              [
+                56,
+                2025202375.0,
+                113935
+              ],
+              [
+                59,
+                2025202375.0,
+                84042
+              ],
+              [
+                66,
+                71556063.0,
+                74564
+              ],
+              [
+                71,
+                2147418302.0,
+                59110
+              ],
+              [
+                77,
+                2025202375.0,
+                47024
+              ],
+              [
+                86,
+                1984954368.0,
+                68032
+              ],
+              [
+                96,
+                15794177.0,
+                116533
+              ],
+              [
+                141,
+                15794177.0,
+                15068
+              ]
+            ]
+          },
+          "series": [
+            {
+              "bytes": 20,
+              "signals": {
+                "compressedAllocBytes": 65536.0
+              }
+            },
+            {
+              "bytes": 20,
+              "signals": {
+                "compressedAllocBytes": 131072.0
+              }
+            },
+            {
+              "bytes": 20,
+              "signals": {
+                "compressedAllocBytes": 262144.0
+              }
+            },
+            {
+              "bytes": 20,
+              "signals": {
+                "compressedAllocBytes": 524288.0
+              }
+            },
+            {
+              "bytes": 20,
+              "signals": {
+                "compressedAllocBytes": 1048576.0
+              }
+            },
+            {
+              "bytes": 20,
+              "signals": {
+                "compressedAllocBytes": 2097152.0
+              }
+            },
+            {
+              "bytes": 20,
+              "signals": {
+                "compressedAllocBytes": 4194304.0
+              }
+            },
+            {
+              "bytes": 20,
+              "signals": {
+                "compressedAllocBytes": 8388608.0
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "tool": "ValidateArtifact",
+      "target": "V2",
+      "checks": [
+        {
+          "name": "contract",
+          "status": "pass",
+          "detail": "factory, lastSignals() and fuzz test found"
+        },
+        {
+          "name": "runs",
+          "status": "pass",
+          "detail": "85 executions completed"
+        },
+        {
+          "name": "plan_signals",
+          "status": "pass",
+          "detail": "lastSignals() returns every planned signal [uncompressedAllocBytes]"
+        },
+        {
+          "name": "signal_varies",
+          "status": "pass",
+          "detail": "varying: [uncompressedAllocBytes] (on the guidance's own inputs: [uncompressedAllocBytes])"
+        },
+        {
+          "name": "reset",
+          "status": "pass",
+          "detail": "re-running inputs reproduced their values"
+        },
+        {
+          "name": "depends_on_execution",
+          "status": "pass",
+          "detail": "signals stay near zero when the target does not run"
+        },
+        {
+          "name": "instrumentation",
+          "status": "pass",
+          "detail": "rewrote [org.xerial.snappy.Snappy, org.xerial.snappy.SnappyInputStream]"
+        },
+        {
+          "name": "input_limit",
+          "status": "pass",
+          "detail": "with jqf.ei.MAX_INPUT_SIZE=16 the 20 generated inputs were at most 16 bytes"
+        },
+        {
+          "name": "input_growth",
+          "status": "pass",
+          "detail": "the guidance generated a 27-byte input after 554 ms (1 executions); the target needs 25"
+        },
+        {
+          "name": "progress",
+          "status": "skip",
+          "detail": "not compared: no signal grows along the series"
+        }
+      ],
+      "max_input_bytes": 10240,
+      "example_inputs": 0,
+      "executions": {
+        "own": 40,
+        "repeat": 5,
+        "random": 40,
+        "example": 0,
+        "probe": 3
+      },
+      "test_failures_not_used": 0,
+      "signals": {
+        "uncompressedAllocBytes": {
+          "min": 0.0,
+          "max": 536870912.0,
+          "distinct": 17
+        }
+      },
+      "signals_by_kind": {
+        "own": {
+          "uncompressedAllocBytes": {
+            "min": 0.0,
+            "distinct": 17,
+            "max": 536870912.0
+          }
+        },
+        "random": {
+          "uncompressedAllocBytes": {
+            "min": 0.0,
+            "distinct": 6,
+            "max": 268435456.0
+          }
+        },
+        "repeat": {
+          "uncompressedAllocBytes": {
+            "min": 268435456.0,
+            "distinct": 5,
+            "max": 536870912.0
+          }
+        }
+      },
+      "transformed_classes": [
+        "org.xerial.snappy.Snappy",
+        "org.xerial.snappy.SnappyInputStream"
+      ],
+      "ok": true,
+      "input_limit_probe": {
+        "max_input_bytes": 16,
+        "longest_input": 16,
+        "executions": {
+          "own": 20
+        }
+      },
+      "growth_probe": {
+        "needed_input_bytes": 25,
+        "longest_input": 27,
+        "executions": {
+          "own": 1
+        },
+        "growth": [
+          {
+            "ms": 554,
+            "execution": 1,
+            "bytes": 27
+          }
+        ]
+      },
+      "hard_ok": true,
+      "progress_probe": {
+        "own_ms": 120020,
+        "executions": 8695,
+        "longest_input": 100,
+        "phase": "series",
+        "series_inputs": 8,
+        "comparison": {},
+        "measurements": {
+          "budget_ms": 120000,
+          "own_ms": 120020,
+          "executions": 8695,
+          "longest_input": 100,
+          "phase": "series",
+          "own_best": {
+            "uncompressedAllocBytes": [
+              [
+                24,
+                1.0,
+                2328
+              ],
+              [
+                25,
+                268435456.0,
+                57701
+              ],
+              [
+                29,
+                4293132901.0,
+                106837
+              ],
+              [
+                30,
+                4293132901.0,
+                119634
+              ],
+              [
+                33,
+                4293132901.0,
+                116190
+              ],
+              [
+                35,
+                4024795751.0,
+                103585
+              ],
+              [
+                41,
+                4024762983.0,
+                76202
+              ],
+              [
+                44,
+                4292936421.0,
+                113107
+              ],
+              [
+                47,
+                3755393026.0,
+                25926
+              ],
+              [
+                50,
+                4024795751.0,
+                109799
+              ],
+              [
+                54,
+                4293132901.0,
+                110742
+              ],
+              [
+                61,
+                4024762983.0,
+                86069
+              ],
+              [
+                64,
+                3753902082.0,
+                82540
+              ],
+              [
+                76,
+                3753902082.0,
+                68615
+              ],
+              [
+                83,
+                3487563873.0,
+                46594
+              ],
+              [
+                100,
+                1.0,
+                69673
+              ]
+            ]
+          },
+          "series": [
+            {
+              "bytes": 25,
+              "signals": {
+                "uncompressedAllocBytes": 65536.0
+              }
+            },
+            {
+              "bytes": 25,
+              "signals": {
+                "uncompressedAllocBytes": 131072.0
+              }
+            },
+            {
+              "bytes": 25,
+              "signals": {
+                "uncompressedAllocBytes": 262144.0
+              }
+            },
+            {
+              "bytes": 25,
+              "signals": {
+                "uncompressedAllocBytes": 524288.0
+              }
+            },
+            {
+              "bytes": 25,
+              "signals": {
+                "uncompressedAllocBytes": 1048576.0
+              }
+            },
+            {
+              "bytes": 25,
+              "signals": {
+                "uncompressedAllocBytes": 2097152.0
+              }
+            },
+            {
+              "bytes": 25,
+              "signals": {
+                "uncompressedAllocBytes": 4194304.0
+              }
+            },
+            {
+              "bytes": 25,
+              "signals": {
+                "uncompressedAllocBytes": 8388608.0
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "tool": "ValidateArtifact",
+      "target": "V3",
+      "checks": [
+        {
+          "name": "contract",
+          "status": "pass",
+          "detail": "factory, lastSignals() and fuzz test found"
+        },
+        {
+          "name": "runs",
+          "status": "pass",
+          "detail": "85 executions completed"
+        },
+        {
+          "name": "plan_signals",
+          "status": "pass",
+          "detail": "lastSignals() returns every planned signal [resultAllocBytes]"
+        },
+        {
+          "name": "signal_varies",
+          "status": "pass",
+          "detail": "varying: [resultAllocBytes] (on the guidance's own inputs: [resultAllocBytes])"
+        },
+        {
+          "name": "reset",
+          "status": "pass",
+          "detail": "re-running inputs reproduced their values"
+        },
+        {
+          "name": "depends_on_execution",
+          "status": "pass",
+          "detail": "signals stay near zero when the target does not run"
+        },
+        {
+          "name": "instrumentation",
+          "status": "pass",
+          "detail": "rewrote [org.xerial.snappy.Snappy]"
+        },
+        {
+          "name": "input_limit",
+          "status": "pass",
+          "detail": "with jqf.ei.MAX_INPUT_SIZE=16 the 20 generated inputs were at most 16 bytes"
+        },
+        {
+          "name": "input_growth",
+          "status": "pass",
+          "detail": "the guidance generated a 5-byte input after 488 ms (1 executions); the target needs 5"
+        },
+        {
+          "name": "progress",
+          "status": "skip",
+          "detail": "not compared: no signal grows along the series"
+        }
+      ],
+      "max_input_bytes": 10240,
+      "example_inputs": 0,
+      "executions": {
+        "own": 40,
+        "repeat": 5,
+        "random": 40,
+        "example": 0,
+        "probe": 3
+      },
+      "test_failures_not_used": 2,
+      "signals": {
+        "resultAllocBytes": {
+          "min": 1.0,
+          "max": 1934110966.0,
+          "distinct": 30
+        }
+      },
+      "signals_by_kind": {
+        "own": {
+          "resultAllocBytes": {
+            "max": 1934110966.0,
+            "distinct": 14,
+            "min": 1.0
+          }
+        },
+        "random": {
+          "resultAllocBytes": {
+            "max": 860367263.0,
+            "distinct": 25,
+            "min": 1.0
+          }
+        },
+        "repeat": {
+          "resultAllocBytes": {
+            "max": 1934110966.0,
+            "distinct": 5,
+            "min": 6870858.0
+          }
+        }
+      },
+      "transformed_classes": [
+        "org.xerial.snappy.Snappy"
+      ],
+      "ok": true,
+      "input_limit_probe": {
+        "max_input_bytes": 16,
+        "longest_input": 16,
+        "executions": {
+          "own": 20
+        }
+      },
+      "growth_probe": {
+        "needed_input_bytes": 5,
+        "longest_input": 5,
+        "executions": {
+          "own": 1
+        },
+        "growth": [
+          {
+            "ms": 488,
+            "execution": 1,
+            "bytes": 5
+          }
+        ]
+      },
+      "hard_ok": true,
+      "progress_probe": {
+        "own_ms": 120014,
+        "executions": 8499,
+        "longest_input": 79,
+        "phase": "series",
+        "series_inputs": 8,
+        "comparison": {},
+        "measurements": {
+          "budget_ms": 120000,
+          "own_ms": 120014,
+          "executions": 8499,
+          "longest_input": 79,
+          "phase": "series",
+          "own_best": {
+            "resultAllocBytes": [
+              [
+                4,
+                2.0,
+                8875
+              ],
+              [
+                5,
+                2147483647.0,
+                33652
+              ],
+              [
+                6,
+                2094335.0,
+                57100
+              ],
+              [
+                7,
+                134217729.0,
+                93649
+              ],
+              [
+                8,
+                2147483647.0,
+                4834
+              ],
+              [
+                9,
+                4294967270.0,
+                77920
+              ],
+              [
+                10,
+                4294953062.0,
+                118805
+              ],
+              [
+                11,
+                4294967270.0,
+                99683
+              ],
+              [
+                12,
+                4294967270.0,
+                97585
+              ],
+              [
+                13,
+                4179607654.0,
+                36263
+              ],
+              [
+                14,
+                4294953062.0,
+                116438
+              ],
+              [
+                15,
+                4179607654.0,
+                28057
+              ],
+              [
+                17,
+                4294953062.0,
+                119023
+              ],
+              [
+                18,
+                3707095142.0,
+                32296
+              ],
+              [
+                20,
+                3809855590.0,
+                87187
+              ],
+              [
+                21,
+                4179607654.0,
+                46236
+              ],
+              [
+                24,
+                4179607654.0,
+                28710
+              ],
+              [
+                25,
+                4053778534.0,
+                28622
+              ],
+              [
+                27,
+                4294953062.0,
+                87301
+              ],
+              [
+                30,
+                3809855590.0,
+                107769
+              ],
+              [
+                34,
+                4294953062.0,
+                108055
+              ],
+              [
+                37,
+                4294951014.0,
+                68361
+              ],
+              [
+                40,
+                3707095142.0,
+                90984
+              ],
+              [
+                42,
+                3707095142.0,
+                50773
+              ],
+              [
+                49,
+                3508502630.0,
+                70294
+              ],
+              [
+                50,
+                3541420134.0,
+                59449
+              ],
+              [
+                54,
+                1356672228.0,
+                76653
+              ],
+              [
+                66,
+                3707095142.0,
+                29237
+              ],
+              [
+                70,
+                3707095142.0,
+                100846
+              ],
+              [
+                79,
+                1073741823.0,
+                34384
+              ]
+            ]
+          },
+          "series": [
+            {
+              "bytes": 5,
+              "signals": {
+                "resultAllocBytes": 65536.0
+              }
+            },
+            {
+              "bytes": 5,
+              "signals": {
+                "resultAllocBytes": 131072.0
+              }
+            },
+            {
+              "bytes": 5,
+              "signals": {
+                "resultAllocBytes": 262144.0
+              }
+            },
+            {
+              "bytes": 5,
+              "signals": {
+                "resultAllocBytes": 524288.0
+              }
+            },
+            {
+              "bytes": 5,
+              "signals": {
+                "resultAllocBytes": 1048576.0
+              }
+            },
+            {
+              "bytes": 5,
+              "signals": {
+                "resultAllocBytes": 2097152.0
+              }
+            },
+            {
+              "bytes": 5,
+              "signals": {
+                "resultAllocBytes": 4194304.0
+              }
+            },
+            {
+              "bytes": 5,
+              "signals": {
+                "resultAllocBytes": 8388608.0
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "limits": {
+    "jvm_args": [
+      "-Xmx1g",
+      "-Xss1m"
+    ],
+    "timeout_ms": 20000,
+    "max_input_bytes": 10240
+  },
+  "hard_ok": true
+}

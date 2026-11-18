@@ -1,0 +1,11 @@
+{
+  "parameter": "commit message length (bytes); n64-n1024 are benign (plain text, no token, parsed once); trigger.bin (23 bytes) contains self-referencing ${CHANGES} token causing unbounded recursion",
+  "inputs": [
+    {"file": "n64.bin", "value": 64},
+    {"file": "n128.bin", "value": 128},
+    {"file": "n256.bin", "value": 256},
+    {"file": "n512.bin", "value": 512},
+    {"file": "n1024.bin", "value": 1024},
+    {"file": "trigger.bin", "value": 23}
+  ]
+}

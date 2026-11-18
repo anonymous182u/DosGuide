@@ -1,0 +1,77 @@
+{
+  "clone_url": "https://github.com/netty/netty.git",
+  "commit": "edb55fd8e0a3bcbd85881e423464f585183d1284",
+  "jdk": 17,
+  "tools": "Apache Maven 3.9.x (verified with 3.9.12)",
+  "commands": [
+    "cd src && MAVEN_OPTS=-Xmx2g mvn -B -pl codec-compression -am -DskipTests -Dcheckstyle.skip=true package"
+  ],
+  "artifacts": [
+    {
+      "built": "src/codec-compression/target/netty-codec-compression-4.2.5.Final-SNAPSHOT.jar",
+      "lib": "lib/netty-codec-compression-4.2.5.Final-SNAPSHOT.jar",
+      "sha256": "1965a85bb1231e1641b940c75b5ef159adc28aeeba1d66cdb467da7ca468874c",
+      "classes_sha256": "8248b9acc36d6bbc7ea10a33326735fa7e865ce46a7dcf875c3f03978da15648"
+    },
+    {
+      "built": "src/common/target/netty-common-4.2.5.Final-SNAPSHOT.jar",
+      "lib": "lib/netty-common-4.2.5.Final-SNAPSHOT.jar",
+      "sha256": "a3f848fb564267b0d39c9832dfd36103de5b9e350f5ed2591de962a8e0e5b27f",
+      "classes_sha256": "c3c34418b72c00726226cc36ec2d159d9ba177cd14ec8fbd6d3f74e371ebb6b3"
+    },
+    {
+      "built": "src/buffer/target/netty-buffer-4.2.5.Final-SNAPSHOT.jar",
+      "lib": "lib/netty-buffer-4.2.5.Final-SNAPSHOT.jar",
+      "sha256": "ed4e6b2c280b93ad53ea172652611dcc6cf912406339821fcbe6efd0f92b8045",
+      "classes_sha256": "2d8165e19e845c69c6c2d37588eb9fcf92aa9469ab6c8c0804f3a1bda9fe47c5"
+    },
+    {
+      "built": "src/resolver/target/netty-resolver-4.2.5.Final-SNAPSHOT.jar",
+      "lib": "lib/netty-resolver-4.2.5.Final-SNAPSHOT.jar",
+      "sha256": "d86b671c59e6fa7142afabb293b3dc7cd1c0066f0fa1ffb440cb80697ecacf67",
+      "classes_sha256": "9745e8053a4bfd312b74da446dd07f82832a61b1990ed3e4b6dfe3ad8053bf60"
+    },
+    {
+      "built": "src/transport/target/netty-transport-4.2.5.Final-SNAPSHOT.jar",
+      "lib": "lib/netty-transport-4.2.5.Final-SNAPSHOT.jar",
+      "sha256": "55ca9a1f1f864af2589717d916fe170776f2e3a3b4ae4b189882ab0f51bd832d",
+      "classes_sha256": "99458a32d402d128731d111fc3848336cb9500e48815924f5edb88d0b5642888"
+    },
+    {
+      "built": "src/codec-base/target/netty-codec-base-4.2.5.Final-SNAPSHOT.jar",
+      "lib": "lib/netty-codec-base-4.2.5.Final-SNAPSHOT.jar",
+      "sha256": "27637ecb4380b51df22f4129e8ff853bb5d5d06d6888abc1b52bf1c1af007cda",
+      "classes_sha256": "98d58f68ab8db6e3770667c953e65ffc56b7436a3b34253ddcd36c68e6c231b1"
+    }
+  ],
+  "fixed": {
+    "jars": [
+      {
+        "coords": "io.netty:netty-codec-compression:4.2.5.Final",
+        "sha256": "1a394b2211a319643100900db3e57ebae015dd3929fae575986b1aa695b17e03"
+      },
+      {
+        "coords": "io.netty:netty-common:4.2.5.Final",
+        "sha256": "4b04c6f906908ea7100117d7529e055ba4e8facf626d3925295a2da223b13a4d"
+      },
+      {
+        "coords": "io.netty:netty-buffer:4.2.5.Final",
+        "sha256": "dd747c293bf682eafb2c39b1ef88661d03aed542d8408a69e78f7c06ce9bd57b"
+      },
+      {
+        "coords": "io.netty:netty-resolver:4.2.5.Final",
+        "sha256": "7fe46823602bb7e4e966f5d3097d499e639fb260ac6c2101ee000ba999561275"
+      },
+      {
+        "coords": "io.netty:netty-transport:4.2.5.Final",
+        "sha256": "02b4e9aace1260b10d00d7816fb42ea23fb05686ed7b7fb8e6ad4ecf3da61fff"
+      },
+      {
+        "coords": "io.netty:netty-codec-base:4.2.5.Final",
+        "sha256": "65ebecb5914577f67994feb0dd4b1d54d77e02587823870103910093df1756ca"
+      }
+    ],
+    "drop": "^(netty\\-codec\\-compression|netty\\-common|netty\\-buffer|netty\\-resolver|netty\\-transport|netty\\-codec\\-base)-[0-9]"
+  },
+  "notes": "Reactor: netty-parent, jfr-stub, varhandle-stub, dev-tools, common, buffer, resolver, transport, codec-base, codec-compression (project version 4.2.5.Final-SNAPSHOT; no native module). jfr-stub and varhandle-stub are provided dependencies of netty-common and not used. netty-common is the shaded jar the build produces (jctools relocated to io.netty.util.internal.shaded.org.jctools). JDK 17: netty's java17 profile sets maven.compiler.release=8; the 4.2.5.Final release was built with JDK 11, so many class files differ in bytes from the Central jars (javac 17 vs 11 code generation) while the sources of buffer, resolver, transport and codec-base equal the release's and codec-compression differs exactly in BrotliDecoder, JZlibDecoder, JdkZlibDecoder and ZstdDecoder. -Dcheckstyle.skip=true skips the checkstyle check. Fixed: the six modules at 4.2.5.Final (the advisory's first patched 4.2 release)."
+}

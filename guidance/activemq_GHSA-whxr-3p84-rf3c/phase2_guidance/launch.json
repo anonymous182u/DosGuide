@@ -1,0 +1,27 @@
+{
+  "build": [
+    "mvn package -DskipTests -q",
+    "rm -rf agent-jar/build && mkdir -p agent-jar/build/dosguide/agent && cp target/test-classes/dosguide/agent/*.class agent-jar/build/dosguide/agent/ && cd agent-jar/build && jar xf ../../target/deps/asm-9.8.jar org/ && cd ../.. && jar cfm agent-jar/dosguide-agent.jar agent-jar/MANIFEST.MF -C agent-jar/build ."
+  ],
+  "classpath": "target/test-classes:lib/activemq-client-6.2.0-SNAPSHOT.jar:target/deps/jqf-fuzz-2.1.jar:target/deps/jqf-instrument-2.1.jar:target/deps/asm-9.8.jar:target/deps/junit-4.13.2.jar:target/deps/junit-quickcheck-core-1.0.jar:target/deps/junit-quickcheck-generators-1.0.jar:target/deps/hawtbuf-1.11.jar:target/deps/jakarta.jms-api-3.1.0.jar:target/deps/slf4j-api-2.0.16.jar:target/deps/slf4j-simple-2.0.16.jar:target/deps/generics-resolver-3.0.1.jar:target/deps/javaruntype-1.3.jar:target/deps/antlr-runtime-3.1.2.jar:target/deps/hamcrest-core-1.3.jar",
+  "javaagent": {
+    "jar": "agent-jar/dosguide-agent.jar",
+    "args": ""
+  },
+  "jvm_args": [],
+  "guidance_factory": "dosguide.runner.FuzzRunner#createGuidance",
+  "targets": {
+    "V1": {
+      "test_class": "com.fuzz.activemq.OpenWireFuzzTest",
+      "method": "fuzzOpenWireFormatUnmarshal"
+    },
+    "V2": {
+      "test_class": "com.fuzz.activemq.OpenWireFuzzTest",
+      "method": "fuzzOpenWireFormatUnmarshalStackTraceEnabled"
+    },
+    "V3": {
+      "test_class": "com.fuzz.activemq.OpenWireFuzzTest",
+      "method": "fuzzOpenWireFormatUnmarshal"
+    }
+  }
+}

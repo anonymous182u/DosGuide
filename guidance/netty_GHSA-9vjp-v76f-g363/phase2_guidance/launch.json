@@ -1,0 +1,16 @@
+{
+  "build": [
+    "mvn package -DskipTests -q",
+    "bash build-agent.sh"
+  ],
+  "classpath_command": "echo -n target/test-classes; for j in target/deps/*.jar lib/*.jar; do [ -f \"$j\" ] && echo -n \":$j\"; done",
+  "javaagent": {"jar": "target/v1-agent.jar", "args": ""},
+  "jvm_args": [],
+  "guidance_factory": "com.fuzzer.runner.FuzzRunner#createGuidance",
+  "targets": {
+    "V1": {
+      "test_class": "com.fuzzer.harness.SnappyFuzzTest",
+      "method": "fuzzSnappyFrameDecoderDecode"
+    }
+  }
+}

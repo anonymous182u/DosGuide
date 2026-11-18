@@ -1,0 +1,90 @@
+{
+  "plans": [
+    {
+      "target": "V1",
+      "signals": [
+        {
+          "name": "maxDepth",
+          "quantity": "maximum concurrent recursion depth of readArray/readObject frames during one parse execution",
+          "aggregation": "max",
+          "locations": [
+            "JSONParserBase#readArray",
+            "JSONParserBase#readObject"
+          ],
+          "technique": "bytecode",
+          "storage": "ThreadLocal<long[]> in fuzzing.agent.DepthCounters, index 0 = currentDepth, index 1 = maxDepth",
+          "reset": "DepthCounters.reset() called at the start of V1Guidance.getInput()",
+          "read": "DepthCounters.getMaxDepth() called in V1Guidance.handleResult()"
+        },
+        {
+          "name": "nodeCount",
+          "quantity": "total number of parser production entries (readArray + readObject + readMain invocations) during one parse execution",
+          "aggregation": "count",
+          "locations": [
+            "JSONParserBase#readArray",
+            "JSONParserBase#readObject",
+            "JSONParserBase#readMain"
+          ],
+          "technique": "bytecode",
+          "storage": "ThreadLocal<long[]> in fuzzing.agent.DepthCounters, index 2 = nodeCount",
+          "reset": "DepthCounters.reset() called at the start of V1Guidance.getInput()",
+          "read": "DepthCounters.getNodeCount() called in V1Guidance.handleResult()"
+        }
+      ],
+      "retention": "Primary: keep input if maxDepth > bestMaxDepth (new depth record). Secondary (when signal is flat): keep inputs that grow in byte length toward input_bytes=4000 or that improve nodeCount, so the search can build material for the repetition operator to push past the threshold. Inputs in the corpus are prioritized for mutation proportional to their maxDepth value.",
+      "retention_signals": [
+        "maxDepth",
+        "nodeCount"
+      ],
+      "mutation": [
+        "Byte-level: random byte flip (single byte), random byte insertion, random byte deletion, random byte overwrite at random position",
+        "Repetition [R45a]: select random region [offset, offset+len), repeat it k times in-place where k is chosen so the result fills up to MAX_INPUT_SIZE (10240). Includes 'double entire input' as a special case. A 1-byte seed reaches 10240 bytes in 14 doubling steps.",
+        "Dictionary [R45b]: tokens from the parser source on the attack path — single bytes: '[' (0x5B), ']' (0x5D), '{' (0x7B), '}' (0x7D), ':' (0x3A), ',' (0x2C), '\"' (0x22), '\\'' (0x27); multi-byte tokens: 'null', 'true', 'false', 'NaN'. Inserted or overwritten at random positions. Each token is a syntactic unit from the source; no assembled payloads.",
+        "No encoder [R45c]: JSON is plain UTF-8 text with no checksums, length-prefixes, or compression. Random bytes that decode as valid UTF-8 reach the parser directly."
+      ]
+    },
+    {
+      "target": "V2",
+      "signals": [
+        {
+          "name": "maxDepth",
+          "quantity": "maximum concurrent recursion depth of readArray/readObject frames during one parse execution",
+          "aggregation": "max",
+          "locations": [
+            "JSONParserBase#readArray",
+            "JSONParserBase#readObject"
+          ],
+          "technique": "bytecode",
+          "storage": "ThreadLocal<long[]> in fuzzing.agent.DepthCounters, index 0 = currentDepth, index 1 = maxDepth",
+          "reset": "DepthCounters.reset() called at the start of V2Guidance.getInput()",
+          "read": "DepthCounters.getMaxDepth() called in V2Guidance.handleResult()"
+        },
+        {
+          "name": "nodeCount",
+          "quantity": "total number of parser production entries (readArray + readObject + readMain invocations) during one parse execution",
+          "aggregation": "count",
+          "locations": [
+            "JSONParserBase#readArray",
+            "JSONParserBase#readObject",
+            "JSONParserBase#readMain"
+          ],
+          "technique": "bytecode",
+          "storage": "ThreadLocal<long[]> in fuzzing.agent.DepthCounters, index 2 = nodeCount",
+          "reset": "DepthCounters.reset() called at the start of V2Guidance.getInput()",
+          "read": "DepthCounters.getNodeCount() called in V2Guidance.handleResult()"
+        }
+      ],
+      "retention": "Primary: keep input if maxDepth > bestMaxDepth (new depth record). Secondary (when signal is flat): keep inputs that grow in byte length toward input_bytes=4000 or that improve nodeCount. Inputs prioritized for mutation proportional to maxDepth. Independent corpus directory out/V2/corpus/.",
+      "retention_signals": [
+        "maxDepth",
+        "nodeCount"
+      ],
+      "mutation": [
+        "Byte-level: random byte flip (single byte), random byte insertion, random byte deletion, random byte overwrite at random position",
+        "Repetition [R45a]: select random region [offset, offset+len), repeat it k times in-place where k is chosen so the result fills up to MAX_INPUT_SIZE (10240). Includes 'double entire input' as a special case. A 1-byte seed reaches 10240 bytes in 14 doubling steps.",
+        "Dictionary [R45b]: tokens from the parser source on the attack path — single bytes: '[' (0x5B), ']' (0x5D), '{' (0x7B), '}' (0x7D), ':' (0x3A), ',' (0x2C), '\"' (0x22), '\\'' (0x27); multi-byte tokens: 'null', 'true', 'false', 'NaN'. Inserted or overwritten at random positions.",
+        "No encoder [R45c]: JSON is plain UTF-8 text with no checksums or length-prefixes."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "clone_url": "https://github.com/fracpete/vfsjfilechooser2.git",
+  "commit": "5a5f3487dd44066beb2351a332751932df39973b",
+  "jdk": 8,
+  "tools": "Apache Maven 3.9.x (the project has no Maven wrapper; verified with 3.9.12)",
+  "commands": [
+    "cd src && MAVEN_OPTS=-Xmx2g mvn -B -DskipTests -Dmaven.javadoc.skip=true clean package"
+  ],
+  "artifacts": [
+    {
+      "built": "src/target/vfsjfilechooser2-0.2.9-SNAPSHOT.jar",
+      "lib": "lib/vfsjfilechooser2-0.2.9-SNAPSHOT.jar",
+      "sha256": "14fd6393e07491a70fe32f0bbb31149fd4e8f51b7b3f93beab95b32ff4257784",
+      "classes_sha256": "8a22cc29dc0dd1a487d70cf9f05cf6aa274dcacf76c6f24f80fa78554bdfdeb4"
+    }
+  ],
+  "fixed": {
+    "jars": [
+      {
+        "coords": "com.github.fracpete:vfsjfilechooser2:0.2.9",
+        "sha256": "4045b7b18b11f44f9e6abbd0818c8c79beb452f4b32f93b8107e22f45687a5df"
+      }
+    ],
+    "drop": "^(vfsjfilechooser2)-[0-9]"
+  },
+  "notes": "Single-module Maven project, version 0.2.9-SNAPSHOT at this commit. JDK 8 because the pom compiles with maven-compiler-plugin 2.0.2 at source/target 1.6, which JDK 17 no longer accepts (class files major 50). -Dmaven.javadoc.skip=true skips the attach-javadocs execution; the build also runs its assembly executions (sources, test-sources, bin zip), which are not used. Fixed: vfsjfilechooser2 0.2.9."
+}

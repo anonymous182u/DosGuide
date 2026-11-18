@@ -1,0 +1,15 @@
+{
+  "series_request": null,
+  "rounds": [
+    {
+      "round": 1,
+      "revision": {
+        "V1": {
+          "scale": "Measured: at n=1024 values (2559 bytes), CPU time is 1099.5ms. Growth exponent 2.66 from 512->1024 interval, trending toward cubic (O(n^3)) as n increases. Cost per n^3: ~1.02e-6 ms. Extrapolating the measured k=2.66 power-law: n~3050 values (~7620 bytes) reaches 20s timeout; pure cubic model gives n~2690 (~6730 bytes). At full 10240 bytes (n=4096 values): predicted 44-70 seconds, well above 20s timeout. Using ~7500 bytes (n~3000) as conservative threshold.",
+          "input_bytes": 7500
+        }
+      },
+      "field_problems": {}
+    }
+  ]
+}

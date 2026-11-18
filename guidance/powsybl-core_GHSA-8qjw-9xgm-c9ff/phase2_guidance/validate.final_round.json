@@ -1,0 +1,372 @@
+{
+  "ok": true,
+  "launch": [],
+  "build": {
+    "ok": true
+  },
+  "targets": [
+    {
+      "tool": "ValidateArtifact",
+      "target": "V1",
+      "checks": [
+        {
+          "name": "contract",
+          "status": "pass",
+          "detail": "factory, lastSignals() and fuzz test found"
+        },
+        {
+          "name": "runs",
+          "status": "pass",
+          "detail": "105 executions completed"
+        },
+        {
+          "name": "plan_signals",
+          "status": "pass",
+          "detail": "lastSignals() returns every planned signal [nfaSteps]"
+        },
+        {
+          "name": "signal_varies",
+          "status": "pass",
+          "detail": "varying: [nfaSteps] (on the guidance's own inputs: [nfaSteps])"
+        },
+        {
+          "name": "reset",
+          "status": "pass",
+          "detail": "re-running inputs reproduced their values"
+        },
+        {
+          "name": "depends_on_execution",
+          "status": "pass",
+          "detail": "signals stay near zero when the target does not run"
+        },
+        {
+          "name": "instrumentation",
+          "status": "pass",
+          "detail": "rewrote [java.util.regex.Pattern$1, java.util.regex.Pattern$Begin, java.util.regex.Pattern$BitClass, java.util.regex.Pattern$BmpCharPredicate, java.util.regex.Pattern$BmpCharProperty] and 24 more"
+        },
+        {
+          "name": "input_limit",
+          "status": "pass",
+          "detail": "with jqf.ei.MAX_INPUT_SIZE=16 the 20 generated inputs were at most 16 bytes"
+        },
+        {
+          "name": "input_growth",
+          "status": "pass",
+          "detail": "the guidance generated a 121-byte input after 461 ms (80 executions); the target needs 64"
+        }
+      ],
+      "max_input_bytes": 10240,
+      "example_inputs": 10,
+      "executions": {
+        "own": 40,
+        "repeat": 5,
+        "random": 40,
+        "example": 20,
+        "probe": 3
+      },
+      "test_failures_not_used": 0,
+      "signals": {
+        "nfaSteps": {
+          "min": 0.0,
+          "max": 2169.0,
+          "distinct": 45
+        }
+      },
+      "signals_by_kind": {
+        "example": {
+          "nfaSteps": {
+            "distinct": 14,
+            "max": 3146.0,
+            "min": 1.0
+          }
+        },
+        "own": {
+          "nfaSteps": {
+            "distinct": 28,
+            "max": 1718.0,
+            "min": 0.0
+          }
+        },
+        "random": {
+          "nfaSteps": {
+            "distinct": 21,
+            "max": 2169.0,
+            "min": 0.0
+          }
+        },
+        "repeat": {
+          "nfaSteps": {
+            "distinct": 5,
+            "max": 1718.0,
+            "min": 1057.0
+          }
+        }
+      },
+      "transformed_classes": [
+        "java.util.regex.Pattern$1",
+        "java.util.regex.Pattern$Begin",
+        "java.util.regex.Pattern$BitClass",
+        "java.util.regex.Pattern$BmpCharPredicate",
+        "java.util.regex.Pattern$BmpCharProperty",
+        "java.util.regex.Pattern$BmpCharPropertyGreedy",
+        "java.util.regex.Pattern$BnM",
+        "java.util.regex.Pattern$Branch",
+        "java.util.regex.Pattern$BranchConn",
+        "java.util.regex.Pattern$CharPredicate",
+        "java.util.regex.Pattern$CharProperty",
+        "java.util.regex.Pattern$CharPropertyGreedy",
+        "java.util.regex.Pattern$Curly",
+        "java.util.regex.Pattern$Dollar",
+        "java.util.regex.Pattern$First",
+        "java.util.regex.Pattern$GroupHead",
+        "java.util.regex.Pattern$GroupTail",
+        "java.util.regex.Pattern$LastNode",
+        "java.util.regex.Pattern$Loop",
+        "java.util.regex.Pattern$Node",
+        "java.util.regex.Pattern$Prolog",
+        "java.util.regex.Pattern$Qtype",
+        "java.util.regex.Pattern$Ques",
+        "java.util.regex.Pattern$Slice",
+        "java.util.regex.Pattern$SliceNode",
+        "java.util.regex.Pattern$SliceS",
+        "java.util.regex.Pattern$Start",
+        "java.util.regex.Pattern$StartS",
+        "java.util.regex.Pattern$TreeInfo"
+      ],
+      "ok": true,
+      "input_limit_probe": {
+        "max_input_bytes": 16,
+        "longest_input": 16,
+        "executions": {
+          "own": 20
+        }
+      },
+      "growth_probe": {
+        "needed_input_bytes": 64,
+        "longest_input": 121,
+        "executions": {
+          "own": 80
+        },
+        "growth": [
+          {
+            "ms": 432,
+            "execution": 1,
+            "bytes": 8
+          },
+          {
+            "ms": 436,
+            "execution": 3,
+            "bytes": 20
+          },
+          {
+            "ms": 448,
+            "execution": 33,
+            "bytes": 33
+          },
+          {
+            "ms": 455,
+            "execution": 58,
+            "bytes": 45
+          },
+          {
+            "ms": 457,
+            "execution": 62,
+            "bytes": 46
+          },
+          {
+            "ms": 460,
+            "execution": 78,
+            "bytes": 55
+          },
+          {
+            "ms": 461,
+            "execution": 80,
+            "bytes": 121
+          }
+        ]
+      },
+      "hard_ok": true
+    },
+    {
+      "tool": "ValidateArtifact",
+      "target": "PkgRisk1",
+      "checks": [
+        {
+          "name": "contract",
+          "status": "pass",
+          "detail": "factory, lastSignals() and fuzz test found"
+        },
+        {
+          "name": "runs",
+          "status": "pass",
+          "detail": "105 executions completed"
+        },
+        {
+          "name": "plan_signals",
+          "status": "pass",
+          "detail": "lastSignals() returns every planned signal [nfaSteps]"
+        },
+        {
+          "name": "signal_varies",
+          "status": "pass",
+          "detail": "varying: [nfaSteps] (on the guidance's own inputs: [nfaSteps])"
+        },
+        {
+          "name": "reset",
+          "status": "pass",
+          "detail": "re-running inputs reproduced their values"
+        },
+        {
+          "name": "depends_on_execution",
+          "status": "pass",
+          "detail": "signals stay near zero when the target does not run"
+        },
+        {
+          "name": "instrumentation",
+          "status": "pass",
+          "detail": "rewrote [java.util.regex.Pattern$1, java.util.regex.Pattern$Begin, java.util.regex.Pattern$BitClass, java.util.regex.Pattern$BmpCharPredicate, java.util.regex.Pattern$BmpCharProperty] and 24 more"
+        },
+        {
+          "name": "input_limit",
+          "status": "pass",
+          "detail": "with jqf.ei.MAX_INPUT_SIZE=16 the 20 generated inputs were at most 16 bytes"
+        },
+        {
+          "name": "input_growth",
+          "status": "pass",
+          "detail": "the guidance generated a 71-byte input after 542 ms (57 executions); the target needs 64"
+        }
+      ],
+      "max_input_bytes": 10240,
+      "example_inputs": 10,
+      "executions": {
+        "own": 40,
+        "repeat": 5,
+        "random": 40,
+        "example": 20,
+        "probe": 3
+      },
+      "test_failures_not_used": 0,
+      "signals": {
+        "nfaSteps": {
+          "min": 0.0,
+          "max": 345.0,
+          "distinct": 26
+        }
+      },
+      "signals_by_kind": {
+        "example": {
+          "nfaSteps": {
+            "distinct": 14,
+            "max": 3146.0,
+            "min": 1.0
+          }
+        },
+        "own": {
+          "nfaSteps": {
+            "distinct": 18,
+            "max": 191.0,
+            "min": 0.0
+          }
+        },
+        "random": {
+          "nfaSteps": {
+            "distinct": 16,
+            "max": 345.0,
+            "min": 0.0
+          }
+        },
+        "repeat": {
+          "nfaSteps": {
+            "distinct": 5,
+            "max": 191.0,
+            "min": 76.0
+          }
+        }
+      },
+      "transformed_classes": [
+        "java.util.regex.Pattern$1",
+        "java.util.regex.Pattern$Begin",
+        "java.util.regex.Pattern$BitClass",
+        "java.util.regex.Pattern$BmpCharPredicate",
+        "java.util.regex.Pattern$BmpCharProperty",
+        "java.util.regex.Pattern$BmpCharPropertyGreedy",
+        "java.util.regex.Pattern$BnM",
+        "java.util.regex.Pattern$Branch",
+        "java.util.regex.Pattern$BranchConn",
+        "java.util.regex.Pattern$CharPredicate",
+        "java.util.regex.Pattern$CharProperty",
+        "java.util.regex.Pattern$CharPropertyGreedy",
+        "java.util.regex.Pattern$Curly",
+        "java.util.regex.Pattern$Dollar",
+        "java.util.regex.Pattern$First",
+        "java.util.regex.Pattern$GroupHead",
+        "java.util.regex.Pattern$GroupTail",
+        "java.util.regex.Pattern$LastNode",
+        "java.util.regex.Pattern$Loop",
+        "java.util.regex.Pattern$Node",
+        "java.util.regex.Pattern$Prolog",
+        "java.util.regex.Pattern$Qtype",
+        "java.util.regex.Pattern$Ques",
+        "java.util.regex.Pattern$Slice",
+        "java.util.regex.Pattern$SliceNode",
+        "java.util.regex.Pattern$SliceS",
+        "java.util.regex.Pattern$Start",
+        "java.util.regex.Pattern$StartS",
+        "java.util.regex.Pattern$TreeInfo"
+      ],
+      "ok": true,
+      "input_limit_probe": {
+        "max_input_bytes": 16,
+        "longest_input": 16,
+        "executions": {
+          "own": 20
+        }
+      },
+      "growth_probe": {
+        "needed_input_bytes": 64,
+        "longest_input": 71,
+        "executions": {
+          "own": 57
+        },
+        "growth": [
+          {
+            "ms": 511,
+            "execution": 1,
+            "bytes": 8
+          },
+          {
+            "ms": 513,
+            "execution": 2,
+            "bytes": 9
+          },
+          {
+            "ms": 514,
+            "execution": 3,
+            "bytes": 22
+          },
+          {
+            "ms": 524,
+            "execution": 18,
+            "bytes": 36
+          },
+          {
+            "ms": 542,
+            "execution": 57,
+            "bytes": 71
+          }
+        ]
+      },
+      "hard_ok": true
+    }
+  ],
+  "limits": {
+    "jvm_args": [
+      "-Xmx1g",
+      "-Xss1m"
+    ],
+    "timeout_ms": 20000,
+    "max_input_bytes": 10240
+  },
+  "hard_ok": true
+}

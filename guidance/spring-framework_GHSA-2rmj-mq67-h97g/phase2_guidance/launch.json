@@ -1,0 +1,20 @@
+{
+  "build": [
+    "mvn package -DskipTests -q",
+    "rm -rf agent-build/combined/com && mkdir -p agent-build/combined/com/fuzzing/agent",
+    "cp target/test-classes/com/fuzzing/agent/*.class agent-build/combined/com/fuzzing/agent/",
+    "cd agent-build/combined && jar xf $(find ~/.m2/repository/org/ow2/asm/asm -name 'asm-9.*.jar' | sort -V | tail -1) org/ && cd ../..",
+    "mkdir -p agent",
+    "jar cfm agent/v1-agent.jar agent-build/MANIFEST.MF -C agent-build/combined ."
+  ],
+  "classpath_command": "echo target/test-classes:lib/spring-web-5.3.38-SNAPSHOT.jar:lib/spring-core-5.3.38-SNAPSHOT.jar:lib/spring-jcl-5.3.38-SNAPSHOT.jar:$(find ~/.m2/repository/edu/berkeley/cs/jqf/jqf-fuzz/2.1 -name '*.jar' | head -1):$(find ~/.m2/repository/edu/berkeley/cs/jqf/jqf-instrument/2.1 -name '*.jar' | head -1):$(find ~/.m2/repository/org/ow2/asm/asm -name 'asm-9.*.jar' | sort -V | tail -1):$(find ~/.m2/repository/junit/junit/4.13.2 -name '*.jar' | head -1):$(find ~/.m2/repository/org/hamcrest -name 'hamcrest-core-*.jar' | head -1)",
+  "javaagent": {"jar": "agent/v1-agent.jar", "args": ""},
+  "jvm_args": [],
+  "guidance_factory": "com.fuzzing.runner.FuzzRunner#createGuidance",
+  "targets": {
+    "V1": {
+      "test_class": "com.fuzzing.httpheaders.HttpHeadersFuzzTest",
+      "method": "fuzzHttpHeadersGetIfNoneMatch"
+    }
+  }
+}

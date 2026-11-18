@@ -1,0 +1,19 @@
+{
+  "series_request": null,
+  "rounds": [
+    {
+      "round": 1,
+      "revision": {
+        "V1": {
+          "scale": "At the 256 KB probe stack cap, 1000 notifiers (1000 bytes) completed and 2000 (2000 bytes) overflowed, giving a per-frame cost of ~130-230 bytes. Extrapolating linearly to the 1 MB evaluation stack (4x the probe cap, minus ~30 KB base overhead): overflow threshold is approximately 4,400-8,800 notifiers; conservatively about 5,000 notifiers overflow the 1 MB stack. One input byte per notifier (all bytes >= 0x80), so about 5,000 bytes of input. This is the densest encoding: the fuzz test reads one byte per loop iteration.",
+          "input_bytes": 5000
+        },
+        "V2": {
+          "scale": "At the 256 KB probe stack cap, 1000 cancel handlers (1000 bytes) completed and 2000 (2000 bytes) overflowed, giving a per-frame cost of ~130-230 bytes (same as V1). Extrapolating linearly to the 1 MB evaluation stack (4x the probe cap, minus ~30 KB base overhead): overflow threshold is approximately 4,400-8,800 cancel handlers; conservatively about 5,000 cancel handlers overflow the 1 MB stack. One input byte per handler (all bytes >= 0x80), so about 5,000 bytes of input. This is the densest encoding: the fuzz test reads one byte per loop iteration.",
+          "input_bytes": 5000
+        }
+      },
+      "field_problems": {}
+    }
+  ]
+}

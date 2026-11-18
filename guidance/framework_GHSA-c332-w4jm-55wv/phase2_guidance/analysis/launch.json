@@ -1,0 +1,23 @@
+{
+  "build": [
+    "mvn package -DskipTests -q",
+    "bash build-agent.sh"
+  ],
+  "classpath": "target/test-classes:target/classes:lib/*:target/deps/*",
+  "javaagent": {
+    "jar": "target/regex-step-agent.jar",
+    "args": ""
+  },
+  "jvm_args": [],
+  "guidance_factory": "com.vaadin.fuzz.FuzzRunner#createGuidance",
+  "targets": {
+    "V1": {
+      "test_class": "com.vaadin.fuzz.EmailValidatorFuzzTest",
+      "method": "fuzzEmailValidatorIsValid"
+    },
+    "V2": {
+      "test_class": "com.vaadin.fuzz.EmailValidatorFuzzTest",
+      "method": "fuzzEmailValidatorApply"
+    }
+  }
+}

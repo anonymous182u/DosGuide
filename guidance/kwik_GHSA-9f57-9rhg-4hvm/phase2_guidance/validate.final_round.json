@@ -1,0 +1,300 @@
+{
+  "ok": true,
+  "launch": [],
+  "build": {
+    "ok": true
+  },
+  "targets": [
+    {
+      "tool": "ValidateArtifact",
+      "target": "V1",
+      "checks": [
+        {
+          "name": "contract",
+          "status": "pass",
+          "detail": "factory, lastSignals() and fuzz test found"
+        },
+        {
+          "name": "runs",
+          "status": "pass",
+          "detail": "85 executions completed"
+        },
+        {
+          "name": "plan_signals",
+          "status": "pass",
+          "detail": "lastSignals() returns every planned signal [equalsCount]"
+        },
+        {
+          "name": "signal_varies",
+          "status": "pass",
+          "detail": "varying: [equalsCount] (on the guidance's own inputs: [equalsCount])"
+        },
+        {
+          "name": "reset",
+          "status": "warn",
+          "detail": "`equalsCount`: re-running the same input gave different values (60335552 then 60389808, 35144752 then 35098362, 35138746 then 35164786), so the value is not determined by the executed input (timing, or computed from something other than the execution)"
+        },
+        {
+          "name": "depends_on_execution",
+          "status": "pass",
+          "detail": "signals stay near zero when the target does not run"
+        },
+        {
+          "name": "instrumentation",
+          "status": "pass",
+          "detail": "rewrote [tech.kwik.core.server.impl.ConnectionSource]"
+        },
+        {
+          "name": "input_limit",
+          "status": "pass",
+          "detail": "with jqf.ei.MAX_INPUT_SIZE=16 the 20 generated inputs were at most 16 bytes"
+        },
+        {
+          "name": "input_growth",
+          "status": "pass",
+          "detail": "the guidance generated a 895840-byte input after 33559 ms (36 executions); the target needs 524000"
+        },
+        {
+          "name": "progress",
+          "status": "skip",
+          "detail": "not compared: an execution of the guidance's own inputs ran as long as the time limit"
+        }
+      ],
+      "max_input_bytes": 1048576,
+      "example_inputs": 0,
+      "executions": {
+        "own": 40,
+        "repeat": 5,
+        "random": 40,
+        "example": 0,
+        "probe": 3
+      },
+      "test_failures_not_used": 0,
+      "signals": {
+        "equalsCount": {
+          "min": 0.0,
+          "max": 60389808.0,
+          "distinct": 67
+        }
+      },
+      "signals_by_kind": {
+        "own": {
+          "equalsCount": {
+            "max": 60335552.0,
+            "distinct": 38,
+            "min": 0.0
+          }
+        },
+        "random": {
+          "equalsCount": {
+            "max": 35082875.0,
+            "distinct": 28,
+            "min": 0.0
+          }
+        },
+        "repeat": {
+          "equalsCount": {
+            "max": 60389808.0,
+            "distinct": 5,
+            "min": 18565304.0
+          }
+        }
+      },
+      "transformed_classes": [
+        "tech.kwik.core.server.impl.ConnectionSource"
+      ],
+      "ok": true,
+      "input_limit_probe": {
+        "max_input_bytes": 16,
+        "longest_input": 16,
+        "executions": {
+          "own": 20
+        }
+      },
+      "growth_probe": {
+        "needed_input_bytes": 524000,
+        "longest_input": 895840,
+        "executions": {
+          "own": 36
+        },
+        "growth": [
+          {
+            "ms": 621,
+            "execution": 1,
+            "bytes": 11
+          },
+          {
+            "ms": 628,
+            "execution": 3,
+            "bytes": 275
+          },
+          {
+            "ms": 634,
+            "execution": 5,
+            "bytes": 550
+          },
+          {
+            "ms": 650,
+            "execution": 10,
+            "bytes": 1100
+          },
+          {
+            "ms": 652,
+            "execution": 12,
+            "bytes": 1749
+          },
+          {
+            "ms": 661,
+            "execution": 15,
+            "bytes": 3498
+          },
+          {
+            "ms": 668,
+            "execution": 16,
+            "bytes": 6996
+          },
+          {
+            "ms": 679,
+            "execution": 17,
+            "bytes": 13992
+          },
+          {
+            "ms": 700,
+            "execution": 18,
+            "bytes": 27984
+          },
+          {
+            "ms": 936,
+            "execution": 20,
+            "bytes": 55968
+          },
+          {
+            "ms": 1240,
+            "execution": 23,
+            "bytes": 56452
+          },
+          {
+            "ms": 2302,
+            "execution": 26,
+            "bytes": 111936
+          },
+          {
+            "ms": 2680,
+            "execution": 27,
+            "bytes": 111980
+          },
+          {
+            "ms": 3401,
+            "execution": 31,
+            "bytes": 223960
+          },
+          {
+            "ms": 9434,
+            "execution": 34,
+            "bytes": 447920
+          },
+          {
+            "ms": 33559,
+            "execution": 36,
+            "bytes": 895840
+          }
+        ]
+      },
+      "hard_ok": true,
+      "progress_probe": {
+        "own_ms": 59085,
+        "executions": 33,
+        "longest_input": 678480,
+        "phase": "own",
+        "series_inputs": 6,
+        "comparison": {},
+        "measurements": {
+          "budget_ms": 120000,
+          "own_ms": 59085,
+          "executions": 33,
+          "longest_input": 678480,
+          "phase": "own",
+          "own_best": {
+            "equalsCount": [
+              [
+                660,
+                59.0,
+                719
+              ],
+              [
+                1320,
+                14809.0,
+                745
+              ],
+              [
+                2640,
+                58724.0,
+                772
+              ],
+              [
+                3322,
+                41037.0,
+                789
+              ],
+              [
+                5280,
+                36610.0,
+                769
+              ],
+              [
+                5412,
+                2036.0,
+                786
+              ],
+              [
+                10560,
+                65655.0,
+                778
+              ],
+              [
+                21120,
+                3602086.0,
+                883
+              ],
+              [
+                42240,
+                14092227.0,
+                1277
+              ],
+              [
+                84480,
+                53253383.0,
+                3661
+              ],
+              [
+                169620,
+                192582839.0,
+                9551
+              ],
+              [
+                339614,
+                312397698.0,
+                30025
+              ],
+              [
+                678480,
+                506993624.0,
+                38902
+              ]
+            ]
+          },
+          "series": []
+        }
+      }
+    }
+  ],
+  "limits": {
+    "jvm_args": [
+      "-Xmx1g",
+      "-Xss1m"
+    ],
+    "timeout_ms": 20000,
+    "max_input_bytes": 1048576
+  },
+  "hard_ok": true
+}

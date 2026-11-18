@@ -1,0 +1,194 @@
+{
+  "ordered_targets": [
+    {
+      "slot": 1,
+      "id": "V1",
+      "name": "Bzip2Decoder unbounded multi-block decompression bomb (all decoded blocks retained in out list within one decode call)",
+      "entrypoint": "Bzip2DecoderFuzzTest.fuzzBzip2DecoderDecode(InputStream) → Bzip2DecoderFuzzTest.decodeAll(byte[]) → EmbeddedChannel.writeInbound(Object[]) → DefaultChannelPipeline.fireChannelRead(Object) → AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext, Object) → AbstractChannelHandlerContext.invokeChannelRead(Object) → HeadContext.channelRead(ChannelHandlerContext, Object) → AbstractChannelHandlerContext.fireChannelRead(Object) → AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext, Object) → AbstractChannelHandlerContext.invokeChannelRead(Object) → ByteToMessageDecoder.channelRead(ChannelHandlerContext, Object) → ByteToMessageDecoder.callDecode(ChannelHandlerContext, ByteBuf, List) → ByteToMessageDecoder.decodeRemovalReentryProtection(ChannelHandlerContext, ByteBuf, List) → Bzip2Decoder.decode(ChannelHandlerContext, ByteBuf, List) → Bzip2BlockDecompressor.read()",
+      "source_path": "codec/src/main/java/io/netty/handler/codec/compression/Bzip2Decoder.java",
+      "sink": "io.netty.handler.codec.compression.Bzip2Decoder#decode",
+      "mechanism": "Each bzip2 block's RUNA/RUNB run-length stage fills up to 900k BWT bytes from a few bits; the final run-length stage in Bzip2BlockDecompressor.read() expands every 4-byte+count group to up to 259 bytes, written by writeByte into a per-block ByteBuf with no output size cap; after out.add() the decode loop breaks back to INIT_BLOCK and decodes the next block in the same call, so every CRC-valid block's output is held in the out list until decode() returns",
+      "resource": "heap/direct memory: retained decompressed bytes in the out list, about 46.6 MB per valid maximum-size block (plus a temporary copy when the buffer grows)",
+      "failure_mode": "out_of_memory",
+      "scale": "Measured: all five inputs (1 to 16 maximum-size blocks, 80 to 561 bytes) hit the 2000 ms probe time cap. Even the smallest input, with one or two full blocks (about 46.6 MB of decoded output each), runs longer than 2 s, so the CPU cost is at least about 1 s per block (writeByte plus a CRC update per output byte); allocation and peak heap were not reported. Extrapolation: retained output grows about 46.6 MB per CRC-valid block, so about 21-22 blocks exhaust the 1 GB heap/direct-memory limit (out_of_memory). At 1-2 s per block, 10-20 blocks already pass the 20000 ms limit, so a timeout may come before the out-of-memory error; which comes first was not determined. In the measured libbzip2 encoding (about 32 compressed bytes per block plus about 50 bytes of overhead), 22 blocks take about 750 bytes; the timeout range is about 370-690 bytes. This is already close to the densest encoding; a hand-built stream with minimal Huffman tables could save only a few bytes per block.",
+      "input_bytes": 750,
+      "cwe": "CWE-409",
+      "checkpath_status": "PASS",
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "method": "fuzzing.Bzip2DecoderFuzzTest#fuzzBzip2DecoderDecode(InputStream)",
+          "location": "harness/src/test/java/fuzzing/Bzip2DecoderFuzzTest.java:35"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "harness/src/test/java/fuzzing/Bzip2DecoderFuzzTest.java:36"
+        },
+        {
+          "kind": "hop",
+          "method": "fuzzing.Bzip2DecoderFuzzTest#decodeAll(byte[])",
+          "location": "harness/src/test/java/fuzzing/Bzip2DecoderFuzzTest.java:48"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "harness/src/test/java/fuzzing/Bzip2DecoderFuzzTest.java:50"
+        },
+        {
+          "kind": "hop",
+          "method": "io.netty.channel.embedded.EmbeddedChannel#writeInbound(Object...)",
+          "location": "transport/src/main/java/io/netty/channel/embedded/EmbeddedChannel.java:335"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "transport/src/main/java/io/netty/channel/embedded/EmbeddedChannel.java:343"
+        },
+        {
+          "kind": "hop",
+          "method": "io.netty.channel.DefaultChannelPipeline#fireChannelRead(Object)",
+          "location": "transport/src/main/java/io/netty/channel/DefaultChannelPipeline.java:918"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "transport/src/main/java/io/netty/channel/DefaultChannelPipeline.java:919"
+        },
+        {
+          "kind": "hop",
+          "method": "io.netty.channel.AbstractChannelHandlerContext#invokeChannelRead(AbstractChannelHandlerContext,Object)",
+          "location": "transport/src/main/java/io/netty/channel/AbstractChannelHandlerContext.java:361"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "transport/src/main/java/io/netty/channel/AbstractChannelHandlerContext.java:365"
+        },
+        {
+          "kind": "hop",
+          "method": "io.netty.channel.AbstractChannelHandlerContext#invokeChannelRead(Object)",
+          "location": "transport/src/main/java/io/netty/channel/AbstractChannelHandlerContext.java:376"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "transport/src/main/java/io/netty/channel/AbstractChannelHandlerContext.java:379"
+        },
+        {
+          "kind": "hop",
+          "method": "io.netty.channel.DefaultChannelPipeline.HeadContext#channelRead(ChannelHandlerContext,Object)",
+          "location": "transport/src/main/java/io/netty/channel/DefaultChannelPipeline.java:1409"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "transport/src/main/java/io/netty/channel/DefaultChannelPipeline.java:1410"
+        },
+        {
+          "kind": "hop",
+          "method": "io.netty.channel.AbstractChannelHandlerContext#fireChannelRead(Object)",
+          "location": "transport/src/main/java/io/netty/channel/AbstractChannelHandlerContext.java:356"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "transport/src/main/java/io/netty/channel/AbstractChannelHandlerContext.java:357"
+        },
+        {
+          "kind": "hop",
+          "method": "io.netty.channel.AbstractChannelHandlerContext#invokeChannelRead(AbstractChannelHandlerContext,Object)",
+          "location": "transport/src/main/java/io/netty/channel/AbstractChannelHandlerContext.java:361"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "transport/src/main/java/io/netty/channel/AbstractChannelHandlerContext.java:365"
+        },
+        {
+          "kind": "hop",
+          "method": "io.netty.channel.AbstractChannelHandlerContext#invokeChannelRead(Object)",
+          "location": "transport/src/main/java/io/netty/channel/AbstractChannelHandlerContext.java:376"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "transport/src/main/java/io/netty/channel/AbstractChannelHandlerContext.java:379"
+        },
+        {
+          "kind": "hop",
+          "method": "io.netty.handler.codec.ByteToMessageDecoder#channelRead(ChannelHandlerContext,Object)",
+          "location": "codec/src/main/java/io/netty/handler/codec/ByteToMessageDecoder.java:269"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "codec/src/main/java/io/netty/handler/codec/ByteToMessageDecoder.java:276"
+        },
+        {
+          "kind": "hop",
+          "method": "io.netty.handler.codec.ByteToMessageDecoder#callDecode(ChannelHandlerContext,ByteBuf,List)",
+          "location": "codec/src/main/java/io/netty/handler/codec/ByteToMessageDecoder.java:426"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "codec/src/main/java/io/netty/handler/codec/ByteToMessageDecoder.java:446"
+        },
+        {
+          "kind": "hop",
+          "method": "io.netty.handler.codec.ByteToMessageDecoder#decodeRemovalReentryProtection(ChannelHandlerContext,ByteBuf,List)",
+          "location": "codec/src/main/java/io/netty/handler/codec/ByteToMessageDecoder.java:503"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "codec/src/main/java/io/netty/handler/codec/ByteToMessageDecoder.java:507"
+        },
+        {
+          "kind": "hop",
+          "method": "io.netty.handler.codec.compression.Bzip2Decoder#decode(ChannelHandlerContext,ByteBuf,List)",
+          "location": "codec/src/main/java/io/netty/handler/codec/compression/Bzip2Decoder.java:80"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "codec/src/main/java/io/netty/handler/codec/compression/Bzip2Decoder.java:298"
+        },
+        {
+          "kind": "hop",
+          "method": "io.netty.handler.codec.compression.Bzip2BlockDecompressor#read()",
+          "location": "codec/src/main/java/io/netty/handler/codec/compression/Bzip2BlockDecompressor.java:273"
+        }
+      ],
+      "harness_entry": "fuzzing.Bzip2DecoderFuzzTest#fuzzBzip2DecoderDecode",
+      "scale_measurement": [
+        {
+          "value": 1,
+          "input_bytes": 80,
+          "outcome": "time_cap"
+        },
+        {
+          "value": 2,
+          "input_bytes": 112,
+          "outcome": "time_cap"
+        },
+        {
+          "value": 4,
+          "input_bytes": 176,
+          "outcome": "time_cap"
+        },
+        {
+          "value": 8,
+          "input_bytes": 305,
+          "outcome": "time_cap"
+        },
+        {
+          "value": 16,
+          "input_bytes": 561,
+          "outcome": "time_cap"
+        }
+      ]
+    }
+  ]
+}

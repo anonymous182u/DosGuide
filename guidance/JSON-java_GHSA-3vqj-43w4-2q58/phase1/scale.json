@@ -1,0 +1,15 @@
+{
+  "series_request": null,
+  "rounds": [
+    {
+      "round": 1,
+      "revision": {
+        "V1": {
+          "scale": "Measured: 512 nesting levels fit in 256 KB stack; 1024 levels exceed it. Estimated ~276 bytes per recursive JSONML.parse() frame. Extrapolating to 1 MB stack (-Xss1m): approximately 3500 nesting levels trigger StackOverflowError. Each level is '<a>' (3 bytes), so about 10500 bytes of input.",
+          "input_bytes": 10500
+        }
+      },
+      "field_problems": {}
+    }
+  ]
+}

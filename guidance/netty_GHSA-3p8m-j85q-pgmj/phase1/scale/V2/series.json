@@ -1,0 +1,29 @@
+{
+  "parameter": "decompressed_output_bytes",
+  "inputs": [
+    {
+      "file": "n2m.bin",
+      "value": 2097152
+    },
+    {
+      "file": "n4m.bin",
+      "value": 4194304
+    },
+    {
+      "file": "n8m.bin",
+      "value": 8388608
+    },
+    {
+      "file": "n16m.bin",
+      "value": 16777216
+    },
+    {
+      "file": "n32m.bin",
+      "value": 33554432
+    },
+    {
+      "file": "n64m.bin",
+      "value": 67108864
+    }
+  ]
+}

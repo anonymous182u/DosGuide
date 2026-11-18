@@ -1,0 +1,163 @@
+{
+  "plans": [
+    {
+      "target": "V1",
+      "signals": [
+        {
+          "name": "v1TreeVisits",
+          "quantity": "tree-bin nodes visited (one per read of TreeNode.hash) inside HashMap$TreeNode.find while QuicheQuicCodec.getChannel is on the stack",
+          "aggregation": "sum",
+          "locations": [
+            "java.util.HashMap$TreeNode#find",
+            "io.netty.incubator.codec.quic.QuicheQuicCodec#getChannel"
+          ],
+          "technique": "bytecode",
+          "storage": "public static long DoSCounters.v1TreeVisits (bootstrap-loaded), gated by static int DoSCounters.v1Scope and the owner thread",
+          "reset": "DoSCounters.reset() in V1Guidance.getInput()",
+          "read": "V1Guidance.handleResult()"
+        },
+        {
+          "name": "v1MaxPerLookup",
+          "quantity": "largest number of tree-bin nodes visited during a single getChannel call",
+          "aggregation": "max",
+          "locations": [
+            "io.netty.incubator.codec.quic.QuicheQuicCodec#getChannel",
+            "java.util.HashMap$TreeNode#find"
+          ],
+          "technique": "bytecode",
+          "storage": "public static long DoSCounters.v1MaxPerLookup, updated at getChannel exit from a per-call delta",
+          "reset": "DoSCounters.reset() in V1Guidance.getInput()",
+          "read": "V1Guidance.handleResult()"
+        },
+        {
+          "name": "v1KeyEquals",
+          "quantity": "ByteBuffer.equals key comparisons inside getChannel (covers list bins before treeification)",
+          "aggregation": "count",
+          "locations": [
+            "java.nio.ByteBuffer#equals",
+            "io.netty.incubator.codec.quic.QuicheQuicCodec#getChannel"
+          ],
+          "technique": "bytecode",
+          "storage": "public static long DoSCounters.v1KeyEquals",
+          "reset": "DoSCounters.reset() in V1Guidance.getInput()",
+          "read": "V1Guidance.handleResult()"
+        },
+        {
+          "name": "channelsAdded",
+          "quantity": "number of QuicheQuicCodec.addChannel invocations (distinct connections whose DCID entered the map)",
+          "aggregation": "count",
+          "locations": [
+            "io.netty.incubator.codec.quic.QuicheQuicCodec#addChannel"
+          ],
+          "technique": "bytecode",
+          "storage": "public static long DoSCounters.channelsAdded",
+          "reset": "DoSCounters.reset() in V1Guidance.getInput()",
+          "read": "V1Guidance.handleResult()"
+        }
+      ],
+      "retention": "Keep the input if v1TreeVisits, v1MaxPerLookup, v1KeyEquals or channelsAdded reaches a new maximum, or (flat-signal criterion) if it is longer than every kept input at the same log2 level of v1TreeVisits while that level's longest is below input_bytes=413000. Scheduling: with probability 0.30, while the longest kept input is below input_bytes, apply flat growth to it (append fresh records until it doubles, cut at input_bytes). With probability 0.10 (0.25 once input_bytes is reached), apply dense growth to the highest-scoring input (hash-preserving carry clone of every record, x2; x1.25 above input_bytes; up to MAX_INPUT_SIZE). Otherwise mutate a parent chosen by rank (v1TreeVisits, then v1MaxPerLookup), with growth bounded by max(parent length, input_bytes). Fresh records prefer 20-byte DCIDs. Corpus in out/V1/corpus, metadata in out/V1/meta.",
+      "retention_signals": [
+        "v1TreeVisits",
+        "v1MaxPerLookup",
+        "v1KeyEquals",
+        "channelsAdded"
+      ],
+      "mutation": [
+        "byte flip/set/insert/delete",
+        "record-level replace/insert/splice/length, using the harness's [len][dcid] parse",
+        "repetition: repeat a run of records k times (k up to doubling the input) and double the whole input",
+        "flat growth: append fresh records until the input doubles, toward input_bytes",
+        "dense growth / clone with hash-preserving carry: per-record (+31,-1)/(-31,+1) adjacent-byte adjustments derived from the ByteBuffer.hashCode base-31 polynomial, applied to whatever records the search selected",
+        "dictionary tokens from the attack path: 20 (Quic.MAX_CONN_ID_LEN), 8, 10, 0, 31, 0x7f, 0x80, 0xff, 1",
+        "no encoder needed: the harness applies the QUIC Initial protection"
+      ]
+    },
+    {
+      "target": "PkgRisk1",
+      "signals": [
+        {
+          "name": "p1TreeVisits",
+          "quantity": "tree-bin nodes visited inside HashMap$TreeNode.find while HashMap$TreeNode.putTreeVal runs within QuicheQuicCodec.addChannel",
+          "aggregation": "sum",
+          "locations": [
+            "java.util.HashMap$TreeNode#find",
+            "java.util.HashMap$TreeNode#putTreeVal",
+            "io.netty.incubator.codec.quic.QuicheQuicCodec#addChannel"
+          ],
+          "technique": "bytecode",
+          "storage": "public static long DoSCounters.p1TreeVisits, gated by DoSCounters.addScope and DoSCounters.putScope and the owner thread",
+          "reset": "DoSCounters.reset() in PkgRisk1Guidance.getInput()",
+          "read": "PkgRisk1Guidance.handleResult()"
+        },
+        {
+          "name": "p1VisitsPerKB",
+          "quantity": "p1TreeVisits divided by the KB of datagram content received by QuicheQuicCodec.channelRead in the same execution (both measured)",
+          "aggregation": "ratio",
+          "locations": [
+            "java.util.HashMap$TreeNode#find",
+            "io.netty.incubator.codec.quic.QuicheQuicCodec#channelRead"
+          ],
+          "technique": "bytecode",
+          "storage": "DoSCounters.p1TreeVisits and DoSCounters.datagramBytes (incremented at channelRead entry by msg.content().readableBytes()); ratio computed in PkgRisk1Guidance.handleResult()",
+          "reset": "DoSCounters.reset() in PkgRisk1Guidance.getInput()",
+          "read": "PkgRisk1Guidance.handleResult()"
+        },
+        {
+          "name": "p1Treeify",
+          "quantity": "HashMap$TreeNode.treeify invocations within addChannel (a colliding bin crossed TREEIFY_THRESHOLD)",
+          "aggregation": "count",
+          "locations": [
+            "java.util.HashMap$TreeNode#treeify"
+          ],
+          "technique": "bytecode",
+          "storage": "public static long DoSCounters.p1Treeify",
+          "reset": "DoSCounters.reset() in PkgRisk1Guidance.getInput()",
+          "read": "PkgRisk1Guidance.handleResult()"
+        },
+        {
+          "name": "p1KeyEquals",
+          "quantity": "ByteBuffer.equals key comparisons during insertion inside addChannel (list bins before treeification)",
+          "aggregation": "count",
+          "locations": [
+            "java.nio.ByteBuffer#equals",
+            "io.netty.incubator.codec.quic.QuicheQuicCodec#addChannel"
+          ],
+          "technique": "bytecode",
+          "storage": "public static long DoSCounters.p1KeyEquals",
+          "reset": "DoSCounters.reset() in PkgRisk1Guidance.getInput()",
+          "read": "PkgRisk1Guidance.handleResult()"
+        },
+        {
+          "name": "channelsAdded",
+          "quantity": "number of QuicheQuicCodec.addChannel invocations",
+          "aggregation": "count",
+          "locations": [
+            "io.netty.incubator.codec.quic.QuicheQuicCodec#addChannel"
+          ],
+          "technique": "bytecode",
+          "storage": "public static long DoSCounters.channelsAdded",
+          "reset": "DoSCounters.reset() in PkgRisk1Guidance.getInput()",
+          "read": "PkgRisk1Guidance.handleResult()"
+        }
+      ],
+      "retention": "Keep the input if p1TreeVisits, p1VisitsPerKB, p1Treeify, p1KeyEquals or channelsAdded reaches a new maximum, or (flat-signal criterion) if it is longer than every kept input at the same log2 level of p1TreeVisits while that level's longest is below input_bytes=176000. Scheduling: with probability 0.30, while the longest kept input is below input_bytes, apply flat growth to it (append fresh records until it doubles, cut at input_bytes). With probability 0.10 (0.25 once input_bytes is reached), apply dense growth to the highest-scoring input (hash-preserving carry clone of every record, x2; x1.25 above input_bytes; up to MAX_INPUT_SIZE). Otherwise mutate a parent chosen by rank (p1TreeVisits, then p1VisitsPerKB), with growth bounded by max(parent length, input_bytes). Fresh records prefer 8-10 byte DCIDs (densest encoding), plus a record-shortening operator. Corpus in out/PkgRisk1/corpus, metadata in out/PkgRisk1/meta.",
+      "retention_signals": [
+        "p1TreeVisits",
+        "p1VisitsPerKB",
+        "p1Treeify",
+        "p1KeyEquals",
+        "channelsAdded"
+      ],
+      "mutation": [
+        "byte flip/set/insert/delete",
+        "record-level replace/insert/splice/length, using the harness's [len][dcid] parse",
+        "repetition: repeat a run of records k times (k up to doubling the input) and double the whole input",
+        "flat growth: append fresh records until the input doubles, toward input_bytes",
+        "dense growth / clone with hash-preserving carry: per-record (+31,-1)/(-31,+1) adjacent-byte adjustments derived from the ByteBuffer.hashCode base-31 polynomial, applied to whatever records the search selected",
+        "record shortening toward 8-10 byte DCIDs",
+        "dictionary tokens from the attack path: 8, 10, 20 (Quic.MAX_CONN_ID_LEN), 0, 31, 0x7f, 0x80, 0xff, 1",
+        "no encoder needed: the harness applies the QUIC Initial protection"
+      ]
+    }
+  ]
+}

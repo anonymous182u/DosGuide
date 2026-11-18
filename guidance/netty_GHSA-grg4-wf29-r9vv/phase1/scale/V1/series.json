@@ -1,0 +1,25 @@
+{
+ "parameter": "number of maximum-size (900k BWT bytes, ~46.6 MB decompressed each) bzip2 blocks in one stream, all retained in the decoder out list during a single decode() call",
+ "inputs": [
+  {
+   "file": "blocks1.bin",
+   "value": 1
+  },
+  {
+   "file": "blocks2.bin",
+   "value": 2
+  },
+  {
+   "file": "blocks4.bin",
+   "value": 4
+  },
+  {
+   "file": "blocks8.bin",
+   "value": 8
+  },
+  {
+   "file": "blocks16.bin",
+   "value": 16
+  }
+ ]
+}

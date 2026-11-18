@@ -1,0 +1,70 @@
+{
+  "plans": [
+    {
+      "target": "V1",
+      "signals": [
+        {
+          "name": "processTokenCount",
+          "quantity": "number of times Parser#processToken() is invoked per test execution — with K self-referencing tokens each recursion level branches K times, yielding K^S total invocations where S is the recursion depth",
+          "aggregation": "count",
+          "locations": [
+            "org.jenkinsci.plugins.tokenmacro.Parser#processToken"
+          ],
+          "technique": "bytecode",
+          "storage": "ThreadLocal<long[]> in dosguide.agent.V1Counter (static field 'count', long[1] array to avoid boxing)",
+          "reset": "V1CostGradientGuidance.getInput() calls V1Counter.count.get()[0] = 0 before returning the InputStream",
+          "read": "V1CostGradientGuidance.handleResult() reads V1Counter.count.get()[0] and stores it; exported via lastSignals() as {\"processTokenCount\": N}"
+        }
+      ],
+      "retention": "Primary: retain input if processTokenCount exceeds the running maximum (higher count means closer to timeout from exponential branching). Secondary (flat-signal, R46): when processTokenCount has not increased for 50 consecutive inputs, retain if the input's structural fingerprint is novel — fingerprint is computed from the count and byte-offsets of complete ${...} token boundaries in the input, so inputs with different token arrangements are explored even when signal is flat. Inputs that produce processTokenCount=0 (no tokens parsed) are never retained.",
+      "retention_signals": [
+        "processTokenCount"
+      ],
+      "mutation": [
+        "havoc: flip 1-4 random bits in the byte array (byte-level exploration)",
+        "byteInsert: insert 1-8 random bytes at a random position",
+        "byteDelete: delete 1-8 bytes from a random position",
+        "tokenRepeat: find an existing ${...} token boundary in the input and duplicate it (increases K, the branching factor — most important operator for V1)",
+        "tokenInsert: insert a complete ${CHANGES, format=\"%m\"} (23 bytes) from the dictionary at a random position in the input",
+        "tokenCorrupt: pick a random byte inside a ${...} boundary and replace it with a random byte (explores near-valid token forms)",
+        "splice: given two retained inputs, take a random-length prefix of one and a random-length suffix of the other",
+        "dictReplace: replace a random 1-7 byte span with a dictionary token chosen at random from: ${, }, CHANGES, format, =, \", %m, comma, space, ${CHANGES, format=\"%m\"}",
+        "tokenEncoder: structured operator that builds an input of exactly K copies of the full self-referencing token ${CHANGES, format=\"%m\"} concatenated (23K bytes), where K is sampled 2..max_tokens based on budget — this is the primary encoder for constructing triggering inputs that pass the parser"
+      ]
+    },
+    {
+      "target": "V2",
+      "signals": [
+        {
+          "name": "findNanos",
+          "quantity": "wall-clock nanoseconds spent inside the Matcher.find() call within BeginningOrEndMatchTransorm#transform — measures the backtracking cost of the regex engine on the user-controlled pattern and subject",
+          "aggregation": "sum",
+          "locations": [
+            "org.jenkinsci.plugins.tokenmacro.transform.BeginningOrEndMatchTransorm#transform"
+          ],
+          "technique": "bytecode",
+          "storage": "ThreadLocal<long[]> in dosguide.agent.V2Counter (static fields 'findNanos' and 'startNanos', each long[1])",
+          "reset": "V2VulnDirectedGuidance.getInput() calls V2Counter.findNanos.get()[0] = 0 before returning the InputStream",
+          "read": "V2VulnDirectedGuidance.handleResult() reads V2Counter.findNanos.get()[0] and stores it; exported via lastSignals() as {\"findNanos\": N}"
+        }
+      ],
+      "retention": "Primary: retain input if findNanos exceeds the running maximum (higher nanos means more backtracking, closer to timeout). Secondary (flat-signal, R46): when findNanos has not increased for 50 consecutive inputs, retain if the pattern portion (bytes before NUL) contains a novel combination of regex metacharacters or the subject portion (bytes after NUL) is longer than previously retained subjects. Inputs that throw PatternSyntaxException are discarded (they never reach the Matcher.find sink).",
+      "retention_signals": [
+        "findNanos"
+      ],
+      "mutation": [
+        "havoc: flip 1-4 random bits in the byte array (byte-level exploration)",
+        "byteInsert: insert 1-8 random bytes at a random position",
+        "byteDelete: delete 1-8 bytes from a random position",
+        "patternMutate: modify a random byte in the pattern portion (before the NUL separator), biased 70% toward regex metacharacters from dictionary: (, ), +, *, |, [, ], .",
+        "subjectExtend: append 1-20 copies of the character 'a' (0x61) to the subject portion (after NUL) — increases backtracking path length, most important operator for amplifying V2 signal",
+        "patternNest: find an existing (...) group in the pattern and wrap it in an additional quantified group, e.g. (X)+ becomes ((X)+)+ — increases ambiguity depth",
+        "alternationInsert: insert |<char> inside an existing parenthesized group in the pattern, creating ambiguous alternation that resists JDK 17 optimization (e.g., (a)+ becomes (a|aa)+)",
+        "separatorShift: move the NUL byte position left or right by 1-4 bytes to rebalance pattern vs subject lengths",
+        "crossover: combine the pattern portion (before NUL) of one retained input with the subject portion (after NUL) of another retained input",
+        "redosEncoder: structured operator that builds an input as pattern_bytes + NUL + N copies of 'a', where pattern_bytes is drawn from dictionary seeds like (a|aa)+b or (a|a)+b and N is sampled from a range scaled to budget — primary encoder for constructing well-formed ReDoS inputs that pass Pattern.compile",
+        "dictReplace: replace a random span in the pattern portion with a dictionary token chosen at random from: (, ), +, *, |, a, b, (a|aa)+b, (a|a)+"
+      ]
+    }
+  ]
+}

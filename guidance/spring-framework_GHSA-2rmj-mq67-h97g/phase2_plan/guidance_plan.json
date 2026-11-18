@@ -1,0 +1,54 @@
+{
+  "plans": [
+    {
+      "target": "V1",
+      "signals": [
+        {
+          "name": "regexSteps",
+          "quantity": "total invocations of Pattern$Node.match(Matcher, int, CharSequence) and all overrides in java.util.regex.Pattern inner classes during one fuzz execution — each invocation is one regex VM state transition / backtracking step",
+          "aggregation": "count",
+          "locations": [
+            "java.util.regex.Pattern$Node#match",
+            "java.util.regex.Pattern$Curly#match",
+            "java.util.regex.Pattern$GroupCurly#match",
+            "java.util.regex.Pattern$CharProperty#match",
+            "java.util.regex.Pattern$BmpCharProperty#match",
+            "java.util.regex.Pattern$Slice#match",
+            "java.util.regex.Pattern$Start#match",
+            "java.util.regex.Pattern$Begin#match",
+            "java.util.regex.Pattern$End#match",
+            "java.util.regex.Pattern$Dollar#match",
+            "java.util.regex.Pattern$LastNode#match",
+            "java.util.regex.Pattern$Branch#match",
+            "java.util.regex.Pattern$BranchConn#match",
+            "java.util.regex.Pattern$GroupHead#match",
+            "java.util.regex.Pattern$GroupTail#match",
+            "java.util.regex.Pattern$Ques#match",
+            "java.util.regex.Pattern$Loop#match",
+            "java.util.regex.Pattern$Prolog#match",
+            "java.util.regex.Pattern$LazyLoop#match"
+          ],
+          "technique": "bytecode",
+          "storage": "ThreadLocal<long[]> in com.fuzzing.agent.V1Counters (on bootstrap classpath via Boot-Class-Path manifest attribute in agent jar; java.base reads V1Counters' unnamed module via Instrumentation.redefineModule)",
+          "reset": "V1Counters.reset() called by V1Guidance before each execution via reflection (Class.forName with null classloader)",
+          "read": "V1Counters.getStepCount() called in V1Guidance.handleResult() via reflection; value returned by V1Guidance.lastSignals() as {\"regexSteps\": value}"
+        }
+      ],
+      "retention": "Primary: retain input if regexSteps exceeds the current maximum in the corpus. Secondary (while regexSteps is flat or zero): retain input if its byte length is strictly longer than the longest retained input, ensuring growth toward 57000 bytes. Corpus capped at ~100 entries; eviction removes lowest-regexSteps entries while keeping the longest input. Parent selection for mutation is proportional to regexSteps score.",
+      "retention_signals": [
+        "regexSteps"
+      ],
+      "mutation": [
+        "ETag seed generation: initial seeds are well-formed ETag header values covering all format parts — strong ETags (\"value\"), weak ETags (W/\"value\"), wildcards (*), comma-separated lists — with whitespace padding between tokens. Ordinary examples of the If-None-Match format.",
+        "repetition (R45a): pick random region [start, start+len), repeat k times in-place (k up to inputSizeLimit/len). Grows input for quadratic scaling. 20% weight.",
+        "homogenize: pick a random byte FROM the current input and spread it to other positions via contiguous fill or scattered replacement. The search discovers which source byte maximizes signal. 20% weight.",
+        "dictionary insert (R45b): tokens from ETag grammar source code — 0x20 (space), 0x09 (tab), 0x0A (newline), 0x0D (CR), 0x22 (quote), 0x2A (asterisk), 0x2C (comma), {0x57,0x2F} (W/). Insert or overwrite at random position. 10% weight.",
+        "byte-level flip: pick random position, replace with random byte. 10% weight.",
+        "byte-level insert: pick random position, insert 1-4 random bytes. 5% weight.",
+        "byte-level delete: pick random position, remove 1-4 bytes. Removes structural bytes like quotes. 10% weight.",
+        "havoc: 2-5 rounds of randomly chosen sub-mutations (repetition, homogenize, dictionary, flip, delete, insert). 25% weight.",
+        "encoding (R45c): not needed — input is raw ISO-8859-1 bytes with no checksums, compression, or length-prefix encoding"
+      ]
+    }
+  ]
+}

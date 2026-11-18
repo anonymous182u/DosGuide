@@ -1,0 +1,16 @@
+{
+  "build": [
+    "mvn package -DskipTests -q",
+    "bash build-agent.sh"
+  ],
+  "classpath_command": "printf '%s:%s' 'target/test-classes:target/classes:lib/keycloak-saml-core-999.0.0-SNAPSHOT.jar:lib/keycloak-saml-core-public-999.0.0-SNAPSHOT.jar:lib/keycloak-common-999.0.0-SNAPSHOT.jar' \"$(cat .mvn-test-cp.txt 2>/dev/null | tr -d '\\n')\"",
+  "javaagent": {"jar": "v1-agent.jar", "args": ""},
+  "jvm_args": [],
+  "guidance_factory": "com.fuzzer.runner.FuzzRunner#createGuidance",
+  "targets": {
+    "V1": {
+      "test_class": "com.fuzzer.saml.SAMLRequestParserFuzzTest",
+      "method": "fuzzSAMLRequestParserParseRequestRedirectBinding"
+    }
+  }
+}

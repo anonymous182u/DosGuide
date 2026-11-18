@@ -1,0 +1,2276 @@
+{
+  "ok": true,
+  "launch": [],
+  "build": {
+    "ok": true
+  },
+  "targets": [
+    {
+      "tool": "ValidateArtifact",
+      "target": "V1",
+      "checks": [
+        {
+          "name": "contract",
+          "status": "pass",
+          "detail": "factory, lastSignals() and fuzz test found"
+        },
+        {
+          "name": "runs",
+          "status": "pass",
+          "detail": "105 executions completed"
+        },
+        {
+          "name": "plan_signals",
+          "status": "pass",
+          "detail": "lastSignals() returns every planned signal [bigIntOps, sinkTimeNs]"
+        },
+        {
+          "name": "signal_varies",
+          "status": "pass",
+          "detail": "varying: [bigIntOps, cost, dtostrTimeNs, pow5multCalls, sinkTimeNs] (on the guidance's own inputs: [bigIntOps, cost, dtostrTimeNs, pow5multCalls, sinkTimeNs])"
+        },
+        {
+          "name": "reset",
+          "status": "warn",
+          "detail": "`dtostrTimeNs`: re-running the same input gave different values (2139842 then 136246, 855434 then 396654, 313866 then 83003), so the value is not determined by the executed input (timing, or computed from something other than the execution); `sinkTimeNs`: re-running the same input gave different values (2134362 then 131340, 839194 then 391220, 305947 then 77771), so the value is not determined by the executed input (timing, or computed from something other than the execution)"
+        },
+        {
+          "name": "depends_on_execution",
+          "status": "pass",
+          "detail": "signals stay near zero when the target does not run"
+        },
+        {
+          "name": "instrumentation",
+          "status": "pass",
+          "detail": "rewrote [org.mozilla.javascript.DToA]"
+        },
+        {
+          "name": "input_limit",
+          "status": "pass",
+          "detail": "with jqf.ei.MAX_INPUT_SIZE=16 the 20 generated inputs were at most 16 bytes"
+        },
+        {
+          "name": "input_growth",
+          "status": "pass",
+          "detail": "the guidance generated a 40-byte input after 894 ms (1 executions); the target needs 9"
+        },
+        {
+          "name": "progress",
+          "status": "skip",
+          "detail": "not compared: an execution of the guidance's own inputs ran as long as the time limit"
+        }
+      ],
+      "max_input_bytes": 10240,
+      "example_inputs": 10,
+      "executions": {
+        "own": 40,
+        "repeat": 5,
+        "random": 40,
+        "example": 20,
+        "probe": 3
+      },
+      "test_failures_not_used": 0,
+      "signals": {
+        "bigIntOps": {
+          "min": 0.0,
+          "max": 243.0,
+          "distinct": 20
+        },
+        "cost": {
+          "min": 0.0,
+          "max": 243000.213316,
+          "distinct": 82
+        },
+        "dtostrTimeNs": {
+          "min": 0.0,
+          "max": 2139842.0,
+          "distinct": 82
+        },
+        "pow5multCalls": {
+          "min": 0.0,
+          "max": 1.0,
+          "distinct": 2
+        },
+        "sinkTimeNs": {
+          "min": 0.0,
+          "max": 2134362.0,
+          "distinct": 82
+        }
+      },
+      "signals_by_kind": {
+        "example": {
+          "bigIntOps": {
+            "max": 243.0,
+            "distinct": 5,
+            "min": 0.0
+          },
+          "cost": {
+            "max": 243000.154516,
+            "distinct": 20,
+            "min": 0.020975
+          },
+          "dtostrTimeNs": {
+            "max": 134257.0,
+            "distinct": 20,
+            "min": 11310.0
+          },
+          "pow5multCalls": {
+            "max": 1.0,
+            "distinct": 2,
+            "min": 0.0
+          },
+          "sinkTimeNs": {
+            "max": 129467.0,
+            "distinct": 20,
+            "min": 9665.0
+          }
+        },
+        "own": {
+          "bigIntOps": {
+            "max": 243.0,
+            "distinct": 16,
+            "min": 0.0
+          },
+          "cost": {
+            "max": 243000.213316,
+            "distinct": 40,
+            "min": 0.011295
+          },
+          "dtostrTimeNs": {
+            "max": 2139842.0,
+            "distinct": 40,
+            "min": 6847.0
+          },
+          "pow5multCalls": {
+            "max": 1.0,
+            "distinct": 2,
+            "min": 0.0
+          },
+          "sinkTimeNs": {
+            "max": 2134362.0,
+            "distinct": 40,
+            "min": 4448.0
+          }
+        },
+        "random": {
+          "bigIntOps": {
+            "max": 201.0,
+            "distinct": 12,
+            "min": 0.0
+          },
+          "cost": {
+            "max": 201000.247001,
+            "distinct": 37,
+            "min": 0.0
+          },
+          "dtostrTimeNs": {
+            "max": 1338022.0,
+            "distinct": 37,
+            "min": 0.0
+          },
+          "pow5multCalls": {
+            "max": 1.0,
+            "distinct": 2,
+            "min": 0.0
+          },
+          "sinkTimeNs": {
+            "max": 1331773.0,
+            "distinct": 37,
+            "min": 0.0
+          }
+        },
+        "repeat": {
+          "bigIntOps": {
+            "max": 201.0,
+            "distinct": 4,
+            "min": 48.0
+          },
+          "cost": {
+            "max": 201000.160774,
+            "distinct": 5,
+            "min": 48000.787874
+          },
+          "dtostrTimeNs": {
+            "max": 396654.0,
+            "distinct": 5,
+            "min": 68092.0
+          },
+          "pow5multCalls": {
+            "max": 1.0,
+            "distinct": 2,
+            "min": 0.0
+          },
+          "sinkTimeNs": {
+            "max": 391220.0,
+            "distinct": 5,
+            "min": 55822.0
+          }
+        }
+      },
+      "transformed_classes": [
+        "org.mozilla.javascript.DToA"
+      ],
+      "ok": true,
+      "input_limit_probe": {
+        "max_input_bytes": 16,
+        "longest_input": 16,
+        "executions": {
+          "own": 20
+        }
+      },
+      "growth_probe": {
+        "needed_input_bytes": 9,
+        "longest_input": 40,
+        "executions": {
+          "own": 1
+        },
+        "growth": [
+          {
+            "ms": 894,
+            "execution": 1,
+            "bytes": 40
+          }
+        ]
+      },
+      "hard_ok": true,
+      "progress_probe": {
+        "own_ms": 22029,
+        "executions": 2383,
+        "longest_input": 40,
+        "phase": "own",
+        "series_inputs": 6,
+        "comparison": {},
+        "measurements": {
+          "budget_ms": 120000,
+          "own_ms": 22029,
+          "executions": 2383,
+          "longest_input": 40,
+          "phase": "own",
+          "own_best": {
+            "bigIntOps": [
+              [
+                9,
+                51.0,
+                1288
+              ],
+              [
+                10,
+                115.0,
+                1078
+              ],
+              [
+                11,
+                95.0,
+                1896
+              ],
+              [
+                12,
+                51.0,
+                1881
+              ],
+              [
+                13,
+                51.0,
+                1608
+              ],
+              [
+                14,
+                51.0,
+                1675
+              ],
+              [
+                15,
+                51.0,
+                1653
+              ],
+              [
+                16,
+                69.0,
+                1534
+              ],
+              [
+                19,
+                243.0,
+                916
+              ],
+              [
+                20,
+                93.0,
+                1760
+              ],
+              [
+                21,
+                137.0,
+                1221
+              ],
+              [
+                24,
+                99.0,
+                1775
+              ],
+              [
+                25,
+                161.0,
+                1680
+              ],
+              [
+                28,
+                51.0,
+                1002
+              ],
+              [
+                30,
+                171.0,
+                1328
+              ],
+              [
+                34,
+                185.0,
+                1646
+              ],
+              [
+                35,
+                65.0,
+                1810
+              ],
+              [
+                40,
+                65.0,
+                1887
+              ]
+            ],
+            "cost": [
+              [
+                9,
+                51000.051046,
+                1288
+              ],
+              [
+                10,
+                115000.061739,
+                1078
+              ],
+              [
+                11,
+                95000.041338,
+                1896
+              ],
+              [
+                12,
+                51000.028085,
+                1881
+              ],
+              [
+                13,
+                51000.034197,
+                1608
+              ],
+              [
+                14,
+                51000.039451,
+                1675
+              ],
+              [
+                15,
+                51000.036593,
+                1656
+              ],
+              [
+                16,
+                69000.053561,
+                1534
+              ],
+              [
+                19,
+                243000.111347,
+                916
+              ],
+              [
+                20,
+                93000.026393,
+                1760
+              ],
+              [
+                21,
+                137000.05528,
+                1221
+              ],
+              [
+                24,
+                99000.022235,
+                1775
+              ],
+              [
+                25,
+                161000.028624,
+                1680
+              ],
+              [
+                28,
+                51000.111765,
+                1002
+              ],
+              [
+                30,
+                171000.030895,
+                1328
+              ],
+              [
+                34,
+                185000.02612,
+                1646
+              ],
+              [
+                35,
+                65000.017394,
+                1810
+              ],
+              [
+                40,
+                65000.023022,
+                1887
+              ]
+            ],
+            "dtostrTimeNs": [
+              [
+                9,
+                66542.0,
+                967
+              ],
+              [
+                10,
+                55559.0,
+                1016
+              ],
+              [
+                11,
+                21943.0,
+                1896
+              ],
+              [
+                12,
+                58866.0,
+                1023
+              ],
+              [
+                13,
+                95045.0,
+                854
+              ],
+              [
+                14,
+                20333.0,
+                1675
+              ],
+              [
+                15,
+                22996.0,
+                1058
+              ],
+              [
+                16,
+                63722.0,
+                988
+              ],
+              [
+                19,
+                2639472.0,
+                951
+              ],
+              [
+                20,
+                23650.0,
+                1309
+              ],
+              [
+                21,
+                70079.0,
+                969
+              ],
+              [
+                23,
+                81140.0,
+                877
+              ],
+              [
+                26,
+                78840.0,
+                887
+              ],
+              [
+                28,
+                65856.0,
+                799
+              ],
+              [
+                30,
+                47893.0,
+                897
+              ],
+              [
+                33,
+                111627.0,
+                894
+              ],
+              [
+                37,
+                99729.0,
+                874
+              ],
+              [
+                39,
+                94565.0,
+                876
+              ]
+            ],
+            "pow5multCalls": [
+              [
+                9,
+                1.0,
+                967
+              ],
+              [
+                10,
+                1.0,
+                1016
+              ],
+              [
+                11,
+                1.0,
+                1073
+              ],
+              [
+                12,
+                1.0,
+                1023
+              ],
+              [
+                13,
+                1.0,
+                854
+              ],
+              [
+                14,
+                1.0,
+                1353
+              ],
+              [
+                15,
+                1.0,
+                1058
+              ],
+              [
+                17,
+                1.0,
+                833
+              ],
+              [
+                19,
+                1.0,
+                788
+              ],
+              [
+                20,
+                1.0,
+                1151
+              ],
+              [
+                21,
+                1.0,
+                908
+              ],
+              [
+                23,
+                1.0,
+                877
+              ],
+              [
+                26,
+                1.0,
+                887
+              ],
+              [
+                28,
+                1.0,
+                799
+              ],
+              [
+                30,
+                1.0,
+                897
+              ],
+              [
+                33,
+                1.0,
+                883
+              ],
+              [
+                37,
+                1.0,
+                874
+              ],
+              [
+                39,
+                1.0,
+                876
+              ]
+            ],
+            "sinkTimeNs": [
+              [
+                9,
+                61780.0,
+                967
+              ],
+              [
+                10,
+                49639.0,
+                1016
+              ],
+              [
+                11,
+                19395.0,
+                1896
+              ],
+              [
+                12,
+                54414.0,
+                1023
+              ],
+              [
+                13,
+                90434.0,
+                854
+              ],
+              [
+                14,
+                19118.0,
+                1675
+              ],
+              [
+                15,
+                20252.0,
+                1058
+              ],
+              [
+                16,
+                58387.0,
+                988
+              ],
+              [
+                19,
+                2633722.0,
+                951
+              ],
+              [
+                20,
+                22127.0,
+                1309
+              ],
+              [
+                21,
+                64500.0,
+                969
+              ],
+              [
+                23,
+                77160.0,
+                877
+              ],
+              [
+                26,
+                73688.0,
+                887
+              ],
+              [
+                28,
+                58945.0,
+                799
+              ],
+              [
+                30,
+                44352.0,
+                897
+              ],
+              [
+                33,
+                106378.0,
+                894
+              ],
+              [
+                37,
+                95643.0,
+                874
+              ],
+              [
+                39,
+                90412.0,
+                876
+              ]
+            ]
+          },
+          "series": []
+        }
+      }
+    },
+    {
+      "tool": "ValidateArtifact",
+      "target": "V2",
+      "checks": [
+        {
+          "name": "contract",
+          "status": "pass",
+          "detail": "factory, lastSignals() and fuzz test found"
+        },
+        {
+          "name": "runs",
+          "status": "pass",
+          "detail": "105 executions completed"
+        },
+        {
+          "name": "plan_signals",
+          "status": "pass",
+          "detail": "lastSignals() returns every planned signal [bigIntOps, sinkTimeNs]"
+        },
+        {
+          "name": "signal_varies",
+          "status": "pass",
+          "detail": "varying: [bigIntOps, cost, sinkTimeNs] (on the guidance's own inputs: [bigIntOps, cost, sinkTimeNs])"
+        },
+        {
+          "name": "reset",
+          "status": "warn",
+          "detail": "`sinkTimeNs`: re-running the same input gave different values (2648069 then 864456, 1378857 then 695098, 1319043 then 729127), so the value is not determined by the executed input (timing, or computed from something other than the execution)"
+        },
+        {
+          "name": "depends_on_execution",
+          "status": "pass",
+          "detail": "signals stay near zero when the target does not run"
+        },
+        {
+          "name": "instrumentation",
+          "status": "pass",
+          "detail": "rewrote [org.mozilla.javascript.DToA]"
+        },
+        {
+          "name": "input_limit",
+          "status": "pass",
+          "detail": "with jqf.ei.MAX_INPUT_SIZE=16 the 20 generated inputs were at most 16 bytes"
+        },
+        {
+          "name": "input_growth",
+          "status": "pass",
+          "detail": "the guidance generated a 15-byte input after 670 ms (1 executions); the target needs 9"
+        },
+        {
+          "name": "progress",
+          "status": "skip",
+          "detail": "not compared: no signal grows along the series"
+        }
+      ],
+      "max_input_bytes": 10240,
+      "example_inputs": 10,
+      "executions": {
+        "own": 40,
+        "repeat": 5,
+        "random": 40,
+        "example": 20,
+        "probe": 3
+      },
+      "test_failures_not_used": 0,
+      "signals": {
+        "bigIntOps": {
+          "min": 0.0,
+          "max": 4076.0,
+          "distinct": 40
+        },
+        "cost": {
+          "min": 0.0,
+          "max": 4076001.319043,
+          "distinct": 81
+        },
+        "pow5multCalls": {
+          "min": 0.0,
+          "max": 0.0,
+          "distinct": 1
+        },
+        "sinkTimeNs": {
+          "min": 0.0,
+          "max": 2648069.0,
+          "distinct": 81
+        }
+      },
+      "signals_by_kind": {
+        "example": {
+          "bigIntOps": {
+            "min": 0.0,
+            "max": 645.0,
+            "distinct": 3
+          },
+          "cost": {
+            "min": 0.020007,
+            "max": 645000.175297,
+            "distinct": 20
+          },
+          "pow5multCalls": {
+            "min": 0.0,
+            "max": 0.0,
+            "distinct": 1
+          },
+          "sinkTimeNs": {
+            "min": 20007.0,
+            "max": 175297.0,
+            "distinct": 20
+          }
+        },
+        "own": {
+          "bigIntOps": {
+            "min": 0.0,
+            "max": 4076.0,
+            "distinct": 30
+          },
+          "cost": {
+            "min": 0.0,
+            "max": 4076001.319043,
+            "distinct": 40
+          },
+          "pow5multCalls": {
+            "min": 0.0,
+            "max": 0.0,
+            "distinct": 1
+          },
+          "sinkTimeNs": {
+            "min": 0.0,
+            "max": 2648069.0,
+            "distinct": 40
+          }
+        },
+        "random": {
+          "bigIntOps": {
+            "min": 0.0,
+            "max": 4076.0,
+            "distinct": 25
+          },
+          "cost": {
+            "min": 0.0,
+            "max": 4076001.11627,
+            "distinct": 37
+          },
+          "pow5multCalls": {
+            "min": 0.0,
+            "max": 0.0,
+            "distinct": 1
+          },
+          "sinkTimeNs": {
+            "min": 0.0,
+            "max": 1116270.0,
+            "distinct": 37
+          }
+        },
+        "repeat": {
+          "bigIntOps": {
+            "min": 3066.0,
+            "max": 4076.0,
+            "distinct": 4
+          },
+          "cost": {
+            "min": 3066000.864456,
+            "max": 4076000.733883,
+            "distinct": 5
+          },
+          "pow5multCalls": {
+            "min": 0.0,
+            "max": 0.0,
+            "distinct": 1
+          },
+          "sinkTimeNs": {
+            "min": 695098.0,
+            "max": 864456.0,
+            "distinct": 5
+          }
+        }
+      },
+      "transformed_classes": [
+        "org.mozilla.javascript.DToA"
+      ],
+      "ok": true,
+      "input_limit_probe": {
+        "max_input_bytes": 16,
+        "longest_input": 16,
+        "executions": {
+          "own": 20
+        }
+      },
+      "growth_probe": {
+        "needed_input_bytes": 9,
+        "longest_input": 15,
+        "executions": {
+          "own": 1
+        },
+        "growth": [
+          {
+            "ms": 670,
+            "execution": 1,
+            "bytes": 15
+          }
+        ]
+      },
+      "hard_ok": true,
+      "progress_probe": {
+        "own_ms": 120000,
+        "executions": 873220,
+        "longest_input": 40,
+        "phase": "series",
+        "series_inputs": 6,
+        "comparison": {},
+        "measurements": {
+          "budget_ms": 120000,
+          "own_ms": 120000,
+          "executions": 873220,
+          "longest_input": 40,
+          "phase": "series",
+          "own_best": {
+            "bigIntOps": [
+              [
+                9,
+                3222.0,
+                88857
+              ],
+              [
+                10,
+                3150.0,
+                6022
+              ],
+              [
+                11,
+                4028.0,
+                15970
+              ],
+              [
+                12,
+                3192.0,
+                37360
+              ],
+              [
+                13,
+                3033.0,
+                10172
+              ],
+              [
+                14,
+                3207.0,
+                61922
+              ],
+              [
+                15,
+                3207.0,
+                89904
+              ],
+              [
+                17,
+                3195.0,
+                18502
+              ],
+              [
+                19,
+                3222.0,
+                61670
+              ],
+              [
+                20,
+                3204.0,
+                97729
+              ],
+              [
+                21,
+                3210.0,
+                90975
+              ],
+              [
+                24,
+                3219.0,
+                55551
+              ],
+              [
+                25,
+                3204.0,
+                100142
+              ],
+              [
+                27,
+                3192.0,
+                100312
+              ],
+              [
+                30,
+                3216.0,
+                7804
+              ],
+              [
+                32,
+                3222.0,
+                40446
+              ],
+              [
+                36,
+                4084.0,
+                1648
+              ],
+              [
+                40,
+                3204.0,
+                103764
+              ]
+            ],
+            "cost": [
+              [
+                9,
+                3222000.171966,
+                88857
+              ],
+              [
+                10,
+                3150000.168446,
+                6022
+              ],
+              [
+                11,
+                4028000.112761,
+                15970
+              ],
+              [
+                12,
+                3192000.169448,
+                37360
+              ],
+              [
+                13,
+                3033000.095269,
+                10172
+              ],
+              [
+                14,
+                3207000.171738,
+                61922
+              ],
+              [
+                15,
+                3207000.169694,
+                89904
+              ],
+              [
+                17,
+                3195000.126118,
+                18502
+              ],
+              [
+                19,
+                3222000.171244,
+                61670
+              ],
+              [
+                20,
+                3204000.172108,
+                97729
+              ],
+              [
+                21,
+                3210000.172628,
+                90975
+              ],
+              [
+                24,
+                3219000.176302,
+                55551
+              ],
+              [
+                25,
+                3204000.10625,
+                100142
+              ],
+              [
+                27,
+                3192000.106102,
+                100312
+              ],
+              [
+                30,
+                3216000.109986,
+                7804
+              ],
+              [
+                32,
+                3222000.162972,
+                40446
+              ],
+              [
+                36,
+                4084010.230825,
+                75047
+              ],
+              [
+                40,
+                3204000.1071,
+                103764
+              ]
+            ],
+            "pow5multCalls": [
+              [
+                9,
+                0.0,
+                977
+              ],
+              [
+                10,
+                0.0,
+                971
+              ],
+              [
+                11,
+                0.0,
+                947
+              ],
+              [
+                12,
+                0.0,
+                1145
+              ],
+              [
+                13,
+                0.0,
+                1315
+              ],
+              [
+                14,
+                0.0,
+                1469
+              ],
+              [
+                15,
+                0.0,
+                910
+              ],
+              [
+                16,
+                0.0,
+                851
+              ],
+              [
+                18,
+                0.0,
+                743
+              ],
+              [
+                20,
+                0.0,
+                1075
+              ],
+              [
+                21,
+                0.0,
+                737
+              ],
+              [
+                24,
+                0.0,
+                683
+              ],
+              [
+                26,
+                0.0,
+                816
+              ],
+              [
+                27,
+                0.0,
+                705
+              ],
+              [
+                31,
+                0.0,
+                880
+              ],
+              [
+                33,
+                0.0,
+                700
+              ],
+              [
+                36,
+                0.0,
+                680
+              ],
+              [
+                39,
+                0.0,
+                952
+              ]
+            ],
+            "sinkTimeNs": [
+              [
+                9,
+                892520.0,
+                59776
+              ],
+              [
+                10,
+                287714.0,
+                105934
+              ],
+              [
+                11,
+                9638900.0,
+                37737
+              ],
+              [
+                12,
+                169448.0,
+                37360
+              ],
+              [
+                13,
+                711001.0,
+                108765
+              ],
+              [
+                14,
+                529362.0,
+                57287
+              ],
+              [
+                15,
+                10082550.0,
+                63467
+              ],
+              [
+                16,
+                1716165.0,
+                6946
+              ],
+              [
+                19,
+                2479458.0,
+                52435
+              ],
+              [
+                20,
+                172108.0,
+                97729
+              ],
+              [
+                22,
+                1068720.0,
+                45243
+              ],
+              [
+                24,
+                6939980.0,
+                40994
+              ],
+              [
+                26,
+                189344.0,
+                107590
+              ],
+              [
+                27,
+                8870585.0,
+                79297
+              ],
+              [
+                30,
+                8010183.0,
+                74857
+              ],
+              [
+                33,
+                1011551.0,
+                112410
+              ],
+              [
+                36,
+                28652484.0,
+                64437
+              ],
+              [
+                40,
+                2395770.0,
+                42199
+              ]
+            ]
+          },
+          "series": [
+            {
+              "bytes": 9,
+              "signals": {
+                "bigIntOps": 33.0,
+                "cost": 33000.004676,
+                "pow5multCalls": 0.0,
+                "sinkTimeNs": 4676.0
+              }
+            },
+            {
+              "bytes": 9,
+              "signals": {
+                "bigIntOps": 39.0,
+                "cost": 39000.003931,
+                "pow5multCalls": 0.0,
+                "sinkTimeNs": 3931.0
+              }
+            },
+            {
+              "bytes": 9,
+              "signals": {
+                "bigIntOps": 51.0,
+                "cost": 51000.003891,
+                "pow5multCalls": 0.0,
+                "sinkTimeNs": 3891.0
+              }
+            },
+            {
+              "bytes": 9,
+              "signals": {
+                "bigIntOps": 72.0,
+                "cost": 72000.005785,
+                "pow5multCalls": 0.0,
+                "sinkTimeNs": 5785.0
+              }
+            },
+            {
+              "bytes": 9,
+              "signals": {
+                "bigIntOps": 102.0,
+                "cost": 102000.006677,
+                "pow5multCalls": 0.0,
+                "sinkTimeNs": 6677.0
+              }
+            },
+            {
+              "bytes": 9,
+              "signals": {
+                "bigIntOps": 165.0,
+                "cost": 165000.009053,
+                "pow5multCalls": 0.0,
+                "sinkTimeNs": 9053.0
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "tool": "ValidateArtifact",
+      "target": "V3",
+      "checks": [
+        {
+          "name": "contract",
+          "status": "pass",
+          "detail": "factory, lastSignals() and fuzz test found"
+        },
+        {
+          "name": "runs",
+          "status": "pass",
+          "detail": "105 executions completed"
+        },
+        {
+          "name": "plan_signals",
+          "status": "pass",
+          "detail": "lastSignals() returns every planned signal [bigIntOps, sinkTimeNs]"
+        },
+        {
+          "name": "signal_varies",
+          "status": "pass",
+          "detail": "varying: [bigIntOps, cost, dtoaTimeNs, dtobasestrTimeNs, dtostrTimeNs, pow5multCalls, sinkTimeNs] (on the guidance's own inputs: [bigIntOps, cost, dtoaTimeNs, dtobasestrTimeNs, dtostrTimeNs, pow5multCalls, sinkTimeNs])"
+        },
+        {
+          "name": "reset",
+          "status": "warn",
+          "detail": "`dtoaTimeNs`: re-running the same input gave different values (0 then 0, 0 then 0, 748737 then 135074), so the value is not determined by the executed input (timing, or computed from something other than the execution); `dtobasestrTimeNs`: re-running the same input gave different values (2007225 then 770244, 1718270 then 608359, 0 then 0), so the value is not determined by the executed input (timing, or computed from something other than the execution); `dtostrTimeNs`: re-running the same input gave different values (0 then 0, 0 then 0, 755766 then 139672), so the value is not determined by the executed input (timing, or computed from something other than the execution); `sinkTimeNs`: re-running the same input gave different values (2007225 then 770244, 1718270 then 608359, 1504503 then 274746), so the value is not determined by the executed input (timing, or computed from something other than the execution)"
+        },
+        {
+          "name": "depends_on_execution",
+          "status": "pass",
+          "detail": "signals stay near zero when the target does not run"
+        },
+        {
+          "name": "instrumentation",
+          "status": "pass",
+          "detail": "rewrote [org.mozilla.javascript.DToA]"
+        },
+        {
+          "name": "input_limit",
+          "status": "pass",
+          "detail": "with jqf.ei.MAX_INPUT_SIZE=16 the 20 generated inputs were at most 16 bytes"
+        },
+        {
+          "name": "input_growth",
+          "status": "pass",
+          "detail": "the guidance generated a 16-byte input after 741 ms (1 executions); the target needs 10"
+        },
+        {
+          "name": "progress",
+          "status": "skip",
+          "detail": "not compared: an execution of the guidance's own inputs ran as long as the time limit"
+        }
+      ],
+      "max_input_bytes": 10240,
+      "example_inputs": 10,
+      "executions": {
+        "own": 40,
+        "repeat": 5,
+        "random": 40,
+        "example": 20,
+        "probe": 3
+      },
+      "test_failures_not_used": 0,
+      "signals": {
+        "bigIntOps": {
+          "min": 0.0,
+          "max": 1575.0,
+          "distinct": 11
+        },
+        "cost": {
+          "min": 0.0,
+          "max": 1575002.007225,
+          "distinct": 77
+        },
+        "dtoaTimeNs": {
+          "min": 0.0,
+          "max": 748737.0,
+          "distinct": 53
+        },
+        "dtobasestrTimeNs": {
+          "min": 0.0,
+          "max": 2007225.0,
+          "distinct": 25
+        },
+        "dtostrTimeNs": {
+          "min": 0.0,
+          "max": 755766.0,
+          "distinct": 53
+        },
+        "pow5multCalls": {
+          "min": 0.0,
+          "max": 1.0,
+          "distinct": 2
+        },
+        "sinkTimeNs": {
+          "min": 0.0,
+          "max": 2007225.0,
+          "distinct": 77
+        }
+      },
+      "signals_by_kind": {
+        "example": {
+          "bigIntOps": {
+            "min": 0.0,
+            "distinct": 6,
+            "max": 243.0
+          },
+          "cost": {
+            "min": 0.0,
+            "distinct": 15,
+            "max": 243000.158638
+          },
+          "dtoaTimeNs": {
+            "min": 0.0,
+            "distinct": 13,
+            "max": 578694.0
+          },
+          "dtobasestrTimeNs": {
+            "min": 0.0,
+            "distinct": 3,
+            "max": 65142.0
+          },
+          "dtostrTimeNs": {
+            "min": 0.0,
+            "distinct": 13,
+            "max": 582884.0
+          },
+          "pow5multCalls": {
+            "min": 0.0,
+            "distinct": 2,
+            "max": 1.0
+          },
+          "sinkTimeNs": {
+            "min": 0.0,
+            "distinct": 15,
+            "max": 1161578.0
+          }
+        },
+        "own": {
+          "bigIntOps": {
+            "min": 0.0,
+            "distinct": 8,
+            "max": 1575.0
+          },
+          "cost": {
+            "min": 0.0,
+            "distinct": 40,
+            "max": 1575002.007225
+          },
+          "dtoaTimeNs": {
+            "min": 0.0,
+            "distinct": 28,
+            "max": 748737.0
+          },
+          "dtobasestrTimeNs": {
+            "min": 0.0,
+            "distinct": 13,
+            "max": 2007225.0
+          },
+          "dtostrTimeNs": {
+            "min": 0.0,
+            "distinct": 28,
+            "max": 755766.0
+          },
+          "pow5multCalls": {
+            "min": 0.0,
+            "distinct": 2,
+            "max": 1.0
+          },
+          "sinkTimeNs": {
+            "min": 0.0,
+            "distinct": 40,
+            "max": 2007225.0
+          }
+        },
+        "random": {
+          "bigIntOps": {
+            "min": 0.0,
+            "distinct": 10,
+            "max": 1575.0
+          },
+          "cost": {
+            "min": 0.0,
+            "distinct": 33,
+            "max": 1575000.459293
+          },
+          "dtoaTimeNs": {
+            "min": 0.0,
+            "distinct": 24,
+            "max": 225542.0
+          },
+          "dtobasestrTimeNs": {
+            "min": 0.0,
+            "distinct": 10,
+            "max": 459293.0
+          },
+          "dtostrTimeNs": {
+            "min": 0.0,
+            "distinct": 24,
+            "max": 229676.0
+          },
+          "pow5multCalls": {
+            "min": 0.0,
+            "distinct": 2,
+            "max": 1.0
+          },
+          "sinkTimeNs": {
+            "min": 0.0,
+            "distinct": 33,
+            "max": 459293.0
+          }
+        },
+        "repeat": {
+          "bigIntOps": {
+            "min": 51.0,
+            "distinct": 3,
+            "max": 1575.0
+          },
+          "cost": {
+            "min": 51000.274746,
+            "distinct": 5,
+            "max": 1575000.770244
+          },
+          "dtoaTimeNs": {
+            "min": 0.0,
+            "distinct": 3,
+            "max": 173472.0
+          },
+          "dtobasestrTimeNs": {
+            "min": 0.0,
+            "distinct": 4,
+            "max": 770244.0
+          },
+          "dtostrTimeNs": {
+            "min": 0.0,
+            "distinct": 3,
+            "max": 177796.0
+          },
+          "pow5multCalls": {
+            "min": 0.0,
+            "distinct": 2,
+            "max": 1.0
+          },
+          "sinkTimeNs": {
+            "min": 185839.0,
+            "distinct": 5,
+            "max": 770244.0
+          }
+        }
+      },
+      "transformed_classes": [
+        "org.mozilla.javascript.DToA"
+      ],
+      "ok": true,
+      "input_limit_probe": {
+        "max_input_bytes": 16,
+        "longest_input": 16,
+        "executions": {
+          "own": 20
+        }
+      },
+      "growth_probe": {
+        "needed_input_bytes": 10,
+        "longest_input": 16,
+        "executions": {
+          "own": 1
+        },
+        "growth": [
+          {
+            "ms": 741,
+            "execution": 1,
+            "bytes": 16
+          }
+        ]
+      },
+      "hard_ok": true,
+      "progress_probe": {
+        "own_ms": 25225,
+        "executions": 26382,
+        "longest_input": 41,
+        "phase": "own",
+        "series_inputs": 6,
+        "comparison": {},
+        "measurements": {
+          "budget_ms": 120000,
+          "own_ms": 25225,
+          "executions": 26382,
+          "longest_input": 41,
+          "phase": "own",
+          "own_best": {
+            "bigIntOps": [
+              [
+                10,
+                1128.0,
+                3261
+              ],
+              [
+                11,
+                4084.0,
+                2015
+              ],
+              [
+                12,
+                1146.0,
+                3181
+              ],
+              [
+                13,
+                3168.0,
+                3973
+              ],
+              [
+                14,
+                813.0,
+                4694
+              ],
+              [
+                15,
+                1821.0,
+                4173
+              ],
+              [
+                17,
+                1707.0,
+                4853
+              ],
+              [
+                19,
+                1764.0,
+                1682
+              ],
+              [
+                20,
+                999.0,
+                4519
+              ],
+              [
+                22,
+                717.0,
+                1203
+              ],
+              [
+                24,
+                2832.0,
+                3238
+              ],
+              [
+                25,
+                813.0,
+                1265
+              ],
+              [
+                27,
+                1698.0,
+                2871
+              ],
+              [
+                31,
+                1140.0,
+                4001
+              ],
+              [
+                33,
+                1158.0,
+                2556
+              ],
+              [
+                35,
+                2547.0,
+                1463
+              ],
+              [
+                39,
+                2538.0,
+                3162
+              ]
+            ],
+            "cost": [
+              [
+                10,
+                1128000.061482,
+                3261
+              ],
+              [
+                11,
+                4084000.200562,
+                2015
+              ],
+              [
+                12,
+                1146000.048541,
+                3181
+              ],
+              [
+                13,
+                3168000.10998,
+                3973
+              ],
+              [
+                14,
+                813000.039138,
+                4694
+              ],
+              [
+                15,
+                1821000.075236,
+                4173
+              ],
+              [
+                17,
+                1707000.068824,
+                4853
+              ],
+              [
+                19,
+                1764000.104672,
+                1682
+              ],
+              [
+                20,
+                999000.063308,
+                4519
+              ],
+              [
+                22,
+                717000.058162,
+                1203
+              ],
+              [
+                24,
+                2832000.153751,
+                3238
+              ],
+              [
+                25,
+                813000.081563,
+                1265
+              ],
+              [
+                27,
+                1698000.101427,
+                2871
+              ],
+              [
+                31,
+                1140000.050192,
+                4001
+              ],
+              [
+                33,
+                1158000.055145,
+                2556
+              ],
+              [
+                35,
+                2547000.190605,
+                1463
+              ],
+              [
+                39,
+                2538000.131843,
+                3162
+              ]
+            ],
+            "dtoaTimeNs": [
+              [
+                10,
+                41847.0,
+                1169
+              ],
+              [
+                11,
+                125063.0,
+                2542
+              ],
+              [
+                12,
+                103076.0,
+                2543
+              ],
+              [
+                13,
+                79981.0,
+                4076
+              ],
+              [
+                14,
+                356577.0,
+                4338
+              ],
+              [
+                15,
+                42684.0,
+                3872
+              ],
+              [
+                16,
+                139875.0,
+                2534
+              ],
+              [
+                19,
+                120457.0,
+                875
+              ],
+              [
+                20,
+                38193.0,
+                4980
+              ],
+              [
+                22,
+                50641.0,
+                1092
+              ],
+              [
+                24,
+                52783.0,
+                2634
+              ],
+              [
+                26,
+                1258748.0,
+                647
+              ],
+              [
+                29,
+                101030.0,
+                671
+              ],
+              [
+                30,
+                197359.0,
+                2572
+              ],
+              [
+                32,
+                100331.0,
+                4735
+              ],
+              [
+                35,
+                138952.0,
+                702
+              ],
+              [
+                39,
+                79811.0,
+                1226
+              ]
+            ],
+            "dtobasestrTimeNs": [
+              [
+                10,
+                61482.0,
+                3261
+              ],
+              [
+                11,
+                11584627.0,
+                905
+              ],
+              [
+                12,
+                52059.0,
+                1546
+              ],
+              [
+                13,
+                109980.0,
+                3973
+              ],
+              [
+                14,
+                105871.0,
+                1097
+              ],
+              [
+                15,
+                75236.0,
+                4173
+              ],
+              [
+                16,
+                359963.0,
+                850
+              ],
+              [
+                19,
+                104672.0,
+                1682
+              ],
+              [
+                20,
+                63308.0,
+                4519
+              ],
+              [
+                22,
+                58162.0,
+                1203
+              ],
+              [
+                24,
+                153751.0,
+                3238
+              ],
+              [
+                25,
+                81563.0,
+                1265
+              ],
+              [
+                27,
+                101427.0,
+                2871
+              ],
+              [
+                30,
+                70833.0,
+                4984
+              ],
+              [
+                33,
+                64035.0,
+                4932
+              ],
+              [
+                38,
+                650553.0,
+                719
+              ],
+              [
+                39,
+                131843.0,
+                3162
+              ]
+            ],
+            "dtostrTimeNs": [
+              [
+                10,
+                46868.0,
+                910
+              ],
+              [
+                11,
+                129742.0,
+                2542
+              ],
+              [
+                12,
+                103879.0,
+                2543
+              ],
+              [
+                13,
+                88892.0,
+                4076
+              ],
+              [
+                14,
+                357428.0,
+                4338
+              ],
+              [
+                15,
+                43828.0,
+                3872
+              ],
+              [
+                16,
+                140912.0,
+                2534
+              ],
+              [
+                19,
+                126746.0,
+                875
+              ],
+              [
+                20,
+                39140.0,
+                4980
+              ],
+              [
+                22,
+                54319.0,
+                1092
+              ],
+              [
+                24,
+                53983.0,
+                2634
+              ],
+              [
+                26,
+                1263328.0,
+                647
+              ],
+              [
+                29,
+                105510.0,
+                671
+              ],
+              [
+                30,
+                197937.0,
+                2572
+              ],
+              [
+                32,
+                108252.0,
+                4735
+              ],
+              [
+                35,
+                144096.0,
+                702
+              ],
+              [
+                39,
+                81434.0,
+                1226
+              ]
+            ],
+            "pow5multCalls": [
+              [
+                10,
+                1.0,
+                910
+              ],
+              [
+                11,
+                1.0,
+                800
+              ],
+              [
+                12,
+                1.0,
+                859
+              ],
+              [
+                13,
+                1.0,
+                885
+              ],
+              [
+                14,
+                1.0,
+                1012
+              ],
+              [
+                15,
+                1.0,
+                1762
+              ],
+              [
+                16,
+                1.0,
+                757
+              ],
+              [
+                19,
+                1.0,
+                875
+              ],
+              [
+                20,
+                1.0,
+                1231
+              ],
+              [
+                22,
+                1.0,
+                1064
+              ],
+              [
+                24,
+                1.0,
+                798
+              ],
+              [
+                26,
+                1.0,
+                635
+              ],
+              [
+                29,
+                1.0,
+                671
+              ],
+              [
+                31,
+                1.0,
+                1194
+              ],
+              [
+                34,
+                1.0,
+                953
+              ],
+              [
+                35,
+                1.0,
+                702
+              ],
+              [
+                41,
+                1.0,
+                1058
+              ]
+            ],
+            "sinkTimeNs": [
+              [
+                10,
+                88061.0,
+                910
+              ],
+              [
+                11,
+                11584627.0,
+                905
+              ],
+              [
+                12,
+                206955.0,
+                2543
+              ],
+              [
+                13,
+                168873.0,
+                4076
+              ],
+              [
+                14,
+                714005.0,
+                4338
+              ],
+              [
+                15,
+                86512.0,
+                3872
+              ],
+              [
+                16,
+                359963.0,
+                850
+              ],
+              [
+                19,
+                247203.0,
+                875
+              ],
+              [
+                20,
+                77333.0,
+                4980
+              ],
+              [
+                22,
+                104960.0,
+                1092
+              ],
+              [
+                24,
+                153751.0,
+                3238
+              ],
+              [
+                26,
+                2522076.0,
+                647
+              ],
+              [
+                29,
+                206540.0,
+                671
+              ],
+              [
+                30,
+                395296.0,
+                2572
+              ],
+              [
+                32,
+                208583.0,
+                4735
+              ],
+              [
+                38,
+                650553.0,
+                719
+              ],
+              [
+                39,
+                161245.0,
+                1226
+              ]
+            ]
+          },
+          "series": []
+        }
+      }
+    }
+  ],
+  "limits": {
+    "jvm_args": [
+      "-Xmx1g",
+      "-Xss1m"
+    ],
+    "timeout_ms": 20000,
+    "max_input_bytes": 10240
+  },
+  "hard_ok": true
+}

@@ -1,0 +1,29 @@
+{
+  "parameter": "allocation size in bytes",
+  "inputs": [
+    {
+      "file": "n1m.bin",
+      "value": 1048576
+    },
+    {
+      "file": "n4m.bin",
+      "value": 4194304
+    },
+    {
+      "file": "n16m.bin",
+      "value": 16777216
+    },
+    {
+      "file": "n64m.bin",
+      "value": 67108864
+    },
+    {
+      "file": "n128m.bin",
+      "value": 134217728
+    },
+    {
+      "file": "n256m.bin",
+      "value": 268435456
+    }
+  ]
+}

@@ -1,0 +1,702 @@
+{
+  "tool": "checkpath",
+  "version": "1.0.0",
+  "source_root": "projects/json-smart-v2_GHSA-493p-pfq6-5258",
+  "index": {
+    "files_parsed": 76,
+    "files_failed": 0,
+    "methods": 712,
+    "harness_fuzz_methods": [
+      "JsonSmartFuzzTest.fuzzJSONParserParsePermissive(InputStream)",
+      "JsonSmartFuzzTest.fuzzJSONParserParseRFC4627(InputStream)"
+    ],
+    "index_seconds": 0.7,
+    "max_gap": 2,
+    "sink_depth": 6,
+    "symbol_resolution": true
+  },
+  "ok": true,
+  "targets": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "entrypoint": "JsonSmartFuzzTest.fuzzJSONParserParsePermissive(InputStream) → JSONParser.parse(String) → JSONParserString.parse(String, JsonReaderI) → JSONParserBase.parse(JsonReaderI) → JSONParserBase.readFirst(JsonReaderI) → JSONParserBase.readArray(JsonReaderI) → JSONParserBase.readMain(JsonReaderI, boolean[]) → JSONParserBase.readArray(JsonReaderI)",
+      "source_path": "json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java",
+      "start_ok": true,
+      "harness_entry": "edu.berkeley.cs.jqf.examples.json.JsonSmartFuzzTest#fuzzJSONParserParsePermissive",
+      "end_ok": true,
+      "end": {
+        "sink_file": "json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java",
+        "ok": true,
+        "evidence": "hop 8 JSONParserBase#readArray(JsonReaderI) is declared in json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:286",
+        "level": "method",
+        "sink_method": "JSONParserBase#readArray",
+        "sink_evidence": "hop 6 is JSONParserBase#readArray(JsonReaderI)"
+      },
+      "hops": [
+        {
+          "index": 1,
+          "raw": "JsonSmartFuzzTest.fuzzJSONParserParsePermissive(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "edu.berkeley.cs.jqf.examples.json.JsonSmartFuzzTest#fuzzJSONParserParsePermissive(InputStream)",
+              "location": "harness/src/test/java/edu/berkeley/cs/jqf/examples/json/JsonSmartFuzzTest.java:31"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "raw": "JSONParser.parse(String)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "net.minidev.json.parser.JSONParser#parse(String)",
+              "location": "json-smart/src/main/java/net/minidev/json/parser/JSONParser.java:269"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "raw": "JSONParserString.parse(String, JsonReaderI)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "net.minidev.json.parser.JSONParserString#parse(String,JsonReaderI)",
+              "location": "json-smart/src/main/java/net/minidev/json/parser/JSONParserString.java:54"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "raw": "JSONParserBase.parse(JsonReaderI)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "net.minidev.json.parser.JSONParserBase#parse(JsonReaderI)",
+              "location": "json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:201"
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "raw": "JSONParserBase.readFirst(JsonReaderI)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "net.minidev.json.parser.JSONParserBase#readFirst(JsonReaderI)",
+              "location": "json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:332"
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "raw": "JSONParserBase.readArray(JsonReaderI)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "net.minidev.json.parser.JSONParserBase#readArray(JsonReaderI)",
+              "location": "json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:286"
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "raw": "JSONParserBase.readMain(JsonReaderI, boolean[])",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "net.minidev.json.parser.JSONParserBase#readMain(JsonReaderI,boolean[])",
+              "location": "json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:434"
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "raw": "JSONParserBase.readArray(JsonReaderI)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "net.minidev.json.parser.JSONParserBase#readArray(JsonReaderI)",
+              "location": "json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:286"
+            }
+          ]
+        }
+      ],
+      "path_signature": [
+        "edu.berkeley.cs.jqf.examples.json.JsonSmartFuzzTest#fuzzJSONParserParsePermissive(InputStream)",
+        "net.minidev.json.parser.JSONParser#parse(String)",
+        "net.minidev.json.parser.JSONParserString#parse(String,JsonReaderI)",
+        "net.minidev.json.parser.JSONParserBase#parse(JsonReaderI)",
+        "net.minidev.json.parser.JSONParserBase#readFirst(JsonReaderI)",
+        "net.minidev.json.parser.JSONParserBase#readArray(JsonReaderI)",
+        "net.minidev.json.parser.JSONParserBase#readMain(JsonReaderI,boolean[])",
+        "net.minidev.json.parser.JSONParserBase#readArray(JsonReaderI)"
+      ],
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "written": "JsonSmartFuzzTest.fuzzJSONParserParsePermissive(InputStream)",
+          "provenance": "agent",
+          "method": "edu.berkeley.cs.jqf.examples.json.JsonSmartFuzzTest#fuzzJSONParserParsePermissive(InputStream)",
+          "location": "harness/src/test/java/edu/berkeley/cs/jqf/examples/json/JsonSmartFuzzTest.java:31"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "JsonSmartFuzzTest#fuzzJSONParserParsePermissive(InputStream) calls JSONParser#parse(String) at harness/src/test/java/edu/berkeley/cs/jqf/examples/json/JsonSmartFuzzTest.java:34 (resolved)",
+          "site": "harness/src/test/java/edu/berkeley/cs/jqf/examples/json/JsonSmartFuzzTest.java:34"
+        },
+        {
+          "kind": "hop",
+          "written": "JSONParser.parse(String)",
+          "provenance": "agent",
+          "method": "net.minidev.json.parser.JSONParser#parse(String)",
+          "location": "json-smart/src/main/java/net/minidev/json/parser/JSONParser.java:269"
+        },
+        {
+          "kind": "connection",
+          "type": "INDIRECT",
+          "evidence": "1 omitted call(s)"
+        },
+        {
+          "kind": "hop",
+          "written": null,
+          "provenance": "checkpath (omitted call)",
+          "method": "net.minidev.json.parser.JSONParserString#parse(String)",
+          "location": "json-smart/src/main/java/net/minidev/json/parser/JSONParserString.java:38"
+        },
+        {
+          "kind": "hop",
+          "written": "JSONParserString.parse(String, JsonReaderI)",
+          "provenance": "agent",
+          "method": "net.minidev.json.parser.JSONParserString#parse(String,JsonReaderI)",
+          "location": "json-smart/src/main/java/net/minidev/json/parser/JSONParserString.java:54"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "JSONParserString#parse(String,JsonReaderI) calls JSONParserBase#parse(JsonReaderI) at json-smart/src/main/java/net/minidev/json/parser/JSONParserString.java:58 (resolved)",
+          "site": "json-smart/src/main/java/net/minidev/json/parser/JSONParserString.java:58"
+        },
+        {
+          "kind": "hop",
+          "written": "JSONParserBase.parse(JsonReaderI)",
+          "provenance": "agent",
+          "method": "net.minidev.json.parser.JSONParserBase#parse(JsonReaderI)",
+          "location": "json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:201"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "JSONParserBase#parse(JsonReaderI) calls JSONParserBase#readFirst(JsonReaderI) at json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:206 (resolved)",
+          "site": "json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:206"
+        },
+        {
+          "kind": "hop",
+          "written": "JSONParserBase.readFirst(JsonReaderI)",
+          "provenance": "agent",
+          "method": "net.minidev.json.parser.JSONParserBase#readFirst(JsonReaderI)",
+          "location": "json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:332"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "JSONParserBase#readFirst(JsonReaderI) calls JSONParserBase#readArray(JsonReaderI) at json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:352 (resolved)",
+          "site": "json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:352"
+        },
+        {
+          "kind": "hop",
+          "written": "JSONParserBase.readArray(JsonReaderI)",
+          "provenance": "agent",
+          "method": "net.minidev.json.parser.JSONParserBase#readArray(JsonReaderI)",
+          "location": "json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:286"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "JSONParserBase#readArray(JsonReaderI) calls JSONParserBase#readMain(JsonReaderI,boolean[]) at json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:321 (resolved)",
+          "site": "json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:321"
+        },
+        {
+          "kind": "hop",
+          "written": "JSONParserBase.readMain(JsonReaderI, boolean[])",
+          "provenance": "agent",
+          "method": "net.minidev.json.parser.JSONParserBase#readMain(JsonReaderI,boolean[])",
+          "location": "json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:434"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "JSONParserBase#readMain(JsonReaderI,boolean[]) calls JSONParserBase#readArray(JsonReaderI) at json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:454 (resolved)",
+          "site": "json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:454"
+        },
+        {
+          "kind": "hop",
+          "written": "JSONParserBase.readArray(JsonReaderI)",
+          "provenance": "agent",
+          "method": "net.minidev.json.parser.JSONParserBase#readArray(JsonReaderI)",
+          "location": "json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:286"
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "status": "CALL",
+          "evidence": "JsonSmartFuzzTest#fuzzJSONParserParsePermissive(InputStream) calls JSONParser#parse(String) at harness/src/test/java/edu/berkeley/cs/jqf/examples/json/JsonSmartFuzzTest.java:34 (resolved)"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "status": "INDIRECT",
+          "evidence": "1 omitted call(s)",
+          "chain": [
+            "JSONParser#parse(String)",
+            "JSONParserString#parse(String)",
+            "JSONParserString#parse(String,JsonReaderI)"
+          ]
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "status": "CALL",
+          "evidence": "JSONParserString#parse(String,JsonReaderI) calls JSONParserBase#parse(JsonReaderI) at json-smart/src/main/java/net/minidev/json/parser/JSONParserString.java:58 (resolved)"
+        },
+        {
+          "from": 4,
+          "to": 5,
+          "status": "CALL",
+          "evidence": "JSONParserBase#parse(JsonReaderI) calls JSONParserBase#readFirst(JsonReaderI) at json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:206 (resolved)"
+        },
+        {
+          "from": 5,
+          "to": 6,
+          "status": "CALL",
+          "evidence": "JSONParserBase#readFirst(JsonReaderI) calls JSONParserBase#readArray(JsonReaderI) at json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:352 (resolved)"
+        },
+        {
+          "from": 6,
+          "to": 7,
+          "status": "CALL",
+          "evidence": "JSONParserBase#readArray(JsonReaderI) calls JSONParserBase#readMain(JsonReaderI,boolean[]) at json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:321 (resolved)"
+        },
+        {
+          "from": 7,
+          "to": 8,
+          "status": "CALL",
+          "evidence": "JSONParserBase#readMain(JsonReaderI,boolean[]) calls JSONParserBase#readArray(JsonReaderI) at json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:454 (resolved)"
+        }
+      ],
+      "diagnostics": [],
+      "warnings": [
+        "Edge 2→3 is indirect: JSONParser#parse(String) → JSONParserString#parse(String) → JSONParserString#parse(String,JsonReaderI)"
+      ]
+    },
+    {
+      "target": "V2",
+      "status": "PASS",
+      "entrypoint": "JsonSmartFuzzTest.fuzzJSONParserParseRFC4627(InputStream) → JSONParser.parse(String) → JSONParserString.parse(String, JsonReaderI) → JSONParserBase.parse(JsonReaderI) → JSONParserBase.readFirst(JsonReaderI) → JSONParserBase.readArray(JsonReaderI) → JSONParserBase.readMain(JsonReaderI, boolean[]) → JSONParserBase.readArray(JsonReaderI)",
+      "source_path": "json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java",
+      "start_ok": true,
+      "harness_entry": "edu.berkeley.cs.jqf.examples.json.JsonSmartFuzzTest#fuzzJSONParserParseRFC4627",
+      "end_ok": true,
+      "end": {
+        "sink_file": "json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java",
+        "ok": true,
+        "evidence": "hop 8 JSONParserBase#readArray(JsonReaderI) is declared in json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:286",
+        "level": "method",
+        "sink_method": "JSONParserBase#readArray",
+        "sink_evidence": "hop 6 is JSONParserBase#readArray(JsonReaderI)"
+      },
+      "hops": [
+        {
+          "index": 1,
+          "raw": "JsonSmartFuzzTest.fuzzJSONParserParseRFC4627(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "edu.berkeley.cs.jqf.examples.json.JsonSmartFuzzTest#fuzzJSONParserParseRFC4627(InputStream)",
+              "location": "harness/src/test/java/edu/berkeley/cs/jqf/examples/json/JsonSmartFuzzTest.java:42"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "raw": "JSONParser.parse(String)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "net.minidev.json.parser.JSONParser#parse(String)",
+              "location": "json-smart/src/main/java/net/minidev/json/parser/JSONParser.java:269"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "raw": "JSONParserString.parse(String, JsonReaderI)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "net.minidev.json.parser.JSONParserString#parse(String,JsonReaderI)",
+              "location": "json-smart/src/main/java/net/minidev/json/parser/JSONParserString.java:54"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "raw": "JSONParserBase.parse(JsonReaderI)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "net.minidev.json.parser.JSONParserBase#parse(JsonReaderI)",
+              "location": "json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:201"
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "raw": "JSONParserBase.readFirst(JsonReaderI)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "net.minidev.json.parser.JSONParserBase#readFirst(JsonReaderI)",
+              "location": "json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:332"
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "raw": "JSONParserBase.readArray(JsonReaderI)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "net.minidev.json.parser.JSONParserBase#readArray(JsonReaderI)",
+              "location": "json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:286"
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "raw": "JSONParserBase.readMain(JsonReaderI, boolean[])",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "net.minidev.json.parser.JSONParserBase#readMain(JsonReaderI,boolean[])",
+              "location": "json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:434"
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "raw": "JSONParserBase.readArray(JsonReaderI)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "net.minidev.json.parser.JSONParserBase#readArray(JsonReaderI)",
+              "location": "json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:286"
+            }
+          ]
+        }
+      ],
+      "path_signature": [
+        "edu.berkeley.cs.jqf.examples.json.JsonSmartFuzzTest#fuzzJSONParserParseRFC4627(InputStream)",
+        "net.minidev.json.parser.JSONParser#parse(String)",
+        "net.minidev.json.parser.JSONParserString#parse(String,JsonReaderI)",
+        "net.minidev.json.parser.JSONParserBase#parse(JsonReaderI)",
+        "net.minidev.json.parser.JSONParserBase#readFirst(JsonReaderI)",
+        "net.minidev.json.parser.JSONParserBase#readArray(JsonReaderI)",
+        "net.minidev.json.parser.JSONParserBase#readMain(JsonReaderI,boolean[])",
+        "net.minidev.json.parser.JSONParserBase#readArray(JsonReaderI)"
+      ],
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "written": "JsonSmartFuzzTest.fuzzJSONParserParseRFC4627(InputStream)",
+          "provenance": "agent",
+          "method": "edu.berkeley.cs.jqf.examples.json.JsonSmartFuzzTest#fuzzJSONParserParseRFC4627(InputStream)",
+          "location": "harness/src/test/java/edu/berkeley/cs/jqf/examples/json/JsonSmartFuzzTest.java:42"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "JsonSmartFuzzTest#fuzzJSONParserParseRFC4627(InputStream) calls JSONParser#parse(String) at harness/src/test/java/edu/berkeley/cs/jqf/examples/json/JsonSmartFuzzTest.java:45 (resolved)",
+          "site": "harness/src/test/java/edu/berkeley/cs/jqf/examples/json/JsonSmartFuzzTest.java:45"
+        },
+        {
+          "kind": "hop",
+          "written": "JSONParser.parse(String)",
+          "provenance": "agent",
+          "method": "net.minidev.json.parser.JSONParser#parse(String)",
+          "location": "json-smart/src/main/java/net/minidev/json/parser/JSONParser.java:269"
+        },
+        {
+          "kind": "connection",
+          "type": "INDIRECT",
+          "evidence": "1 omitted call(s)"
+        },
+        {
+          "kind": "hop",
+          "written": null,
+          "provenance": "checkpath (omitted call)",
+          "method": "net.minidev.json.parser.JSONParserString#parse(String)",
+          "location": "json-smart/src/main/java/net/minidev/json/parser/JSONParserString.java:38"
+        },
+        {
+          "kind": "hop",
+          "written": "JSONParserString.parse(String, JsonReaderI)",
+          "provenance": "agent",
+          "method": "net.minidev.json.parser.JSONParserString#parse(String,JsonReaderI)",
+          "location": "json-smart/src/main/java/net/minidev/json/parser/JSONParserString.java:54"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "JSONParserString#parse(String,JsonReaderI) calls JSONParserBase#parse(JsonReaderI) at json-smart/src/main/java/net/minidev/json/parser/JSONParserString.java:58 (resolved)",
+          "site": "json-smart/src/main/java/net/minidev/json/parser/JSONParserString.java:58"
+        },
+        {
+          "kind": "hop",
+          "written": "JSONParserBase.parse(JsonReaderI)",
+          "provenance": "agent",
+          "method": "net.minidev.json.parser.JSONParserBase#parse(JsonReaderI)",
+          "location": "json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:201"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "JSONParserBase#parse(JsonReaderI) calls JSONParserBase#readFirst(JsonReaderI) at json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:206 (resolved)",
+          "site": "json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:206"
+        },
+        {
+          "kind": "hop",
+          "written": "JSONParserBase.readFirst(JsonReaderI)",
+          "provenance": "agent",
+          "method": "net.minidev.json.parser.JSONParserBase#readFirst(JsonReaderI)",
+          "location": "json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:332"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "JSONParserBase#readFirst(JsonReaderI) calls JSONParserBase#readArray(JsonReaderI) at json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:352 (resolved)",
+          "site": "json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:352"
+        },
+        {
+          "kind": "hop",
+          "written": "JSONParserBase.readArray(JsonReaderI)",
+          "provenance": "agent",
+          "method": "net.minidev.json.parser.JSONParserBase#readArray(JsonReaderI)",
+          "location": "json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:286"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "JSONParserBase#readArray(JsonReaderI) calls JSONParserBase#readMain(JsonReaderI,boolean[]) at json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:321 (resolved)",
+          "site": "json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:321"
+        },
+        {
+          "kind": "hop",
+          "written": "JSONParserBase.readMain(JsonReaderI, boolean[])",
+          "provenance": "agent",
+          "method": "net.minidev.json.parser.JSONParserBase#readMain(JsonReaderI,boolean[])",
+          "location": "json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:434"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "JSONParserBase#readMain(JsonReaderI,boolean[]) calls JSONParserBase#readArray(JsonReaderI) at json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:454 (resolved)",
+          "site": "json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:454"
+        },
+        {
+          "kind": "hop",
+          "written": "JSONParserBase.readArray(JsonReaderI)",
+          "provenance": "agent",
+          "method": "net.minidev.json.parser.JSONParserBase#readArray(JsonReaderI)",
+          "location": "json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:286"
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "status": "CALL",
+          "evidence": "JsonSmartFuzzTest#fuzzJSONParserParseRFC4627(InputStream) calls JSONParser#parse(String) at harness/src/test/java/edu/berkeley/cs/jqf/examples/json/JsonSmartFuzzTest.java:45 (resolved)"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "status": "INDIRECT",
+          "evidence": "1 omitted call(s)",
+          "chain": [
+            "JSONParser#parse(String)",
+            "JSONParserString#parse(String)",
+            "JSONParserString#parse(String,JsonReaderI)"
+          ]
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "status": "CALL",
+          "evidence": "JSONParserString#parse(String,JsonReaderI) calls JSONParserBase#parse(JsonReaderI) at json-smart/src/main/java/net/minidev/json/parser/JSONParserString.java:58 (resolved)"
+        },
+        {
+          "from": 4,
+          "to": 5,
+          "status": "CALL",
+          "evidence": "JSONParserBase#parse(JsonReaderI) calls JSONParserBase#readFirst(JsonReaderI) at json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:206 (resolved)"
+        },
+        {
+          "from": 5,
+          "to": 6,
+          "status": "CALL",
+          "evidence": "JSONParserBase#readFirst(JsonReaderI) calls JSONParserBase#readArray(JsonReaderI) at json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:352 (resolved)"
+        },
+        {
+          "from": 6,
+          "to": 7,
+          "status": "CALL",
+          "evidence": "JSONParserBase#readArray(JsonReaderI) calls JSONParserBase#readMain(JsonReaderI,boolean[]) at json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:321 (resolved)"
+        },
+        {
+          "from": 7,
+          "to": 8,
+          "status": "CALL",
+          "evidence": "JSONParserBase#readMain(JsonReaderI,boolean[]) calls JSONParserBase#readArray(JsonReaderI) at json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:454 (resolved)"
+        }
+      ],
+      "diagnostics": [],
+      "warnings": [
+        "Edge 2→3 is indirect: JSONParser#parse(String) → JSONParserString#parse(String) → JSONParserString#parse(String,JsonReaderI)"
+      ]
+    }
+  ],
+  "plan_ok": true,
+  "plans": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "signals": [
+        {
+          "name": "maxDepth",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "JSONParserBase#readArray",
+              "status": "RESOLVED",
+              "method": "net.minidev.json.parser.JSONParserBase#readArray",
+              "declared_at": "json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:286",
+              "relation": "on_path"
+            },
+            {
+              "written": "JSONParserBase#readObject",
+              "status": "RESOLVED",
+              "method": "net.minidev.json.parser.JSONParserBase#readObject",
+              "declared_at": "json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:538",
+              "relation": "called_from_path",
+              "chain": [
+                "JSONParserBase#readFirst(JsonReaderI)",
+                "JSONParserBase#readObject(JsonReaderI)"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "nodeCount",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "JSONParserBase#readArray",
+              "status": "RESOLVED",
+              "method": "net.minidev.json.parser.JSONParserBase#readArray",
+              "declared_at": "json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:286",
+              "relation": "on_path"
+            },
+            {
+              "written": "JSONParserBase#readObject",
+              "status": "RESOLVED",
+              "method": "net.minidev.json.parser.JSONParserBase#readObject",
+              "declared_at": "json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:538",
+              "relation": "called_from_path",
+              "chain": [
+                "JSONParserBase#readFirst(JsonReaderI)",
+                "JSONParserBase#readObject(JsonReaderI)"
+              ]
+            },
+            {
+              "written": "JSONParserBase#readMain",
+              "status": "RESOLVED",
+              "method": "net.minidev.json.parser.JSONParserBase#readMain",
+              "declared_at": "json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:434",
+              "relation": "on_path"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    },
+    {
+      "target": "V2",
+      "status": "PASS",
+      "signals": [
+        {
+          "name": "maxDepth",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "JSONParserBase#readArray",
+              "status": "RESOLVED",
+              "method": "net.minidev.json.parser.JSONParserBase#readArray",
+              "declared_at": "json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:286",
+              "relation": "on_path"
+            },
+            {
+              "written": "JSONParserBase#readObject",
+              "status": "RESOLVED",
+              "method": "net.minidev.json.parser.JSONParserBase#readObject",
+              "declared_at": "json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:538",
+              "relation": "called_from_path",
+              "chain": [
+                "JSONParserBase#readFirst(JsonReaderI)",
+                "JSONParserBase#readObject(JsonReaderI)"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "nodeCount",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "JSONParserBase#readArray",
+              "status": "RESOLVED",
+              "method": "net.minidev.json.parser.JSONParserBase#readArray",
+              "declared_at": "json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:286",
+              "relation": "on_path"
+            },
+            {
+              "written": "JSONParserBase#readObject",
+              "status": "RESOLVED",
+              "method": "net.minidev.json.parser.JSONParserBase#readObject",
+              "declared_at": "json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:538",
+              "relation": "called_from_path",
+              "chain": [
+                "JSONParserBase#readFirst(JsonReaderI)",
+                "JSONParserBase#readObject(JsonReaderI)"
+              ]
+            },
+            {
+              "written": "JSONParserBase#readMain",
+              "status": "RESOLVED",
+              "method": "net.minidev.json.parser.JSONParserBase#readMain",
+              "declared_at": "json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java:434",
+              "relation": "on_path"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    }
+  ]
+}

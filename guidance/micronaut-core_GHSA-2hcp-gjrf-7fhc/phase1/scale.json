@@ -1,0 +1,15 @@
+{
+  "series_request": null,
+  "rounds": [
+    {
+      "round": 1,
+      "revision": {
+        "V1": {
+          "scale": "measured allocation grows linearly at ~42.5 KB per unique line (total allocation including temporaries); retained cache per entry is ~4 KB (HTML string with CSS + key/node overhead). With 1 GB heap and ~200 MB JVM/context baseline, ~800 MB available for cache entries; OOM at ~200K unique lines. At 4 bytes per line (3-byte unique content + 1-byte newline), about 800 KB of input",
+          "input_bytes": 800000
+        }
+      },
+      "field_problems": {}
+    }
+  ]
+}

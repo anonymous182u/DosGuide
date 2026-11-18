@@ -1,0 +1,181 @@
+{
+  "caps": {
+    "input_bytes": 2560,
+    "heap_bytes": 268435456,
+    "stack_bytes": 262144,
+    "time_ms": 2000
+  },
+  "targets": {
+    "V1": {
+      "problems": [],
+      "parameter": "commit message length (bytes); n64-n1024 are benign (plain text, no token, parsed once); trigger.bin (23 bytes) contains self-referencing ${CHANGES} token causing unbounded recursion",
+      "inputs": [
+        {
+          "file": "n64.bin",
+          "value": 64,
+          "input_bytes": 64,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 234.621924,
+          "wall_ms": 344.869505,
+          "allocated_bytes": 33194120,
+          "peak_heap_bytes": 10485760
+        },
+        {
+          "file": "n128.bin",
+          "value": 128,
+          "input_bytes": 128,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 260.806253,
+          "wall_ms": 266.1201,
+          "allocated_bytes": 33198136,
+          "peak_heap_bytes": 10485760
+        },
+        {
+          "file": "n256.bin",
+          "value": 256,
+          "input_bytes": 256,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 256.884553,
+          "wall_ms": 264.610116,
+          "allocated_bytes": 33206088,
+          "peak_heap_bytes": 12582912
+        },
+        {
+          "file": "n512.bin",
+          "value": 512,
+          "input_bytes": 512,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 292.729635,
+          "wall_ms": 298.70296,
+          "allocated_bytes": 33223104,
+          "peak_heap_bytes": 12582912
+        },
+        {
+          "file": "n1024.bin",
+          "value": 1024,
+          "input_bytes": 1024,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 243.977573,
+          "wall_ms": 250.531127,
+          "allocated_bytes": 33253256,
+          "peak_heap_bytes": 11534336
+        },
+        {
+          "file": "trigger.bin",
+          "value": 23,
+          "input_bytes": 23,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 225.266323,
+          "wall_ms": 231.194146,
+          "allocated_bytes": 38567816,
+          "peak_heap_bytes": 11534336
+        }
+      ]
+    },
+    "V2": {
+      "problems": [],
+      "parameter": "subject length (number of 'a' characters matched against catastrophic-backtracking pattern ^(a+)+b)",
+      "inputs": [
+        {
+          "file": "n8.bin",
+          "value": 8,
+          "input_bytes": 15,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 3.154674,
+          "wall_ms": 3.212715,
+          "allocated_bytes": 164152,
+          "peak_heap_bytes": 0
+        },
+        {
+          "file": "n14.bin",
+          "value": 14,
+          "input_bytes": 21,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 3.137103,
+          "wall_ms": 3.35456,
+          "allocated_bytes": 164168,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "file": "n20.bin",
+          "value": 20,
+          "input_bytes": 27,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 3.246631,
+          "wall_ms": 3.294814,
+          "allocated_bytes": 164544,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "file": "n24.bin",
+          "value": 24,
+          "input_bytes": 31,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 3.153224,
+          "wall_ms": 3.280057,
+          "allocated_bytes": 164544,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "file": "n27.bin",
+          "value": 27,
+          "input_bytes": 34,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 3.213196,
+          "wall_ms": 3.278528,
+          "allocated_bytes": 164560,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "file": "n30.bin",
+          "value": 30,
+          "input_bytes": 37,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 4.590712,
+          "wall_ms": 4.642685,
+          "allocated_bytes": 164560,
+          "peak_heap_bytes": 1048576
+        }
+      ]
+    }
+  },
+  "build": {
+    "ok": true
+  }
+}

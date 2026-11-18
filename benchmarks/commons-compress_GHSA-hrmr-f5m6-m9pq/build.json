@@ -1,0 +1,27 @@
+{
+  "clone_url": "https://github.com/apache/commons-compress.git",
+  "commit": "d9993f8ff119d4a3eb1259b460c53401f619d655",
+  "jdk": 8,
+  "tools": "the project's Maven wrapper (./mvnw, Maven 3.5.0)",
+  "commands": [
+    "cd src && MAVEN_OPTS=-Xmx2g ./mvnw -B -DskipTests -Drat.skip=true -Danimal.sniffer.skip=true -Djapicmp.skip=true -Dmaven.javadoc.skip=true clean package"
+  ],
+  "artifacts": [
+    {
+      "built": "src/target/commons-compress-1.17.jar",
+      "lib": "lib/commons-compress-1.17.jar",
+      "sha256": "1423f5b6e13ac4e8994a763c703d79a04f5a2f11a9943ca21af197b3832a2a1e",
+      "classes_sha256": "17cfd1f142d30632df3be533410e5a0c0bb44a40e1aca84d416340776650f934"
+    }
+  ],
+  "fixed": {
+    "jars": [
+      {
+        "coords": "org.apache.commons:commons-compress:1.18",
+        "sha256": "5f2df1e467825e4cac5996d44890c4201c000b43c0b23cffc0782d28a0beb9b0"
+      }
+    ],
+    "drop": "^(commons\\-compress)-[0-9]"
+  },
+  "notes": "Commit = tag rel/1.17 (project version 1.17). Built with the project's Maven wrapper on JDK 8, as the 1.17 release (Build-Jdk 1.8.0_171); source/target 1.7 from the pom. The flags only skip checks (tests, rat, animal-sniffer, japicmp, javadoc). The 336 classes are byte-identical to Central's commons-compress-1.17.jar (only META-INF/MANIFEST.MF differs). commons-compress 1.17 has only optional, provided and test dependencies. Fixed: commons-compress 1.18."
+}

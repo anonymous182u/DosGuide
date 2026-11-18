@@ -1,0 +1,41 @@
+{
+  "series_request": null,
+  "rounds": [
+    {
+      "round": 1,
+      "revision": {
+        "V1": {
+          "scale": "Measured: 256 nesting levels fit in the 256 KB probe stack, 512 do not, so the classic QueryParser recursion costs about 0.5-1 KB of stack per '(' level (interpreted frames; the parser's per-level cost is higher than the 200-300 B estimate). CPU and heap stay flat (~50 ms, ~5 MB), so stack depth is the only growing resource. Extrapolated to the fixed 1 MB stack (4x the cap): about 1,000-2,000 levels overflow with interpreted frames. JIT-compiled frames are smaller and may need up to ~2-3x more levels. One '(' byte per level is already the densest encoding, so about 2 KB of input, with up to ~4-6 KB if the frames are compiled.",
+          "input_bytes": 2048
+        },
+        "V2": {
+          "scale": "Measured: does NOT grow. Allocation (4.1 MB), peak heap (4-5 MB) and CPU (~50 ms) stay constant from repeat count 16,384 to 1,048,576 (64x). The n copies are never built. Likely cause, from the bytecode: RegExp.toAutomatonInternal (lucene-core 9.12.2) checks the sub-automaton's state count against the determinize work limit (getNumStates plus TooComplexToDeterminizeException) before calling Operations.repeat. In the default all-fields mode, query_string is lenient, so QueryStringQueryParser.getRegexpQuerySingle turns that exception into a lenient query. Nested repeats are checked the same way at each level, and regexes are limited to 1,000 characters. The resource does not grow with the parameter as the mechanism stated, so no input within the 131,072-byte limit reaches out_of_memory. The failure cannot occur in this evaluation.",
+          "input_bytes": 131073
+        }
+      },
+      "field_problems": {
+        "V2": [
+          "`input_bytes` is 131073, more than the input size limit of this evaluation (131072 bytes; longer inputs are cut), so the failure could not occur. Check the estimate against the source; if it holds, the target cannot fail in this evaluation."
+        ]
+      }
+    },
+    {
+      "round": 2,
+      "revision": {
+        "V1": {
+          "scale": "Measured: 256 nesting levels fit in the 256 KB probe stack, 512 do not, so the classic QueryParser recursion costs about 0.5-1 KB of stack per '(' level (interpreted frames; the parser's per-level cost is higher than the 200-300 B estimate). CPU and heap stay flat (~50 ms, ~5 MB), so stack depth is the only growing resource. Extrapolated to the fixed 1 MB stack (4x the cap): about 1,000-2,000 levels overflow with interpreted frames. JIT-compiled frames are smaller and may need up to ~2-3x more levels. One '(' byte per level is already the densest encoding, so about 2 KB of input, with up to ~4-6 KB if the frames are compiled.",
+          "input_bytes": 2048
+        },
+        "V2": {
+          "scale": "CANNOT FAIL IN THIS EVALUATION (confirmed). Measured: no growth. Allocation (4.1 MB), peak heap (4-5 MB) and CPU (~50 ms) stay constant from repeat count 16,384 to 1,048,576 (64x), so Operations.repeat never builds the n copies. Likely cause, from the bytecode: RegExp.toAutomatonInternal (lucene-core 9.12.2) checks the sub-automaton's state count against the determinize work limit (getNumStates plus TooComplexToDeterminizeException) before repeating. In the default all-fields mode, query_string is lenient, so QueryStringQueryParser.getRegexpQuerySingle turns that exception into a lenient query. Nested repeats are checked the same way at each level, and regexes are limited to 1,000 characters (index.max_regex_length). No input up to the 131,072-byte limit makes heap use grow with the repeat count, so out_of_memory cannot be reached. input_bytes is set above the limit on purpose to record this.",
+          "input_bytes": 131073
+        }
+      },
+      "field_problems": {
+        "V2": [
+          "`input_bytes` is 131073, more than the input size limit of this evaluation (131072 bytes; longer inputs are cut), so the failure could not occur. Check the estimate against the source; if it holds, the target cannot fail in this evaluation."
+        ]
+      }
+    }
+  ]
+}

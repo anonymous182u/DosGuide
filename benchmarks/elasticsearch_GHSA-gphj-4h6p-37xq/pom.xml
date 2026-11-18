@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.fuzzing</groupId>
+    <artifactId>elasticsearch-blockbuilder-fuzz</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>Elasticsearch block builder fuzz harness</name>
+    <description>
+        JQF fuzz harness for the block builders of the Elasticsearch ES|QL compute module.
+        The library under test is the ES|QL compute module of Elasticsearch 8.19.7, built from the
+        source of tag v8.19.7 (lib/); 9.x needs Java 21, so the Java 17 release line 8.19 is used.
+    </description>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- the version that the Gradle build of tag v8.19.7 gives its jars (lib/) -->
+        <elasticsearch.version>8.19.7-SNAPSHOT</elasticsearch.version>
+        <!-- the Lucene release Elasticsearch 8.19.7 depends on -->
+        <lucene.version>9.12.2</lucene.version>
+        <jqf.version>2.1</jqf.version>
+        <junit.version>4.13.2</junit.version>
+        <quickcheck.version>1.0</quickcheck.version>
+    </properties>
+
+    <dependencies>
+        <!--
+            Lucene core.
+            This is a transitive dependency of the Elasticsearch compute module.
+            Scope: compile.
+        -->
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-core</artifactId>
+            <version>${lucene.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!--
+            Elasticsearch server, the ES|QL compute module (block builders, BlockFactory) and the
+            Elasticsearch libraries they depend on, built from source (system scope, lib/).
+        -->
+        <dependency>
+            <groupId>org.elasticsearch</groupId>
+            <artifactId>elasticsearch</artifactId>
+            <version>${elasticsearch.version}</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/elasticsearch-${elasticsearch.version}.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>org.elasticsearch</groupId>
+            <artifactId>elasticsearch-cli</artifactId>
+            <version>${elasticsearch.version}</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/elasticsearch-cli-${elasticsearch.version}.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>org.elasticsearch</groupId>
+            <artifactId>elasticsearch-core</artifactId>
+            <version>${elasticsearch.version}</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/elasticsearch-core-${elasticsearch.version}.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>org.elasticsearch</groupId>
+            <artifactId>elasticsearch-entitlement</artifactId>
+            <version>${elasticsearch.version}</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/elasticsearch-entitlement-${elasticsearch.version}.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>org.elasticsearch</groupId>
+            <artifactId>elasticsearch-geo</artifactId>
+            <version>${elasticsearch.version}</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/elasticsearch-geo-${elasticsearch.version}.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>org.elasticsearch</groupId>
+            <artifactId>elasticsearch-grok</artifactId>
+            <version>${elasticsearch.version}</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/elasticsearch-grok-${elasticsearch.version}.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>org.elasticsearch</groupId>
+            <artifactId>elasticsearch-logging</artifactId>
+            <version>${elasticsearch.version}</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/elasticsearch-logging-${elasticsearch.version}.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>org.elasticsearch</groupId>
+            <artifactId>elasticsearch-lz4</artifactId>
+            <version>${elasticsearch.version}</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/elasticsearch-lz4-${elasticsearch.version}.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>org.elasticsearch</groupId>
+            <artifactId>elasticsearch-native</artifactId>
+            <version>${elasticsearch.version}</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/elasticsearch-native-${elasticsearch.version}.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>org.elasticsearch.plugin</groupId>
+            <artifactId>elasticsearch-plugin-analysis-api</artifactId>
+            <version>${elasticsearch.version}</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/elasticsearch-plugin-analysis-api-${elasticsearch.version}.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>org.elasticsearch.plugin</groupId>
+            <artifactId>elasticsearch-plugin-api</artifactId>
+            <version>${elasticsearch.version}</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/elasticsearch-plugin-api-${elasticsearch.version}.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>org.elasticsearch</groupId>
+            <artifactId>elasticsearch-simdvec</artifactId>
+            <version>${elasticsearch.version}</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/elasticsearch-simdvec-${elasticsearch.version}.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>org.elasticsearch</groupId>
+            <artifactId>elasticsearch-tdigest</artifactId>
+            <version>${elasticsearch.version}</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/elasticsearch-tdigest-${elasticsearch.version}.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>org.elasticsearch</groupId>
+            <artifactId>elasticsearch-x-content</artifactId>
+            <version>${elasticsearch.version}</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/elasticsearch-x-content-${elasticsearch.version}.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>org.elasticsearch.plugin</groupId>
+            <artifactId>x-pack-esql-compute</artifactId>
+            <version>${elasticsearch.version}</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/x-pack-esql-compute-${elasticsearch.version}.jar</systemPath>
+        </dependency>
+
+        <!--
+            Third-party runtime dependencies of these modules, as declared in the POMs that the
+            Elasticsearch 8.19.7 build generates for them (same versions and scopes).
+        -->
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-analysis-common</artifactId>
+            <version>${lucene.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-backward-codecs</artifactId>
+            <version>${lucene.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-facet</artifactId>
+            <version>${lucene.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-grouping</artifactId>
+            <version>${lucene.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-highlighter</artifactId>
+            <version>${lucene.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-join</artifactId>
+            <version>${lucene.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-memory</artifactId>
+            <version>${lucene.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-misc</artifactId>
+            <version>${lucene.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-queries</artifactId>
+            <version>${lucene.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-queryparser</artifactId>
+            <version>${lucene.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-sandbox</artifactId>
+            <version>${lucene.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-suggest</artifactId>
+            <version>${lucene.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hdrhistogram</groupId>
+            <artifactId>HdrHistogram</artifactId>
+            <version>2.1.9</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.19.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.19.0</version>
+        </dependency>
+        <dependency>
+            <groupId>co.elastic.logging</groupId>
+            <artifactId>log4j2-ecs-layout</artifactId>
+            <version>1.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>co.elastic.logging</groupId>
+            <artifactId>ecs-logging-core</artifactId>
+            <version>1.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.carrotsearch</groupId>
+            <artifactId>hppc</artifactId>
+            <version>0.8.1</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.jopt-simple</groupId>
+            <artifactId>jopt-simple</artifactId>
+            <version>5.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jruby.joni</groupId>
+            <artifactId>joni</artifactId>
+            <version>2.1.29</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jruby.jcodings</groupId>
+            <artifactId>jcodings</artifactId>
+            <version>1.0.44</version>
+        </dependency>
+        <dependency>
+            <groupId>org.lz4</groupId>
+            <artifactId>lz4-java</artifactId>
+            <version>1.8.0</version>
+        </dependency>
+
+        <!--
+            JQF core: Guidance interface, GuidedFuzzing runner, @Fuzz, @JQF.
+            Scope: test — only used from src/test/java.
+        -->
+        <dependency>
+            <groupId>edu.berkeley.cs.jqf</groupId>
+            <artifactId>jqf-fuzz</artifactId>
+            <version>${jqf.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!--
+            JQF instrumentation: TraceEvent for coverage/cost tracking.
+            Scope: test.
+        -->
+        <dependency>
+            <groupId>edu.berkeley.cs.jqf</groupId>
+            <artifactId>jqf-instrument</artifactId>
+            <version>${jqf.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!--
+            JUnit 4: required by JQF @RunWith(JQF.class).
+            Scope: test.
+        -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!--
+            junit-quickcheck core: SourceOfRandomness used by JQF internally.
+            Scope: test.
+        -->
+        <dependency>
+            <groupId>com.pholser</groupId>
+            <artifactId>junit-quickcheck-core</artifactId>
+            <version>${quickcheck.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- Compiler: JDK 17, no preview features -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <source>17</source>
+                    <target>17</target>
+                    <encoding>UTF-8</encoding>
+                    <!-- Disable assertions in compile; we enable -ea at JVM runtime -->
+                    <compilerArgs>
+                        <arg>-Xlint:all</arg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
+
+            <!-- Surefire: skip tests during mvn package (fuzzing is manual) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.1.2</version>
+                <configuration>
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
+
+            <!-- Jar plugin: include test classes in a separate jar for fuzzing -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.3.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>test-jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!--
+                Dependency plugin: copy all dependency JARs to target/dependency
+                for classpath construction during fuzzing.
+            -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.6.0</version>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/dependency</outputDirectory>
+                            <includeScope>test</includeScope>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

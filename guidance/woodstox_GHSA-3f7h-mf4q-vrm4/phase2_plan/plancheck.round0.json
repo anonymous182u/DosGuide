@@ -1,0 +1,421 @@
+{
+  "tool": "checkpath",
+  "version": "1.0.0",
+  "source_root": "projects/woodstox_GHSA-3f7h-mf4q-vrm4",
+  "index": {
+    "files_parsed": 178,
+    "files_failed": 0,
+    "methods": 2657,
+    "harness_fuzz_methods": [
+      "WoodstoxFuzzTest.fuzzXMLStreamReaderNextNonValidating(InputStream)",
+      "WoodstoxFuzzTest.fuzzXMLStreamReaderNextValidating(InputStream)",
+      "WoodstoxFuzzTest.fuzzXMLStreamReaderNextNoExternalEntities(InputStream)"
+    ],
+    "index_seconds": 1.3,
+    "max_gap": 2,
+    "sink_depth": 6,
+    "symbol_resolution": true
+  },
+  "ok": true,
+  "targets": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "entrypoint": "WoodstoxFuzzTest.fuzzXMLStreamReaderNextNonValidating(InputStream) → BasicStreamReader.next() → BasicStreamReader.nextFromProlog(boolean) → BasicStreamReader.skipToken() → ValidatingStreamReader.finishDTD(boolean) → FullDTDReader.readInternalSubset(WstxInputData, WstxInputSource, ReaderConfig, boolean, int) → FullDTDReader.parseDTD() → FullDTDReader.parseDirective() → FullDTDReader.handleDeclaration(char) → FullDTDReader.handleElementDecl() → FullDTDReader.readContentSpec(PrefixedName, boolean, boolean)",
+      "source_path": "src/main/java/com/ctc/wstx/dtd/FullDTDReader.java",
+      "start_ok": true,
+      "harness_entry": "fuzzing.harness.WoodstoxFuzzTest#fuzzXMLStreamReaderNextNonValidating",
+      "end_ok": true,
+      "end": {
+        "sink_file": "src/main/java/com/ctc/wstx/dtd/FullDTDReader.java",
+        "ok": true,
+        "evidence": "hop 11 FullDTDReader#readContentSpec(PrefixedName,boolean,boolean) is declared in src/main/java/com/ctc/wstx/dtd/FullDTDReader.java:3055",
+        "level": "method",
+        "sink_method": "FullDTDReader#readContentSpec",
+        "sink_evidence": "hop 11 is FullDTDReader#readContentSpec(PrefixedName,boolean,boolean)"
+      },
+      "hops": [
+        {
+          "index": 1,
+          "raw": "WoodstoxFuzzTest.fuzzXMLStreamReaderNextNonValidating(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "fuzzing.harness.WoodstoxFuzzTest#fuzzXMLStreamReaderNextNonValidating(InputStream)",
+              "location": "harness/src/test/java/fuzzing/harness/WoodstoxFuzzTest.java:29"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "raw": "BasicStreamReader.next()",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "com.ctc.wstx.sr.BasicStreamReader#next()",
+              "location": "src/main/java/com/ctc/wstx/sr/BasicStreamReader.java:1105"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "raw": "BasicStreamReader.nextFromProlog(boolean)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "com.ctc.wstx.sr.BasicStreamReader#nextFromProlog(boolean)",
+              "location": "src/main/java/com/ctc/wstx/sr/BasicStreamReader.java:2063"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "raw": "BasicStreamReader.skipToken()",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "com.ctc.wstx.sr.BasicStreamReader#skipToken()",
+              "location": "src/main/java/com/ctc/wstx/sr/BasicStreamReader.java:3403"
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "raw": "ValidatingStreamReader.finishDTD(boolean)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "com.ctc.wstx.sr.ValidatingStreamReader#finishDTD(boolean)",
+              "location": "src/main/java/com/ctc/wstx/sr/ValidatingStreamReader.java:253"
+            },
+            {
+              "method": "com.ctc.wstx.sr.BasicStreamReader#finishDTD(boolean)",
+              "location": "src/main/java/com/ctc/wstx/sr/BasicStreamReader.java:2642"
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "raw": "FullDTDReader.readInternalSubset(WstxInputData, WstxInputSource, ReaderConfig, boolean, int)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "com.ctc.wstx.dtd.FullDTDReader#readInternalSubset(WstxInputData,WstxInputSource,ReaderConfig,boolean,int)",
+              "location": "src/main/java/com/ctc/wstx/dtd/FullDTDReader.java:414"
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "raw": "FullDTDReader.parseDTD()",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "com.ctc.wstx.dtd.FullDTDReader#parseDTD()",
+              "location": "src/main/java/com/ctc/wstx/dtd/FullDTDReader.java:552"
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "raw": "FullDTDReader.parseDirective()",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "com.ctc.wstx.dtd.FullDTDReader#parseDirective()",
+              "location": "src/main/java/com/ctc/wstx/dtd/FullDTDReader.java:675"
+            }
+          ]
+        },
+        {
+          "index": 9,
+          "raw": "FullDTDReader.handleDeclaration(char)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "com.ctc.wstx.dtd.FullDTDReader#handleDeclaration(char)",
+              "location": "src/main/java/com/ctc/wstx/dtd/FullDTDReader.java:2061"
+            }
+          ]
+        },
+        {
+          "index": 10,
+          "raw": "FullDTDReader.handleElementDecl()",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "com.ctc.wstx.dtd.FullDTDReader#handleElementDecl()",
+              "location": "src/main/java/com/ctc/wstx/dtd/FullDTDReader.java:2246"
+            }
+          ]
+        },
+        {
+          "index": 11,
+          "raw": "FullDTDReader.readContentSpec(PrefixedName, boolean, boolean)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "com.ctc.wstx.dtd.FullDTDReader#readContentSpec(PrefixedName,boolean,boolean)",
+              "location": "src/main/java/com/ctc/wstx/dtd/FullDTDReader.java:3055"
+            }
+          ]
+        }
+      ],
+      "path_signature": [
+        "fuzzing.harness.WoodstoxFuzzTest#fuzzXMLStreamReaderNextNonValidating(InputStream)",
+        "com.ctc.wstx.sr.BasicStreamReader#next()",
+        "com.ctc.wstx.sr.BasicStreamReader#nextFromProlog(boolean)",
+        "com.ctc.wstx.sr.BasicStreamReader#skipToken()",
+        "com.ctc.wstx.sr.ValidatingStreamReader#finishDTD(boolean)",
+        "com.ctc.wstx.dtd.FullDTDReader#readInternalSubset(WstxInputData,WstxInputSource,ReaderConfig,boolean,int)",
+        "com.ctc.wstx.dtd.FullDTDReader#parseDTD()",
+        "com.ctc.wstx.dtd.FullDTDReader#parseDirective()",
+        "com.ctc.wstx.dtd.FullDTDReader#handleDeclaration(char)",
+        "com.ctc.wstx.dtd.FullDTDReader#handleElementDecl()",
+        "com.ctc.wstx.dtd.FullDTDReader#readContentSpec(PrefixedName,boolean,boolean)"
+      ],
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "written": "WoodstoxFuzzTest.fuzzXMLStreamReaderNextNonValidating(InputStream)",
+          "provenance": "agent",
+          "method": "fuzzing.harness.WoodstoxFuzzTest#fuzzXMLStreamReaderNextNonValidating(InputStream)",
+          "location": "harness/src/test/java/fuzzing/harness/WoodstoxFuzzTest.java:29"
+        },
+        {
+          "kind": "connection",
+          "type": "INDIRECT",
+          "evidence": "1 omitted call(s); WoodstoxFuzzTest#readAll(XMLInputFactory,InputStream) calls next on a javax.xml.stream.XMLStreamReader (outside the source tree) at harness/src/test/java/fuzzing/harness/WoodstoxFuzzTest.java:66, which may dispatch to BasicStreamReader#next() (src/main/java/com/ctc/wstx/sr/BasicStreamReader.java:1105), overriding javax.xml.stream.XMLStreamReader#next(); BasicStreamReader's supertype org.codehaus.stax2.DTDInfo, org.codehaus.stax2.LocationInfo, org.codehaus.stax2.XMLStreamReader2 could not be resolved, so BasicStreamReader is not confirmed to be a javax.xml.stream.XMLStreamReader (unresolved ancestor)",
+          "site": "harness/src/test/java/fuzzing/harness/WoodstoxFuzzTest.java:66"
+        },
+        {
+          "kind": "hop",
+          "written": null,
+          "provenance": "checkpath (omitted call)",
+          "method": "fuzzing.harness.WoodstoxFuzzTest#readAll(XMLInputFactory,InputStream)",
+          "location": "harness/src/test/java/fuzzing/harness/WoodstoxFuzzTest.java:63"
+        },
+        {
+          "kind": "hop",
+          "written": "BasicStreamReader.next()",
+          "provenance": "agent",
+          "method": "com.ctc.wstx.sr.BasicStreamReader#next()",
+          "location": "src/main/java/com/ctc/wstx/sr/BasicStreamReader.java:1105"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "BasicStreamReader#next() calls BasicStreamReader#nextFromProlog(boolean) at src/main/java/com/ctc/wstx/sr/BasicStreamReader.java:1179 (name match)",
+          "site": "src/main/java/com/ctc/wstx/sr/BasicStreamReader.java:1179"
+        },
+        {
+          "kind": "hop",
+          "written": "BasicStreamReader.nextFromProlog(boolean)",
+          "provenance": "agent",
+          "method": "com.ctc.wstx.sr.BasicStreamReader#nextFromProlog(boolean)",
+          "location": "src/main/java/com/ctc/wstx/sr/BasicStreamReader.java:2063"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "BasicStreamReader#nextFromProlog(boolean) calls BasicStreamReader#skipToken() at src/main/java/com/ctc/wstx/sr/BasicStreamReader.java:2071 (name match)",
+          "site": "src/main/java/com/ctc/wstx/sr/BasicStreamReader.java:2071"
+        },
+        {
+          "kind": "hop",
+          "written": "BasicStreamReader.skipToken()",
+          "provenance": "agent",
+          "method": "com.ctc.wstx.sr.BasicStreamReader#skipToken()",
+          "location": "src/main/java/com/ctc/wstx/sr/BasicStreamReader.java:3403"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "BasicStreamReader#skipToken() calls BasicStreamReader#finishDTD(boolean) at src/main/java/com/ctc/wstx/sr/BasicStreamReader.java:3445 (name match)",
+          "site": "src/main/java/com/ctc/wstx/sr/BasicStreamReader.java:3445"
+        },
+        {
+          "kind": "hop",
+          "written": "ValidatingStreamReader.finishDTD(boolean)",
+          "provenance": "agent",
+          "method": "com.ctc.wstx.sr.ValidatingStreamReader#finishDTD(boolean)",
+          "location": "src/main/java/com/ctc/wstx/sr/ValidatingStreamReader.java:253"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "ValidatingStreamReader#finishDTD(boolean) calls FullDTDReader#readInternalSubset(WstxInputData,WstxInputSource,ReaderConfig,boolean,int) at src/main/java/com/ctc/wstx/sr/ValidatingStreamReader.java:277 (name match)",
+          "site": "src/main/java/com/ctc/wstx/sr/ValidatingStreamReader.java:277"
+        },
+        {
+          "kind": "hop",
+          "written": "FullDTDReader.readInternalSubset(WstxInputData, WstxInputSource, ReaderConfig, boolean, int)",
+          "provenance": "agent",
+          "method": "com.ctc.wstx.dtd.FullDTDReader#readInternalSubset(WstxInputData,WstxInputSource,ReaderConfig,boolean,int)",
+          "location": "src/main/java/com/ctc/wstx/dtd/FullDTDReader.java:414"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "FullDTDReader#readInternalSubset(WstxInputData,WstxInputSource,ReaderConfig,boolean,int) calls FullDTDReader#parseDTD() at src/main/java/com/ctc/wstx/dtd/FullDTDReader.java:427 (resolved)",
+          "site": "src/main/java/com/ctc/wstx/dtd/FullDTDReader.java:427"
+        },
+        {
+          "kind": "hop",
+          "written": "FullDTDReader.parseDTD()",
+          "provenance": "agent",
+          "method": "com.ctc.wstx.dtd.FullDTDReader#parseDTD()",
+          "location": "src/main/java/com/ctc/wstx/dtd/FullDTDReader.java:552"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "FullDTDReader#parseDTD() calls FullDTDReader#parseDirective() at src/main/java/com/ctc/wstx/dtd/FullDTDReader.java:581 (resolved)",
+          "site": "src/main/java/com/ctc/wstx/dtd/FullDTDReader.java:581"
+        },
+        {
+          "kind": "hop",
+          "written": "FullDTDReader.parseDirective()",
+          "provenance": "agent",
+          "method": "com.ctc.wstx.dtd.FullDTDReader#parseDirective()",
+          "location": "src/main/java/com/ctc/wstx/dtd/FullDTDReader.java:675"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "FullDTDReader#parseDirective() calls FullDTDReader#handleDeclaration(char) at src/main/java/com/ctc/wstx/dtd/FullDTDReader.java:708 (resolved)",
+          "site": "src/main/java/com/ctc/wstx/dtd/FullDTDReader.java:708"
+        },
+        {
+          "kind": "hop",
+          "written": "FullDTDReader.handleDeclaration(char)",
+          "provenance": "agent",
+          "method": "com.ctc.wstx.dtd.FullDTDReader#handleDeclaration(char)",
+          "location": "src/main/java/com/ctc/wstx/dtd/FullDTDReader.java:2061"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "FullDTDReader#handleDeclaration(char) calls FullDTDReader#handleElementDecl() at src/main/java/com/ctc/wstx/dtd/FullDTDReader.java:2100 (resolved)",
+          "site": "src/main/java/com/ctc/wstx/dtd/FullDTDReader.java:2100"
+        },
+        {
+          "kind": "hop",
+          "written": "FullDTDReader.handleElementDecl()",
+          "provenance": "agent",
+          "method": "com.ctc.wstx.dtd.FullDTDReader#handleElementDecl()",
+          "location": "src/main/java/com/ctc/wstx/dtd/FullDTDReader.java:2246"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "FullDTDReader#handleElementDecl() calls FullDTDReader#readContentSpec(PrefixedName,boolean,boolean) at src/main/java/com/ctc/wstx/dtd/FullDTDReader.java:2274 (resolved)",
+          "site": "src/main/java/com/ctc/wstx/dtd/FullDTDReader.java:2274"
+        },
+        {
+          "kind": "hop",
+          "written": "FullDTDReader.readContentSpec(PrefixedName, boolean, boolean)",
+          "provenance": "agent",
+          "method": "com.ctc.wstx.dtd.FullDTDReader#readContentSpec(PrefixedName,boolean,boolean)",
+          "location": "src/main/java/com/ctc/wstx/dtd/FullDTDReader.java:3055"
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "status": "INDIRECT",
+          "evidence": "1 omitted call(s); WoodstoxFuzzTest#readAll(XMLInputFactory,InputStream) calls next on a javax.xml.stream.XMLStreamReader (outside the source tree) at harness/src/test/java/fuzzing/harness/WoodstoxFuzzTest.java:66, which may dispatch to BasicStreamReader#next() (src/main/java/com/ctc/wstx/sr/BasicStreamReader.java:1105), overriding javax.xml.stream.XMLStreamReader#next(); BasicStreamReader's supertype org.codehaus.stax2.DTDInfo, org.codehaus.stax2.LocationInfo, org.codehaus.stax2.XMLStreamReader2 could not be resolved, so BasicStreamReader is not confirmed to be a javax.xml.stream.XMLStreamReader (unresolved ancestor)",
+          "chain": [
+            "WoodstoxFuzzTest#fuzzXMLStreamReaderNextNonValidating(InputStream)",
+            "WoodstoxFuzzTest#readAll(XMLInputFactory,InputStream)",
+            "BasicStreamReader#next()"
+          ]
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "status": "CALL",
+          "evidence": "BasicStreamReader#next() calls BasicStreamReader#nextFromProlog(boolean) at src/main/java/com/ctc/wstx/sr/BasicStreamReader.java:1179 (name match)"
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "status": "CALL",
+          "evidence": "BasicStreamReader#nextFromProlog(boolean) calls BasicStreamReader#skipToken() at src/main/java/com/ctc/wstx/sr/BasicStreamReader.java:2071 (name match)"
+        },
+        {
+          "from": 4,
+          "to": 5,
+          "status": "CALL",
+          "evidence": "BasicStreamReader#skipToken() calls BasicStreamReader#finishDTD(boolean) at src/main/java/com/ctc/wstx/sr/BasicStreamReader.java:3445 (name match)"
+        },
+        {
+          "from": 5,
+          "to": 6,
+          "status": "CALL",
+          "evidence": "ValidatingStreamReader#finishDTD(boolean) calls FullDTDReader#readInternalSubset(WstxInputData,WstxInputSource,ReaderConfig,boolean,int) at src/main/java/com/ctc/wstx/sr/ValidatingStreamReader.java:277 (name match)"
+        },
+        {
+          "from": 6,
+          "to": 7,
+          "status": "CALL",
+          "evidence": "FullDTDReader#readInternalSubset(WstxInputData,WstxInputSource,ReaderConfig,boolean,int) calls FullDTDReader#parseDTD() at src/main/java/com/ctc/wstx/dtd/FullDTDReader.java:427 (resolved)"
+        },
+        {
+          "from": 7,
+          "to": 8,
+          "status": "CALL",
+          "evidence": "FullDTDReader#parseDTD() calls FullDTDReader#parseDirective() at src/main/java/com/ctc/wstx/dtd/FullDTDReader.java:581 (resolved)"
+        },
+        {
+          "from": 8,
+          "to": 9,
+          "status": "CALL",
+          "evidence": "FullDTDReader#parseDirective() calls FullDTDReader#handleDeclaration(char) at src/main/java/com/ctc/wstx/dtd/FullDTDReader.java:708 (resolved)"
+        },
+        {
+          "from": 9,
+          "to": 10,
+          "status": "CALL",
+          "evidence": "FullDTDReader#handleDeclaration(char) calls FullDTDReader#handleElementDecl() at src/main/java/com/ctc/wstx/dtd/FullDTDReader.java:2100 (resolved)"
+        },
+        {
+          "from": 10,
+          "to": 11,
+          "status": "CALL",
+          "evidence": "FullDTDReader#handleElementDecl() calls FullDTDReader#readContentSpec(PrefixedName,boolean,boolean) at src/main/java/com/ctc/wstx/dtd/FullDTDReader.java:2274 (resolved)"
+        }
+      ],
+      "diagnostics": [],
+      "warnings": [
+        "Edge 1→2 is indirect: WoodstoxFuzzTest#fuzzXMLStreamReaderNextNonValidating(InputStream) → WoodstoxFuzzTest#readAll(XMLInputFactory,InputStream) → BasicStreamReader#next()",
+        "Edge 1→2 rests on an unconfirmed dispatch: BasicStreamReader's supertype org.codehaus.stax2.DTDInfo, org.codehaus.stax2.LocationInfo, org.codehaus.stax2.XMLStreamReader2 is outside the source tree and could not be resolved, so BasicStreamReader#next() is taken to be what the call to next on a javax.xml.stream.XMLStreamReader at harness/src/test/java/fuzzing/harness/WoodstoxFuzzTest.java:66 runs because its name and parameter types match."
+      ]
+    }
+  ],
+  "plan_ok": true,
+  "plans": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "signals": [
+        {
+          "name": "maxDepth",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "FullDTDReader#readContentSpec",
+              "status": "RESOLVED",
+              "method": "com.ctc.wstx.dtd.FullDTDReader#readContentSpec",
+              "declared_at": "src/main/java/com/ctc/wstx/dtd/FullDTDReader.java:3055",
+              "relation": "on_path"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    }
+  ]
+}

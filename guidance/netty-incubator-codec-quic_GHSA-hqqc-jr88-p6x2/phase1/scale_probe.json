@@ -1,0 +1,139 @@
+{
+  "caps": {
+    "input_bytes": 262144,
+    "heap_bytes": 268435456,
+    "stack_bytes": 262144,
+    "time_ms": 2000
+  },
+  "targets": {
+    "V1": {
+      "problems": [],
+      "parameter": "number of Initial packets whose DCIDs share one ByteBuffer.hashCode (colliding map keys)",
+      "inputs": [
+        {
+          "file": "n512.bin",
+          "value": 512,
+          "input_bytes": 10752,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 576.757929,
+          "wall_ms": 697.978066,
+          "allocated_bytes": 38733176,
+          "peak_heap_bytes": 27262976
+        },
+        {
+          "file": "n1024.bin",
+          "value": 1024,
+          "input_bytes": 21504,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 622.572188,
+          "wall_ms": 630.207736,
+          "allocated_bytes": 61781024,
+          "peak_heap_bytes": 20971520
+        },
+        {
+          "file": "n2048.bin",
+          "value": 2048,
+          "input_bytes": 43008,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 844.350149,
+          "wall_ms": 854.981091,
+          "allocated_bytes": 123414864,
+          "peak_heap_bytes": 46137344
+        },
+        {
+          "file": "n4096.bin",
+          "value": 4096,
+          "input_bytes": 86016,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 1567.259113,
+          "wall_ms": 1592.411166,
+          "allocated_bytes": 311831320,
+          "peak_heap_bytes": 20661200
+        },
+        {
+          "file": "n8192.bin",
+          "value": 8192,
+          "input_bytes": 172032,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "time_cap"
+        }
+      ]
+    },
+    "PkgRisk1": {
+      "problems": [],
+      "parameter": "number of Initial packets whose DCIDs share one ByteBuffer.hashCode (colliding map keys)",
+      "inputs": [
+        {
+          "file": "n1024.bin",
+          "value": 1024,
+          "input_bytes": 11264,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 596.152563,
+          "wall_ms": 605.387736,
+          "allocated_bytes": 61822000,
+          "peak_heap_bytes": 42991616
+        },
+        {
+          "file": "n2048.bin",
+          "value": 2048,
+          "input_bytes": 22528,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 1128.099531,
+          "wall_ms": 1143.7025,
+          "allocated_bytes": 123720688,
+          "peak_heap_bytes": 14327992
+        },
+        {
+          "file": "n4096.bin",
+          "value": 4096,
+          "input_bytes": 45056,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "time_cap"
+        },
+        {
+          "file": "n8192.bin",
+          "value": 8192,
+          "input_bytes": 90112,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "time_cap"
+        },
+        {
+          "file": "n16384.bin",
+          "value": 16384,
+          "input_bytes": 180224,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "time_cap"
+        }
+      ]
+    }
+  },
+  "build": {
+    "ok": true
+  }
+}

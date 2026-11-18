@@ -1,0 +1,181 @@
+{
+  "caps": {
+    "input_bytes": 2560,
+    "heap_bytes": 268435456,
+    "stack_bytes": 262144,
+    "time_ms": 2000
+  },
+  "targets": {
+    "V1": {
+      "problems": [],
+      "parameter": "number of repeated chars in text triggering exponential NFA backtracking",
+      "inputs": [
+        {
+          "file": "n10.bin",
+          "value": 10,
+          "input_bytes": 20,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 3.479448,
+          "wall_ms": 3.532573,
+          "allocated_bytes": 220448,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "file": "n20.bin",
+          "value": 20,
+          "input_bytes": 40,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 3.50488,
+          "wall_ms": 3.634031,
+          "allocated_bytes": 220920,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "file": "n40.bin",
+          "value": 40,
+          "input_bytes": 80,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 5.907293,
+          "wall_ms": 5.979219,
+          "allocated_bytes": 222104,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "file": "n80.bin",
+          "value": 80,
+          "input_bytes": 160,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 6.495886,
+          "wall_ms": 6.557181,
+          "allocated_bytes": 224464,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "file": "n160.bin",
+          "value": 160,
+          "input_bytes": 320,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 7.979483,
+          "wall_ms": 8.355213,
+          "allocated_bytes": 229064,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "file": "n320.bin",
+          "value": 320,
+          "input_bytes": 640,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 9.197344,
+          "wall_ms": 9.309368,
+          "allocated_bytes": 238208,
+          "peak_heap_bytes": 1048576
+        }
+      ]
+    },
+    "PkgRisk1": {
+      "problems": [],
+      "parameter": "number of repeated chars in text triggering exponential NFA backtracking",
+      "inputs": [
+        {
+          "file": "n10.bin",
+          "value": 10,
+          "input_bytes": 20,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 3.451756,
+          "wall_ms": 3.6125,
+          "allocated_bytes": 220448,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "file": "n20.bin",
+          "value": 20,
+          "input_bytes": 40,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 3.537308,
+          "wall_ms": 3.602049,
+          "allocated_bytes": 220920,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "file": "n40.bin",
+          "value": 40,
+          "input_bytes": 80,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 3.954574,
+          "wall_ms": 4.03493,
+          "allocated_bytes": 222104,
+          "peak_heap_bytes": 0
+        },
+        {
+          "file": "n80.bin",
+          "value": 80,
+          "input_bytes": 160,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 4.610861,
+          "wall_ms": 4.733934,
+          "allocated_bytes": 224464,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "file": "n160.bin",
+          "value": 160,
+          "input_bytes": 320,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 5.929997,
+          "wall_ms": 6.002349,
+          "allocated_bytes": 229064,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "file": "n320.bin",
+          "value": 320,
+          "input_bytes": 640,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 9.846193,
+          "wall_ms": 9.922723,
+          "allocated_bytes": 238208,
+          "peak_heap_bytes": 1048576
+        }
+      ]
+    }
+  },
+  "build": {
+    "ok": true
+  }
+}

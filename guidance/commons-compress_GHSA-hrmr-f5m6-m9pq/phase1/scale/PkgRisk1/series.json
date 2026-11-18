@@ -1,0 +1,29 @@
+{
+ "parameter": "bzip2 decompressed bytes of one BZIP2 (method 12) entry",
+ "inputs": [
+  {
+   "file": "out2MiB.bin",
+   "value": 2097152
+  },
+  {
+   "file": "out4MiB.bin",
+   "value": 4194304
+  },
+  {
+   "file": "out8MiB.bin",
+   "value": 8388608
+  },
+  {
+   "file": "out16MiB.bin",
+   "value": 16777216
+  },
+  {
+   "file": "out32MiB.bin",
+   "value": 33554432
+  },
+  {
+   "file": "out64MiB.bin",
+   "value": 67108864
+  }
+ ]
+}

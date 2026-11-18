@@ -1,0 +1,30 @@
+{
+  "clone_url": "https://github.com/stleary/JSON-java.git",
+  "commit": "f1b0210b8acdbc5f5316bc5507e2f3630506a9a3",
+  "jdk": 17,
+  "linux_only": false,
+  "commands": [
+    "rm -rf build && mkdir -p build/classes",
+    "javac -nowarn -encoding UTF-8 --release 8 -d build/classes $(find src/src/main/java -name '*.java' | LC_ALL=C sort)",
+    "jar cf build/json.jar -C build/classes ."
+  ],
+  "artifacts": [
+    {
+      "built": "build/json.jar",
+      "lib": "lib/json-20211205.jar",
+      "sha256": "d08ba1bf85106a28641e88011d384a0b3206a4ebddd574f1f4286c423c131fdd",
+      "classes_sha256": "7b6ac635ea5cab344b73572743adafc4240c810f4769ee6bdbe73db09b336839"
+    }
+  ],
+  "fixed": {
+    "jars": [
+      {
+        "coords": "org.json:json:20220320",
+        "sha256": "1edf7fcea79a16b8dfdd3bc988ddec7f8908b1f7762fdf00d39acb037542747a"
+      }
+    ],
+    "drop": "^(json)-[0-9]"
+  },
+  "tools": "JDK 17 (javac, jar)",
+  "notes": "The library is src/main/java of the vulnerable commit (the parent of fix 7a124d8, pom version 20211205) compiled with javac --release 8 and packed with jar, as the evaluation's jar was made; the project's Maven build is not used. Its sources equal those of the org.json:json:20211205 release apart from line endings, but the evaluation used this build, not the Central jar. Fixed: org.json:json 20220320, the first release with 7a124d8."
+}

@@ -1,0 +1,232 @@
+{
+  "ordered_targets": [
+    {
+      "slot": 1,
+      "id": "V1",
+      "name": "Unbounded recursive token expansion via ChangesSinceLastBuildMacro.hasNestedContent()",
+      "entrypoint": "TokenMacroFuzzTest.fuzzTokenMacroExpand(InputStream) → TokenMacro.expand(Run, FilePath, TaskListener, String, boolean, List) → Parser.process(Run, FilePath, TaskListener, String, boolean, List) → Parser.DelimitedToken() → Parser.processToken() → Parser.process(Run, FilePath, TaskListener, String, boolean, List)",
+      "source_path": "src/main/java/org/jenkinsci/plugins/tokenmacro/Parser.java",
+      "sink": "Parser#processToken",
+      "mechanism": "ChangesSinceLastBuildMacro with format=%m returns the commit message as the replacement. Because hasNestedContent() returns true, processToken() recursively calls Parser.process on the replacement. When the commit message contains ${CHANGES, format=\"%m\"}, every recursion level produces the same replacement, creating unbounded recursion.",
+      "resource": "stack depth: one Parser.process + Parboiled parse + macro evaluation frame per recursion level (~3000-6000 bytes per level)",
+      "failure_mode": "stack_overflow",
+      "scale": "Measured ~225 ms (completed) for the 23-byte single-token trigger; 5 MB extra allocation over benign inputs indicates ~10-25 recursion levels before StackOverflowError, which is caught by Parser.process's catch(Exception) via Parboiled's ActionException wrapping. With K=1 token, work is linear in depth S (fast). With K>=2 self-referencing tokens, each level branches K times: total evaluations K^S. From allocation data S is 10-25; per-evaluation cost ~1-2 ms. K=2 tokens (46 bytes): 2^15 evaluations × 1.5 ms ≈ 49 seconds at S=15, easily exceeding the 20-second timeout. Failure mode is timeout from exponential CPU consumption (not stack_overflow as originally estimated). Denser encoding: two tokens with no space between them is the minimal 46-byte input.",
+      "input_bytes": 46,
+      "cwe": "CWE-674",
+      "checkpath_status": "PASS",
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "method": "edu.berkeley.cs.jqf.examples.tokenmacro.TokenMacroFuzzTest#fuzzTokenMacroExpand(InputStream)",
+          "location": "harness/src/test/java/edu/berkeley/cs/jqf/examples/tokenmacro/TokenMacroFuzzTest.java:62"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "harness/src/test/java/edu/berkeley/cs/jqf/examples/tokenmacro/TokenMacroFuzzTest.java:69"
+        },
+        {
+          "kind": "hop",
+          "method": "org.jenkinsci.plugins.tokenmacro.TokenMacro#expand(Run,FilePath,TaskListener,String,boolean,List)",
+          "location": "src/main/java/org/jenkinsci/plugins/tokenmacro/TokenMacro.java:203"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "src/main/java/org/jenkinsci/plugins/tokenmacro/TokenMacro.java:204"
+        },
+        {
+          "kind": "hop",
+          "method": "org.jenkinsci.plugins.tokenmacro.Parser#process(Run,FilePath,TaskListener,String,boolean,List)",
+          "location": "src/main/java/org/jenkinsci/plugins/tokenmacro/Parser.java:60"
+        },
+        {
+          "kind": "connection",
+          "type": "INDIRECT",
+          "evidence": "2 omitted call(s)"
+        },
+        {
+          "kind": "hop",
+          "provenance": "checkpath (omitted call)",
+          "method": "org.jenkinsci.plugins.tokenmacro.Parser#Text()",
+          "location": "src/main/java/org/jenkinsci/plugins/tokenmacro/Parser.java:78"
+        },
+        {
+          "kind": "hop",
+          "provenance": "checkpath (omitted call)",
+          "method": "org.jenkinsci.plugins.tokenmacro.Parser#Token()",
+          "location": "src/main/java/org/jenkinsci/plugins/tokenmacro/Parser.java:87"
+        },
+        {
+          "kind": "hop",
+          "method": "org.jenkinsci.plugins.tokenmacro.Parser#DelimitedToken()",
+          "location": "src/main/java/org/jenkinsci/plugins/tokenmacro/Parser.java:94"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "src/main/java/org/jenkinsci/plugins/tokenmacro/Parser.java:102"
+        },
+        {
+          "kind": "hop",
+          "method": "org.jenkinsci.plugins.tokenmacro.Parser#processToken()",
+          "location": "src/main/java/org/jenkinsci/plugins/tokenmacro/Parser.java:283"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "src/main/java/org/jenkinsci/plugins/tokenmacro/Parser.java:312"
+        },
+        {
+          "kind": "hop",
+          "method": "org.jenkinsci.plugins.tokenmacro.Parser#process(Run,FilePath,TaskListener,String,boolean,List)",
+          "location": "src/main/java/org/jenkinsci/plugins/tokenmacro/Parser.java:60"
+        }
+      ],
+      "harness_entry": "edu.berkeley.cs.jqf.examples.tokenmacro.TokenMacroFuzzTest#fuzzTokenMacroExpand",
+      "scale_measurement": [
+        {
+          "value": 64,
+          "input_bytes": 64,
+          "outcome": "completed",
+          "cpu_ms": 234.621924,
+          "allocated_bytes": 33194120,
+          "peak_heap_bytes": 10485760
+        },
+        {
+          "value": 128,
+          "input_bytes": 128,
+          "outcome": "completed",
+          "cpu_ms": 260.806253,
+          "allocated_bytes": 33198136,
+          "peak_heap_bytes": 10485760
+        },
+        {
+          "value": 256,
+          "input_bytes": 256,
+          "outcome": "completed",
+          "cpu_ms": 256.884553,
+          "allocated_bytes": 33206088,
+          "peak_heap_bytes": 12582912
+        },
+        {
+          "value": 512,
+          "input_bytes": 512,
+          "outcome": "completed",
+          "cpu_ms": 292.729635,
+          "allocated_bytes": 33223104,
+          "peak_heap_bytes": 12582912
+        },
+        {
+          "value": 1024,
+          "input_bytes": 1024,
+          "outcome": "completed",
+          "cpu_ms": 243.977573,
+          "allocated_bytes": 33253256,
+          "peak_heap_bytes": 11534336
+        },
+        {
+          "value": 23,
+          "input_bytes": 23,
+          "outcome": "completed",
+          "cpu_ms": 225.266323,
+          "allocated_bytes": 38567816,
+          "peak_heap_bytes": 11534336
+        }
+      ]
+    },
+    {
+      "slot": 2,
+      "id": "V2",
+      "name": "Regex DoS via user-controlled pattern in BeginningOrEndMatchTransorm",
+      "entrypoint": "TokenMacroFuzzTest.fuzzBeginningOrEndMatchTransormTransform(InputStream) → BeginningOrEndMatchTransorm.transform(String) → Matcher.find()",
+      "source_path": "src/main/java/org/jenkinsci/plugins/tokenmacro/transform/BeginningOrEndMatchTransorm.java",
+      "sink": "Matcher#find",
+      "mechanism": "User-controlled regex pattern is compiled by Pattern.compile and matched against user-controlled subject via Matcher.find(). Patterns with nested quantifiers like (a+)+b cause the NFA regex engine to explore exponentially many backtracking states when the subject does not match.",
+      "resource": "CPU time: regex backtracking states grow as O(2^n) where n is the length of the backtrack-inducing subject substring",
+      "failure_mode": "timeout",
+      "scale": "Measured flat 3.2-4.6 ms for subject lengths 8-30 with pattern (a+)+b — no exponential growth. JDK 17's regex engine optimizes nested quantifiers, eliminating backtracking for this pattern class. An effective ReDoS pattern must resist the optimization, e.g. alternation-based (a|aa)+b (9 bytes) where the NFA has genuinely ambiguous transitions. For such a pattern, Fibonacci-like branching gives ~F(n) states; F(50) ≈ 1.3×10^10 at ~10 ns/state ≈ 130 seconds, well over the 20-second timeout. Required subject length ~50 characters. Total: 9-byte pattern + NUL + 50-byte subject = 60 bytes.",
+      "input_bytes": 60,
+      "cwe": "CWE-1333",
+      "checkpath_status": "PASS",
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "method": "edu.berkeley.cs.jqf.examples.tokenmacro.TokenMacroFuzzTest#fuzzBeginningOrEndMatchTransormTransform(InputStream)",
+          "location": "harness/src/test/java/edu/berkeley/cs/jqf/examples/tokenmacro/TokenMacroFuzzTest.java:81"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "harness/src/test/java/edu/berkeley/cs/jqf/examples/tokenmacro/TokenMacroFuzzTest.java:102"
+        },
+        {
+          "kind": "hop",
+          "method": "org.jenkinsci.plugins.tokenmacro.transform.BeginningOrEndMatchTransorm#transform(String)",
+          "location": "src/main/java/org/jenkinsci/plugins/tokenmacro/transform/BeginningOrEndMatchTransorm.java:21"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "src/main/java/org/jenkinsci/plugins/tokenmacro/transform/BeginningOrEndMatchTransorm.java:24"
+        },
+        {
+          "kind": "hop",
+          "method": "Matcher.find()",
+          "location": "outside the source tree"
+        }
+      ],
+      "harness_entry": "edu.berkeley.cs.jqf.examples.tokenmacro.TokenMacroFuzzTest#fuzzBeginningOrEndMatchTransormTransform",
+      "scale_measurement": [
+        {
+          "value": 8,
+          "input_bytes": 15,
+          "outcome": "completed",
+          "cpu_ms": 3.154674,
+          "allocated_bytes": 164152,
+          "peak_heap_bytes": 0
+        },
+        {
+          "value": 14,
+          "input_bytes": 21,
+          "outcome": "completed",
+          "cpu_ms": 3.137103,
+          "allocated_bytes": 164168,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "value": 20,
+          "input_bytes": 27,
+          "outcome": "completed",
+          "cpu_ms": 3.246631,
+          "allocated_bytes": 164544,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "value": 24,
+          "input_bytes": 31,
+          "outcome": "completed",
+          "cpu_ms": 3.153224,
+          "allocated_bytes": 164544,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "value": 27,
+          "input_bytes": 34,
+          "outcome": "completed",
+          "cpu_ms": 3.213196,
+          "allocated_bytes": 164560,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "value": 30,
+          "input_bytes": 37,
+          "outcome": "completed",
+          "cpu_ms": 4.590712,
+          "allocated_bytes": 164560,
+          "peak_heap_bytes": 1048576
+        }
+      ]
+    }
+  ]
+}

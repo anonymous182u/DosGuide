@@ -1,0 +1,57 @@
+{
+  "clone_url": "https://github.com/vaadin/framework.git",
+  "commit": "9978eec85cb95df26170006a04d2285cfd7bcc7d",
+  "jdk": 8,
+  "tools": "Apache Maven 3.9.x (verified with 3.9.12)",
+  "commands": [
+    "cd src && MAVEN_OPTS=-Xmx2g mvn -B -pl compatibility-server -am -DskipTests -Dcheckstyle.skip=true package"
+  ],
+  "artifacts": [
+    {
+      "built": "src/compatibility-server/target/vaadin-compatibility-server-8.13-SNAPSHOT.jar",
+      "lib": "lib/vaadin-compatibility-server-8.13-SNAPSHOT.jar",
+      "sha256": "589d08e1f4fc1586665956dd8dc5c63f801977bd7835ef792dbc2a3dbe99a244",
+      "classes_sha256": "2d25d3b5332f3b7bc1ac95d7f785492267312fcfe20f8dec524d38cf5bcf2a58"
+    },
+    {
+      "built": "src/compatibility-shared/target/vaadin-compatibility-shared-8.13-SNAPSHOT.jar",
+      "lib": "lib/vaadin-compatibility-shared-8.13-SNAPSHOT.jar",
+      "sha256": "ebfa8cd3edb3daa93145f42d8fdcedb49aabdb4b845402cb82e6804ab35a5a71",
+      "classes_sha256": "ab66416b008b61b7cadb2d1aaf76c56a1c94a5d9258884d527535667cf606ad7"
+    },
+    {
+      "built": "src/server/target/vaadin-server-8.13-SNAPSHOT.jar",
+      "lib": "lib/vaadin-server-8.13-SNAPSHOT.jar",
+      "sha256": "8088611c29bb6f157d1482937bce1b6d6f60bcaf58e9d4b149a5022a32d7e9de",
+      "classes_sha256": "4e6afde8c9c2903e7abd84927c8efb7a66ea847ae48aa9cf58bae807baf46801"
+    },
+    {
+      "built": "src/shared/target/vaadin-shared-8.13-SNAPSHOT.jar",
+      "lib": "lib/vaadin-shared-8.13-SNAPSHOT.jar",
+      "sha256": "2e82dadbe41945953162333bf64edd58ea7b1c84e7e77f76d73f8f1dcf6e3cef",
+      "classes_sha256": "4b013533b5a810c7dbe9810555aae5f0448e96f10c8f4d50558e9deb0f31a39a"
+    }
+  ],
+  "fixed": {
+    "jars": [
+      {
+        "coords": "com.vaadin:vaadin-compatibility-server:8.13.0",
+        "sha256": "da24fb057a4bafcbc7f3308dc1a376bce6788dc0c6afe325c9aee8b0989fa64a"
+      },
+      {
+        "coords": "com.vaadin:vaadin-compatibility-shared:8.13.0",
+        "sha256": "62f40035028aa434474da4e64e0951ca93a6fa693132a88b654c4ce18d590d63"
+      },
+      {
+        "coords": "com.vaadin:vaadin-server:8.13.0",
+        "sha256": "2ad4c1400772ab9a5675dd79c78f47b92fc8f50773b504935299a1c12f9dccf8"
+      },
+      {
+        "coords": "com.vaadin:vaadin-shared:8.13.0",
+        "sha256": "2c2ab539cc8dd470a8c7855cafa2c683005259d9e92444f8710475672ce4f805"
+      }
+    ],
+    "drop": "^(vaadin\\-compatibility\\-server|vaadin\\-compatibility\\-shared|vaadin\\-server|vaadin\\-shared)-[0-9]"
+  },
+  "notes": "Version at this commit: 8.13-SNAPSHOT. Reactor: vaadin-root, vaadin-shared, vaadin-push (provided-scope dependency of vaadin-server, built by -am, not used), vaadin-server, vaadin-compatibility-shared, vaadin-compatibility-server; no GWT client module is built. -DskipTests still compiles the tests, which the reactor needs (compatibility-server has a test dependency on vaadin-server:tests); -Dcheckstyle.skip=true skips the checkstyle report. As in the release jars, the build compiles into vaadin-shared the elemental json/util sources it unpacks from com.google.gwt:gwt-elemental 2.8.2 and into vaadin-server the VaadinIcons.java it unpacks from com.vaadin:vaadin-icons 3.0.2 (a separate Vaadin project); class files target Java 8. Fixed: the four artifacts at 8.13.0."
+}

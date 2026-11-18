@@ -1,0 +1,117 @@
+{
+  "ordered_targets": [
+    {
+      "slot": 1,
+      "id": "V1",
+      "name": "Unbounded DEFLATE Decompression Output (Decompression Bomb)",
+      "entrypoint": "JsonWebEncryptionFuzzTest.fuzzJsonWebEncryptionGetPlaintextBytes(InputStream) → JsonWebEncryption.getPlaintextBytes() → JsonWebEncryption.decrypt() → JsonWebEncryption.decompress(Headers, byte[]) → DeflateRFC1951CompressionAlgorithm.decompress(byte[])",
+      "source_path": "src/main/java/org/jose4j/zip/DeflateRFC1951CompressionAlgorithm.java",
+      "sink": "DeflateRFC1951CompressionAlgorithm#decompress",
+      "mechanism": "The decompress() method inflates a raw DEFLATE stream into a ByteArrayOutputStream with no limit on output size. A crafted DEFLATE stream using maximum-length back-references (length-258, distance-1) achieves ~159:1 compression ratio per back-reference pair, causing small inputs to expand into output many orders of magnitude larger.",
+      "resource": "heap memory: bytes accumulated in ByteArrayOutputStream during Inflater.inflate() loop iterations; the internal array doubles when full, so allocation is geometric",
+      "failure_mode": "out_of_memory",
+      "scale": "Measured: DEFLATE input grows ~5 bytes per doubling of decompressed output (8 bytes input→512 bytes output at 64:1 up to 33 bytes→16,384 bytes at 496:1). CPU (~85-95 ms), allocated (~5.5 MB) and peak heap (~6 MB) are flat — JWE overhead dominates, decompression cost is negligible. Extrapolating at 5 bytes per doubling: ~51 bytes of optimal dynamic-Huffman DEFLATE input produces >204,800 bytes of decompressed output, triggering the harness AssertionError (undeclared throwable). At 10,240-byte input limit, decompressed output reaches millions of bytes. Failure is not JVM OOM (decompressed output fits in 1 GB heap) but the harness's explicit 204,800-byte size check. Conservative estimate: 100 bytes accounts for encoding variation.",
+      "input_bytes": 100,
+      "cwe": "CWE-409",
+      "checkpath_status": "PASS",
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "method": "org.jose4j.fuzz.JsonWebEncryptionFuzzTest#fuzzJsonWebEncryptionGetPlaintextBytes(InputStream)",
+          "location": "harness/src/test/java/org/jose4j/fuzz/JsonWebEncryptionFuzzTest.java:49"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "harness/src/test/java/org/jose4j/fuzz/JsonWebEncryptionFuzzTest.java:56"
+        },
+        {
+          "kind": "hop",
+          "method": "org.jose4j.jwe.JsonWebEncryption#getPlaintextBytes()",
+          "location": "src/main/java/org/jose4j/jwe/JsonWebEncryption.java:92"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "src/main/java/org/jose4j/jwe/JsonWebEncryption.java:96"
+        },
+        {
+          "kind": "hop",
+          "method": "org.jose4j.jwe.JsonWebEncryption#decrypt()",
+          "location": "src/main/java/org/jose4j/jwe/JsonWebEncryption.java:242"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "src/main/java/org/jose4j/jwe/JsonWebEncryption.java:262"
+        },
+        {
+          "kind": "hop",
+          "method": "org.jose4j.jwe.JsonWebEncryption#decompress(Headers,byte[])",
+          "location": "src/main/java/org/jose4j/jwe/JsonWebEncryption.java:290"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "src/main/java/org/jose4j/jwe/JsonWebEncryption.java:298"
+        },
+        {
+          "kind": "hop",
+          "method": "org.jose4j.zip.CompressionAlgorithm#decompress(byte[])",
+          "location": "src/main/java/org/jose4j/zip/CompressionAlgorithm.java:27"
+        }
+      ],
+      "harness_entry": "org.jose4j.fuzz.JsonWebEncryptionFuzzTest#fuzzJsonWebEncryptionGetPlaintextBytes",
+      "scale_measurement": [
+        {
+          "value": 512,
+          "input_bytes": 8,
+          "outcome": "completed",
+          "cpu_ms": 87.840487,
+          "allocated_bytes": 5743520,
+          "peak_heap_bytes": 6291456
+        },
+        {
+          "value": 1024,
+          "input_bytes": 11,
+          "outcome": "completed",
+          "cpu_ms": 90.209193,
+          "allocated_bytes": 5745376,
+          "peak_heap_bytes": 6291456
+        },
+        {
+          "value": 2048,
+          "input_bytes": 17,
+          "outcome": "completed",
+          "cpu_ms": 85.542499,
+          "allocated_bytes": 5748608,
+          "peak_heap_bytes": 6291456
+        },
+        {
+          "value": 4096,
+          "input_bytes": 20,
+          "outcome": "completed",
+          "cpu_ms": 87.549312,
+          "allocated_bytes": 5842712,
+          "peak_heap_bytes": 6291456
+        },
+        {
+          "value": 8192,
+          "input_bytes": 25,
+          "outcome": "completed",
+          "cpu_ms": 83.964204,
+          "allocated_bytes": 5865712,
+          "peak_heap_bytes": 7340032
+        },
+        {
+          "value": 16384,
+          "input_bytes": 33,
+          "outcome": "completed",
+          "cpu_ms": 95.291254,
+          "allocated_bytes": 5792632,
+          "peak_heap_bytes": 6291456
+        }
+      ]
+    }
+  ]
+}

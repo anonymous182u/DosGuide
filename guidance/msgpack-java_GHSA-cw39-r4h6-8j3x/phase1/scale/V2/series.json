@@ -1,0 +1,25 @@
+{
+  "parameter": "array elements declared",
+  "inputs": [
+    {
+      "file": "n4M.bin",
+      "value": 4194304
+    },
+    {
+      "file": "n8M.bin",
+      "value": 8388608
+    },
+    {
+      "file": "n16M.bin",
+      "value": 16777216
+    },
+    {
+      "file": "n32M.bin",
+      "value": 33554432
+    },
+    {
+      "file": "n64M.bin",
+      "value": 67108864
+    }
+  ]
+}

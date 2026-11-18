@@ -1,0 +1,87 @@
+{
+  "plans": [
+    {
+      "target": "V1",
+      "signals": [
+        {
+          "name": "maxDepth",
+          "quantity": "maximum recursion depth of MessageUnpacker.unpackValue() during one execution",
+          "aggregation": "max",
+          "locations": [
+            "MessageUnpacker#unpackValue"
+          ],
+          "technique": "bytecode",
+          "storage": "ThreadLocal<long[]> in agent.V1Counters, index [0]=currentDepth, [1]=maxDepth",
+          "reset": "V1Guidance.getInput() calls V1Counters.reset() before each execution",
+          "read": "V1Guidance.handleResult() calls V1Counters.getMaxDepth()"
+        }
+      ],
+      "retention": "Primary: retain input if maxDepth > bestMaxDepth. Secondary (while signal is flat): retain inputs that are longer (growing toward input_bytes=6301) or that contain container format bytes (0x91, 0x81, 0xDD, 0xDC), so the search can cross the threshold where parsing succeeds and recursion begins.",
+      "retention_signals": [
+        "maxDepth"
+      ],
+      "mutation": [
+        "Byte-level: random byte flip, random byte insert, random byte delete, block copy/shuffle",
+        "Repetition [R45a]: duplicate a contiguous run of bytes (preferring container bytes 0x91) and repeat k times in place, with k up to filling MAX_INPUT_SIZE (10240). From a seed of a few 0x91+0xC0 bytes, repeated doubling reaches 6301 bytes in ~12 steps (< 1 minute).",
+        "Dictionary [R45b]: tokens from the source on the attack path: {0x91} fixarray(1), {0x81} fixmap(1), {0xC0} nil, {0xC2} false, {0xC3} true, {0xDD} ARRAY32, {0xDC} ARRAY16, {0xDF} MAP32, {0x00} fixint-0. Inserted or overwritten at random positions.",
+        "No encoder needed [R45c]: msgpack container+terminal bytes are accepted raw; no checksums, compression, or length-prefix encoding to pass."
+      ]
+    },
+    {
+      "target": "V2",
+      "signals": [
+        {
+          "name": "declaredArraySize",
+          "quantity": "element count declared in the first ARRAY/MAP header of the input, which is the exact argument to new Value[size] at the sink",
+          "aggregation": "max",
+          "locations": [
+            "MessageUnpacker#unpackValue"
+          ],
+          "technique": "static",
+          "storage": "field lastDeclaredSize in V2Guidance",
+          "reset": "V2Guidance.getInput() sets lastDeclaredSize = 0",
+          "read": "V2Guidance.handleResult() parses the input bytes for ARRAY32/ARRAY16/fixarray/MAP32/MAP16/fixmap header and extracts the declared size"
+        }
+      ],
+      "retention": "Primary: retain input if declaredArraySize > bestDeclaredSize. Secondary (while signal is 0, i.e. no valid array/map header found): retain inputs that contain array/map format bytes (0x90-0x9F, 0xDC, 0xDD, 0x80-0x8F, 0xDE, 0xDF) and that are at least 5 bytes long (enough for ARRAY32 header).",
+      "retention_signals": [
+        "declaredArraySize"
+      ],
+      "mutation": [
+        "Byte-level: random byte flip, random byte insert, random byte delete",
+        "Repetition [R45a]: copy a chunk and repeat it k times to grow the input; not the primary growth mechanism for this target but ensures diverse inputs.",
+        "Dictionary [R45b]: tokens from the source: {0xDD} ARRAY32, {0xDC} ARRAY16, {0x91} fixarray(1), {0x9F} fixarray(15), {0xDF} MAP32, {0xDE} MAP16, {0xC0} nil, {0xFF} max-byte, {0x7F} max-positive-byte. Inserted at random positions.",
+        "Size-field targeted mutation: when input starts with 0xDD (ARRAY32), mutate bytes at offsets 1-4 specifically toward larger values (set to 0xFF, increment, randomize high bytes while keeping positive).",
+        "No encoder needed [R45c]: msgpack headers are bare bytes, no checksums or compression."
+      ]
+    },
+    {
+      "target": "V3",
+      "signals": [
+        {
+          "name": "declaredPayloadBytes",
+          "quantity": "payload length declared in the first BIN/EXT header of the input, which is the exact argument to new byte[length] at the sink",
+          "aggregation": "max",
+          "locations": [
+            "MessageUnpacker#readPayload"
+          ],
+          "technique": "static",
+          "storage": "field lastDeclaredLength in V3Guidance",
+          "reset": "V3Guidance.getInput() sets lastDeclaredLength = 0",
+          "read": "V3Guidance.handleResult() parses the input bytes for BIN32/BIN16/BIN8/EXT32/EXT16/EXT8 header and extracts the declared length"
+        }
+      ],
+      "retention": "Primary: retain input if declaredPayloadBytes > bestDeclaredLength. Secondary (while signal is 0, i.e. no valid binary/ext header found): retain inputs that contain BIN/EXT format bytes (0xC4-0xC9) and that are at least 5 bytes long (enough for BIN32 header).",
+      "retention_signals": [
+        "declaredPayloadBytes"
+      ],
+      "mutation": [
+        "Byte-level: random byte flip, random byte insert, random byte delete",
+        "Repetition [R45a]: copy a chunk and repeat it k times to grow the input.",
+        "Dictionary [R45b]: tokens from the source: {0xC6} BIN32, {0xC9} EXT32, {0xC4} BIN8, {0xC5} BIN16, {0xC7} EXT8, {0xC8} EXT16, {0xC0} nil, {0xFF} max-byte, {0x7F} max-positive-byte. Inserted at random positions.",
+        "Length-field targeted mutation: when input starts with 0xC6 (BIN32) or 0xC9 (EXT32), mutate bytes at offsets 1-4 specifically toward larger values.",
+        "No encoder needed [R45c]: msgpack headers are bare bytes."
+      ]
+    }
+  ]
+}

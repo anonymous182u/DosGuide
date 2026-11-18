@@ -1,0 +1,19 @@
+{
+  "series_request": null,
+  "rounds": [
+    {
+      "round": 1,
+      "revision": {
+        "V1": {
+          "scale": "Measured ~225 ms (completed) for the 23-byte single-token trigger; 5 MB extra allocation over benign inputs indicates ~10-25 recursion levels before StackOverflowError, which is caught by Parser.process's catch(Exception) via Parboiled's ActionException wrapping. With K=1 token, work is linear in depth S (fast). With K>=2 self-referencing tokens, each level branches K times: total evaluations K^S. From allocation data S is 10-25; per-evaluation cost ~1-2 ms. K=2 tokens (46 bytes): 2^15 evaluations × 1.5 ms ≈ 49 seconds at S=15, easily exceeding the 20-second timeout. Failure mode is timeout from exponential CPU consumption (not stack_overflow as originally estimated). Denser encoding: two tokens with no space between them is the minimal 46-byte input.",
+          "input_bytes": 46
+        },
+        "V2": {
+          "scale": "Measured flat 3.2-4.6 ms for subject lengths 8-30 with pattern (a+)+b — no exponential growth. JDK 17's regex engine optimizes nested quantifiers, eliminating backtracking for this pattern class. An effective ReDoS pattern must resist the optimization, e.g. alternation-based (a|aa)+b (9 bytes) where the NFA has genuinely ambiguous transitions. For such a pattern, Fibonacci-like branching gives ~F(n) states; F(50) ≈ 1.3×10^10 at ~10 ns/state ≈ 130 seconds, well over the 20-second timeout. Required subject length ~50 characters. Total: 9-byte pattern + NUL + 50-byte subject = 60 bytes.",
+          "input_bytes": 60
+        }
+      },
+      "field_problems": {}
+    }
+  ]
+}

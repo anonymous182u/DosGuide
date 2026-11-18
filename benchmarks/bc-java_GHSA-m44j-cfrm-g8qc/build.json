@@ -1,0 +1,28 @@
+{
+  "clone_url": "https://github.com/bcgit/bc-java.git",
+  "commit": "f1367f0b89962b29460eea381a12063fa7cd2428",
+  "jdk": 17,
+  "tools": "Gradle 7.6.4 (downloaded by the commands from services.gradle.org, sha256 checked)",
+  "commands": [
+    "[ -x gradle-7.6.4/bin/gradle ] || { curl -fsSL -o gradle-7.6.4-bin.zip https://services.gradle.org/distributions/gradle-7.6.4-bin.zip && python3 -c \"import hashlib,sys; sys.exit(hashlib.sha256(open('gradle-7.6.4-bin.zip','rb').read()).hexdigest() != 'bed1da33cca0f557ab13691c77f38bb67388119e4794d113e051039b80af9bb1')\" && unzip -qo gradle-7.6.4-bin.zip; }",
+    "export GRADLE_USER_HOME=\"$PWD/gradle-home\" && cd src && ../gradle-7.6.4/bin/gradle --no-daemon --max-workers=2 -Dorg.gradle.jvmargs=-Xmx2g :prov:jar -x test"
+  ],
+  "artifacts": [
+    {
+      "built": "src/prov/build/libs/bcprov-jdk18on-1.75.jar",
+      "lib": "lib/bcprov-jdk18on-1.75.jar",
+      "sha256": "9388a7ea399b5aa2ea07459f9476f509333e39df23c5e3837b068192e7cba896",
+      "classes_sha256": "9ce05bc24dfabd929be9323c83bb3cbf67cb0ebef8ce2247b2a3979ea762938c"
+    }
+  ],
+  "fixed": {
+    "jars": [
+      {
+        "coords": "org.bouncycastle:bcprov-jdk18on:1.78",
+        "sha256": "1bf721b09758b3f55f2a5c875b6178ec6c41dddad854b0dead4b27a236f1943a"
+      }
+    ],
+    "drop": "^(bcprov\\-jdk18on)-[0-9]"
+  },
+  "notes": "Commit = tag r1rv77 (release 1.77). The tag has gradlew but no gradle/wrapper/ directory, so the wrapper cannot run; the project's CI (ci/test_17.sh) runs an installed Gradle 7 on JDK 17, hence Gradle 7.6.4 from services.gradle.org, with GRADLE_USER_HOME in the work directory so no user-level Gradle configuration takes part. Only :prov:jar (and :core, which it depends on; core's classes are inside the prov jar), tests not run; --max-workers and the heap are resource flags. The Gradle build names the jar 1.75 (gradle.properties version=1.75; 1.77 is only in bc-build.properties, used by the ant release scripts), so the lib file is bcprov-jdk18on-1.75.jar although the sources are release 1.77. JDK >= 9 selects vmrange jdk18on with source/target 1.8 (class files major 52). Compared with the Central 1.77 jar, the Gradle jar also has 42 legacy NTRU classes (org/bouncycastle/pqc/legacy/{crypto,math}/ntru) and lacks the multi-release META-INF/versions classes, signature files and core's resources; none of these is on the harness path (org.bouncycastle.math.ec.rfc8032.Ed25519). Fixed: bcprov-jdk18on 1.78."
+}

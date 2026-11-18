@@ -1,0 +1,39 @@
+{
+  "clone_url": "https://github.com/xerial/snappy-java.git",
+  "commit": "49d700175f18ed5f8c5d371b7c2f80c75979bd68",
+  "jdk": 17,
+  "linux_only": true,
+  "system_packages": [
+    "gcc",
+    "gcc-c++",
+    "make",
+    "cmake",
+    "libstdc++-static",
+    "git",
+    "curl",
+    "tar"
+  ],
+  "tools": "the project's Makefile with its sbt launcher (./sbt, sbt 1.9.6 from project/build.properties); Linux x86_64 with GNU make, gcc/g++, cmake (reference build: make 4.3, gcc 11.5.0, cmake 3.22.2, Amazon Linux 2023)",
+  "commands": [
+    "cd src && make",
+    "jar=$(ls -t src/target/snappy-java-1.1.10.3-17-49d70017*-SNAPSHOT.jar | head -n 1) && cp \"$jar\" snappy-java-1.1.10.3-17-49d70017-SNAPSHOT.jar"
+  ],
+  "artifacts": [
+    {
+      "built": "snappy-java-1.1.10.3-17-49d70017-SNAPSHOT.jar",
+      "lib": "lib/snappy-java-1.1.10.3-17-49d70017-SNAPSHOT.jar",
+      "sha256": "a3e4940759b360770fd8ff9fde5ce8f7c6cec6daaf2ea0d5287b05ce1f0751b8",
+      "classes_sha256": "5e20e75bac29e1bbef78046ac1ccef40365da739819ccd654937f0a307e0d65e"
+    }
+  ],
+  "fixed": {
+    "jars": [
+      {
+        "coords": "org.xerial.snappy:snappy-java:1.1.10.4",
+        "sha256": "55b30c94e5c4cc2d4b6976916098d0678a8a6cc7427fa8c875621bd94e731ac8"
+      }
+    ],
+    "drop": "^(snappy\\-java)-[0-9]"
+  },
+  "notes": "Build = the Makefile's default target (snappy = native + ./sbt package): native clones google/snappy 1.1.10 and downloads bitshuffle 0.3.4 (versions from src/main/resources/org/xerial/snappy/VERSION), compiles them with SnappyNative.cpp/BitShuffleNative.cpp (Linux-x86_64 flags of Makefile.common, -static-libgcc -static-libstdc++), strips the library and copies it to src/main/resources/org/xerial/snappy/native/Linux/x86_64/libsnappyjava.so; sbt package then compiles the Java sources (javac --release 8) and packages them with src/main/resources, which also hold the 25 prebuilt native libraries for the other platforms committed at this commit. Overwriting the tracked Linux/x86_64 library makes the work tree dirty, so sbt-dynver appends the build time to the version (1.1.10.3-17-49d70017-<yyyyMMdd-HHmm>-SNAPSHOT); the second command copies the newest such jar to the name the fixture uses, which has no time in it (snappy-java-1.1.10.3-17-49d70017-SNAPSHOT.jar); the fixture's jar is the build's jar with the two version lines of its MANIFEST (Specification-Version, Implementation-Version) written without the build time; every other entry is byte-identical, so classes_sha256 is the build's. The classes_sha256 covers the 40 classes, not the native library (reference Linux/x86_64 libsnappyjava.so sha256 eae07e2eb21b1a1840b103ff036933d7f13b00a98c0bda4cc075bb7968ed81d2). snappy-java has no runtime dependencies. Fixed: snappy-java 1.1.10.4."
+}

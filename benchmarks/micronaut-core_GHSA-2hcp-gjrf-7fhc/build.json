@@ -1,0 +1,107 @@
+{
+  "clone_url": "https://github.com/micronaut-projects/micronaut-core.git",
+  "commit": "37e2a1bc54d4a6d4a165615c5d9fe4de33038bec",
+  "jdk": 17,
+  "tools": "the project's Gradle wrapper (./gradlew, Gradle 8.14.3)",
+  "commands": [
+    "cd src && ./gradlew --no-daemon --no-build-cache --max-workers=2 -Dorg.gradle.jvmargs=-Xmx2g -Pkotlin.compiler.execution.strategy=in-process -x test :micronaut-core:jar :micronaut-core-reactive:jar :micronaut-inject:jar :micronaut-aop:jar :micronaut-context:jar :micronaut-context-propagation:jar :micronaut-http:jar :micronaut-router:jar :micronaut-http-server:jar"
+  ],
+  "artifacts": [
+    {
+      "built": "src/http-server/build/libs/micronaut-http-server-4.10.17-SNAPSHOT.jar",
+      "lib": "lib/micronaut-http-server-4.10.17-SNAPSHOT.jar",
+      "sha256": "cf082e920bf97f2aa2a6f5186431cad03a8b53c773cd4c1374424398705fc503",
+      "classes_sha256": "90e2ae5b71c34de999b5417d3fe063502973ef5564d12a72fa55e6421f90edb4"
+    },
+    {
+      "built": "src/http/build/libs/micronaut-http-4.10.17-SNAPSHOT.jar",
+      "lib": "lib/micronaut-http-4.10.17-SNAPSHOT.jar",
+      "sha256": "3d93c9878f9c27b74aeda31dbe17cd4b92929b232629f7c444a89cd6acd25940",
+      "classes_sha256": "791cdd3036634c8ac34748362837400bd59e1de17590c95bd8776c969e00beb8"
+    },
+    {
+      "built": "src/router/build/libs/micronaut-router-4.10.17-SNAPSHOT.jar",
+      "lib": "lib/micronaut-router-4.10.17-SNAPSHOT.jar",
+      "sha256": "ca2f700145a4955868bc62a12de100c01b4dcec1bcd2defc8e952417ebec8101",
+      "classes_sha256": "eb96b09cbee1b5626f2f659b679c9ce9fc1fd8c27131c97149452913698fc887"
+    },
+    {
+      "built": "src/context-propagation/build/libs/micronaut-context-propagation-4.10.17-SNAPSHOT.jar",
+      "lib": "lib/micronaut-context-propagation-4.10.17-SNAPSHOT.jar",
+      "sha256": "62ad88a8b0e15fbd6c8bb15ec4afa0823eea61d5cd488d0342fa103d00da795e",
+      "classes_sha256": "4cc2ae2bd63b23c71c612a272f05ebb22380eef174dad3f8a651d6a77eafcb1d"
+    },
+    {
+      "built": "src/context/build/libs/micronaut-context-4.10.17-SNAPSHOT.jar",
+      "lib": "lib/micronaut-context-4.10.17-SNAPSHOT.jar",
+      "sha256": "42b02b8d74a72a5dc5bc649ee454e1fd5a181572626c7731a2e3edd2dcc31355",
+      "classes_sha256": "df389d7758c4550c866ffa512f757e6c2d3ed5b3b7758af5517a3f10d74a9987"
+    },
+    {
+      "built": "src/aop/build/libs/micronaut-aop-4.10.17-SNAPSHOT.jar",
+      "lib": "lib/micronaut-aop-4.10.17-SNAPSHOT.jar",
+      "sha256": "622e27934cb94c4d807727c18ed501a72e48b37f33e461b41e78b6cf651b6156",
+      "classes_sha256": "37b3d4f0d7c74e98e4757c1dc1d53466c37303dbdf34dbc367527d114a4f88a3"
+    },
+    {
+      "built": "src/inject/build/libs/micronaut-inject-4.10.17-SNAPSHOT.jar",
+      "lib": "lib/micronaut-inject-4.10.17-SNAPSHOT.jar",
+      "sha256": "1e5636a2ca2d0988dad89e2a524acc3abed5583ab593ed568518945cc3224384",
+      "classes_sha256": "a728e2a4634145daf593c2358e3b2947aaa7609d50b7a40c0778887b581a52ae"
+    },
+    {
+      "built": "src/core-reactive/build/libs/micronaut-core-reactive-4.10.17-SNAPSHOT.jar",
+      "lib": "lib/micronaut-core-reactive-4.10.17-SNAPSHOT.jar",
+      "sha256": "b06f28a55d5d9f198bf9f0f01c06808d0117e489b79d9a921c0e17524f9d4b50",
+      "classes_sha256": "7092149248d0e34fee0a1b9d509ad538b1e293f45b67350e045535cd292f73fc"
+    },
+    {
+      "built": "src/core/build/libs/micronaut-core-4.10.17-SNAPSHOT.jar",
+      "lib": "lib/micronaut-core-4.10.17-SNAPSHOT.jar",
+      "sha256": "4b378dc0e94a00908550a58080fd85fe06cf49a0bd8aa45c9734ec9ce67814c0",
+      "classes_sha256": "c5b6a34a10e53f3e8b94cd978e38309952d658fcc3ce64a6f9db4d061969bd11"
+    }
+  ],
+  "fixed": {
+    "jars": [
+      {
+        "coords": "io.micronaut:micronaut-http-server:4.10.17",
+        "sha256": "0450495d175cbeef19895532e0bae73f9e8f7b6bea4c78eae9eeced7ddd61574"
+      },
+      {
+        "coords": "io.micronaut:micronaut-http:4.10.17",
+        "sha256": "4f405eaaa76a149ddfa0d608209d96ea02558f325542d6d9567b53c3bd044efa"
+      },
+      {
+        "coords": "io.micronaut:micronaut-router:4.10.17",
+        "sha256": "e0d34a262591c6e1e854dba76f9e5a1ef980496fc1f6f14ff10f7a5504a56226"
+      },
+      {
+        "coords": "io.micronaut:micronaut-context-propagation:4.10.17",
+        "sha256": "b197f6dfa9b8d644b6ef4cfaa118a1970e4c645aee22fbb95ecf5c172b9e570c"
+      },
+      {
+        "coords": "io.micronaut:micronaut-context:4.10.17",
+        "sha256": "bec5d2c053458a4d415f18293b5f041202b78e757928732c2b223a93308ffc89"
+      },
+      {
+        "coords": "io.micronaut:micronaut-aop:4.10.17",
+        "sha256": "831763aa26b191be9b9f3ea7c43d2f5ac3f1e378575dcaea3c6ea038ef4b8bff"
+      },
+      {
+        "coords": "io.micronaut:micronaut-inject:4.10.17",
+        "sha256": "25075748296dd739d87c55dc29ab7f1e16fa4cb3cfaeee7ed1ddcd30d382ac02"
+      },
+      {
+        "coords": "io.micronaut:micronaut-core-reactive:4.10.17",
+        "sha256": "675b9bd8b463b7daf80ad2b80a5fa27d2bbeba70b1f549e09c92e246c7ca07f8"
+      },
+      {
+        "coords": "io.micronaut:micronaut-core:4.10.17",
+        "sha256": "ba1532ca642a7e3f10b99de7f902cb69b34709a9bb6b2caae8b4260c71e68f52"
+      }
+    ],
+    "drop": "^(micronaut\\-http\\-server|micronaut\\-http|micronaut\\-router|micronaut\\-context\\-propagation|micronaut\\-context|micronaut\\-aop|micronaut\\-inject|micronaut\\-core\\-reactive|micronaut\\-core)-[0-9]"
+  },
+  "notes": "projectVersion at this commit: 4.10.17-SNAPSHOT. The nine modules are the micronaut-core modules that micronaut-http-server brings onto the class path. The build compiles the annotation processors it needs from the same tree (micronaut-core-processor, -inject-java, -graal) and runs them over context, context-propagation (kapt), http, router and http-server, so bean definitions and introspections come from the commit's own processors. Gradle's dependency substitution maps io.micronaut:micronaut-* to the projects being built; the only io.micronaut artifacts fetched are BOM POMs and separate Micronaut projects used at build time only (micronaut-build plugins, docs, sourcegen, validation, rxjava2/3, runtime-groovy). Flags: --no-build-cache keeps Gradle from taking compiled outputs from a build cache (gradle.properties sets org.gradle.caching=true); -Pkotlin.compiler.execution.strategy=in-process avoids a separate Kotlin daemon; -x test, --max-workers=2 and the heap are resource flags. Fixed: the nine artifacts at 4.10.17."
+}

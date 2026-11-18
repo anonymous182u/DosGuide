@@ -1,0 +1,76 @@
+{
+  "caps": {
+    "input_bytes": 2560,
+    "heap_bytes": 268435456,
+    "stack_bytes": 262144,
+    "time_ms": 2000
+  },
+  "targets": {
+    "V1": {
+      "problems": [],
+      "parameter": "nesting levels (flow sequence depth)",
+      "inputs": [
+        {
+          "file": "n64.bin",
+          "value": 64,
+          "input_bytes": 129,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 27.062583,
+          "wall_ms": 39.567571,
+          "allocated_bytes": 2485120,
+          "peak_heap_bytes": 4194304
+        },
+        {
+          "file": "n128.bin",
+          "value": 128,
+          "input_bytes": 257,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 34.724555,
+          "wall_ms": 50.640923,
+          "allocated_bytes": 3308800,
+          "peak_heap_bytes": 4194304
+        },
+        {
+          "file": "n256.bin",
+          "value": 256,
+          "input_bytes": 513,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 52.048444,
+          "wall_ms": 74.914416,
+          "allocated_bytes": 6071576,
+          "peak_heap_bytes": 6291456
+        },
+        {
+          "file": "n512.bin",
+          "value": 512,
+          "input_bytes": 1025,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "stack_cap"
+        },
+        {
+          "file": "n1024.bin",
+          "value": 1024,
+          "input_bytes": 2049,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "stack_cap"
+        }
+      ]
+    }
+  },
+  "build": {
+    "ok": true
+  }
+}

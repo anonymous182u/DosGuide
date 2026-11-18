@@ -1,0 +1,519 @@
+{
+  "ordered_targets": [
+    {
+      "slot": 1,
+      "id": "V1",
+      "name": "",
+      "entrypoint": "NativeNumberFuzzTest.fuzzNumberToFixed(InputStream) → Context.evaluateString(Scriptable, String, String, int, Object) → InterpretedFunction.exec(Context, Scriptable) → InterpretedFunction.call(Context, Scriptable, Scriptable, Object[]) → Interpreter.interpretLoop(Context, CallFrame, Object) → IdFunctionObject.call(Context, Scriptable, Scriptable, Object[]) → NativeNumber.execIdCall(IdFunctionObject, Context, Scriptable, Scriptable, Object[]) → NativeNumber.num_to(double, Object[], int, int, int, int) → DToA.JS_dtostr(StringBuilder, int, int, double) → DToA.JS_dtoa(double, int, boolean, int, boolean[], StringBuilder)",
+      "source_path": "src/org/mozilla/javascript/DToA.java",
+      "sink": "DToA#JS_dtoa",
+      "mechanism": "BigInteger exponentiation in DToA.JS_dtoa mode 3 (DTOSTR_FIXED): for d just below 1e21 with precision up to 100, computes pow5mult(b, k) = b.multiply(5^k) without caching, generating up to ~121 BigInteger digits. The uncached 5^k computation and repeated BigInteger multiply/divide in the digit extraction loop scale with precision+k+1.",
+      "resource": "cpu",
+      "failure_mode": "timeout",
+      "scale": "121 BigInteger iterations (precision=100, k≈20). Measured cost: ~65ms flat across all precision values (0ms/iteration above baseline). At maximum precision=100 the total is ~65ms, far below 20000ms timeout. The mechanism is correct but per-iteration BigInteger cost on ~90-bit numbers is negligible.",
+      "input_bytes": 9,
+      "cwe": "CWE-400",
+      "checkpath_status": "PASS",
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "method": "fuzz.harness.NativeNumberFuzzTest#fuzzNumberToFixed(InputStream)",
+          "location": "harness/src/test/java/fuzz/harness/NativeNumberFuzzTest.java:45"
+        },
+        {
+          "kind": "connection",
+          "type": "INDIRECT",
+          "evidence": "1 omitted call(s)"
+        },
+        {
+          "kind": "hop",
+          "provenance": "checkpath (omitted call)",
+          "method": "fuzz.harness.NativeNumberFuzzTest#evaluate(String,String)",
+          "location": "harness/src/test/java/fuzz/harness/NativeNumberFuzzTest.java:100"
+        },
+        {
+          "kind": "hop",
+          "method": "org.mozilla.javascript.Context#evaluateString(Scriptable,String,String,int,Object)",
+          "location": "src/org/mozilla/javascript/Context.java:1133"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "src/org/mozilla/javascript/Context.java:1137"
+        },
+        {
+          "kind": "hop",
+          "method": "org.mozilla.javascript.InterpretedFunction#exec(Context,Scriptable)",
+          "location": "src/org/mozilla/javascript/InterpretedFunction.java:94"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "src/org/mozilla/javascript/SecurityController.java:161"
+        },
+        {
+          "kind": "hop",
+          "method": "org.mozilla.javascript.InterpretedFunction#call(Context,Scriptable,Scriptable,Object[])",
+          "location": "src/org/mozilla/javascript/InterpretedFunction.java:86"
+        },
+        {
+          "kind": "connection",
+          "type": "INDIRECT",
+          "evidence": "1 omitted call(s)"
+        },
+        {
+          "kind": "hop",
+          "provenance": "checkpath (omitted call)",
+          "method": "org.mozilla.javascript.Interpreter#interpret(InterpretedFunction,Context,Scriptable,Scriptable,Object[])",
+          "location": "src/org/mozilla/javascript/Interpreter.java:1030"
+        },
+        {
+          "kind": "hop",
+          "method": "org.mozilla.javascript.Interpreter#interpretLoop(Context,CallFrame,Object)",
+          "location": "src/org/mozilla/javascript/Interpreter.java:1110"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "src/org/mozilla/javascript/Interpreter.java:1871"
+        },
+        {
+          "kind": "hop",
+          "method": "org.mozilla.javascript.IdFunctionObject#call(Context,Scriptable,Scriptable,Object[])",
+          "location": "src/org/mozilla/javascript/IdFunctionObject.java:97"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "src/org/mozilla/javascript/IdFunctionObject.java:100"
+        },
+        {
+          "kind": "hop",
+          "method": "org.mozilla.javascript.NativeNumber#execIdCall(IdFunctionObject,Context,Scriptable,Scriptable,Object[])",
+          "location": "src/org/mozilla/javascript/NativeNumber.java:118"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "src/org/mozilla/javascript/NativeNumber.java:160"
+        },
+        {
+          "kind": "hop",
+          "method": "org.mozilla.javascript.NativeNumber#num_to(double,Object[],int,int,int,int)",
+          "location": "src/org/mozilla/javascript/NativeNumber.java:257"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "src/org/mozilla/javascript/NativeNumber.java:281"
+        },
+        {
+          "kind": "hop",
+          "method": "org.mozilla.javascript.DToA#JS_dtostr(StringBuilder,int,int,double)",
+          "location": "src/org/mozilla/javascript/DToA.java:1130"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "src/org/mozilla/javascript/DToA.java:1142"
+        },
+        {
+          "kind": "hop",
+          "method": "org.mozilla.javascript.DToA#JS_dtoa(double,int,boolean,int,boolean[],StringBuilder)",
+          "location": "src/org/mozilla/javascript/DToA.java:442"
+        }
+      ],
+      "harness_entry": "fuzz.harness.NativeNumberFuzzTest#fuzzNumberToFixed",
+      "scale_measurement": [
+        {
+          "value": 10,
+          "input_bytes": 9,
+          "outcome": "completed",
+          "cpu_ms": 68.045336,
+          "allocated_bytes": 5765976,
+          "peak_heap_bytes": 6291456
+        },
+        {
+          "value": 20,
+          "input_bytes": 9,
+          "outcome": "completed",
+          "cpu_ms": 71.62814,
+          "allocated_bytes": 5767760,
+          "peak_heap_bytes": 6291456
+        },
+        {
+          "value": 40,
+          "input_bytes": 9,
+          "outcome": "completed",
+          "cpu_ms": 66.770867,
+          "allocated_bytes": 5771136,
+          "peak_heap_bytes": 6291456
+        },
+        {
+          "value": 60,
+          "input_bytes": 9,
+          "outcome": "completed",
+          "cpu_ms": 65.143224,
+          "allocated_bytes": 5774680,
+          "peak_heap_bytes": 7340032
+        },
+        {
+          "value": 80,
+          "input_bytes": 9,
+          "outcome": "completed",
+          "cpu_ms": 63.505343,
+          "allocated_bytes": 5778056,
+          "peak_heap_bytes": 7340032
+        },
+        {
+          "value": 100,
+          "input_bytes": 9,
+          "outcome": "completed",
+          "cpu_ms": 64.776875,
+          "allocated_bytes": 5781440,
+          "peak_heap_bytes": 6291456
+        }
+      ]
+    },
+    {
+      "slot": 2,
+      "id": "V2",
+      "name": "",
+      "entrypoint": "NativeNumberFuzzTest.fuzzNumberToStringRadix(InputStream) → Context.evaluateString(Scriptable, String, String, int, Object) → InterpretedFunction.exec(Context, Scriptable) → InterpretedFunction.call(Context, Scriptable, Scriptable, Object[]) → Interpreter.interpretLoop(Context, CallFrame, Object) → IdFunctionObject.call(Context, Scriptable, Scriptable, Object[]) → NativeNumber.execIdCall(IdFunctionObject, Context, Scriptable, Scriptable, Object[]) → ScriptRuntime.numberToString(double, int) → DToA.JS_dtobasestr(int, double)",
+      "source_path": "src/org/mozilla/javascript/DToA.java",
+      "sink": "DToA#JS_dtobasestr",
+      "mechanism": "BigInteger fractional digit loop in DToA.JS_dtobasestr: for fractional doubles with small radix (e.g., radix=2), the convergence loop runs up to 1074/log2(radix) iterations. Each iteration performs BigInteger.multiply(radix) and divideAndRemainder on growing numerators. Radix 2 yields ~1074 iterations.",
+      "resource": "cpu",
+      "failure_mode": "timeout",
+      "scale": "1074 fractional loop iterations (radix=2, subnormal d). Measured cost: ~65ms flat across 207-1074 iterations (0ms/iteration above baseline). Even at maximum 1074 iterations with d=0.1 (s2≈57), total is ~65ms, far below 20000ms timeout. The BigIntegers remain small because d=0.1 is a normal double with small s2.",
+      "input_bytes": 9,
+      "cwe": "CWE-400",
+      "checkpath_status": "PASS",
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "method": "fuzz.harness.NativeNumberFuzzTest#fuzzNumberToStringRadix(InputStream)",
+          "location": "harness/src/test/java/fuzz/harness/NativeNumberFuzzTest.java:59"
+        },
+        {
+          "kind": "connection",
+          "type": "INDIRECT",
+          "evidence": "1 omitted call(s)"
+        },
+        {
+          "kind": "hop",
+          "provenance": "checkpath (omitted call)",
+          "method": "fuzz.harness.NativeNumberFuzzTest#evaluate(String,String)",
+          "location": "harness/src/test/java/fuzz/harness/NativeNumberFuzzTest.java:100"
+        },
+        {
+          "kind": "hop",
+          "method": "org.mozilla.javascript.Context#evaluateString(Scriptable,String,String,int,Object)",
+          "location": "src/org/mozilla/javascript/Context.java:1133"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "src/org/mozilla/javascript/Context.java:1137"
+        },
+        {
+          "kind": "hop",
+          "method": "org.mozilla.javascript.InterpretedFunction#exec(Context,Scriptable)",
+          "location": "src/org/mozilla/javascript/InterpretedFunction.java:94"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "src/org/mozilla/javascript/SecurityController.java:161"
+        },
+        {
+          "kind": "hop",
+          "method": "org.mozilla.javascript.InterpretedFunction#call(Context,Scriptable,Scriptable,Object[])",
+          "location": "src/org/mozilla/javascript/InterpretedFunction.java:86"
+        },
+        {
+          "kind": "connection",
+          "type": "INDIRECT",
+          "evidence": "1 omitted call(s)"
+        },
+        {
+          "kind": "hop",
+          "provenance": "checkpath (omitted call)",
+          "method": "org.mozilla.javascript.Interpreter#interpret(InterpretedFunction,Context,Scriptable,Scriptable,Object[])",
+          "location": "src/org/mozilla/javascript/Interpreter.java:1030"
+        },
+        {
+          "kind": "hop",
+          "method": "org.mozilla.javascript.Interpreter#interpretLoop(Context,CallFrame,Object)",
+          "location": "src/org/mozilla/javascript/Interpreter.java:1110"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "src/org/mozilla/javascript/Interpreter.java:1871"
+        },
+        {
+          "kind": "hop",
+          "method": "org.mozilla.javascript.IdFunctionObject#call(Context,Scriptable,Scriptable,Object[])",
+          "location": "src/org/mozilla/javascript/IdFunctionObject.java:97"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "src/org/mozilla/javascript/IdFunctionObject.java:100"
+        },
+        {
+          "kind": "hop",
+          "method": "org.mozilla.javascript.NativeNumber#execIdCall(IdFunctionObject,Context,Scriptable,Scriptable,Object[])",
+          "location": "src/org/mozilla/javascript/NativeNumber.java:118"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "src/org/mozilla/javascript/NativeNumber.java:149"
+        },
+        {
+          "kind": "hop",
+          "method": "org.mozilla.javascript.ScriptRuntime#numberToString(double,int)",
+          "location": "src/org/mozilla/javascript/ScriptRuntime.java:1035"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "src/org/mozilla/javascript/ScriptRuntime.java:1049"
+        },
+        {
+          "kind": "hop",
+          "method": "org.mozilla.javascript.DToA#JS_dtobasestr(int,double)",
+          "location": "src/org/mozilla/javascript/DToA.java:206"
+        }
+      ],
+      "harness_entry": "fuzz.harness.NativeNumberFuzzTest#fuzzNumberToStringRadix",
+      "scale_measurement": [
+        {
+          "value": 207,
+          "input_bytes": 9,
+          "outcome": "completed",
+          "cpu_ms": 64.14854,
+          "allocated_bytes": 5767280,
+          "peak_heap_bytes": 6291456
+        },
+        {
+          "value": 257,
+          "input_bytes": 9,
+          "outcome": "completed",
+          "cpu_ms": 57.078887,
+          "allocated_bytes": 5768376,
+          "peak_heap_bytes": 6291456
+        },
+        {
+          "value": 338,
+          "input_bytes": 9,
+          "outcome": "completed",
+          "cpu_ms": 66.794827,
+          "allocated_bytes": 5769536,
+          "peak_heap_bytes": 7340032
+        },
+        {
+          "value": 462,
+          "input_bytes": 9,
+          "outcome": "completed",
+          "cpu_ms": 64.055575,
+          "allocated_bytes": 5774928,
+          "peak_heap_bytes": 6291456
+        },
+        {
+          "value": 677,
+          "input_bytes": 9,
+          "outcome": "completed",
+          "cpu_ms": 65.287775,
+          "allocated_bytes": 5778600,
+          "peak_heap_bytes": 6291456
+        },
+        {
+          "value": 1074,
+          "input_bytes": 9,
+          "outcome": "completed",
+          "cpu_ms": 65.810726,
+          "allocated_bytes": 5785232,
+          "peak_heap_bytes": 7340032
+        }
+      ]
+    },
+    {
+      "slot": 3,
+      "id": "V3",
+      "name": "",
+      "entrypoint": "NativeNumberFuzzTest.fuzzNumberFormatMethods(InputStream) → Context.evaluateString(Scriptable, String, String, int, Object) → InterpretedFunction.exec(Context, Scriptable) → InterpretedFunction.call(Context, Scriptable, Scriptable, Object[]) → Interpreter.interpretLoop(Context, CallFrame, Object) → IdFunctionObject.call(Context, Scriptable, Scriptable, Object[]) → NativeNumber.execIdCall(IdFunctionObject, Context, Scriptable, Scriptable, Object[]) → NativeNumber.num_to(double, Object[], int, int, int, int) → DToA.JS_dtostr(StringBuilder, int, int, double) → DToA.JS_dtoa(double, int, boolean, int, boolean[], StringBuilder)",
+      "source_path": "src/org/mozilla/javascript/DToA.java",
+      "sink": "DToA#JS_dtoa",
+      "mechanism": "BigInteger exponentiation in DToA.JS_dtoa mode 2 (DTOSTR_EXPONENTIAL/PRECISION): for very large doubles (up to Double.MAX_VALUE ≈ 1.7e308) with precision=100, computes pow5mult with k≈308, building 5^308 (~715 bits). The digit extraction loop performs 100 iterations of BigInteger multiply/compare on these large numbers.",
+      "resource": "cpu",
+      "failure_mode": "timeout",
+      "scale": "715-bit 5^308 BigInteger (d≈1.7e308, precision=100). Measured cost: ~65ms flat across exponents 10-308 (0ms/exponent above baseline). At maximum d=MAX_VALUE, total is ~65ms, far below 20000ms timeout. The 100-iteration digit loop on ~715-bit BigIntegers completes in <1ms.",
+      "input_bytes": 10,
+      "cwe": "CWE-400",
+      "checkpath_status": "PASS",
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "method": "fuzz.harness.NativeNumberFuzzTest#fuzzNumberFormatMethods(InputStream)",
+          "location": "harness/src/test/java/fuzz/harness/NativeNumberFuzzTest.java:74"
+        },
+        {
+          "kind": "connection",
+          "type": "INDIRECT",
+          "evidence": "1 omitted call(s)"
+        },
+        {
+          "kind": "hop",
+          "provenance": "checkpath (omitted call)",
+          "method": "fuzz.harness.NativeNumberFuzzTest#evaluate(String,String)",
+          "location": "harness/src/test/java/fuzz/harness/NativeNumberFuzzTest.java:100"
+        },
+        {
+          "kind": "hop",
+          "method": "org.mozilla.javascript.Context#evaluateString(Scriptable,String,String,int,Object)",
+          "location": "src/org/mozilla/javascript/Context.java:1133"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "src/org/mozilla/javascript/Context.java:1137"
+        },
+        {
+          "kind": "hop",
+          "method": "org.mozilla.javascript.InterpretedFunction#exec(Context,Scriptable)",
+          "location": "src/org/mozilla/javascript/InterpretedFunction.java:94"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "src/org/mozilla/javascript/SecurityController.java:161"
+        },
+        {
+          "kind": "hop",
+          "method": "org.mozilla.javascript.InterpretedFunction#call(Context,Scriptable,Scriptable,Object[])",
+          "location": "src/org/mozilla/javascript/InterpretedFunction.java:86"
+        },
+        {
+          "kind": "connection",
+          "type": "INDIRECT",
+          "evidence": "1 omitted call(s)"
+        },
+        {
+          "kind": "hop",
+          "provenance": "checkpath (omitted call)",
+          "method": "org.mozilla.javascript.Interpreter#interpret(InterpretedFunction,Context,Scriptable,Scriptable,Object[])",
+          "location": "src/org/mozilla/javascript/Interpreter.java:1030"
+        },
+        {
+          "kind": "hop",
+          "method": "org.mozilla.javascript.Interpreter#interpretLoop(Context,CallFrame,Object)",
+          "location": "src/org/mozilla/javascript/Interpreter.java:1110"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "src/org/mozilla/javascript/Interpreter.java:1871"
+        },
+        {
+          "kind": "hop",
+          "method": "org.mozilla.javascript.IdFunctionObject#call(Context,Scriptable,Scriptable,Object[])",
+          "location": "src/org/mozilla/javascript/IdFunctionObject.java:97"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "src/org/mozilla/javascript/IdFunctionObject.java:100"
+        },
+        {
+          "kind": "hop",
+          "method": "org.mozilla.javascript.NativeNumber#execIdCall(IdFunctionObject,Context,Scriptable,Scriptable,Object[])",
+          "location": "src/org/mozilla/javascript/NativeNumber.java:118"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "src/org/mozilla/javascript/NativeNumber.java:160"
+        },
+        {
+          "kind": "hop",
+          "method": "org.mozilla.javascript.NativeNumber#num_to(double,Object[],int,int,int,int)",
+          "location": "src/org/mozilla/javascript/NativeNumber.java:257"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "src/org/mozilla/javascript/NativeNumber.java:281"
+        },
+        {
+          "kind": "hop",
+          "method": "org.mozilla.javascript.DToA#JS_dtostr(StringBuilder,int,int,double)",
+          "location": "src/org/mozilla/javascript/DToA.java:1130"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "src/org/mozilla/javascript/DToA.java:1142"
+        },
+        {
+          "kind": "hop",
+          "method": "org.mozilla.javascript.DToA#JS_dtoa(double,int,boolean,int,boolean[],StringBuilder)",
+          "location": "src/org/mozilla/javascript/DToA.java:442"
+        }
+      ],
+      "harness_entry": "fuzz.harness.NativeNumberFuzzTest#fuzzNumberFormatMethods",
+      "scale_measurement": [
+        {
+          "value": 10,
+          "input_bytes": 10,
+          "outcome": "completed",
+          "cpu_ms": 61.724291,
+          "allocated_bytes": 5760592,
+          "peak_heap_bytes": 6291456
+        },
+        {
+          "value": 20,
+          "input_bytes": 10,
+          "outcome": "completed",
+          "cpu_ms": 70.860492,
+          "allocated_bytes": 5778128,
+          "peak_heap_bytes": 7340032
+        },
+        {
+          "value": 50,
+          "input_bytes": 10,
+          "outcome": "completed",
+          "cpu_ms": 71.097041,
+          "allocated_bytes": 5792808,
+          "peak_heap_bytes": 6291456
+        },
+        {
+          "value": 100,
+          "input_bytes": 10,
+          "outcome": "completed",
+          "cpu_ms": 69.754324,
+          "allocated_bytes": 5814096,
+          "peak_heap_bytes": 6291456
+        },
+        {
+          "value": 200,
+          "input_bytes": 10,
+          "outcome": "completed",
+          "cpu_ms": 65.78538,
+          "allocated_bytes": 5833864,
+          "peak_heap_bytes": 6291456
+        },
+        {
+          "value": 308,
+          "input_bytes": 10,
+          "outcome": "completed",
+          "cpu_ms": 63.637276,
+          "allocated_bytes": 5849336,
+          "peak_heap_bytes": 6291456
+        }
+      ]
+    }
+  ]
+}

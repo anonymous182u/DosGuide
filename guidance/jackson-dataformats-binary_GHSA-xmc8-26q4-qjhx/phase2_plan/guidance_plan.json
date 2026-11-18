@@ -1,0 +1,64 @@
+{
+  "plans": [
+    {
+      "target": "V1",
+      "signals": [
+        {
+          "name": "declaredLen",
+          "quantity": "maximum value of the len parameter passed to CBORParser._finishBytes(int) during execution — measured by bytecode instrumentation at method entry, this is the exact allocation size used in new byte[len] at line 2437",
+          "aggregation": "max",
+          "locations": [
+            "CBORParser#_finishBytes where new byte[len] allocates the attacker-controlled size"
+          ],
+          "technique": "bytecode",
+          "storage": "ThreadLocal<long[]> COUNTERS in AllocationSizeCounters: index [0] = maxLen seen during execution",
+          "reset": "V1Guidance.getInput() calls AllocationSizeCounters.reset() before returning the InputStream, setting the counter to 0",
+          "read": "V1Guidance.handleResult() calls AllocationSizeCounters.maxLen() which returns COUNTERS.get()[0] — the maximum len parameter passed to CBORParser._finishBytes(int) during execution, reported via lastSignals() as {\"declaredLen\": value}"
+        }
+      ],
+      "retention": "Retain inputs that yield a higher declaredLen than any previously retained input, creating a monotonically increasing signal toward the OOM threshold (~800,000,000 with -Xmx1g). Corpus capped at 64 inputs. When declaredLen is flat, retain inputs closer to 5 bytes (target input_bytes) for diversity.",
+      "retention_signals": [
+        "declaredLen"
+      ],
+      "mutation": [
+        "lengthFieldMutate (weight 0.35): if input contains a 0x5A header at byte 0, randomly increase one of the 4 length bytes (set to 0xFF, or increment) to hill-climb the declared length integer",
+        "dictionaryInsert (weight 0.25): insert CBOR byte-string header tokens from source analysis — 0x5A (4-byte len), 0x5B (8-byte len), 0x59 (2-byte len), 0x58 (1-byte len), 0xC2 (tag bignum-pos triggers getBinaryValue), 0xC3 (tag bignum-neg), 0xFF (break), 0x00 (integer 0)",
+        "byteFlip (weight 0.15): flip a random bit in a random byte",
+        "byteInsert (weight 0.10): insert a random byte at a random position",
+        "havoc (weight 0.10): apply 1-4 random basic mutations in sequence",
+        "byteDelete (weight 0.05): delete a random byte"
+      ]
+    },
+    {
+      "target": "PkgRisk1",
+      "signals": [
+        {
+          "name": "maxNestingDepth",
+          "quantity": "maximum recursion depth reached by the mutually recursive deserializeArray/deserializeObject methods in BaseNodeDeserializer during tree deserialization — each level consumes ~134 bytes of stack",
+          "aggregation": "max",
+          "locations": [
+            "BaseNodeDeserializer#deserializeArray where recursive array deserialization consumes stack frames",
+            "BaseNodeDeserializer#deserializeObject where recursive object deserialization consumes stack frames"
+          ],
+          "technique": "bytecode",
+          "storage": "ThreadLocal<long[]> COUNTERS in NestingDepthCounters: index [0] = currentDepth, index [1] = maxDepth",
+          "reset": "PkgRisk1Guidance.getInput() calls NestingDepthCounters.reset() before returning the InputStream, setting both counters to 0",
+          "read": "PkgRisk1Guidance.handleResult() calls NestingDepthCounters.maxDepth() which returns COUNTERS.get()[1], reported via lastSignals() as {\"maxNestingDepth\": value}"
+        }
+      ],
+      "retention": "Retain inputs that yield a higher maxNestingDepth than any previously retained input, creating a monotonically increasing signal toward the StackOverflow threshold (~3000-4000 levels with -Xss1m). Corpus capped at 64 inputs. When maxNestingDepth is flat, retain inputs that are growing toward 4000 bytes (target input_bytes) or that mix array/object nesting for structural diversity.",
+      "retention_signals": [
+        "maxNestingDepth"
+      ],
+      "mutation": [
+        "chunkRepeat (weight 0.40): select a contiguous chunk of the input (1-64 bytes) and repeat it k times (k=2..8) in place — PRIMARY growth operator that builds deeply nested CBOR structures by duplicating runs of 0x81 nesting bytes",
+        "dictionaryInsert (weight 0.15): insert CBOR nesting tokens from source analysis — 0x81 (1-element array, most efficient nesting at 1 byte/level), 0x82 (2-element array), 0xA1 (1-element map triggers deserializeObject), 0x9F (indefinite array), 0xBF (indefinite map), 0x00 (integer 0 leaf), 0xF6 (null leaf), 0xFF (break code), 0x60 (empty text string leaf)",
+        "splice (weight 0.15): take a prefix from one corpus input and a suffix from another to combine nesting structures",
+        "byteFlip (weight 0.10): flip a random bit in a random byte",
+        "havoc (weight 0.10): apply 1-4 random basic mutations in sequence",
+        "byteInsert (weight 0.05): insert a random byte at a random position",
+        "byteDelete (weight 0.05): delete a random byte"
+      ]
+    }
+  ]
+}

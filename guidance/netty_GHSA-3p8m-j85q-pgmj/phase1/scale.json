@@ -1,0 +1,41 @@
+{
+  "series_request": null,
+  "rounds": [
+    {
+      "round": 1,
+      "revision": {
+        "V1": {
+          "scale": "REVISED MECHANISM: Measurements show Java heap is constant (~11 MB allocated, ~11 MB peak heap) regardless of decompressed output size (2–64 MB). BrotliDecoder.pull() calls alloc.buffer(int), and the default PooledByteBufAllocator creates direct (off-heap) ByteBufs. The growing resource is direct memory, not Java heap. Direct memory grows at ~1 byte per byte of decompressed output (inferred: all output ByteBufs accumulate unreleased in the out list during a single decode() call). Wall time grows at ~1.29 ms/MB (measured over 4–64 MB). To exhaust MaxDirectMemorySize (which defaults to Xmx = 1 GB): ~1 GB of decompressed output is needed, taking ~1.4 seconds (well under the 20-second timeout). Brotli compresses 1 GB of zeros to ~1642 bytes; all-zeros is near-optimal for brotli compression, so no significantly denser encoding exists.",
+          "input_bytes": 1700
+        },
+        "V2": {
+          "scale": "REVISED: Measurements show allocated grows at ~1.04 MB per MB of decompressed output (linear from 16–64 MB), but peak heap plateaus at ~38 MB for 32–64 MB of decompressed data. ZstdDecoder.decode() explicitly uses ctx.alloc().heapBuffer(), so data is heap-allocated, but the PooledByteBufAllocator's arena management keeps peak live heap far below cumulative allocations. Wall time grows at ~1.72 ms/MB. Extrapolating to 256 MB decompressed (maximum from a 10240-byte zstd input of ~8210 bytes compressed): ~280 MB allocated, peak heap likely ~50–80 MB, ~549 ms wall time. With -Xmx1g, neither OOM (280 MB allocated << 1 GB) nor timeout (549 ms << 20 s) is triggered. For OOM at ~900 MB allocated: ~851 MB decompressed is needed, requiring ~27449 bytes of compressed zstd, which exceeds the 10240-byte input limit. The failure cannot occur within this evaluation's input size limit.",
+          "input_bytes": 27449
+        }
+      },
+      "field_problems": {
+        "V2": [
+          "`input_bytes` is 27449, more than the input size limit of this evaluation (10240 bytes; longer inputs are cut), so the failure could not occur. Check the estimate against the source; if it holds, the target cannot fail in this evaluation."
+        ]
+      }
+    },
+    {
+      "round": 2,
+      "revision": {
+        "V1": {
+          "scale": "REVISED MECHANISM: Measurements show Java heap is constant (~11 MB allocated, ~11 MB peak heap) regardless of decompressed output size (2–64 MB). BrotliDecoder.pull() calls alloc.buffer(int), and the default PooledByteBufAllocator creates direct (off-heap) ByteBufs. The growing resource is direct memory, not Java heap. Direct memory grows at ~1 byte per byte of decompressed output (inferred: all output ByteBufs accumulate unreleased in the out list during a single decode() call). Wall time grows at ~1.29 ms/MB (measured over 4–64 MB). To exhaust MaxDirectMemorySize (which defaults to Xmx = 1 GB): ~1 GB of decompressed output is needed, taking ~1.4 seconds (well under the 20-second timeout). Brotli compresses 1 GB of zeros to ~1642 bytes; all-zeros is near-optimal for brotli compression, so no significantly denser encoding exists.",
+          "input_bytes": 1700
+        },
+        "V2": {
+          "scale": "CANNOT FAIL IN THIS EVALUATION. Measurements show allocated grows at ~1.04 MB per MB of decompressed output, but peak heap plateaus at ~38 MB. ZstdDecoder.decode() explicitly uses ctx.alloc().heapBuffer() (line 73), so data is heap-allocated. Extrapolating to 256 MB decompressed (maximum from 10240-byte zstd input): ~280 MB allocated, ~549 ms wall time — neither approaches -Xmx1g or the 20 s timeout. OOM requires ~851 MB decompressed → ~27449 bytes compressed zstd (at ~32.3 bytes per MB, inherent to the zstd frame/block structure on all-zeros). This exceeds the 10240-byte input limit. No denser encoding exists: all-zeros is near-optimal for zstd, and the per-block header overhead is format-intrinsic.",
+          "input_bytes": 27449
+        }
+      },
+      "field_problems": {
+        "V2": [
+          "`input_bytes` is 27449, more than the input size limit of this evaluation (10240 bytes; longer inputs are cut), so the failure could not occur. Check the estimate against the source; if it holds, the target cannot fail in this evaluation."
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,817 @@
+{
+  "tool": "checkpath",
+  "version": "1.0.0",
+  "source_root": "projects/activemq_GHSA-whxr-3p84-rf3c",
+  "index": {
+    "files_parsed": 2262,
+    "files_failed": 0,
+    "methods": 25953,
+    "harness_fuzz_methods": [
+      "OpenWireFuzzTest.fuzzOpenWireFormatUnmarshalStackTraceEnabled(InputStream)",
+      "OpenWireFuzzTest.fuzzOpenWireFormatUnmarshal(InputStream)",
+      "OpenWireFuzzTest.fuzzOpenWireFormatUnmarshal2(InputStream)"
+    ],
+    "index_seconds": 7.8,
+    "max_gap": 2,
+    "sink_depth": 6,
+    "symbol_resolution": true
+  },
+  "ok": true,
+  "targets": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "entrypoint": "OpenWireFuzzTest.fuzzOpenWireFormatUnmarshal(InputStream) → OpenWireFormat.unmarshal(ByteSequence) → OpenWireFormat.doUnmarshal(DataInput) → PartialCommandMarshaller.looseUnmarshal(OpenWireFormat, Object, DataInput) → BaseDataStreamMarshaller.looseUnmarshalByteArray(DataInput)",
+      "source_path": "activemq-client/src/main/java/org/apache/activemq/openwire/v12/BaseDataStreamMarshaller.java",
+      "start_ok": true,
+      "harness_entry": "com.fuzz.activemq.OpenWireFuzzTest#fuzzOpenWireFormatUnmarshal",
+      "end_ok": true,
+      "end": {
+        "sink_file": "activemq-client/src/main/java/org/apache/activemq/openwire/v12/BaseDataStreamMarshaller.java",
+        "ok": true,
+        "evidence": "hop 5 BaseDataStreamMarshaller#looseUnmarshalByteArray(DataInput) is declared in activemq-client/src/main/java/org/apache/activemq/openwire/v12/BaseDataStreamMarshaller.java:622",
+        "level": "method",
+        "sink_method": "BaseDataStreamMarshaller#looseUnmarshalByteArray",
+        "sink_evidence": "hop 5 is BaseDataStreamMarshaller#looseUnmarshalByteArray(DataInput)"
+      },
+      "hops": [
+        {
+          "index": 1,
+          "raw": "OpenWireFuzzTest.fuzzOpenWireFormatUnmarshal(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "com.fuzz.activemq.OpenWireFuzzTest#fuzzOpenWireFormatUnmarshal(InputStream)",
+              "location": "harness/src/test/java/com/fuzz/activemq/OpenWireFuzzTest.java:63"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "raw": "OpenWireFormat.unmarshal(ByteSequence)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.apache.activemq.openwire.OpenWireFormat#unmarshal(ByteSequence)",
+              "location": "activemq-client/src/main/java/org/apache/activemq/openwire/OpenWireFormat.java:192"
+            },
+            {
+              "method": "org.apache.activemq.wireformat.WireFormat#unmarshal(ByteSequence)",
+              "location": "activemq-client/src/main/java/org/apache/activemq/wireformat/WireFormat.java:42"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "raw": "OpenWireFormat.doUnmarshal(DataInput)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.apache.activemq.openwire.OpenWireFormat#doUnmarshal(DataInput)",
+              "location": "activemq-client/src/main/java/org/apache/activemq/openwire/OpenWireFormat.java:366"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "raw": "PartialCommandMarshaller.looseUnmarshal(OpenWireFormat, Object, DataInput)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.apache.activemq.openwire.v12.PartialCommandMarshaller#looseUnmarshal(OpenWireFormat,Object,DataInput)",
+              "location": "activemq-client/src/main/java/org/apache/activemq/openwire/v12/PartialCommandMarshaller.java:111"
+            },
+            {
+              "method": "org.apache.activemq.openwire.v1.PartialCommandMarshaller#looseUnmarshal(OpenWireFormat,Object,DataInput)",
+              "location": "activemq-client/src/main/java/org/apache/activemq/openwire/v1/PartialCommandMarshaller.java:112"
+            },
+            {
+              "method": "org.apache.activemq.openwire.v10.PartialCommandMarshaller#looseUnmarshal(OpenWireFormat,Object,DataInput)",
+              "location": "activemq-client/src/main/java/org/apache/activemq/openwire/v10/PartialCommandMarshaller.java:111"
+            },
+            {
+              "method": "org.apache.activemq.openwire.v11.PartialCommandMarshaller#looseUnmarshal(OpenWireFormat,Object,DataInput)",
+              "location": "activemq-client/src/main/java/org/apache/activemq/openwire/v11/PartialCommandMarshaller.java:111"
+            },
+            {
+              "method": "org.apache.activemq.openwire.v9.PartialCommandMarshaller#looseUnmarshal(OpenWireFormat,Object,DataInput)",
+              "location": "activemq-client/src/main/java/org/apache/activemq/openwire/v9/PartialCommandMarshaller.java:111"
+            },
+            {
+              "method": "org.apache.activemq.openwire.v2.PartialCommandMarshaller#looseUnmarshal(OpenWireFormat,Object,DataInput)",
+              "location": "activemq-openwire-legacy/src/main/java/org/apache/activemq/openwire/v2/PartialCommandMarshaller.java:112"
+            },
+            {
+              "method": "org.apache.activemq.openwire.v3.PartialCommandMarshaller#looseUnmarshal(OpenWireFormat,Object,DataInput)",
+              "location": "activemq-openwire-legacy/src/main/java/org/apache/activemq/openwire/v3/PartialCommandMarshaller.java:112"
+            },
+            {
+              "method": "org.apache.activemq.openwire.v4.PartialCommandMarshaller#looseUnmarshal(OpenWireFormat,Object,DataInput)",
+              "location": "activemq-openwire-legacy/src/main/java/org/apache/activemq/openwire/v4/PartialCommandMarshaller.java:111"
+            }
+          ],
+          "more_candidates": 29
+        },
+        {
+          "index": 5,
+          "raw": "BaseDataStreamMarshaller.looseUnmarshalByteArray(DataInput)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.apache.activemq.openwire.v12.BaseDataStreamMarshaller#looseUnmarshalByteArray(DataInput)",
+              "location": "activemq-client/src/main/java/org/apache/activemq/openwire/v12/BaseDataStreamMarshaller.java:622"
+            },
+            {
+              "method": "org.apache.activemq.openwire.v1.BaseDataStreamMarshaller#looseUnmarshalByteArray(DataInput)",
+              "location": "activemq-client/src/main/java/org/apache/activemq/openwire/v1/BaseDataStreamMarshaller.java:621"
+            },
+            {
+              "method": "org.apache.activemq.openwire.v10.BaseDataStreamMarshaller#looseUnmarshalByteArray(DataInput)",
+              "location": "activemq-client/src/main/java/org/apache/activemq/openwire/v10/BaseDataStreamMarshaller.java:620"
+            },
+            {
+              "method": "org.apache.activemq.openwire.v11.BaseDataStreamMarshaller#looseUnmarshalByteArray(DataInput)",
+              "location": "activemq-client/src/main/java/org/apache/activemq/openwire/v11/BaseDataStreamMarshaller.java:619"
+            },
+            {
+              "method": "org.apache.activemq.openwire.v9.BaseDataStreamMarshaller#looseUnmarshalByteArray(DataInput)",
+              "location": "activemq-client/src/main/java/org/apache/activemq/openwire/v9/BaseDataStreamMarshaller.java:619"
+            },
+            {
+              "method": "org.apache.activemq.openwire.v2.BaseDataStreamMarshaller#looseUnmarshalByteArray(DataInput)",
+              "location": "activemq-openwire-legacy/src/main/java/org/apache/activemq/openwire/v2/BaseDataStreamMarshaller.java:620"
+            },
+            {
+              "method": "org.apache.activemq.openwire.v3.BaseDataStreamMarshaller#looseUnmarshalByteArray(DataInput)",
+              "location": "activemq-openwire-legacy/src/main/java/org/apache/activemq/openwire/v3/BaseDataStreamMarshaller.java:620"
+            },
+            {
+              "method": "org.apache.activemq.openwire.v4.BaseDataStreamMarshaller#looseUnmarshalByteArray(DataInput)",
+              "location": "activemq-openwire-legacy/src/main/java/org/apache/activemq/openwire/v4/BaseDataStreamMarshaller.java:620"
+            }
+          ],
+          "more_candidates": 4
+        }
+      ],
+      "path_signature": [
+        "com.fuzz.activemq.OpenWireFuzzTest#fuzzOpenWireFormatUnmarshal(InputStream)",
+        "org.apache.activemq.openwire.OpenWireFormat#unmarshal(ByteSequence)",
+        "org.apache.activemq.openwire.OpenWireFormat#doUnmarshal(DataInput)",
+        "org.apache.activemq.openwire.v12.PartialCommandMarshaller#looseUnmarshal(OpenWireFormat,Object,DataInput)",
+        "org.apache.activemq.openwire.v12.BaseDataStreamMarshaller#looseUnmarshalByteArray(DataInput)"
+      ],
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "written": "OpenWireFuzzTest.fuzzOpenWireFormatUnmarshal(InputStream)",
+          "provenance": "agent",
+          "method": "com.fuzz.activemq.OpenWireFuzzTest#fuzzOpenWireFormatUnmarshal(InputStream)",
+          "location": "harness/src/test/java/com/fuzz/activemq/OpenWireFuzzTest.java:63"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "OpenWireFuzzTest#fuzzOpenWireFormatUnmarshal(InputStream) calls OpenWireFormat#unmarshal(ByteSequence) at harness/src/test/java/com/fuzz/activemq/OpenWireFuzzTest.java:66 (resolved)",
+          "site": "harness/src/test/java/com/fuzz/activemq/OpenWireFuzzTest.java:66"
+        },
+        {
+          "kind": "hop",
+          "written": "OpenWireFormat.unmarshal(ByteSequence)",
+          "provenance": "agent",
+          "method": "org.apache.activemq.openwire.OpenWireFormat#unmarshal(ByteSequence)",
+          "location": "activemq-client/src/main/java/org/apache/activemq/openwire/OpenWireFormat.java:192"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "OpenWireFormat#unmarshal(ByteSequence) calls OpenWireFormat#doUnmarshal(DataInput) at activemq-client/src/main/java/org/apache/activemq/openwire/OpenWireFormat.java:209 (resolved)",
+          "site": "activemq-client/src/main/java/org/apache/activemq/openwire/OpenWireFormat.java:209"
+        },
+        {
+          "kind": "hop",
+          "written": "OpenWireFormat.doUnmarshal(DataInput)",
+          "provenance": "agent",
+          "method": "org.apache.activemq.openwire.OpenWireFormat#doUnmarshal(DataInput)",
+          "location": "activemq-client/src/main/java/org/apache/activemq/openwire/OpenWireFormat.java:366"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "OpenWireFormat#doUnmarshal(DataInput) calls DataStreamMarshaller#looseUnmarshal(OpenWireFormat,Object,DataInput) at activemq-client/src/main/java/org/apache/activemq/openwire/OpenWireFormat.java:379 (resolved)",
+          "site": "activemq-client/src/main/java/org/apache/activemq/openwire/OpenWireFormat.java:379"
+        },
+        {
+          "kind": "hop",
+          "written": "PartialCommandMarshaller.looseUnmarshal(OpenWireFormat, Object, DataInput)",
+          "provenance": "agent",
+          "method": "org.apache.activemq.openwire.v12.PartialCommandMarshaller#looseUnmarshal(OpenWireFormat,Object,DataInput)",
+          "location": "activemq-client/src/main/java/org/apache/activemq/openwire/v12/PartialCommandMarshaller.java:111"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "PartialCommandMarshaller#looseUnmarshal(OpenWireFormat,Object,DataInput) calls BaseDataStreamMarshaller#looseUnmarshalByteArray(DataInput) at activemq-client/src/main/java/org/apache/activemq/openwire/v12/PartialCommandMarshaller.java:116 (resolved)",
+          "site": "activemq-client/src/main/java/org/apache/activemq/openwire/v12/PartialCommandMarshaller.java:116"
+        },
+        {
+          "kind": "hop",
+          "written": "BaseDataStreamMarshaller.looseUnmarshalByteArray(DataInput)",
+          "provenance": "agent",
+          "method": "org.apache.activemq.openwire.v1.BaseDataStreamMarshaller#looseUnmarshalByteArray(DataInput)",
+          "location": "activemq-client/src/main/java/org/apache/activemq/openwire/v1/BaseDataStreamMarshaller.java:621"
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "status": "CALL",
+          "evidence": "OpenWireFuzzTest#fuzzOpenWireFormatUnmarshal(InputStream) calls OpenWireFormat#unmarshal(ByteSequence) at harness/src/test/java/com/fuzz/activemq/OpenWireFuzzTest.java:66 (resolved)"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "status": "CALL",
+          "evidence": "OpenWireFormat#unmarshal(ByteSequence) calls OpenWireFormat#doUnmarshal(DataInput) at activemq-client/src/main/java/org/apache/activemq/openwire/OpenWireFormat.java:209 (resolved)"
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "status": "CALL",
+          "evidence": "OpenWireFormat#doUnmarshal(DataInput) calls DataStreamMarshaller#looseUnmarshal(OpenWireFormat,Object,DataInput) at activemq-client/src/main/java/org/apache/activemq/openwire/OpenWireFormat.java:379 (resolved)"
+        },
+        {
+          "from": 4,
+          "to": 5,
+          "status": "CALL",
+          "evidence": "PartialCommandMarshaller#looseUnmarshal(OpenWireFormat,Object,DataInput) calls BaseDataStreamMarshaller#looseUnmarshalByteArray(DataInput) at activemq-client/src/main/java/org/apache/activemq/openwire/v12/PartialCommandMarshaller.java:116 (resolved)"
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    },
+    {
+      "target": "V2",
+      "status": "PASS",
+      "entrypoint": "OpenWireFuzzTest.fuzzOpenWireFormatUnmarshalStackTraceEnabled(InputStream) → OpenWireFormat.unmarshal(ByteSequence) → OpenWireFormat.doUnmarshal(DataInput) → ExceptionResponseMarshaller.looseUnmarshal(OpenWireFormat, Object, DataInput) → BaseDataStreamMarshaller.looseUnmarsalThrowable(OpenWireFormat, DataInput)",
+      "source_path": "activemq-client/src/main/java/org/apache/activemq/openwire/v12/BaseDataStreamMarshaller.java",
+      "start_ok": true,
+      "harness_entry": "com.fuzz.activemq.OpenWireFuzzTest#fuzzOpenWireFormatUnmarshalStackTraceEnabled",
+      "end_ok": true,
+      "end": {
+        "sink_file": "activemq-client/src/main/java/org/apache/activemq/openwire/v12/BaseDataStreamMarshaller.java",
+        "ok": true,
+        "evidence": "hop 5 BaseDataStreamMarshaller#looseUnmarsalThrowable(OpenWireFormat,DataInput) is declared in activemq-client/src/main/java/org/apache/activemq/openwire/v12/BaseDataStreamMarshaller.java:515",
+        "level": "method",
+        "sink_method": "BaseDataStreamMarshaller#looseUnmarsalThrowable",
+        "sink_evidence": "hop 5 is BaseDataStreamMarshaller#looseUnmarsalThrowable(OpenWireFormat,DataInput)"
+      },
+      "hops": [
+        {
+          "index": 1,
+          "raw": "OpenWireFuzzTest.fuzzOpenWireFormatUnmarshalStackTraceEnabled(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "com.fuzz.activemq.OpenWireFuzzTest#fuzzOpenWireFormatUnmarshalStackTraceEnabled(InputStream)",
+              "location": "harness/src/test/java/com/fuzz/activemq/OpenWireFuzzTest.java:50"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "raw": "OpenWireFormat.unmarshal(ByteSequence)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.apache.activemq.openwire.OpenWireFormat#unmarshal(ByteSequence)",
+              "location": "activemq-client/src/main/java/org/apache/activemq/openwire/OpenWireFormat.java:192"
+            },
+            {
+              "method": "org.apache.activemq.wireformat.WireFormat#unmarshal(ByteSequence)",
+              "location": "activemq-client/src/main/java/org/apache/activemq/wireformat/WireFormat.java:42"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "raw": "OpenWireFormat.doUnmarshal(DataInput)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.apache.activemq.openwire.OpenWireFormat#doUnmarshal(DataInput)",
+              "location": "activemq-client/src/main/java/org/apache/activemq/openwire/OpenWireFormat.java:366"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "raw": "ExceptionResponseMarshaller.looseUnmarshal(OpenWireFormat, Object, DataInput)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.apache.activemq.openwire.v12.ExceptionResponseMarshaller#looseUnmarshal(OpenWireFormat,Object,DataInput)",
+              "location": "activemq-client/src/main/java/org/apache/activemq/openwire/v12/ExceptionResponseMarshaller.java:109"
+            },
+            {
+              "method": "org.apache.activemq.openwire.v1.ExceptionResponseMarshaller#looseUnmarshal(OpenWireFormat,Object,DataInput)",
+              "location": "activemq-client/src/main/java/org/apache/activemq/openwire/v1/ExceptionResponseMarshaller.java:110"
+            },
+            {
+              "method": "org.apache.activemq.openwire.v10.ExceptionResponseMarshaller#looseUnmarshal(OpenWireFormat,Object,DataInput)",
+              "location": "activemq-client/src/main/java/org/apache/activemq/openwire/v10/ExceptionResponseMarshaller.java:109"
+            },
+            {
+              "method": "org.apache.activemq.openwire.v11.ExceptionResponseMarshaller#looseUnmarshal(OpenWireFormat,Object,DataInput)",
+              "location": "activemq-client/src/main/java/org/apache/activemq/openwire/v11/ExceptionResponseMarshaller.java:109"
+            },
+            {
+              "method": "org.apache.activemq.openwire.v9.ExceptionResponseMarshaller#looseUnmarshal(OpenWireFormat,Object,DataInput)",
+              "location": "activemq-client/src/main/java/org/apache/activemq/openwire/v9/ExceptionResponseMarshaller.java:109"
+            },
+            {
+              "method": "org.apache.activemq.openwire.v2.ExceptionResponseMarshaller#looseUnmarshal(OpenWireFormat,Object,DataInput)",
+              "location": "activemq-openwire-legacy/src/main/java/org/apache/activemq/openwire/v2/ExceptionResponseMarshaller.java:110"
+            },
+            {
+              "method": "org.apache.activemq.openwire.v3.ExceptionResponseMarshaller#looseUnmarshal(OpenWireFormat,Object,DataInput)",
+              "location": "activemq-openwire-legacy/src/main/java/org/apache/activemq/openwire/v3/ExceptionResponseMarshaller.java:110"
+            },
+            {
+              "method": "org.apache.activemq.openwire.v4.ExceptionResponseMarshaller#looseUnmarshal(OpenWireFormat,Object,DataInput)",
+              "location": "activemq-openwire-legacy/src/main/java/org/apache/activemq/openwire/v4/ExceptionResponseMarshaller.java:109"
+            }
+          ],
+          "more_candidates": 41
+        },
+        {
+          "index": 5,
+          "raw": "BaseDataStreamMarshaller.looseUnmarsalThrowable(OpenWireFormat, DataInput)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.apache.activemq.openwire.v12.BaseDataStreamMarshaller#looseUnmarsalThrowable(OpenWireFormat,DataInput)",
+              "location": "activemq-client/src/main/java/org/apache/activemq/openwire/v12/BaseDataStreamMarshaller.java:515"
+            },
+            {
+              "method": "org.apache.activemq.openwire.v1.BaseDataStreamMarshaller#looseUnmarsalThrowable(OpenWireFormat,DataInput)",
+              "location": "activemq-client/src/main/java/org/apache/activemq/openwire/v1/BaseDataStreamMarshaller.java:514"
+            },
+            {
+              "method": "org.apache.activemq.openwire.v10.BaseDataStreamMarshaller#looseUnmarsalThrowable(OpenWireFormat,DataInput)",
+              "location": "activemq-client/src/main/java/org/apache/activemq/openwire/v10/BaseDataStreamMarshaller.java:513"
+            },
+            {
+              "method": "org.apache.activemq.openwire.v11.BaseDataStreamMarshaller#looseUnmarsalThrowable(OpenWireFormat,DataInput)",
+              "location": "activemq-client/src/main/java/org/apache/activemq/openwire/v11/BaseDataStreamMarshaller.java:512"
+            },
+            {
+              "method": "org.apache.activemq.openwire.v9.BaseDataStreamMarshaller#looseUnmarsalThrowable(OpenWireFormat,DataInput)",
+              "location": "activemq-client/src/main/java/org/apache/activemq/openwire/v9/BaseDataStreamMarshaller.java:512"
+            },
+            {
+              "method": "org.apache.activemq.openwire.v2.BaseDataStreamMarshaller#looseUnmarsalThrowable(OpenWireFormat,DataInput)",
+              "location": "activemq-openwire-legacy/src/main/java/org/apache/activemq/openwire/v2/BaseDataStreamMarshaller.java:513"
+            },
+            {
+              "method": "org.apache.activemq.openwire.v3.BaseDataStreamMarshaller#looseUnmarsalThrowable(OpenWireFormat,DataInput)",
+              "location": "activemq-openwire-legacy/src/main/java/org/apache/activemq/openwire/v3/BaseDataStreamMarshaller.java:513"
+            },
+            {
+              "method": "org.apache.activemq.openwire.v4.BaseDataStreamMarshaller#looseUnmarsalThrowable(OpenWireFormat,DataInput)",
+              "location": "activemq-openwire-legacy/src/main/java/org/apache/activemq/openwire/v4/BaseDataStreamMarshaller.java:513"
+            }
+          ],
+          "more_candidates": 4
+        }
+      ],
+      "path_signature": [
+        "com.fuzz.activemq.OpenWireFuzzTest#fuzzOpenWireFormatUnmarshalStackTraceEnabled(InputStream)",
+        "org.apache.activemq.openwire.OpenWireFormat#unmarshal(ByteSequence)",
+        "org.apache.activemq.openwire.OpenWireFormat#doUnmarshal(DataInput)",
+        "org.apache.activemq.openwire.v12.ExceptionResponseMarshaller#looseUnmarshal(OpenWireFormat,Object,DataInput)",
+        "org.apache.activemq.openwire.v12.BaseDataStreamMarshaller#looseUnmarsalThrowable(OpenWireFormat,DataInput)"
+      ],
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "written": "OpenWireFuzzTest.fuzzOpenWireFormatUnmarshalStackTraceEnabled(InputStream)",
+          "provenance": "agent",
+          "method": "com.fuzz.activemq.OpenWireFuzzTest#fuzzOpenWireFormatUnmarshalStackTraceEnabled(InputStream)",
+          "location": "harness/src/test/java/com/fuzz/activemq/OpenWireFuzzTest.java:50"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "OpenWireFuzzTest#fuzzOpenWireFormatUnmarshalStackTraceEnabled(InputStream) calls OpenWireFormat#unmarshal(ByteSequence) at harness/src/test/java/com/fuzz/activemq/OpenWireFuzzTest.java:55 (resolved)",
+          "site": "harness/src/test/java/com/fuzz/activemq/OpenWireFuzzTest.java:55"
+        },
+        {
+          "kind": "hop",
+          "written": "OpenWireFormat.unmarshal(ByteSequence)",
+          "provenance": "agent",
+          "method": "org.apache.activemq.openwire.OpenWireFormat#unmarshal(ByteSequence)",
+          "location": "activemq-client/src/main/java/org/apache/activemq/openwire/OpenWireFormat.java:192"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "OpenWireFormat#unmarshal(ByteSequence) calls OpenWireFormat#doUnmarshal(DataInput) at activemq-client/src/main/java/org/apache/activemq/openwire/OpenWireFormat.java:209 (resolved)",
+          "site": "activemq-client/src/main/java/org/apache/activemq/openwire/OpenWireFormat.java:209"
+        },
+        {
+          "kind": "hop",
+          "written": "OpenWireFormat.doUnmarshal(DataInput)",
+          "provenance": "agent",
+          "method": "org.apache.activemq.openwire.OpenWireFormat#doUnmarshal(DataInput)",
+          "location": "activemq-client/src/main/java/org/apache/activemq/openwire/OpenWireFormat.java:366"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "OpenWireFormat#doUnmarshal(DataInput) calls DataStreamMarshaller#looseUnmarshal(OpenWireFormat,Object,DataInput) at activemq-client/src/main/java/org/apache/activemq/openwire/OpenWireFormat.java:379 (resolved)",
+          "site": "activemq-client/src/main/java/org/apache/activemq/openwire/OpenWireFormat.java:379"
+        },
+        {
+          "kind": "hop",
+          "written": "ExceptionResponseMarshaller.looseUnmarshal(OpenWireFormat, Object, DataInput)",
+          "provenance": "agent",
+          "method": "org.apache.activemq.openwire.v12.ExceptionResponseMarshaller#looseUnmarshal(OpenWireFormat,Object,DataInput)",
+          "location": "activemq-client/src/main/java/org/apache/activemq/openwire/v12/ExceptionResponseMarshaller.java:109"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "ExceptionResponseMarshaller#looseUnmarshal(OpenWireFormat,Object,DataInput) calls BaseDataStreamMarshaller#looseUnmarsalThrowable(OpenWireFormat,DataInput) at activemq-client/src/main/java/org/apache/activemq/openwire/v12/ExceptionResponseMarshaller.java:113 (resolved)",
+          "site": "activemq-client/src/main/java/org/apache/activemq/openwire/v12/ExceptionResponseMarshaller.java:113"
+        },
+        {
+          "kind": "hop",
+          "written": "BaseDataStreamMarshaller.looseUnmarsalThrowable(OpenWireFormat, DataInput)",
+          "provenance": "agent",
+          "method": "org.apache.activemq.openwire.v1.BaseDataStreamMarshaller#looseUnmarsalThrowable(OpenWireFormat,DataInput)",
+          "location": "activemq-client/src/main/java/org/apache/activemq/openwire/v1/BaseDataStreamMarshaller.java:514"
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "status": "CALL",
+          "evidence": "OpenWireFuzzTest#fuzzOpenWireFormatUnmarshalStackTraceEnabled(InputStream) calls OpenWireFormat#unmarshal(ByteSequence) at harness/src/test/java/com/fuzz/activemq/OpenWireFuzzTest.java:55 (resolved)"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "status": "CALL",
+          "evidence": "OpenWireFormat#unmarshal(ByteSequence) calls OpenWireFormat#doUnmarshal(DataInput) at activemq-client/src/main/java/org/apache/activemq/openwire/OpenWireFormat.java:209 (resolved)"
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "status": "CALL",
+          "evidence": "OpenWireFormat#doUnmarshal(DataInput) calls DataStreamMarshaller#looseUnmarshal(OpenWireFormat,Object,DataInput) at activemq-client/src/main/java/org/apache/activemq/openwire/OpenWireFormat.java:379 (resolved)"
+        },
+        {
+          "from": 4,
+          "to": 5,
+          "status": "CALL",
+          "evidence": "ExceptionResponseMarshaller#looseUnmarshal(OpenWireFormat,Object,DataInput) calls BaseDataStreamMarshaller#looseUnmarsalThrowable(OpenWireFormat,DataInput) at activemq-client/src/main/java/org/apache/activemq/openwire/v12/ExceptionResponseMarshaller.java:113 (resolved)"
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    },
+    {
+      "target": "V3",
+      "status": "PASS",
+      "entrypoint": "OpenWireFuzzTest.fuzzOpenWireFormatUnmarshal(InputStream) → OpenWireFormat.unmarshal(ByteSequence) → OpenWireFormat.doUnmarshal(DataInput) → DataResponseMarshaller.looseUnmarshal(OpenWireFormat, Object, DataInput) → BaseDataStreamMarshaller.looseUnmarsalNestedObject(OpenWireFormat, DataInput) → OpenWireFormat.looseUnmarshalNestedObject(DataInput)",
+      "source_path": "activemq-client/src/main/java/org/apache/activemq/openwire/OpenWireFormat.java",
+      "start_ok": true,
+      "harness_entry": "com.fuzz.activemq.OpenWireFuzzTest#fuzzOpenWireFormatUnmarshal",
+      "end_ok": true,
+      "end": {
+        "sink_file": "activemq-client/src/main/java/org/apache/activemq/openwire/OpenWireFormat.java",
+        "ok": true,
+        "evidence": "hop 6 OpenWireFormat#looseUnmarshalNestedObject(DataInput) is declared in activemq-client/src/main/java/org/apache/activemq/openwire/OpenWireFormat.java:477",
+        "level": "method",
+        "sink_method": "OpenWireFormat#looseUnmarshalNestedObject",
+        "sink_evidence": "hop 6 is OpenWireFormat#looseUnmarshalNestedObject(DataInput)"
+      },
+      "hops": [
+        {
+          "index": 1,
+          "raw": "OpenWireFuzzTest.fuzzOpenWireFormatUnmarshal(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "com.fuzz.activemq.OpenWireFuzzTest#fuzzOpenWireFormatUnmarshal(InputStream)",
+              "location": "harness/src/test/java/com/fuzz/activemq/OpenWireFuzzTest.java:63"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "raw": "OpenWireFormat.unmarshal(ByteSequence)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.apache.activemq.openwire.OpenWireFormat#unmarshal(ByteSequence)",
+              "location": "activemq-client/src/main/java/org/apache/activemq/openwire/OpenWireFormat.java:192"
+            },
+            {
+              "method": "org.apache.activemq.wireformat.WireFormat#unmarshal(ByteSequence)",
+              "location": "activemq-client/src/main/java/org/apache/activemq/wireformat/WireFormat.java:42"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "raw": "OpenWireFormat.doUnmarshal(DataInput)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.apache.activemq.openwire.OpenWireFormat#doUnmarshal(DataInput)",
+              "location": "activemq-client/src/main/java/org/apache/activemq/openwire/OpenWireFormat.java:366"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "raw": "DataResponseMarshaller.looseUnmarshal(OpenWireFormat, Object, DataInput)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.apache.activemq.openwire.v1.DataResponseMarshaller#looseUnmarshal(OpenWireFormat,Object,DataInput)",
+              "location": "activemq-client/src/main/java/org/apache/activemq/openwire/v1/DataResponseMarshaller.java:110"
+            },
+            {
+              "method": "org.apache.activemq.openwire.v10.DataResponseMarshaller#looseUnmarshal(OpenWireFormat,Object,DataInput)",
+              "location": "activemq-client/src/main/java/org/apache/activemq/openwire/v10/DataResponseMarshaller.java:109"
+            },
+            {
+              "method": "org.apache.activemq.openwire.v11.DataResponseMarshaller#looseUnmarshal(OpenWireFormat,Object,DataInput)",
+              "location": "activemq-client/src/main/java/org/apache/activemq/openwire/v11/DataResponseMarshaller.java:109"
+            },
+            {
+              "method": "org.apache.activemq.openwire.v12.DataResponseMarshaller#looseUnmarshal(OpenWireFormat,Object,DataInput)",
+              "location": "activemq-client/src/main/java/org/apache/activemq/openwire/v12/DataResponseMarshaller.java:109"
+            },
+            {
+              "method": "org.apache.activemq.openwire.v9.DataResponseMarshaller#looseUnmarshal(OpenWireFormat,Object,DataInput)",
+              "location": "activemq-client/src/main/java/org/apache/activemq/openwire/v9/DataResponseMarshaller.java:109"
+            },
+            {
+              "method": "org.apache.activemq.openwire.v2.DataResponseMarshaller#looseUnmarshal(OpenWireFormat,Object,DataInput)",
+              "location": "activemq-openwire-legacy/src/main/java/org/apache/activemq/openwire/v2/DataResponseMarshaller.java:110"
+            },
+            {
+              "method": "org.apache.activemq.openwire.v3.DataResponseMarshaller#looseUnmarshal(OpenWireFormat,Object,DataInput)",
+              "location": "activemq-openwire-legacy/src/main/java/org/apache/activemq/openwire/v3/DataResponseMarshaller.java:110"
+            },
+            {
+              "method": "org.apache.activemq.openwire.v4.DataResponseMarshaller#looseUnmarshal(OpenWireFormat,Object,DataInput)",
+              "location": "activemq-openwire-legacy/src/main/java/org/apache/activemq/openwire/v4/DataResponseMarshaller.java:109"
+            }
+          ],
+          "more_candidates": 41
+        },
+        {
+          "index": 5,
+          "raw": "BaseDataStreamMarshaller.looseUnmarsalNestedObject(OpenWireFormat, DataInput)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.apache.activemq.openwire.v1.BaseDataStreamMarshaller#looseUnmarsalNestedObject(OpenWireFormat,DataInput)",
+              "location": "activemq-client/src/main/java/org/apache/activemq/openwire/v1/BaseDataStreamMarshaller.java:470"
+            },
+            {
+              "method": "org.apache.activemq.openwire.v10.BaseDataStreamMarshaller#looseUnmarsalNestedObject(OpenWireFormat,DataInput)",
+              "location": "activemq-client/src/main/java/org/apache/activemq/openwire/v10/BaseDataStreamMarshaller.java:469"
+            },
+            {
+              "method": "org.apache.activemq.openwire.v11.BaseDataStreamMarshaller#looseUnmarsalNestedObject(OpenWireFormat,DataInput)",
+              "location": "activemq-client/src/main/java/org/apache/activemq/openwire/v11/BaseDataStreamMarshaller.java:468"
+            },
+            {
+              "method": "org.apache.activemq.openwire.v12.BaseDataStreamMarshaller#looseUnmarsalNestedObject(OpenWireFormat,DataInput)",
+              "location": "activemq-client/src/main/java/org/apache/activemq/openwire/v12/BaseDataStreamMarshaller.java:471"
+            },
+            {
+              "method": "org.apache.activemq.openwire.v9.BaseDataStreamMarshaller#looseUnmarsalNestedObject(OpenWireFormat,DataInput)",
+              "location": "activemq-client/src/main/java/org/apache/activemq/openwire/v9/BaseDataStreamMarshaller.java:468"
+            },
+            {
+              "method": "org.apache.activemq.openwire.v2.BaseDataStreamMarshaller#looseUnmarsalNestedObject(OpenWireFormat,DataInput)",
+              "location": "activemq-openwire-legacy/src/main/java/org/apache/activemq/openwire/v2/BaseDataStreamMarshaller.java:469"
+            },
+            {
+              "method": "org.apache.activemq.openwire.v3.BaseDataStreamMarshaller#looseUnmarsalNestedObject(OpenWireFormat,DataInput)",
+              "location": "activemq-openwire-legacy/src/main/java/org/apache/activemq/openwire/v3/BaseDataStreamMarshaller.java:469"
+            },
+            {
+              "method": "org.apache.activemq.openwire.v4.BaseDataStreamMarshaller#looseUnmarsalNestedObject(OpenWireFormat,DataInput)",
+              "location": "activemq-openwire-legacy/src/main/java/org/apache/activemq/openwire/v4/BaseDataStreamMarshaller.java:469"
+            }
+          ],
+          "more_candidates": 4
+        },
+        {
+          "index": 6,
+          "raw": "OpenWireFormat.looseUnmarshalNestedObject(DataInput)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.apache.activemq.openwire.OpenWireFormat#looseUnmarshalNestedObject(DataInput)",
+              "location": "activemq-client/src/main/java/org/apache/activemq/openwire/OpenWireFormat.java:477"
+            }
+          ]
+        }
+      ],
+      "path_signature": [
+        "com.fuzz.activemq.OpenWireFuzzTest#fuzzOpenWireFormatUnmarshal(InputStream)",
+        "org.apache.activemq.openwire.OpenWireFormat#unmarshal(ByteSequence)",
+        "org.apache.activemq.openwire.OpenWireFormat#doUnmarshal(DataInput)",
+        "org.apache.activemq.openwire.v1.DataResponseMarshaller#looseUnmarshal(OpenWireFormat,Object,DataInput)",
+        "org.apache.activemq.openwire.v1.BaseDataStreamMarshaller#looseUnmarsalNestedObject(OpenWireFormat,DataInput)",
+        "org.apache.activemq.openwire.OpenWireFormat#looseUnmarshalNestedObject(DataInput)"
+      ],
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "written": "OpenWireFuzzTest.fuzzOpenWireFormatUnmarshal(InputStream)",
+          "provenance": "agent",
+          "method": "com.fuzz.activemq.OpenWireFuzzTest#fuzzOpenWireFormatUnmarshal(InputStream)",
+          "location": "harness/src/test/java/com/fuzz/activemq/OpenWireFuzzTest.java:63"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "OpenWireFuzzTest#fuzzOpenWireFormatUnmarshal(InputStream) calls OpenWireFormat#unmarshal(ByteSequence) at harness/src/test/java/com/fuzz/activemq/OpenWireFuzzTest.java:66 (resolved)",
+          "site": "harness/src/test/java/com/fuzz/activemq/OpenWireFuzzTest.java:66"
+        },
+        {
+          "kind": "hop",
+          "written": "OpenWireFormat.unmarshal(ByteSequence)",
+          "provenance": "agent",
+          "method": "org.apache.activemq.openwire.OpenWireFormat#unmarshal(ByteSequence)",
+          "location": "activemq-client/src/main/java/org/apache/activemq/openwire/OpenWireFormat.java:192"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "OpenWireFormat#unmarshal(ByteSequence) calls OpenWireFormat#doUnmarshal(DataInput) at activemq-client/src/main/java/org/apache/activemq/openwire/OpenWireFormat.java:209 (resolved)",
+          "site": "activemq-client/src/main/java/org/apache/activemq/openwire/OpenWireFormat.java:209"
+        },
+        {
+          "kind": "hop",
+          "written": "OpenWireFormat.doUnmarshal(DataInput)",
+          "provenance": "agent",
+          "method": "org.apache.activemq.openwire.OpenWireFormat#doUnmarshal(DataInput)",
+          "location": "activemq-client/src/main/java/org/apache/activemq/openwire/OpenWireFormat.java:366"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "OpenWireFormat#doUnmarshal(DataInput) calls DataStreamMarshaller#looseUnmarshal(OpenWireFormat,Object,DataInput) at activemq-client/src/main/java/org/apache/activemq/openwire/OpenWireFormat.java:379 (resolved)",
+          "site": "activemq-client/src/main/java/org/apache/activemq/openwire/OpenWireFormat.java:379"
+        },
+        {
+          "kind": "hop",
+          "written": "DataResponseMarshaller.looseUnmarshal(OpenWireFormat, Object, DataInput)",
+          "provenance": "agent",
+          "method": "org.apache.activemq.openwire.v1.DataResponseMarshaller#looseUnmarshal(OpenWireFormat,Object,DataInput)",
+          "location": "activemq-client/src/main/java/org/apache/activemq/openwire/v1/DataResponseMarshaller.java:110"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "DataResponseMarshaller#looseUnmarshal(OpenWireFormat,Object,DataInput) calls BaseDataStreamMarshaller#looseUnmarsalNestedObject(OpenWireFormat,DataInput) at activemq-client/src/main/java/org/apache/activemq/openwire/v1/DataResponseMarshaller.java:114 (resolved)",
+          "site": "activemq-client/src/main/java/org/apache/activemq/openwire/v1/DataResponseMarshaller.java:114"
+        },
+        {
+          "kind": "hop",
+          "written": "BaseDataStreamMarshaller.looseUnmarsalNestedObject(OpenWireFormat, DataInput)",
+          "provenance": "agent",
+          "method": "org.apache.activemq.openwire.v1.BaseDataStreamMarshaller#looseUnmarsalNestedObject(OpenWireFormat,DataInput)",
+          "location": "activemq-client/src/main/java/org/apache/activemq/openwire/v1/BaseDataStreamMarshaller.java:470"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "BaseDataStreamMarshaller#looseUnmarsalNestedObject(OpenWireFormat,DataInput) calls OpenWireFormat#looseUnmarshalNestedObject(DataInput) at activemq-client/src/main/java/org/apache/activemq/openwire/v1/BaseDataStreamMarshaller.java:472 (resolved)",
+          "site": "activemq-client/src/main/java/org/apache/activemq/openwire/v1/BaseDataStreamMarshaller.java:472"
+        },
+        {
+          "kind": "hop",
+          "written": "OpenWireFormat.looseUnmarshalNestedObject(DataInput)",
+          "provenance": "agent",
+          "method": "org.apache.activemq.openwire.OpenWireFormat#looseUnmarshalNestedObject(DataInput)",
+          "location": "activemq-client/src/main/java/org/apache/activemq/openwire/OpenWireFormat.java:477"
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "status": "CALL",
+          "evidence": "OpenWireFuzzTest#fuzzOpenWireFormatUnmarshal(InputStream) calls OpenWireFormat#unmarshal(ByteSequence) at harness/src/test/java/com/fuzz/activemq/OpenWireFuzzTest.java:66 (resolved)"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "status": "CALL",
+          "evidence": "OpenWireFormat#unmarshal(ByteSequence) calls OpenWireFormat#doUnmarshal(DataInput) at activemq-client/src/main/java/org/apache/activemq/openwire/OpenWireFormat.java:209 (resolved)"
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "status": "CALL",
+          "evidence": "OpenWireFormat#doUnmarshal(DataInput) calls DataStreamMarshaller#looseUnmarshal(OpenWireFormat,Object,DataInput) at activemq-client/src/main/java/org/apache/activemq/openwire/OpenWireFormat.java:379 (resolved)"
+        },
+        {
+          "from": 4,
+          "to": 5,
+          "status": "CALL",
+          "evidence": "DataResponseMarshaller#looseUnmarshal(OpenWireFormat,Object,DataInput) calls BaseDataStreamMarshaller#looseUnmarsalNestedObject(OpenWireFormat,DataInput) at activemq-client/src/main/java/org/apache/activemq/openwire/v1/DataResponseMarshaller.java:114 (resolved)"
+        },
+        {
+          "from": 5,
+          "to": 6,
+          "status": "CALL",
+          "evidence": "BaseDataStreamMarshaller#looseUnmarsalNestedObject(OpenWireFormat,DataInput) calls OpenWireFormat#looseUnmarshalNestedObject(DataInput) at activemq-client/src/main/java/org/apache/activemq/openwire/v1/BaseDataStreamMarshaller.java:472 (resolved)"
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    }
+  ],
+  "plan_ok": true,
+  "plans": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "signals": [
+        {
+          "name": "allocBytes",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "org.apache.activemq.openwire.v1.BaseDataStreamMarshaller#looseUnmarshalByteArray(DataInput) — line 624-625: int size = dataIn.readInt(); rc = new byte[size];",
+              "status": "RESOLVED",
+              "method": "org.apache.activemq.openwire.v1.BaseDataStreamMarshaller#looseUnmarshalByteArray",
+              "declared_at": "activemq-client/src/main/java/org/apache/activemq/openwire/v1/BaseDataStreamMarshaller.java:621",
+              "relation": "on_path"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    },
+    {
+      "target": "V2",
+      "status": "PASS",
+      "signals": [
+        {
+          "name": "throwableDepth",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "org.apache.activemq.openwire.v1.BaseDataStreamMarshaller#looseUnmarsalThrowable(OpenWireFormat, DataInput) — line 514 entry, line 545 recursive self-call via o.initCause()",
+              "status": "RESOLVED",
+              "method": "org.apache.activemq.openwire.v1.BaseDataStreamMarshaller#looseUnmarsalThrowable",
+              "declared_at": "activemq-client/src/main/java/org/apache/activemq/openwire/v1/BaseDataStreamMarshaller.java:514",
+              "relation": "on_path"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    },
+    {
+      "target": "V3",
+      "status": "PASS",
+      "signals": [
+        {
+          "name": "nestingDepth",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "org.apache.activemq.openwire.v1.BaseDataStreamMarshaller#looseUnmarsalNestedObject(OpenWireFormat, DataInput) — line 470-472: delegates to wireFormat.looseUnmarshalNestedObject(dataIn) which reads type byte and dispatches back to marshaller",
+              "status": "RESOLVED",
+              "method": "org.apache.activemq.openwire.v1.BaseDataStreamMarshaller#looseUnmarsalNestedObject",
+              "declared_at": "activemq-client/src/main/java/org/apache/activemq/openwire/v1/BaseDataStreamMarshaller.java:470",
+              "relation": "on_path"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "warnings": [
+        "Target V3, signal `nestingDepth`: every location is on the attack path before the sink OpenWireFormat#looseUnmarshalNestedObject; it observes the sink's resource only if it is measured after the sink ran (e.g. a returned length), not at method entry."
+      ]
+    }
+  ]
+}

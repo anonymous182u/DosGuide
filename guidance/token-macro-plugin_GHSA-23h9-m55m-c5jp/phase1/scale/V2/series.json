@@ -1,0 +1,11 @@
+{
+  "parameter": "subject length (number of 'a' characters matched against catastrophic-backtracking pattern ^(a+)+b)",
+  "inputs": [
+    {"file": "n8.bin", "value": 8},
+    {"file": "n14.bin", "value": 14},
+    {"file": "n20.bin", "value": 20},
+    {"file": "n24.bin", "value": 24},
+    {"file": "n27.bin", "value": 27},
+    {"file": "n30.bin", "value": 30}
+  ]
+}

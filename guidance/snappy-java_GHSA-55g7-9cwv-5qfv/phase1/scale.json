@@ -1,0 +1,23 @@
+{
+  "series_request": null,
+  "rounds": [
+    {
+      "round": 1,
+      "revision": {
+        "V1": {
+          "scale": "Measured: allocation grows at 1.0 byte per unit of chunkSize with ~200 KB constant overhead (e.g. chunkSize=8388608 → 8.2 MB allocated, peak heap 10 MB). CPU is flat at ~5 ms. Extrapolating linearly to -Xmx1g: available heap after JVM overhead ≈ 800 MB, so chunkSize ≈ 800000000 triggers OOM. The 4-byte big-endian integer easily encodes this (0x2FAF0800). Input is 20 bytes (16-byte Snappy stream header + 4-byte chunkSize). Amplification: 20 bytes → ~800 MB allocation.",
+          "input_bytes": 20
+        },
+        "V2": {
+          "scale": "Measured: allocation grows at 1.0 byte per unit of claimed uncompressedLength with ~470 KB overhead (e.g. value=8388608 → 8.5 MB allocated, peak heap 10 MB). CPU is flat at ~28 ms. Extrapolating to -Xmx1g: need uncompressedLength ≈ 800000000 for OOM. A 5-byte snappy varint encodes this value. Input is 25 bytes (16-byte header + 4-byte chunkSize=5 + 5 bytes compressed data encoding the varint). Amplification: 25 bytes → ~800 MB allocation.",
+          "input_bytes": 25
+        },
+        "V3": {
+          "scale": "Measured: allocation grows at 1.0 byte per unit of claimed uncompressedLength with ~400 KB overhead (e.g. value=8388608 → 8.4 MB allocated, peak heap 11 MB). CPU is flat at ~26 ms. Extrapolating to -Xmx1g: need uncompressedLength ≈ 800000000 for OOM. A 5-byte snappy varint encodes this. Input is 5 bytes (varint + padding). Amplification: 5 bytes → ~800 MB allocation.",
+          "input_bytes": 5
+        }
+      },
+      "field_problems": {}
+    }
+  ]
+}

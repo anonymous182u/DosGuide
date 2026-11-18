@@ -1,0 +1,33 @@
+{
+ "parameter": "regex repeat count {n} inside a /regexp/ term (copies concatenated by Operations.repeat)",
+ "inputs": [
+  {
+   "file": "r16384.bin",
+   "value": 16384
+  },
+  {
+   "file": "r32768.bin",
+   "value": 32768
+  },
+  {
+   "file": "r65536.bin",
+   "value": 65536
+  },
+  {
+   "file": "r131072.bin",
+   "value": 131072
+  },
+  {
+   "file": "r262144.bin",
+   "value": 262144
+  },
+  {
+   "file": "r524288.bin",
+   "value": 524288
+  },
+  {
+   "file": "r1048576.bin",
+   "value": 1048576
+  }
+ ]
+}

@@ -1,0 +1,27 @@
+{
+  "clone_url": "https://github.com/apache/cxf.git",
+  "commit": "51ad92012fbcfbdd77b722214631303850315799",
+  "jdk": 17,
+  "tools": "Apache Maven 3.9.x (verified with 3.9.12)",
+  "commands": [
+    "cd src && MAVEN_OPTS=-Xmx2g mvn -B -Pfastinstall -DskipTests -pl core -am package"
+  ],
+  "artifacts": [
+    {
+      "built": "src/core/target/cxf-core-4.1.1-SNAPSHOT.jar",
+      "lib": "lib/cxf-core-4.1.1-SNAPSHOT.jar",
+      "sha256": "1da876ecbb1e1a2d32afa6ecaa0824cfbeadf23de99b4a8c2c4753fb0f0e121a",
+      "classes_sha256": "406d5268dcffeaad47a0e3cbe8043d9ec68e757bbab019b43a5c612aa4e636d6"
+    }
+  ],
+  "fixed": {
+    "jars": [
+      {
+        "coords": "org.apache.cxf:cxf-core:4.1.1",
+        "sha256": "b2272ea0cb851914f103ff0cace4c8978114228ab41dede68e60287be0562396"
+      }
+    ],
+    "drop": "^(cxf\\-core)-[0-9]"
+  },
+  "notes": "Reactor: cxf (root pom), cxf-parent, cxf-core (project version 4.1.1-SNAPSHOT). -Pfastinstall is the project's own profile (maven.test.skip, pmd.skip, checkstyle.skip, invoker.skip). The build itself generates the ws/addressing, wsdl/http and configuration/security classes (cxf-xjc-plugin) and packages the module's resources; the build plugins under the org.apache.cxf group (cxf-xjc-plugin, cxf-xjc-dv, cxf-buildtools, cxf-xml2fastinfoset-plugin) are separate Apache projects resolved from Central and not on the fixture's class path. The jar has the same entries as the cxf-core 4.1.0 release (847 classes). Fixed: cxf-core 4.1.1."
+}

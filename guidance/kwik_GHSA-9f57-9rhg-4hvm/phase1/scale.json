@@ -1,0 +1,15 @@
+{
+  "series_request": null,
+  "rounds": [
+    {
+      "round": 1,
+      "revision": {
+        "V1": {
+          "scale": "Measured growth is quadratic (O(n^2) equals comparisons in ConcurrentHashMap TreeBin DFS traversal). Fit from n=1024 (23.7ms) and n=2048 (51.5ms): cpu ≈ 14.4ms baseline + 8.83ns per comparison pair × n(n-1). Extrapolating to 20,000ms timeout: n ≈ 47,570 unique hash-colliding 10-byte connection IDs; at 11 bytes per ID (1 length + 10 data), ≈ 524,000 bytes. Available collision IDs: 9^5 = 59,049 (sufficient). Well within 1MB input limit.",
+          "input_bytes": 524000
+        }
+      },
+      "field_problems": {}
+    }
+  ]
+}

@@ -1,0 +1,386 @@
+{
+  "tool": "checkpath",
+  "version": "1.0.0",
+  "source_root": "projects/xnio_GHSA-7f88-5hhx-67m2",
+  "index": {
+    "files_parsed": 238,
+    "files_failed": 0,
+    "methods": 3529,
+    "harness_fuzz_methods": [
+      "XnioFuzzTest.fuzzIoFutureAddNotifier(InputStream)",
+      "XnioFuzzTest.fuzzFutureResultAddCancelHandler(InputStream)"
+    ],
+    "index_seconds": 2.2,
+    "max_gap": 2,
+    "sink_depth": 6,
+    "symbol_resolution": true
+  },
+  "ok": true,
+  "targets": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "entrypoint": "XnioFuzzTest.fuzzIoFutureAddNotifier(InputStream) → FutureResult.setResult(String) → AbstractIoFuture.setResult(Object) → NotifierState.notifyDone(AbstractIoFuture, Object)",
+      "source_path": "api/src/main/java/org/xnio/AbstractIoFuture.java",
+      "start_ok": true,
+      "harness_entry": "org.xnio.fuzz.XnioFuzzTest#fuzzIoFutureAddNotifier",
+      "end_ok": true,
+      "end": {
+        "sink_file": "api/src/main/java/org/xnio/AbstractIoFuture.java",
+        "ok": true,
+        "evidence": "hop 4 NotifierState#notifyDone(AbstractIoFuture,T) is declared in api/src/main/java/org/xnio/AbstractIoFuture.java:247",
+        "level": "method",
+        "sink_method": "AbstractIoFuture.NotifierState#notifyDone",
+        "sink_evidence": "hop 4 is State#notifyDone(AbstractIoFuture,T)"
+      },
+      "hops": [
+        {
+          "index": 1,
+          "raw": "XnioFuzzTest.fuzzIoFutureAddNotifier(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.xnio.fuzz.XnioFuzzTest#fuzzIoFutureAddNotifier(InputStream)",
+              "location": "harness/src/test/java/org/xnio/fuzz/XnioFuzzTest.java:31"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "raw": "FutureResult.setResult(String)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.xnio.FutureResult#setResult(T)",
+              "location": "api/src/main/java/org/xnio/FutureResult.java:74"
+            },
+            {
+              "method": "org.xnio.Result#setResult(T)",
+              "location": "api/src/main/java/org/xnio/Result.java:18"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "raw": "AbstractIoFuture.setResult(Object)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.xnio.AbstractIoFuture#setResult(T)",
+              "location": "api/src/main/java/org/xnio/AbstractIoFuture.java:605"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "raw": "NotifierState.notifyDone(AbstractIoFuture, Object)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.xnio.AbstractIoFuture.NotifierState#notifyDone(AbstractIoFuture,T)",
+              "location": "api/src/main/java/org/xnio/AbstractIoFuture.java:247"
+            },
+            {
+              "method": "org.xnio.AbstractIoFuture.State#notifyDone(AbstractIoFuture,T)",
+              "location": "api/src/main/java/org/xnio/AbstractIoFuture.java:46"
+            }
+          ]
+        }
+      ],
+      "path_signature": [
+        "org.xnio.fuzz.XnioFuzzTest#fuzzIoFutureAddNotifier(InputStream)",
+        "org.xnio.FutureResult#setResult(T)",
+        "org.xnio.AbstractIoFuture#setResult(T)",
+        "org.xnio.AbstractIoFuture.NotifierState#notifyDone(AbstractIoFuture,T)"
+      ],
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "written": "XnioFuzzTest.fuzzIoFutureAddNotifier(InputStream)",
+          "provenance": "agent",
+          "method": "org.xnio.fuzz.XnioFuzzTest#fuzzIoFutureAddNotifier(InputStream)",
+          "location": "harness/src/test/java/org/xnio/fuzz/XnioFuzzTest.java:31"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "XnioFuzzTest#fuzzIoFutureAddNotifier(InputStream) calls FutureResult#setResult(T) at harness/src/test/java/org/xnio/fuzz/XnioFuzzTest.java:43 (resolved)",
+          "site": "harness/src/test/java/org/xnio/fuzz/XnioFuzzTest.java:43"
+        },
+        {
+          "kind": "hop",
+          "written": "FutureResult.setResult(String)",
+          "provenance": "agent",
+          "method": "org.xnio.FutureResult#setResult(T)",
+          "location": "api/src/main/java/org/xnio/FutureResult.java:74"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "FutureResult#setResult(T) calls AbstractIoFuture#setResult(T) at api/src/main/java/org/xnio/FutureResult.java:75 (resolved)",
+          "site": "api/src/main/java/org/xnio/FutureResult.java:75"
+        },
+        {
+          "kind": "hop",
+          "written": "AbstractIoFuture.setResult(Object)",
+          "provenance": "agent",
+          "method": "org.xnio.AbstractIoFuture#setResult(T)",
+          "location": "api/src/main/java/org/xnio/AbstractIoFuture.java:605"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "AbstractIoFuture#setResult(T) calls State#notifyDone(AbstractIoFuture,T) at api/src/main/java/org/xnio/AbstractIoFuture.java:619 (resolved)",
+          "site": "api/src/main/java/org/xnio/AbstractIoFuture.java:619"
+        },
+        {
+          "kind": "hop",
+          "written": "NotifierState.notifyDone(AbstractIoFuture, Object)",
+          "provenance": "agent",
+          "method": "org.xnio.AbstractIoFuture.State#notifyDone(AbstractIoFuture,T)",
+          "location": "api/src/main/java/org/xnio/AbstractIoFuture.java:46"
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "status": "CALL",
+          "evidence": "XnioFuzzTest#fuzzIoFutureAddNotifier(InputStream) calls FutureResult#setResult(T) at harness/src/test/java/org/xnio/fuzz/XnioFuzzTest.java:43 (resolved)"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "status": "CALL",
+          "evidence": "FutureResult#setResult(T) calls AbstractIoFuture#setResult(T) at api/src/main/java/org/xnio/FutureResult.java:75 (resolved)"
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "status": "CALL",
+          "evidence": "AbstractIoFuture#setResult(T) calls State#notifyDone(AbstractIoFuture,T) at api/src/main/java/org/xnio/AbstractIoFuture.java:619 (resolved)"
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    },
+    {
+      "target": "V2",
+      "status": "PASS",
+      "entrypoint": "XnioFuzzTest.fuzzFutureResultAddCancelHandler(InputStream) → FutureResult.getIoFuture() → AbstractIoFuture.cancel() → CancellableState.cancel()",
+      "source_path": "api/src/main/java/org/xnio/AbstractIoFuture.java",
+      "start_ok": true,
+      "harness_entry": "org.xnio.fuzz.XnioFuzzTest#fuzzFutureResultAddCancelHandler",
+      "end_ok": true,
+      "end": {
+        "sink_file": "api/src/main/java/org/xnio/AbstractIoFuture.java",
+        "ok": true,
+        "evidence": "hop 4 CancellableState#cancel() is declared in api/src/main/java/org/xnio/AbstractIoFuture.java:337",
+        "level": "method",
+        "sink_method": "AbstractIoFuture.CancellableState#cancel",
+        "sink_evidence": "hop 4 is State#cancel()"
+      },
+      "hops": [
+        {
+          "index": 1,
+          "raw": "XnioFuzzTest.fuzzFutureResultAddCancelHandler(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.xnio.fuzz.XnioFuzzTest#fuzzFutureResultAddCancelHandler(InputStream)",
+              "location": "harness/src/test/java/org/xnio/fuzz/XnioFuzzTest.java:52"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "raw": "FutureResult.getIoFuture()",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.xnio.FutureResult#getIoFuture()",
+              "location": "api/src/main/java/org/xnio/FutureResult.java:54"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "raw": "AbstractIoFuture.cancel()",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.xnio.AbstractIoFuture#cancel()",
+              "location": "api/src/main/java/org/xnio/AbstractIoFuture.java:654"
+            },
+            {
+              "method": "org.xnio.Cancellable#cancel()",
+              "location": "api/src/main/java/org/xnio/Cancellable.java:14"
+            },
+            {
+              "method": "org.xnio.FailedIoFuture#cancel()",
+              "location": "api/src/main/java/org/xnio/FailedIoFuture.java:26"
+            },
+            {
+              "method": "org.xnio.IoFuture#cancel()",
+              "location": "api/src/main/java/org/xnio/IoFuture.java:80"
+            },
+            {
+              "method": "org.xnio.IoUtils$anon(Cancellable)#cancel()",
+              "location": "api/src/main/java/org/xnio/IoUtils.java:89"
+            },
+            {
+              "method": "org.xnio.nio.WorkerThread$anon(Cancellable)#cancel()",
+              "location": "nio-impl/src/main/java/org/xnio/nio/WorkerThread.java:227"
+            },
+            {
+              "method": "org.xnio.nio.WorkerThread$anon(Cancellable)#cancel()",
+              "location": "nio-impl/src/main/java/org/xnio/nio/WorkerThread.java:282"
+            },
+            {
+              "method": "org.xnio.fuzz.XnioFuzzTest$anon(Cancellable)#cancel()",
+              "location": "harness/src/test/java/org/xnio/fuzz/XnioFuzzTest.java:56"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "raw": "CancellableState.cancel()",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.xnio.AbstractIoFuture.CancellableState#cancel()",
+              "location": "api/src/main/java/org/xnio/AbstractIoFuture.java:337"
+            },
+            {
+              "method": "org.xnio.AbstractIoFuture.State#cancel()",
+              "location": "api/src/main/java/org/xnio/AbstractIoFuture.java:52"
+            }
+          ]
+        }
+      ],
+      "path_signature": [
+        "org.xnio.fuzz.XnioFuzzTest#fuzzFutureResultAddCancelHandler(InputStream)",
+        "org.xnio.FutureResult#getIoFuture()",
+        "org.xnio.AbstractIoFuture#cancel()",
+        "org.xnio.AbstractIoFuture.CancellableState#cancel()"
+      ],
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "written": "XnioFuzzTest.fuzzFutureResultAddCancelHandler(InputStream)",
+          "provenance": "agent",
+          "method": "org.xnio.fuzz.XnioFuzzTest#fuzzFutureResultAddCancelHandler(InputStream)",
+          "location": "harness/src/test/java/org/xnio/fuzz/XnioFuzzTest.java:52"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "XnioFuzzTest#fuzzFutureResultAddCancelHandler(InputStream) calls FutureResult#getIoFuture() at harness/src/test/java/org/xnio/fuzz/XnioFuzzTest.java:62 (resolved)",
+          "site": "harness/src/test/java/org/xnio/fuzz/XnioFuzzTest.java:62"
+        },
+        {
+          "kind": "hop",
+          "written": "FutureResult.getIoFuture()",
+          "provenance": "agent",
+          "method": "org.xnio.FutureResult#getIoFuture()",
+          "location": "api/src/main/java/org/xnio/FutureResult.java:54"
+        },
+        {
+          "kind": "connection",
+          "type": "SEQUENCE",
+          "evidence": "JsseXnioSsl#connectSsl(XnioWorker,InetSocketAddress,InetSocketAddress,ChannelListener,ChannelListener,OptionMap) (api/src/main/java/org/xnio/ssl/JsseXnioSsl.java:123) calls FutureResult#getIoFuture() at line 143 and cancel at line 145",
+          "site": "api/src/main/java/org/xnio/ssl/JsseXnioSsl.java:123"
+        },
+        {
+          "kind": "hop",
+          "written": "AbstractIoFuture.cancel()",
+          "provenance": "agent",
+          "method": "org.xnio.AbstractIoFuture#cancel()",
+          "location": "api/src/main/java/org/xnio/AbstractIoFuture.java:654"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "AbstractIoFuture#cancel() calls State#cancel() at api/src/main/java/org/xnio/AbstractIoFuture.java:660 (resolved)",
+          "site": "api/src/main/java/org/xnio/AbstractIoFuture.java:660"
+        },
+        {
+          "kind": "hop",
+          "written": "CancellableState.cancel()",
+          "provenance": "agent",
+          "method": "org.xnio.AbstractIoFuture.State#cancel()",
+          "location": "api/src/main/java/org/xnio/AbstractIoFuture.java:52"
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "status": "CALL",
+          "evidence": "XnioFuzzTest#fuzzFutureResultAddCancelHandler(InputStream) calls FutureResult#getIoFuture() at harness/src/test/java/org/xnio/fuzz/XnioFuzzTest.java:62 (resolved)"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "status": "SEQUENCE",
+          "evidence": "JsseXnioSsl#connectSsl(XnioWorker,InetSocketAddress,InetSocketAddress,ChannelListener,ChannelListener,OptionMap) (api/src/main/java/org/xnio/ssl/JsseXnioSsl.java:123) calls FutureResult#getIoFuture() at line 143 and cancel at line 145"
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "status": "CALL",
+          "evidence": "AbstractIoFuture#cancel() calls State#cancel() at api/src/main/java/org/xnio/AbstractIoFuture.java:660 (resolved)"
+        }
+      ],
+      "diagnostics": [],
+      "warnings": [
+        "Edge 2→3 is a call sequence, not a call chain: JsseXnioSsl#connectSsl(XnioWorker,InetSocketAddress,InetSocketAddress,ChannelListener,ChannelListener,OptionMap) (api/src/main/java/org/xnio/ssl/JsseXnioSsl.java:123) calls FutureResult#getIoFuture() at line 143 and cancel at line 145"
+      ]
+    }
+  ],
+  "plan_ok": true,
+  "plans": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "signals": [
+        {
+          "name": "maxDepth",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "AbstractIoFuture$NotifierState#notifyDone",
+              "status": "RESOLVED",
+              "method": "org.xnio.AbstractIoFuture.State#notifyDone",
+              "declared_at": "api/src/main/java/org/xnio/AbstractIoFuture.java:46",
+              "relation": "on_path"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    },
+    {
+      "target": "V2",
+      "status": "PASS",
+      "signals": [
+        {
+          "name": "maxDepth",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "AbstractIoFuture$CancellableState#cancel",
+              "status": "RESOLVED",
+              "method": "org.xnio.AbstractIoFuture.State#cancel",
+              "declared_at": "api/src/main/java/org/xnio/AbstractIoFuture.java:52",
+              "relation": "on_path"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    }
+  ]
+}

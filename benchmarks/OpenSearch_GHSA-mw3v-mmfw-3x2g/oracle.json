@@ -1,0 +1,15 @@
+{
+  "timeout_ms": 20000,
+  "jvm_args": [
+    "-Xmx1g",
+    "-Xss1m"
+  ],
+  "max_input_bytes": 131072,
+  "justification": {
+    "max_input_bytes": "The fix only changes the behaviour for query strings longer than the default length limit it introduces, which is well above 10,240 characters, so the default cannot reach any behaviour that differs between the vulnerable and the fixed version; inputs several times that limit are needed to exceed -Xmx1g or 20 s on the vulnerable version. Measured on 2.19.3 at -Xmx1g -Xss1m with the PoCs' constructions cut at group boundaries: regex_terms passes at 46,000 bytes and fails (OutOfMemoryError, ~3.5 s) from 48,000; regex_bool_groups passes at 70,000 and fails from 80,000. The input size rule (the smallest power of two of at least twice the smallest failing input) gives 131,072."
+  },
+  "fixed": {
+    "lib": "fixed/lib/*",
+    "drop": "^(opensearch|opensearch\\-cli|opensearch\\-common|opensearch\\-compress|opensearch\\-core|opensearch\\-geo|opensearch\\-secure\\-sm|opensearch\\-task\\-commons|opensearch\\-telemetry|opensearch\\-x\\-content)-[0-9]"
+  }
+}

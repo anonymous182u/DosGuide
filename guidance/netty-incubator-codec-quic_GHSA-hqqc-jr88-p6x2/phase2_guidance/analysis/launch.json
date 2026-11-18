@@ -1,0 +1,11 @@
+{
+  "build": ["bash build.sh"],
+  "classpath_command": "echo \"target/test-classes:target/classes:$(ls lib/*.jar target/deps/*.jar | tr '\\n' ':')\"",
+  "javaagent": {"jar": "target/dosguide-agent.jar", "args": ""},
+  "jvm_args": ["-Xmx1g", "-Xss1m"],
+  "guidance_factory": "dosguide.run.FuzzRunner#createGuidance",
+  "targets": {
+    "V1": {"test_class": "io.netty.incubator.codec.quic.fuzz.QuicCodecFuzzTest", "method": "fuzzQuicServerCodecChannelRead"},
+    "PkgRisk1": {"test_class": "io.netty.incubator.codec.quic.fuzz.QuicCodecFuzzTest", "method": "fuzzQuicServerCodecChannelRead2"}
+  }
+}

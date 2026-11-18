@@ -1,0 +1,20 @@
+{
+  "build": [
+    "mvn -q package -DskipTests",
+    "mkdir -p target/agent-staging/agent",
+    "cp target/test-classes/agent/V1Counters.class target/agent-staging/agent/",
+    "cp target/test-classes/agent/V1Transformer.class target/agent-staging/agent/",
+    "cp target/test-classes/agent/V1MeasureAgent.class target/agent-staging/agent/",
+    "cp target/test-classes/agent/V1Transformer\\$*.class target/agent-staging/agent/ 2>/dev/null; true",
+    "jar cfm target/v1-agent.jar src/test/resources/META-INF/MANIFEST.MF -C target/agent-staging ."
+  ],
+  "classpath": "target/msgpack-fuzz-1.0-SNAPSHOT-tests.jar:lib/msgpack-core-0.9.10-19-befe3b94-SNAPSHOT.jar:target/test-deps/*",
+  "javaagent": {"jar": "target/v1-agent.jar", "args": ""},
+  "jvm_args": [],
+  "guidance_factory": "runner.FuzzRunner#createGuidance",
+  "targets": {
+    "V1": {"test_class": "fuzzing.MsgpackFuzzTest", "method": "fuzzMessageUnpackerUnpackValue"},
+    "V2": {"test_class": "fuzzing.MsgpackFuzzTest", "method": "fuzzMessageUnpackerUnpackValue"},
+    "V3": {"test_class": "fuzzing.MsgpackFuzzTest", "method": "fuzzMessageUnpackerUnpackValue"}
+  }
+}

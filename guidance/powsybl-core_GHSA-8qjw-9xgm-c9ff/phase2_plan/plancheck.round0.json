@@ -1,0 +1,578 @@
+{
+  "tool": "checkpath",
+  "version": "1.0.0",
+  "source_root": "projects/powsybl-core_GHSA-8qjw-9xgm-c9ff",
+  "index": {
+    "files_parsed": 2420,
+    "files_failed": 0,
+    "methods": 21748,
+    "harness_fuzz_methods": [
+      "RegexCriterionFuzzTest.fuzzRegexCriterionFilter(InputStream)",
+      "RegexCriterionFuzzTest.fuzzPatternMatcherFind(InputStream)"
+    ],
+    "index_seconds": 5.8,
+    "max_gap": 2,
+    "sink_depth": 6,
+    "symbol_resolution": true
+  },
+  "ok": true,
+  "targets": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "entrypoint": "RegexCriterionFuzzTest.fuzzRegexCriterionFilter(InputStream) → RegexCriterion(String) → RegexCriterion.filter(Identifiable, IdentifiableType) → Pattern.compile(String) → Matcher.find()",
+      "source_path": "iidm/iidm-criteria/src/main/java/com/powsybl/iidm/criteria/RegexCriterion.java",
+      "start_ok": true,
+      "harness_entry": "com.powsybl.fuzzing.tests.RegexCriterionFuzzTest#fuzzRegexCriterionFilter",
+      "end_ok": true,
+      "end": {
+        "sink_file": "iidm/iidm-criteria/src/main/java/com/powsybl/iidm/criteria/RegexCriterion.java",
+        "ok": true,
+        "evidence": "hop 3 RegexCriterion#filter(Identifiable,IdentifiableType) is declared in iidm/iidm-criteria/src/main/java/com/powsybl/iidm/criteria/RegexCriterion.java:32",
+        "level": "method",
+        "sink_method": "Matcher#find()",
+        "sink_evidence": "hop 5 names Matcher#find() (outside the source tree)"
+      },
+      "hops": [
+        {
+          "index": 1,
+          "raw": "RegexCriterionFuzzTest.fuzzRegexCriterionFilter(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "com.powsybl.fuzzing.tests.RegexCriterionFuzzTest#fuzzRegexCriterionFilter(InputStream)",
+              "location": "harness/src/test/java/com/powsybl/fuzzing/tests/RegexCriterionFuzzTest.java:39"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "raw": "RegexCriterion(String)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "com.powsybl.iidm.criteria.RegexCriterion#RegexCriterion(String)",
+              "location": "iidm/iidm-criteria/src/main/java/com/powsybl/iidm/criteria/RegexCriterion.java:22"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "raw": "RegexCriterion.filter(Identifiable, IdentifiableType)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "com.powsybl.iidm.criteria.RegexCriterion#filter(Identifiable,IdentifiableType)",
+              "location": "iidm/iidm-criteria/src/main/java/com/powsybl/iidm/criteria/RegexCriterion.java:32"
+            },
+            {
+              "method": "com.powsybl.iidm.criteria.Criterion#filter(Identifiable,IdentifiableType)",
+              "location": "iidm/iidm-criteria/src/main/java/com/powsybl/iidm/criteria/Criterion.java:42"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "raw": "Pattern.compile(String)",
+          "status": "EXTERNAL",
+          "candidates": [],
+          "external": [
+            "Pattern.compile(String)"
+          ]
+        },
+        {
+          "index": 5,
+          "raw": "Matcher.find()",
+          "status": "EXTERNAL",
+          "candidates": [],
+          "external": [
+            "Matcher.find()"
+          ]
+        }
+      ],
+      "path_signature": [
+        "com.powsybl.fuzzing.tests.RegexCriterionFuzzTest#fuzzRegexCriterionFilter(InputStream)",
+        "com.powsybl.iidm.criteria.RegexCriterion#RegexCriterion(String)",
+        "com.powsybl.iidm.criteria.RegexCriterion#filter(Identifiable,IdentifiableType)",
+        "external:compile",
+        "external:find"
+      ],
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "written": "RegexCriterionFuzzTest.fuzzRegexCriterionFilter(InputStream)",
+          "provenance": "agent",
+          "method": "com.powsybl.fuzzing.tests.RegexCriterionFuzzTest#fuzzRegexCriterionFilter(InputStream)",
+          "location": "harness/src/test/java/com/powsybl/fuzzing/tests/RegexCriterionFuzzTest.java:39"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "RegexCriterionFuzzTest#fuzzRegexCriterionFilter(InputStream) calls RegexCriterion#RegexCriterion(String) at harness/src/test/java/com/powsybl/fuzzing/tests/RegexCriterionFuzzTest.java:45 (resolved)",
+          "site": "harness/src/test/java/com/powsybl/fuzzing/tests/RegexCriterionFuzzTest.java:45"
+        },
+        {
+          "kind": "hop",
+          "written": "RegexCriterion(String)",
+          "provenance": "agent",
+          "method": "com.powsybl.iidm.criteria.RegexCriterion#RegexCriterion(String)",
+          "location": "iidm/iidm-criteria/src/main/java/com/powsybl/iidm/criteria/RegexCriterion.java:22"
+        },
+        {
+          "kind": "connection",
+          "type": "DATAFLOW",
+          "evidence": "RegexCriterion#RegexCriterion(String) (iidm/iidm-criteria/src/main/java/com/powsybl/iidm/criteria/RegexCriterion.java:22) writes field `regex`, which RegexCriterion#filter(Identifiable,IdentifiableType) (iidm/iidm-criteria/src/main/java/com/powsybl/iidm/criteria/RegexCriterion.java:32) reads",
+          "site": "iidm/iidm-criteria/src/main/java/com/powsybl/iidm/criteria/RegexCriterion.java:22"
+        },
+        {
+          "kind": "hop",
+          "written": "RegexCriterion.filter(Identifiable, IdentifiableType)",
+          "provenance": "agent",
+          "method": "com.powsybl.iidm.criteria.RegexCriterion#filter(Identifiable,IdentifiableType)",
+          "location": "iidm/iidm-criteria/src/main/java/com/powsybl/iidm/criteria/RegexCriterion.java:32"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "RegexCriterion#filter(Identifiable,IdentifiableType) calls Pattern.compile(String) at iidm/iidm-criteria/src/main/java/com/powsybl/iidm/criteria/RegexCriterion.java:33",
+          "site": "iidm/iidm-criteria/src/main/java/com/powsybl/iidm/criteria/RegexCriterion.java:33"
+        },
+        {
+          "kind": "hop",
+          "written": "Pattern.compile(String)",
+          "provenance": "agent",
+          "method": "Pattern.compile(String)",
+          "location": "outside the source tree"
+        },
+        {
+          "kind": "connection",
+          "type": "UNCHECKED",
+          "evidence": "hop 4 is outside the source tree, so calls made inside it cannot be inspected"
+        },
+        {
+          "kind": "hop",
+          "written": "Matcher.find()",
+          "provenance": "agent",
+          "method": "Matcher.find()",
+          "location": "outside the source tree"
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "status": "CALL",
+          "evidence": "RegexCriterionFuzzTest#fuzzRegexCriterionFilter(InputStream) calls RegexCriterion#RegexCriterion(String) at harness/src/test/java/com/powsybl/fuzzing/tests/RegexCriterionFuzzTest.java:45 (resolved)"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "status": "DATAFLOW",
+          "evidence": "RegexCriterion#RegexCriterion(String) (iidm/iidm-criteria/src/main/java/com/powsybl/iidm/criteria/RegexCriterion.java:22) writes field `regex`, which RegexCriterion#filter(Identifiable,IdentifiableType) (iidm/iidm-criteria/src/main/java/com/powsybl/iidm/criteria/RegexCriterion.java:32) reads"
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "status": "CALL",
+          "evidence": "RegexCriterion#filter(Identifiable,IdentifiableType) calls Pattern.compile(String) at iidm/iidm-criteria/src/main/java/com/powsybl/iidm/criteria/RegexCriterion.java:33"
+        },
+        {
+          "from": 4,
+          "to": 5,
+          "status": "UNCHECKED",
+          "evidence": "hop 4 is outside the source tree, so calls made inside it cannot be inspected"
+        }
+      ],
+      "diagnostics": [],
+      "warnings": [
+        "Hop 4: `Pattern.compile(String)` belongs to JDK class java.util.regex.Pattern; its body is not analyzed",
+        "Hop 5: `Matcher.find()` belongs to JDK class java.util.regex.Matcher; its body is not analyzed",
+        "Edge 4→5 not checked: hop 4 is outside the source tree, so calls made inside it cannot be inspected"
+      ]
+    },
+    {
+      "target": "PkgRisk1",
+      "status": "PASS",
+      "entrypoint": "RegexCriterionFuzzTest.fuzzRegexCriterionFilter(InputStream) → RegexCriterion(String) → RegexCriterion.filter(Identifiable, IdentifiableType) → Pattern.compile(String) → Matcher.find() → Matcher.search(int) → Pattern$Node.match(Matcher, int, CharSequence)",
+      "source_path": "iidm/iidm-criteria/src/main/java/com/powsybl/iidm/criteria/RegexCriterion.java",
+      "start_ok": true,
+      "harness_entry": "com.powsybl.fuzzing.tests.RegexCriterionFuzzTest#fuzzRegexCriterionFilter",
+      "end_ok": true,
+      "end": {
+        "sink_file": "iidm/iidm-criteria/src/main/java/com/powsybl/iidm/criteria/RegexCriterion.java",
+        "ok": true,
+        "evidence": "hop 3 RegexCriterion#filter(Identifiable,IdentifiableType) is declared in iidm/iidm-criteria/src/main/java/com/powsybl/iidm/criteria/RegexCriterion.java:32",
+        "level": "method",
+        "sink_method": "Pattern$Node#match()",
+        "sink_evidence": "hop 7 names Pattern$Node#match() (outside the source tree)"
+      },
+      "hops": [
+        {
+          "index": 1,
+          "raw": "RegexCriterionFuzzTest.fuzzRegexCriterionFilter(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "com.powsybl.fuzzing.tests.RegexCriterionFuzzTest#fuzzRegexCriterionFilter(InputStream)",
+              "location": "harness/src/test/java/com/powsybl/fuzzing/tests/RegexCriterionFuzzTest.java:39"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "raw": "RegexCriterion(String)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "com.powsybl.iidm.criteria.RegexCriterion#RegexCriterion(String)",
+              "location": "iidm/iidm-criteria/src/main/java/com/powsybl/iidm/criteria/RegexCriterion.java:22"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "raw": "RegexCriterion.filter(Identifiable, IdentifiableType)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "com.powsybl.iidm.criteria.RegexCriterion#filter(Identifiable,IdentifiableType)",
+              "location": "iidm/iidm-criteria/src/main/java/com/powsybl/iidm/criteria/RegexCriterion.java:32"
+            },
+            {
+              "method": "com.powsybl.iidm.criteria.Criterion#filter(Identifiable,IdentifiableType)",
+              "location": "iidm/iidm-criteria/src/main/java/com/powsybl/iidm/criteria/Criterion.java:42"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "raw": "Pattern.compile(String)",
+          "status": "EXTERNAL",
+          "candidates": [],
+          "external": [
+            "Pattern.compile(String)"
+          ]
+        },
+        {
+          "index": 5,
+          "raw": "Matcher.find()",
+          "status": "EXTERNAL",
+          "candidates": [],
+          "external": [
+            "Matcher.find()"
+          ]
+        },
+        {
+          "index": 6,
+          "raw": "Matcher.search(int)",
+          "status": "EXTERNAL",
+          "candidates": [],
+          "external": [
+            "Matcher.search(int)"
+          ]
+        },
+        {
+          "index": 7,
+          "raw": "Pattern$Node.match(Matcher, int, CharSequence)",
+          "status": "EXTERNAL",
+          "candidates": [],
+          "external": [
+            "Pattern$Node.match(Matcher, int, CharSequence)"
+          ]
+        }
+      ],
+      "path_signature": [
+        "com.powsybl.fuzzing.tests.RegexCriterionFuzzTest#fuzzRegexCriterionFilter(InputStream)",
+        "com.powsybl.iidm.criteria.RegexCriterion#RegexCriterion(String)",
+        "com.powsybl.iidm.criteria.RegexCriterion#filter(Identifiable,IdentifiableType)",
+        "external:compile",
+        "external:find",
+        "external:search",
+        "external:match"
+      ],
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "written": "RegexCriterionFuzzTest.fuzzRegexCriterionFilter(InputStream)",
+          "provenance": "agent",
+          "method": "com.powsybl.fuzzing.tests.RegexCriterionFuzzTest#fuzzRegexCriterionFilter(InputStream)",
+          "location": "harness/src/test/java/com/powsybl/fuzzing/tests/RegexCriterionFuzzTest.java:39"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "RegexCriterionFuzzTest#fuzzRegexCriterionFilter(InputStream) calls RegexCriterion#RegexCriterion(String) at harness/src/test/java/com/powsybl/fuzzing/tests/RegexCriterionFuzzTest.java:45 (resolved)",
+          "site": "harness/src/test/java/com/powsybl/fuzzing/tests/RegexCriterionFuzzTest.java:45"
+        },
+        {
+          "kind": "hop",
+          "written": "RegexCriterion(String)",
+          "provenance": "agent",
+          "method": "com.powsybl.iidm.criteria.RegexCriterion#RegexCriterion(String)",
+          "location": "iidm/iidm-criteria/src/main/java/com/powsybl/iidm/criteria/RegexCriterion.java:22"
+        },
+        {
+          "kind": "connection",
+          "type": "DATAFLOW",
+          "evidence": "RegexCriterion#RegexCriterion(String) (iidm/iidm-criteria/src/main/java/com/powsybl/iidm/criteria/RegexCriterion.java:22) writes field `regex`, which RegexCriterion#filter(Identifiable,IdentifiableType) (iidm/iidm-criteria/src/main/java/com/powsybl/iidm/criteria/RegexCriterion.java:32) reads",
+          "site": "iidm/iidm-criteria/src/main/java/com/powsybl/iidm/criteria/RegexCriterion.java:22"
+        },
+        {
+          "kind": "hop",
+          "written": "RegexCriterion.filter(Identifiable, IdentifiableType)",
+          "provenance": "agent",
+          "method": "com.powsybl.iidm.criteria.RegexCriterion#filter(Identifiable,IdentifiableType)",
+          "location": "iidm/iidm-criteria/src/main/java/com/powsybl/iidm/criteria/RegexCriterion.java:32"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "RegexCriterion#filter(Identifiable,IdentifiableType) calls Pattern.compile(String) at iidm/iidm-criteria/src/main/java/com/powsybl/iidm/criteria/RegexCriterion.java:33",
+          "site": "iidm/iidm-criteria/src/main/java/com/powsybl/iidm/criteria/RegexCriterion.java:33"
+        },
+        {
+          "kind": "hop",
+          "written": "Pattern.compile(String)",
+          "provenance": "agent",
+          "method": "Pattern.compile(String)",
+          "location": "outside the source tree"
+        },
+        {
+          "kind": "connection",
+          "type": "UNCHECKED",
+          "evidence": "hop 4 is outside the source tree, so calls made inside it cannot be inspected"
+        },
+        {
+          "kind": "hop",
+          "written": "Matcher.find()",
+          "provenance": "agent",
+          "method": "Matcher.find()",
+          "location": "outside the source tree"
+        },
+        {
+          "kind": "connection",
+          "type": "UNCHECKED",
+          "evidence": "hop 5 is outside the source tree, so calls made inside it cannot be inspected"
+        },
+        {
+          "kind": "hop",
+          "written": "Matcher.search(int)",
+          "provenance": "agent",
+          "method": "Matcher.search(int)",
+          "location": "outside the source tree"
+        },
+        {
+          "kind": "connection",
+          "type": "UNCHECKED",
+          "evidence": "hop 6 is outside the source tree, so calls made inside it cannot be inspected"
+        },
+        {
+          "kind": "hop",
+          "written": "Pattern$Node.match(Matcher, int, CharSequence)",
+          "provenance": "agent",
+          "method": "Pattern$Node.match(Matcher, int, CharSequence)",
+          "location": "outside the source tree"
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "status": "CALL",
+          "evidence": "RegexCriterionFuzzTest#fuzzRegexCriterionFilter(InputStream) calls RegexCriterion#RegexCriterion(String) at harness/src/test/java/com/powsybl/fuzzing/tests/RegexCriterionFuzzTest.java:45 (resolved)"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "status": "DATAFLOW",
+          "evidence": "RegexCriterion#RegexCriterion(String) (iidm/iidm-criteria/src/main/java/com/powsybl/iidm/criteria/RegexCriterion.java:22) writes field `regex`, which RegexCriterion#filter(Identifiable,IdentifiableType) (iidm/iidm-criteria/src/main/java/com/powsybl/iidm/criteria/RegexCriterion.java:32) reads"
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "status": "CALL",
+          "evidence": "RegexCriterion#filter(Identifiable,IdentifiableType) calls Pattern.compile(String) at iidm/iidm-criteria/src/main/java/com/powsybl/iidm/criteria/RegexCriterion.java:33"
+        },
+        {
+          "from": 4,
+          "to": 5,
+          "status": "UNCHECKED",
+          "evidence": "hop 4 is outside the source tree, so calls made inside it cannot be inspected"
+        },
+        {
+          "from": 5,
+          "to": 6,
+          "status": "UNCHECKED",
+          "evidence": "hop 5 is outside the source tree, so calls made inside it cannot be inspected"
+        },
+        {
+          "from": 6,
+          "to": 7,
+          "status": "UNCHECKED",
+          "evidence": "hop 6 is outside the source tree, so calls made inside it cannot be inspected"
+        }
+      ],
+      "diagnostics": [],
+      "warnings": [
+        "Hop 4: `Pattern.compile(String)` belongs to JDK class java.util.regex.Pattern; its body is not analyzed",
+        "Hop 5: `Matcher.find()` belongs to JDK class java.util.regex.Matcher; its body is not analyzed",
+        "Hop 6: `Matcher.search(int)` belongs to JDK class java.util.regex.Matcher; its body is not analyzed",
+        "Hop 7: `Pattern$Node.match(Matcher, int, CharSequence)` belongs to JDK class java.util.regex.Pattern; its body is not analyzed",
+        "Edge 4→5 not checked: hop 4 is outside the source tree, so calls made inside it cannot be inspected",
+        "Edge 5→6 not checked: hop 5 is outside the source tree, so calls made inside it cannot be inspected",
+        "Edge 6→7 not checked: hop 6 is outside the source tree, so calls made inside it cannot be inspected"
+      ]
+    }
+  ],
+  "plan_ok": true,
+  "plans": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "signals": [
+        {
+          "name": "nfaSteps",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "Pattern$Node#match",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "Pattern$GroupHead#match",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "Pattern$GroupTail#match",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "Pattern$Loop#match",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "Pattern$Curly#match",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "Pattern$Curly#match0",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "Pattern$Curly#match1",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "Pattern$Curly#match2",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "Pattern$BmpCharProperty#match",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "Pattern$CharProperty#match",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "Pattern$Dollar#match",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "Pattern$BnM#match",
+              "status": "EXTERNAL",
+              "relation": "library"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    },
+    {
+      "target": "PkgRisk1",
+      "status": "PASS",
+      "signals": [
+        {
+          "name": "nfaSteps",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "Pattern$Node#match",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "Pattern$GroupHead#match",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "Pattern$GroupTail#match",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "Pattern$Loop#match",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "Pattern$Curly#match",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "Pattern$Curly#match0",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "Pattern$Curly#match1",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "Pattern$Curly#match2",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "Pattern$BmpCharProperty#match",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "Pattern$CharProperty#match",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "Pattern$Dollar#match",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "Pattern$BnM#match",
+              "status": "EXTERNAL",
+              "relation": "library"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    }
+  ]
+}

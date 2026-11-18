@@ -1,0 +1,19 @@
+{
+  "build": [
+    "mvn package -DskipTests -q",
+    "bash build_agent.sh"
+  ],
+  "classpath": "target/test-classes:lib/vfsjfilechooser2-0.2.9-SNAPSHOT.jar:target/dependency/*",
+  "javaagent": {
+    "jar": "target/v1-agent.jar",
+    "args": ""
+  },
+  "jvm_args": [],
+  "guidance_factory": "com.googlecode.vfsjfilechooser2.fuzz.runner.FuzzRunner#createGuidance",
+  "targets": {
+    "V1": {
+      "test_class": "com.googlecode.vfsjfilechooser2.fuzz.harness.VFSURIValidatorFuzzTest",
+      "method": "fuzzVFSURIValidatorIsValid"
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "build": [
+    "mvn package -DskipTests -q",
+    "bash scripts/build-agent.sh"
+  ],
+  "classpath": "target/test-classes:target/dependency/*:lib/jose4j-0.9.6-SNAPSHOT.jar",
+  "javaagent": {"jar": "target/v1-measure-agent.jar"},
+  "jvm_args": [],
+  "guidance_factory": "org.jose4j.fuzz.runner.FuzzRunner#createGuidance",
+  "targets": {
+    "V1": {
+      "test_class": "org.jose4j.fuzz.JsonWebEncryptionFuzzTest",
+      "method": "fuzzJsonWebEncryptionGetPlaintextBytes"
+    }
+  }
+}

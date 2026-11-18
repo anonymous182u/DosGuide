@@ -1,0 +1,531 @@
+{
+  "tool": "checkpath",
+  "version": "1.0.0",
+  "source_root": "projects/snappy-java_GHSA-55g7-9cwv-5qfv",
+  "index": {
+    "files_parsed": 31,
+    "files_failed": 0,
+    "methods": 303,
+    "harness_fuzz_methods": [
+      "SnappyFuzzTest.fuzzSnappyInputStreamRead(InputStream)",
+      "SnappyFuzzTest.fuzzSnappyInputStreamReadByteArray(InputStream)",
+      "SnappyFuzzTest.fuzzSnappyUncompress(InputStream)"
+    ],
+    "index_seconds": 1.0,
+    "max_gap": 2,
+    "sink_depth": 6,
+    "symbol_resolution": true
+  },
+  "ok": true,
+  "targets": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "entrypoint": "SnappyFuzzTest.fuzzSnappyInputStreamRead(InputStream) → SnappyInputStream.<init>(InputStream) → SnappyInputStream.read(byte[], int, int) → SnappyInputStream.hasNextChunk()",
+      "source_path": "src/main/java/org/xerial/snappy/SnappyInputStream.java",
+      "start_ok": true,
+      "harness_entry": "org.xerial.snappy.fuzz.SnappyFuzzTest#fuzzSnappyInputStreamRead",
+      "end_ok": true,
+      "end": {
+        "sink_file": "src/main/java/org/xerial/snappy/SnappyInputStream.java",
+        "ok": true,
+        "evidence": "hop 4 SnappyInputStream#hasNextChunk() is declared in src/main/java/org/xerial/snappy/SnappyInputStream.java:388",
+        "level": "method",
+        "sink_method": "SnappyInputStream#hasNextChunk",
+        "sink_evidence": "hop 4 is SnappyInputStream#hasNextChunk()"
+      },
+      "hops": [
+        {
+          "index": 1,
+          "raw": "SnappyFuzzTest.fuzzSnappyInputStreamRead(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.xerial.snappy.fuzz.SnappyFuzzTest#fuzzSnappyInputStreamRead(InputStream)",
+              "location": "harness/src/test/java/org/xerial/snappy/fuzz/SnappyFuzzTest.java:62"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "raw": "SnappyInputStream.<init>(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.xerial.snappy.SnappyInputStream#SnappyInputStream(InputStream)",
+              "location": "src/main/java/org/xerial/snappy/SnappyInputStream.java:55"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "raw": "SnappyInputStream.read(byte[], int, int)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.xerial.snappy.SnappyInputStream#read(byte[],int,int)",
+              "location": "src/main/java/org/xerial/snappy/SnappyInputStream.java:160"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "raw": "SnappyInputStream.hasNextChunk()",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.xerial.snappy.SnappyInputStream#hasNextChunk()",
+              "location": "src/main/java/org/xerial/snappy/SnappyInputStream.java:388"
+            }
+          ]
+        }
+      ],
+      "path_signature": [
+        "org.xerial.snappy.fuzz.SnappyFuzzTest#fuzzSnappyInputStreamRead(InputStream)",
+        "org.xerial.snappy.SnappyInputStream#SnappyInputStream(InputStream)",
+        "org.xerial.snappy.SnappyInputStream#read(byte[],int,int)",
+        "org.xerial.snappy.SnappyInputStream#hasNextChunk()"
+      ],
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "written": "SnappyFuzzTest.fuzzSnappyInputStreamRead(InputStream)",
+          "provenance": "agent",
+          "method": "org.xerial.snappy.fuzz.SnappyFuzzTest#fuzzSnappyInputStreamRead(InputStream)",
+          "location": "harness/src/test/java/org/xerial/snappy/fuzz/SnappyFuzzTest.java:62"
+        },
+        {
+          "kind": "connection",
+          "type": "INDIRECT",
+          "evidence": "1 omitted call(s)"
+        },
+        {
+          "kind": "hop",
+          "written": null,
+          "provenance": "checkpath (omitted call)",
+          "method": "org.xerial.snappy.fuzz.SnappyFuzzTest#readStream(byte[])",
+          "location": "harness/src/test/java/org/xerial/snappy/fuzz/SnappyFuzzTest.java:39"
+        },
+        {
+          "kind": "hop",
+          "written": "SnappyInputStream.<init>(InputStream)",
+          "provenance": "agent",
+          "method": "org.xerial.snappy.SnappyInputStream#SnappyInputStream(InputStream)",
+          "location": "src/main/java/org/xerial/snappy/SnappyInputStream.java:55"
+        },
+        {
+          "kind": "connection",
+          "type": "DATAFLOW",
+          "evidence": "SnappyInputStream#SnappyInputStream(InputStream) (src/main/java/org/xerial/snappy/SnappyInputStream.java:55) writes field `in`, which SnappyInputStream#read(byte[],int,int) (src/main/java/org/xerial/snappy/SnappyInputStream.java:160) reads (through helper calls)",
+          "site": "src/main/java/org/xerial/snappy/SnappyInputStream.java:55"
+        },
+        {
+          "kind": "hop",
+          "written": "SnappyInputStream.read(byte[], int, int)",
+          "provenance": "agent",
+          "method": "org.xerial.snappy.SnappyInputStream#read(byte[],int,int)",
+          "location": "src/main/java/org/xerial/snappy/SnappyInputStream.java:160"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "SnappyInputStream#read(byte[],int,int) calls SnappyInputStream#hasNextChunk() at src/main/java/org/xerial/snappy/SnappyInputStream.java:167 (resolved)",
+          "site": "src/main/java/org/xerial/snappy/SnappyInputStream.java:167"
+        },
+        {
+          "kind": "hop",
+          "written": "SnappyInputStream.hasNextChunk()",
+          "provenance": "agent",
+          "method": "org.xerial.snappy.SnappyInputStream#hasNextChunk()",
+          "location": "src/main/java/org/xerial/snappy/SnappyInputStream.java:388"
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "status": "INDIRECT",
+          "evidence": "1 omitted call(s)",
+          "chain": [
+            "SnappyFuzzTest#fuzzSnappyInputStreamRead(InputStream)",
+            "SnappyFuzzTest#readStream(byte[])",
+            "SnappyInputStream#SnappyInputStream(InputStream)"
+          ]
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "status": "DATAFLOW",
+          "evidence": "SnappyInputStream#SnappyInputStream(InputStream) (src/main/java/org/xerial/snappy/SnappyInputStream.java:55) writes field `in`, which SnappyInputStream#read(byte[],int,int) (src/main/java/org/xerial/snappy/SnappyInputStream.java:160) reads (through helper calls)"
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "status": "CALL",
+          "evidence": "SnappyInputStream#read(byte[],int,int) calls SnappyInputStream#hasNextChunk() at src/main/java/org/xerial/snappy/SnappyInputStream.java:167 (resolved)"
+        }
+      ],
+      "diagnostics": [],
+      "warnings": [
+        "Edge 1→2 is indirect: SnappyFuzzTest#fuzzSnappyInputStreamRead(InputStream) → SnappyFuzzTest#readStream(byte[]) → SnappyInputStream#SnappyInputStream(InputStream)"
+      ]
+    },
+    {
+      "target": "V2",
+      "status": "PASS",
+      "entrypoint": "SnappyFuzzTest.fuzzSnappyInputStreamRead(InputStream) → SnappyInputStream.<init>(InputStream) → SnappyInputStream.read(byte[], int, int) → SnappyInputStream.hasNextChunk() → Snappy.uncompressedLength(byte[], int, int)",
+      "source_path": "src/main/java/org/xerial/snappy/SnappyInputStream.java",
+      "start_ok": true,
+      "harness_entry": "org.xerial.snappy.fuzz.SnappyFuzzTest#fuzzSnappyInputStreamRead",
+      "end_ok": true,
+      "end": {
+        "sink_file": "src/main/java/org/xerial/snappy/SnappyInputStream.java",
+        "ok": true,
+        "evidence": "hop 4 SnappyInputStream#hasNextChunk() is declared in src/main/java/org/xerial/snappy/SnappyInputStream.java:388",
+        "level": "method",
+        "sink_method": "SnappyInputStream#hasNextChunk",
+        "sink_evidence": "hop 4 is SnappyInputStream#hasNextChunk()"
+      },
+      "hops": [
+        {
+          "index": 1,
+          "raw": "SnappyFuzzTest.fuzzSnappyInputStreamRead(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.xerial.snappy.fuzz.SnappyFuzzTest#fuzzSnappyInputStreamRead(InputStream)",
+              "location": "harness/src/test/java/org/xerial/snappy/fuzz/SnappyFuzzTest.java:62"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "raw": "SnappyInputStream.<init>(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.xerial.snappy.SnappyInputStream#SnappyInputStream(InputStream)",
+              "location": "src/main/java/org/xerial/snappy/SnappyInputStream.java:55"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "raw": "SnappyInputStream.read(byte[], int, int)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.xerial.snappy.SnappyInputStream#read(byte[],int,int)",
+              "location": "src/main/java/org/xerial/snappy/SnappyInputStream.java:160"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "raw": "SnappyInputStream.hasNextChunk()",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.xerial.snappy.SnappyInputStream#hasNextChunk()",
+              "location": "src/main/java/org/xerial/snappy/SnappyInputStream.java:388"
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "raw": "Snappy.uncompressedLength(byte[], int, int)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.xerial.snappy.Snappy#uncompressedLength(byte[],int,int)",
+              "location": "src/main/java/org/xerial/snappy/Snappy.java:673"
+            }
+          ]
+        }
+      ],
+      "path_signature": [
+        "org.xerial.snappy.fuzz.SnappyFuzzTest#fuzzSnappyInputStreamRead(InputStream)",
+        "org.xerial.snappy.SnappyInputStream#SnappyInputStream(InputStream)",
+        "org.xerial.snappy.SnappyInputStream#read(byte[],int,int)",
+        "org.xerial.snappy.SnappyInputStream#hasNextChunk()",
+        "org.xerial.snappy.Snappy#uncompressedLength(byte[],int,int)"
+      ],
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "written": "SnappyFuzzTest.fuzzSnappyInputStreamRead(InputStream)",
+          "provenance": "agent",
+          "method": "org.xerial.snappy.fuzz.SnappyFuzzTest#fuzzSnappyInputStreamRead(InputStream)",
+          "location": "harness/src/test/java/org/xerial/snappy/fuzz/SnappyFuzzTest.java:62"
+        },
+        {
+          "kind": "connection",
+          "type": "INDIRECT",
+          "evidence": "1 omitted call(s)"
+        },
+        {
+          "kind": "hop",
+          "written": null,
+          "provenance": "checkpath (omitted call)",
+          "method": "org.xerial.snappy.fuzz.SnappyFuzzTest#readStream(byte[])",
+          "location": "harness/src/test/java/org/xerial/snappy/fuzz/SnappyFuzzTest.java:39"
+        },
+        {
+          "kind": "hop",
+          "written": "SnappyInputStream.<init>(InputStream)",
+          "provenance": "agent",
+          "method": "org.xerial.snappy.SnappyInputStream#SnappyInputStream(InputStream)",
+          "location": "src/main/java/org/xerial/snappy/SnappyInputStream.java:55"
+        },
+        {
+          "kind": "connection",
+          "type": "DATAFLOW",
+          "evidence": "SnappyInputStream#SnappyInputStream(InputStream) (src/main/java/org/xerial/snappy/SnappyInputStream.java:55) writes field `in`, which SnappyInputStream#read(byte[],int,int) (src/main/java/org/xerial/snappy/SnappyInputStream.java:160) reads (through helper calls)",
+          "site": "src/main/java/org/xerial/snappy/SnappyInputStream.java:55"
+        },
+        {
+          "kind": "hop",
+          "written": "SnappyInputStream.read(byte[], int, int)",
+          "provenance": "agent",
+          "method": "org.xerial.snappy.SnappyInputStream#read(byte[],int,int)",
+          "location": "src/main/java/org/xerial/snappy/SnappyInputStream.java:160"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "SnappyInputStream#read(byte[],int,int) calls SnappyInputStream#hasNextChunk() at src/main/java/org/xerial/snappy/SnappyInputStream.java:167 (resolved)",
+          "site": "src/main/java/org/xerial/snappy/SnappyInputStream.java:167"
+        },
+        {
+          "kind": "hop",
+          "written": "SnappyInputStream.hasNextChunk()",
+          "provenance": "agent",
+          "method": "org.xerial.snappy.SnappyInputStream#hasNextChunk()",
+          "location": "src/main/java/org/xerial/snappy/SnappyInputStream.java:388"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "SnappyInputStream#hasNextChunk() calls Snappy#uncompressedLength(byte[],int,int) at src/main/java/org/xerial/snappy/SnappyInputStream.java:446 (resolved)",
+          "site": "src/main/java/org/xerial/snappy/SnappyInputStream.java:446"
+        },
+        {
+          "kind": "hop",
+          "written": "Snappy.uncompressedLength(byte[], int, int)",
+          "provenance": "agent",
+          "method": "org.xerial.snappy.Snappy#uncompressedLength(byte[],int,int)",
+          "location": "src/main/java/org/xerial/snappy/Snappy.java:673"
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "status": "INDIRECT",
+          "evidence": "1 omitted call(s)",
+          "chain": [
+            "SnappyFuzzTest#fuzzSnappyInputStreamRead(InputStream)",
+            "SnappyFuzzTest#readStream(byte[])",
+            "SnappyInputStream#SnappyInputStream(InputStream)"
+          ]
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "status": "DATAFLOW",
+          "evidence": "SnappyInputStream#SnappyInputStream(InputStream) (src/main/java/org/xerial/snappy/SnappyInputStream.java:55) writes field `in`, which SnappyInputStream#read(byte[],int,int) (src/main/java/org/xerial/snappy/SnappyInputStream.java:160) reads (through helper calls)"
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "status": "CALL",
+          "evidence": "SnappyInputStream#read(byte[],int,int) calls SnappyInputStream#hasNextChunk() at src/main/java/org/xerial/snappy/SnappyInputStream.java:167 (resolved)"
+        },
+        {
+          "from": 4,
+          "to": 5,
+          "status": "CALL",
+          "evidence": "SnappyInputStream#hasNextChunk() calls Snappy#uncompressedLength(byte[],int,int) at src/main/java/org/xerial/snappy/SnappyInputStream.java:446 (resolved)"
+        }
+      ],
+      "diagnostics": [],
+      "warnings": [
+        "Edge 1→2 is indirect: SnappyFuzzTest#fuzzSnappyInputStreamRead(InputStream) → SnappyFuzzTest#readStream(byte[]) → SnappyInputStream#SnappyInputStream(InputStream)"
+      ]
+    },
+    {
+      "target": "V3",
+      "status": "PASS",
+      "entrypoint": "SnappyFuzzTest.fuzzSnappyUncompress(InputStream) → Snappy.uncompress(byte[]) → Snappy.uncompressedLength(byte[])",
+      "source_path": "src/main/java/org/xerial/snappy/Snappy.java",
+      "start_ok": true,
+      "harness_entry": "org.xerial.snappy.fuzz.SnappyFuzzTest#fuzzSnappyUncompress",
+      "end_ok": true,
+      "end": {
+        "sink_file": "src/main/java/org/xerial/snappy/Snappy.java",
+        "ok": true,
+        "evidence": "hop 3 Snappy#uncompressedLength(byte[]) is declared in src/main/java/org/xerial/snappy/Snappy.java:656",
+        "level": "method",
+        "sink_method": "Snappy#uncompress(byte[])",
+        "sink_evidence": "hop 2 is Snappy#uncompress(byte[])"
+      },
+      "hops": [
+        {
+          "index": 1,
+          "raw": "SnappyFuzzTest.fuzzSnappyUncompress(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.xerial.snappy.fuzz.SnappyFuzzTest#fuzzSnappyUncompress(InputStream)",
+              "location": "harness/src/test/java/org/xerial/snappy/fuzz/SnappyFuzzTest.java:80"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "raw": "Snappy.uncompress(byte[])",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.xerial.snappy.Snappy#uncompress(byte[])",
+              "location": "src/main/java/org/xerial/snappy/Snappy.java:514"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "raw": "Snappy.uncompressedLength(byte[])",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.xerial.snappy.Snappy#uncompressedLength(byte[])",
+              "location": "src/main/java/org/xerial/snappy/Snappy.java:656"
+            }
+          ]
+        }
+      ],
+      "path_signature": [
+        "org.xerial.snappy.fuzz.SnappyFuzzTest#fuzzSnappyUncompress(InputStream)",
+        "org.xerial.snappy.Snappy#uncompress(byte[])",
+        "org.xerial.snappy.Snappy#uncompressedLength(byte[])"
+      ],
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "written": "SnappyFuzzTest.fuzzSnappyUncompress(InputStream)",
+          "provenance": "agent",
+          "method": "org.xerial.snappy.fuzz.SnappyFuzzTest#fuzzSnappyUncompress(InputStream)",
+          "location": "harness/src/test/java/org/xerial/snappy/fuzz/SnappyFuzzTest.java:80"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "SnappyFuzzTest#fuzzSnappyUncompress(InputStream) calls Snappy#uncompress(byte[]) at harness/src/test/java/org/xerial/snappy/fuzz/SnappyFuzzTest.java:81 (resolved)",
+          "site": "harness/src/test/java/org/xerial/snappy/fuzz/SnappyFuzzTest.java:81"
+        },
+        {
+          "kind": "hop",
+          "written": "Snappy.uncompress(byte[])",
+          "provenance": "agent",
+          "method": "org.xerial.snappy.Snappy#uncompress(byte[])",
+          "location": "src/main/java/org/xerial/snappy/Snappy.java:514"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "Snappy#uncompress(byte[]) calls Snappy#uncompressedLength(byte[]) at src/main/java/org/xerial/snappy/Snappy.java:517 (resolved)",
+          "site": "src/main/java/org/xerial/snappy/Snappy.java:517"
+        },
+        {
+          "kind": "hop",
+          "written": "Snappy.uncompressedLength(byte[])",
+          "provenance": "agent",
+          "method": "org.xerial.snappy.Snappy#uncompressedLength(byte[])",
+          "location": "src/main/java/org/xerial/snappy/Snappy.java:656"
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "status": "CALL",
+          "evidence": "SnappyFuzzTest#fuzzSnappyUncompress(InputStream) calls Snappy#uncompress(byte[]) at harness/src/test/java/org/xerial/snappy/fuzz/SnappyFuzzTest.java:81 (resolved)"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "status": "CALL",
+          "evidence": "Snappy#uncompress(byte[]) calls Snappy#uncompressedLength(byte[]) at src/main/java/org/xerial/snappy/Snappy.java:517 (resolved)"
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    }
+  ],
+  "plan_ok": true,
+  "plans": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "signals": [
+        {
+          "name": "compressedAllocBytes",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "SnappyInputStream#hasNextChunk",
+              "status": "RESOLVED",
+              "method": "org.xerial.snappy.SnappyInputStream#hasNextChunk",
+              "declared_at": "src/main/java/org/xerial/snappy/SnappyInputStream.java:388",
+              "relation": "on_path"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    },
+    {
+      "target": "V2",
+      "status": "PASS",
+      "signals": [
+        {
+          "name": "uncompressedAllocBytes",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "SnappyInputStream#hasNextChunk",
+              "status": "RESOLVED",
+              "method": "org.xerial.snappy.SnappyInputStream#hasNextChunk",
+              "declared_at": "src/main/java/org/xerial/snappy/SnappyInputStream.java:388",
+              "relation": "on_path"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    },
+    {
+      "target": "V3",
+      "status": "PASS",
+      "signals": [
+        {
+          "name": "resultAllocBytes",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "Snappy#uncompress(byte[])",
+              "status": "RESOLVED",
+              "method": "org.xerial.snappy.Snappy#uncompress",
+              "declared_at": "src/main/java/org/xerial/snappy/Snappy.java:514",
+              "relation": "on_path"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    }
+  ]
+}

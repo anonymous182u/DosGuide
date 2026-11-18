@@ -1,0 +1,1 @@
+{"parameter": "nesting levels (number of '[' characters)", "inputs": [{"file": "n64.bin", "value": 64}, {"file": "n128.bin", "value": 128}, {"file": "n256.bin", "value": 256}, {"file": "n512.bin", "value": 512}, {"file": "n1024.bin", "value": 1024}, {"file": "n2048.bin", "value": 2048}]}

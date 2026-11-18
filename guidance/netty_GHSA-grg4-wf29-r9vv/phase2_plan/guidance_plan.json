@@ -1,0 +1,61 @@
+{
+  "plans": [
+    {
+      "target": "V1",
+      "signals": [
+        {
+          "name": "retainedBytes",
+          "quantity": "decompressed bytes of blocks whose CRC check passed; Bzip2Decoder#decode keeps these in the out list within one decode() call",
+          "aggregation": "sum",
+          "locations": [
+            "io.netty.handler.codec.compression.Bzip2BlockDecompressor#checkCRC",
+            "io.netty.handler.codec.compression.Bzip2BlockDecompressor#read"
+          ],
+          "technique": "bytecode",
+          "storage": "static long fields retainedBytes/validBlocks/currentBlockBytes in fuzzing.v1.V1Counters, updated by V1Transformer-inserted calls",
+          "reset": "V1Guidance.getInput() calls V1Counters.reset() before each execution",
+          "read": "V1Guidance.handleResult()"
+        },
+        {
+          "name": "decodedBytes",
+          "quantity": "number of decoded bytes (return value >= 0) produced by Bzip2BlockDecompressor#read(), i.e. writeByte calls on the output buffer",
+          "aggregation": "count",
+          "locations": [
+            "io.netty.handler.codec.compression.Bzip2BlockDecompressor#read"
+          ],
+          "technique": "bytecode",
+          "storage": "static long decodedBytes in fuzzing.v1.V1Counters",
+          "reset": "V1Guidance.getInput() calls V1Counters.reset()",
+          "read": "V1Guidance.handleResult()"
+        },
+        {
+          "name": "bwtBytes",
+          "quantity": "sum of BWT block lengths returned by Bzip2BlockDecompressor#blockLength() (blocks that reached DECODE_HUFFMAN_DATA), plus the blocksReached count",
+          "aggregation": "sum",
+          "locations": [
+            "io.netty.handler.codec.compression.Bzip2BlockDecompressor#blockLength"
+          ],
+          "technique": "bytecode",
+          "storage": "static long bwtBytes/blocksReached in fuzzing.v1.V1Counters",
+          "reset": "V1Guidance.getInput() calls V1Counters.reset()",
+          "read": "V1Guidance.handleResult()"
+        }
+      ],
+      "retention": "Keep the input if it sets a new maximum retainedBytes or retainedBytes per input byte. Otherwise keep it if it reaches a new (blocksReached, validBlocks) pair or a new maximum decodedBytes/bwtBytes. While all signals are 0, keep inputs that set a new maximum length (growing toward input_bytes = 750) or that first reach blocksReached > 0. Parents are chosen in proportion to retainedBytes rank, with boosts for high validBlocks (kept blocks per decode() call, specific to the Bzip2Decoder INIT_BLOCK re-entry loop) and high measured output/input ratio.",
+      "retention_signals": [
+        "retainedBytes",
+        "decodedBytes",
+        "bwtBytes"
+      ],
+      "mutation": [
+        "genome (block-size digit + list of (byte, runLength) plaintext records) re-encoded with Netty's own io.netty.handler.codec.compression.Bzip2Encoder through an EmbeddedChannel, so block and stream CRCs are always valid",
+        "genome record mutations: change byte or run length (+-1, x2, /2, random), insert, delete, swap records, change the block-size digit",
+        "decoded-level repetition: repeat a slice of records k times, double the whole record list, multiply all run lengths",
+        "splice genomes of two corpus entries",
+        "byte-level on encoded bytes: bit and byte flips, random insertions and deletions",
+        "byte-level repetition: repeat a random chunk k times up to jqf.ei.MAX_INPUT_SIZE, including doubling the whole input",
+        "dictionary tokens from Bzip2Decoder/Bzip2Constants inserted or overwritten: 'BZh' (MAGIC_NUMBER), block-size digits '1'-'9', block magic 0x314159 0x265359, end-of-stream magic 0x177245 0x385090"
+      ]
+    }
+  ]
+}

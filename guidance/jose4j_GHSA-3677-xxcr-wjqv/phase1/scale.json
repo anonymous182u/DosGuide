@@ -1,0 +1,15 @@
+{
+  "series_request": null,
+  "rounds": [
+    {
+      "round": 1,
+      "revision": {
+        "V1": {
+          "scale": "Measured: DEFLATE input grows ~5 bytes per doubling of decompressed output (8 bytes input→512 bytes output at 64:1 up to 33 bytes→16,384 bytes at 496:1). CPU (~85-95 ms), allocated (~5.5 MB) and peak heap (~6 MB) are flat — JWE overhead dominates, decompression cost is negligible. Extrapolating at 5 bytes per doubling: ~51 bytes of optimal dynamic-Huffman DEFLATE input produces >204,800 bytes of decompressed output, triggering the harness AssertionError (undeclared throwable). At 10,240-byte input limit, decompressed output reaches millions of bytes. Failure is not JVM OOM (decompressed output fits in 1 GB heap) but the harness's explicit 204,800-byte size check. Conservative estimate: 100 bytes accounts for encoding variation.",
+          "input_bytes": 100
+        }
+      },
+      "field_problems": {}
+    }
+  ]
+}

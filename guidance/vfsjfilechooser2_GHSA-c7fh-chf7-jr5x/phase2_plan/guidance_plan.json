@@ -1,0 +1,34 @@
+{
+  "plans": [
+    {
+      "target": "V1",
+      "signals": [
+        {
+          "name": "regexSteps",
+          "quantity": "total number of regex NFA node evaluations (each Pattern$Node.match() call is one backtracking step in the regex engine)",
+          "aggregation": "count",
+          "locations": [
+            "java.util.regex.Pattern$Node#match (base class and all inner-class overrides such as Pattern$Curly#match, Pattern$GroupHead#match, Pattern$Loop#match, etc.) — cost is incurred every time the NFA tries or retries a node during Matcher.matches() called at VFSURIValidator line 243"
+          ],
+          "technique": "bytecode",
+          "storage": "ThreadLocal<long[]> in regexmeasure.RegexStepCounter (single-element array, index 0 holds the count; class placed on bootstrap classpath via Instrumentation.appendToBootstrapClassLoaderSearch so java.base classes can call it)",
+          "reset": "V1Guidance.getInput() calls RegexStepCounter.reset() before returning the input stream",
+          "read": "V1Guidance.handleResult() calls RegexStepCounter.get() and stores the value as lastRegexSteps"
+        }
+      ],
+      "retention": "Hill-climb: always retain the input that produced the highest regexSteps as bestInput. All mutations derive from bestInput. Plateau escape: after 1000 consecutive trials with no improvement, also accept inputs with regexSteps >= 90% of the best AND byte length strictly greater than bestInput, to encourage growth toward the input_bytes limit. The seed input is ftp://a:a@a:a@a/! which triggers a small but non-zero regexSteps to bootstrap the gradient.",
+      "retention_signals": [
+        "regexSteps"
+      ],
+      "mutation": [
+        "ByteFlip (10%): flip one random byte to a random value in [0,255]",
+        "ByteInsert (10%): insert one random byte at a random position",
+        "ByteDelete (5%): delete one random byte (only if length > 10)",
+        "ChunkRepeat (30%): select a random contiguous chunk of 1-64 bytes, duplicate it 2-8 times in place — this is the dominant operator because the ReDoS cost grows with repeated colon/at-sign sequences",
+        "DictInsert (25%): insert a dictionary token at a random position — tokens extracted from source lines 235-236: protocol prefixes (ftp://, sftp://, http://, https://, webdav://, smb://, and uppercase variants), delimiter pairs (a:, a@), single delimiters (:, @, /), and the non-matching terminator (!)",
+        "DictReplace (10%): overwrite bytes at a random position with a dictionary token",
+        "Crossover (10%): splice a random-length segment from the seed input into a random position in the current input"
+      ]
+    }
+  ]
+}

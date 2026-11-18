@@ -1,0 +1,37 @@
+{
+  "final_ok": true,
+  "repair_rounds": 1,
+  "fuzz_tests_fixed_at_round": 0,
+  "rounds": [
+    {
+      "round": 0,
+      "ok": false,
+      "error": null,
+      "launch": [],
+      "build_ok": true,
+      "failing": [
+        "V1",
+        "V2",
+        "V3"
+      ],
+      "progress_advisory": {},
+      "repair": {
+        "modified": [
+          "analysis/launch.json",
+          "run.sh",
+          "src/test/java/dosguide/agent/DoSFuzzTransformer.java"
+        ],
+        "plan_revised": true
+      }
+    },
+    {
+      "round": 1,
+      "ok": true,
+      "error": null,
+      "launch": [],
+      "build_ok": true,
+      "failing": [],
+      "progress_advisory": {}
+    }
+  ]
+}

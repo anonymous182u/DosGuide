@@ -1,0 +1,199 @@
+{
+  "tool": "checkpath",
+  "version": "1.0.0",
+  "source_root": "projects/keycloak_GHSA-wq8x-cg39-8mrr",
+  "index": {
+    "files_parsed": 5025,
+    "files_failed": 0,
+    "methods": 43553,
+    "harness_fuzz_methods": [
+      "SearchQueryFuzzTest.fuzzSearchQueryUtilsGetFields(InputStream)"
+    ],
+    "index_seconds": 9.8,
+    "max_gap": 2,
+    "sink_depth": 6,
+    "symbol_resolution": true
+  },
+  "ok": true,
+  "targets": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "entrypoint": "SearchQueryFuzzTest.fuzzSearchQueryUtilsGetFields(InputStream) → SearchQueryUtils.getFields(String) → java.util.regex.Matcher.find()",
+      "source_path": "services/src/main/java/org/keycloak/utils/SearchQueryUtils.java",
+      "start_ok": true,
+      "harness_entry": "org.keycloak.fuzzing.SearchQueryFuzzTest#fuzzSearchQueryUtilsGetFields",
+      "end_ok": true,
+      "end": {
+        "sink_file": "services/src/main/java/org/keycloak/utils/SearchQueryUtils.java",
+        "ok": true,
+        "evidence": "hop 2 SearchQueryUtils#getFields(String) is declared in services/src/main/java/org/keycloak/utils/SearchQueryUtils.java:32",
+        "level": "method",
+        "sink_method": "java.util.regex.Matcher#find",
+        "sink_evidence": "hop 3 names java.util.regex.Matcher#find (outside the source tree)"
+      },
+      "hops": [
+        {
+          "index": 1,
+          "raw": "SearchQueryFuzzTest.fuzzSearchQueryUtilsGetFields(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.keycloak.fuzzing.SearchQueryFuzzTest#fuzzSearchQueryUtilsGetFields(InputStream)",
+              "location": "harness/src/test/java/org/keycloak/fuzzing/SearchQueryFuzzTest.java:32"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "raw": "SearchQueryUtils.getFields(String)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.keycloak.utils.SearchQueryUtils#getFields(String)",
+              "location": "services/src/main/java/org/keycloak/utils/SearchQueryUtils.java:32"
+            },
+            {
+              "method": "org.keycloak.utils.SearchQueryUtils#getFields(String)",
+              "location": "harness/src/main/java/org/keycloak/utils/SearchQueryUtils.java:32"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "raw": "java.util.regex.Matcher.find()",
+          "status": "EXTERNAL",
+          "candidates": [],
+          "external": [
+            "java.util.regex.Matcher.find()"
+          ]
+        }
+      ],
+      "path_signature": [
+        "org.keycloak.fuzzing.SearchQueryFuzzTest#fuzzSearchQueryUtilsGetFields(InputStream)",
+        "org.keycloak.utils.SearchQueryUtils#getFields(String)",
+        "external:find"
+      ],
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "written": "SearchQueryFuzzTest.fuzzSearchQueryUtilsGetFields(InputStream)",
+          "provenance": "agent",
+          "method": "org.keycloak.fuzzing.SearchQueryFuzzTest#fuzzSearchQueryUtilsGetFields(InputStream)",
+          "location": "harness/src/test/java/org/keycloak/fuzzing/SearchQueryFuzzTest.java:32"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "SearchQueryFuzzTest#fuzzSearchQueryUtilsGetFields(InputStream) calls SearchQueryUtils#getFields(String) at harness/src/test/java/org/keycloak/fuzzing/SearchQueryFuzzTest.java:34 (resolved)",
+          "site": "harness/src/test/java/org/keycloak/fuzzing/SearchQueryFuzzTest.java:34"
+        },
+        {
+          "kind": "hop",
+          "written": "SearchQueryUtils.getFields(String)",
+          "provenance": "agent",
+          "method": "org.keycloak.utils.SearchQueryUtils#getFields(String)",
+          "location": "services/src/main/java/org/keycloak/utils/SearchQueryUtils.java:32"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "SearchQueryUtils#getFields(String) calls java.util.regex.Matcher.find() at services/src/main/java/org/keycloak/utils/SearchQueryUtils.java:35",
+          "site": "services/src/main/java/org/keycloak/utils/SearchQueryUtils.java:35"
+        },
+        {
+          "kind": "hop",
+          "written": "java.util.regex.Matcher.find()",
+          "provenance": "agent",
+          "method": "java.util.regex.Matcher.find()",
+          "location": "outside the source tree"
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "status": "CALL",
+          "evidence": "SearchQueryFuzzTest#fuzzSearchQueryUtilsGetFields(InputStream) calls SearchQueryUtils#getFields(String) at harness/src/test/java/org/keycloak/fuzzing/SearchQueryFuzzTest.java:34 (resolved)"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "status": "CALL",
+          "evidence": "SearchQueryUtils#getFields(String) calls java.util.regex.Matcher.find() at services/src/main/java/org/keycloak/utils/SearchQueryUtils.java:35"
+        }
+      ],
+      "diagnostics": [],
+      "warnings": [
+        "Hop 3: `java.util.regex.Matcher.find()` belongs to JDK class java.util.regex.Matcher; its body is not analyzed"
+      ]
+    }
+  ],
+  "plan_ok": true,
+  "plans": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "signals": [
+        {
+          "name": "regexSteps",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "java.util.regex.Pattern$Node#match",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "java.util.regex.Pattern$Curly#match",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "java.util.regex.Pattern$GroupHead#match",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "java.util.regex.Pattern$CharProperty#match",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "java.util.regex.Pattern$Slice#match",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "java.util.regex.Pattern$Branch#match",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "java.util.regex.Pattern$Loop#match",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "java.util.regex.Pattern$GroupTail#match",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "java.util.regex.Pattern$Start#match",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "java.util.regex.Pattern$BnM#match",
+              "status": "EXTERNAL",
+              "relation": "library"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    }
+  ]
+}

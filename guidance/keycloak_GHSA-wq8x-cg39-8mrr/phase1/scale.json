@@ -1,0 +1,15 @@
+{
+  "series_request": null,
+  "rounds": [
+    {
+      "round": 1,
+      "revision": {
+        "V1": {
+          "scale": "Measured CPU time: 11ms at 64B, 36ms at 128B, 81ms at 256B, 351ms at 512B, ≥2000ms (capped) at 1024B. Doubling ratios accelerate from 3.2× to ≥5.7×, consistent with O(n^3/6) cubic growth where lower-order terms depress ratios at small n. Conservative extrapolation using exponent 2.5 from n=1024 (≥2000ms): timeout (20s) at ~2560 tab bytes; at n=10240: ~1.2 million ms. Tab 0x09 is the densest encoding: one byte per unit of the parameter (input length), with each tab matching both \\s* and [^: ]+ to drive the dual-backtracking cubic mechanism.",
+          "input_bytes": 2560
+        }
+      },
+      "field_problems": {}
+    }
+  ]
+}

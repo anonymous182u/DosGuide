@@ -1,0 +1,31 @@
+{
+  "clone_url": "https://bitbucket.org/b_c/jose4j.git",
+  "commit": "a3a21a6c3169e2fea87153a4fad53896f953abf2",
+  "jdk": 17,
+  "linux_only": false,
+  "commands": [
+    "rm -rf build && mkdir -p build/classes deps",
+    "curl -sSfL --retry 3 -o deps/slf4j-api-1.7.36.jar https://repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.36/slf4j-api-1.7.36.jar",
+    "javac -nowarn -encoding UTF-8 -source 8 -target 8 -cp deps/slf4j-api-1.7.36.jar -d build/classes $(find src/src/main/java -name '*.java' | LC_ALL=C sort)",
+    "jar cf build/jose4j.jar -C build/classes ."
+  ],
+  "artifacts": [
+    {
+      "built": "build/jose4j.jar",
+      "lib": "lib/jose4j-0.9.6-SNAPSHOT.jar",
+      "sha256": "22a47540513c2c949bd552525e4163597919805169419e2a81e64ff159a58156",
+      "classes_sha256": "8bc2d250812cef99a105c3e710ec372b7c38cf61f2081ea1840c94524c48353c"
+    }
+  ],
+  "fixed": {
+    "jars": [
+      {
+        "coords": "org.bitbucket.b_c:jose4j:0.9.6",
+        "sha256": "7314af50cde9c99e8eaf43eee617a23edcc6bb43036221064355094999d837ef"
+      }
+    ],
+    "drop": "^(jose4j)-[0-9]"
+  },
+  "tools": "JDK 17 (javac, jar), curl",
+  "notes": "The library is src/main/java of the vulnerable commit (the parent of fix 19a90a6) compiled with javac -source 8 -target 8 against slf4j-api 1.7.36 (Maven Central) and packed with jar, as the evaluation's jar was made; the project's Maven build is not used. The tree has no main resources. No Maven Central release has this code (0.9.6 has the fix, 0.9.5 differs in two files); the jar name keeps the old fixture's 0.9.6-SNAPSHOT. Fixed: jose4j 0.9.6, the first release with 19a90a6."
+}

@@ -1,0 +1,21 @@
+{
+  "series_request": [
+    "PkgRisk1"
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "revision": {
+        "V1": {
+          "scale": "Measured (fixed startup cost of ~530 ms subtracted): about 92 ms at 1024, 315 ms at 2048 and 1040 ms at 4096 colliding 20-byte DCIDs; doubling 2048→4096 costs ×3.3, close to quadratic. Fit cost ≈ 49 ns·n² + 54 µs·n (the linear part is the per-packet harness crypto and native connection setup); this predicts ~4.2 s at 8192, matching the probe's time cap there. Solving 4.9e-5·n² + 0.054·n = 20,000 ms gives n ≈ 19,600 colliding packets; at 21 bytes per record (length byte + 20-byte DCID), about 413 KB. Shorter DCIDs give a denser encoding (11 bytes per record with 10-byte IDs; see PkgRisk1).",
+          "input_bytes": 413000
+        },
+        "PkgRisk1": {
+          "scale": "Measured (fixed startup cost of ~530 ms subtracted): about 66 ms at 1024, 598 ms at 2048 and over 1470 ms at 4096 colliding 10-byte DCIDs (4096 hit the 2 s probe cap); the growth is superlinear and consistent with quadratic bin traversal, with a coefficient of about 74–140 ns per n², above V1's 49 ns. Solving a·n² + 0.054·n = 20,000 ms gives n ≈ 14,000–16,000 colliding inserts; taking about 16,000 at 11 bytes per record (length byte + 10-byte DCID) gives about 176 KB. A denser encoding exists: 8-byte DCIDs at 9 bytes per record (16,000 packets ≈ 144 KB), but reaching 16,000 colliding 8-byte IDs needs a more general collision construction than the two-byte-block substitution used here, which yields only 6,561.",
+          "input_bytes": 176000
+        }
+      },
+      "field_problems": {}
+    }
+  ]
+}

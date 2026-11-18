@@ -1,0 +1,15 @@
+{
+  "timeout_ms": 20000,
+  "jvm_args": [
+    "-Xmx1g",
+    "-Xss1m"
+  ],
+  "max_input_bytes": 65536,
+  "justification": {
+    "max_input_bytes": "The advisory's upstream PoC (JSON-java issue #708) and the fix's regression test are about 18 KB, and with the default JVM options the vulnerable version needs inputs of that order (about 15-22 KB measured) to fail, so 10,240 bytes cannot reach the failure; 65,536 was the harness's previous bound and leaves margin."
+  },
+  "fixed": {
+    "lib": "fixed/lib/*",
+    "drop": "^(json)-[0-9]"
+  }
+}

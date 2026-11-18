@@ -1,0 +1,21 @@
+{
+  "parameter": "nested DataResponse object depth",
+  "inputs": [
+    {
+      "file": "n32.bin",
+      "value": 32
+    },
+    {
+      "file": "n64.bin",
+      "value": 64
+    },
+    {
+      "file": "n128.bin",
+      "value": 128
+    },
+    {
+      "file": "n200.bin",
+      "value": 200
+    }
+  ]
+}

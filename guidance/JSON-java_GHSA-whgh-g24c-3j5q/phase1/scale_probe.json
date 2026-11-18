@@ -1,0 +1,156 @@
+{
+  "caps": {
+    "input_bytes": 2560,
+    "heap_bytes": 268435456,
+    "stack_bytes": 262144,
+    "time_ms": 2000
+  },
+  "targets": {
+    "V1": {
+      "problems": [],
+      "parameter": "nesting levels (number of '[' characters)",
+      "inputs": [
+        {
+          "file": "n64.bin",
+          "value": 64,
+          "input_bytes": 64,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 4.333285,
+          "wall_ms": 4.417606,
+          "allocated_bytes": 343928,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "file": "n128.bin",
+          "value": 128,
+          "input_bytes": 128,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 4.635788,
+          "wall_ms": 4.727829,
+          "allocated_bytes": 349336,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "file": "n256.bin",
+          "value": 256,
+          "input_bytes": 256,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 7.283442,
+          "wall_ms": 7.479288,
+          "allocated_bytes": 360184,
+          "peak_heap_bytes": 0
+        },
+        {
+          "file": "n512.bin",
+          "value": 512,
+          "input_bytes": 512,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 5.74908,
+          "wall_ms": 5.871499,
+          "allocated_bytes": 381136,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "file": "n1024.bin",
+          "value": 1024,
+          "input_bytes": 1024,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "stack_cap"
+        },
+        {
+          "file": "n2048.bin",
+          "value": 2048,
+          "input_bytes": 2048,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "stack_cap"
+        }
+      ]
+    },
+    "V2": {
+      "problems": [],
+      "parameter": "nesting levels (number of '<a>' elements)",
+      "inputs": [
+        {
+          "file": "n64.bin",
+          "value": 64,
+          "input_bytes": 192,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 5.100378,
+          "wall_ms": 5.175878,
+          "allocated_bytes": 360528,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "file": "n128.bin",
+          "value": 128,
+          "input_bytes": 384,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 5.365255,
+          "wall_ms": 5.572435,
+          "allocated_bytes": 373024,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "file": "n256.bin",
+          "value": 256,
+          "input_bytes": 768,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 8.380776,
+          "wall_ms": 8.569354,
+          "allocated_bytes": 398016,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "file": "n512.bin",
+          "value": 512,
+          "input_bytes": 1536,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 6.479708,
+          "wall_ms": 6.560461,
+          "allocated_bytes": 448016,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "file": "n853.bin",
+          "value": 853,
+          "input_bytes": 2559,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "stack_cap"
+        }
+      ]
+    }
+  },
+  "build": {
+    "ok": true
+  }
+}

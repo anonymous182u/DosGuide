@@ -1,0 +1,82 @@
+{
+  "plans": [
+    {
+      "target": "V1",
+      "signals": [
+        {
+          "name": "maxDepth",
+          "quantity": "maximum recursion depth of JSONTokener.nextValue() during one execution",
+          "aggregation": "max",
+          "locations": [
+            "JSONTokener#nextValue"
+          ],
+          "technique": "bytecode",
+          "storage": "ThreadLocal<long[]> in fuzzing.agent.DepthCounters, index 1",
+          "reset": "V1Guidance.getInput() calls DepthCounters.reset() before providing the next input",
+          "read": "V1Guidance.handleResult() reads DepthCounters.getMaxDepth()"
+        },
+        {
+          "name": "nodeCount",
+          "quantity": "total number of JSONTokener.nextValue() invocations during one execution",
+          "aggregation": "count",
+          "locations": [
+            "JSONTokener#nextValue"
+          ],
+          "technique": "bytecode",
+          "storage": "ThreadLocal<long[]> in fuzzing.agent.DepthCounters, index 2",
+          "reset": "V1Guidance.getInput() calls DepthCounters.reset() before providing the next input",
+          "read": "V1Guidance.handleResult() reads DepthCounters.getNodeCount()"
+        }
+      ],
+      "retention": "Primary: retain the input if maxDepth exceeds the current best. Secondary (flat-signal progress): when maxDepth has not improved for 500 executions, also retain inputs whose length exceeds the longest retained input, so input size grows toward 3300 bytes. Corpus is ranked by maxDepth (primary) then length (secondary). Parent selection for mutation is weighted toward higher-ranked inputs.",
+      "retention_signals": [
+        "maxDepth"
+      ],
+      "mutation": [
+        "Byte-level: random byte flip, random byte insertion, random byte deletion, random block copy within the input",
+        "Repetition [R45(a)]: select a random chunk (1 to len/2 bytes), repeat it k times (k chosen to fill up to MAX_INPUT_SIZE=10240); also whole-input doubling (append copy of self). Grows nesting tokens like '[' from a small seed to thousands of bytes within seconds.",
+        "Dictionary [R45(b)]: tokens from JSONTokener/JSONArray/JSONObject source — single chars: '[' ']' '{' '}' ':' ',' '\"' '\\''; keywords: 'true' 'false' 'null'; escapes: '\\\\' '\\n' '\\r' '\\t' '\\b' '\\f'. Inserted or overwritten at random positions.",
+        "No encoder needed [R45(c)]: JSON text is plain UTF-8; random ASCII bytes reach the parser without encoding."
+      ]
+    },
+    {
+      "target": "V2",
+      "signals": [
+        {
+          "name": "maxDepth",
+          "quantity": "maximum recursion depth of XML.parse() during one execution",
+          "aggregation": "max",
+          "locations": [
+            "XML#parse"
+          ],
+          "technique": "bytecode",
+          "storage": "ThreadLocal<long[]> in fuzzing.agent.XmlDepthCounters, index 1",
+          "reset": "V2Guidance.getInput() calls XmlDepthCounters.reset() before providing the next input",
+          "read": "V2Guidance.handleResult() reads XmlDepthCounters.getMaxDepth()"
+        },
+        {
+          "name": "nodeCount",
+          "quantity": "total number of XML.parse() invocations during one execution",
+          "aggregation": "count",
+          "locations": [
+            "XML#parse"
+          ],
+          "technique": "bytecode",
+          "storage": "ThreadLocal<long[]> in fuzzing.agent.XmlDepthCounters, index 2",
+          "reset": "V2Guidance.getInput() calls XmlDepthCounters.reset() before providing the next input",
+          "read": "V2Guidance.handleResult() reads XmlDepthCounters.getNodeCount()"
+        }
+      ],
+      "retention": "Primary: retain the input if maxDepth exceeds the current best. Secondary (flat-signal progress): when maxDepth has not improved for 500 executions, also retain inputs whose length exceeds the longest retained input, so input size grows toward 8960 bytes. Corpus is ranked by maxDepth (primary) then length (secondary). Parent selection for mutation is weighted toward higher-ranked inputs.",
+      "retention_signals": [
+        "maxDepth"
+      ],
+      "mutation": [
+        "Byte-level: random byte flip, random byte insertion, random byte deletion, random block copy within the input",
+        "Repetition [R45(a)]: select a random chunk (1 to len/2 bytes), repeat it k times (k chosen to fill up to MAX_INPUT_SIZE=10240); also whole-input doubling. Grows nesting tokens like '<a>' from a small seed to thousands of bytes within seconds.",
+        "Dictionary [R45(b)]: tokens from XMLTokener/XML.parse() source — single chars: '<' '>' '/' '=' '!' '?' '\"' '\\'' '&' ';'; multi-char: '</' '/>' '<!--' '-->' '<![CDATA[' ']]>' '&amp;' '&lt;' '&gt;' '&quot;' '&apos;'; tag fragments: '<a>' '</a>' '<a '. Inserted or overwritten at random positions.",
+        "No encoder needed [R45(c)]: XML text is plain UTF-8; random ASCII bytes reach the parser without encoding."
+      ]
+    }
+  ]
+}

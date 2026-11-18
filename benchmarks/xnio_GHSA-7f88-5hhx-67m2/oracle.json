@@ -1,0 +1,15 @@
+{
+  "timeout_ms": 20000,
+  "jvm_args": [
+    "-Xmx1g",
+    "-Xss1m"
+  ],
+  "max_input_bytes": 65536,
+  "justification": {
+    "max_input_bytes": "With this harness's input decoding, overflowing the vulnerable recursion at -Xss1m needs more than 10,240 input bytes (measured on xnio-api 3.8.13.Final: about 11,000 cold and about 20,000 after JIT compilation). 65,536 keeps a margin for JIT-compiled frames."
+  },
+  "fixed": {
+    "lib": "fixed/lib/*",
+    "drop": "^(xnio\\-api|wildfly\\-common|wildfly\\-client\\-config|jboss\\-threads|jboss\\-logging)-[0-9]"
+  }
+}

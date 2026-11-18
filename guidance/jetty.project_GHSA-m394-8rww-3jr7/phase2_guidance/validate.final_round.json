@@ -1,0 +1,352 @@
+{
+  "ok": true,
+  "launch": [],
+  "build": {
+    "ok": true
+  },
+  "targets": [
+    {
+      "tool": "ValidateArtifact",
+      "target": "V1",
+      "checks": [
+        {
+          "name": "contract",
+          "status": "pass",
+          "detail": "factory, lastSignals() and fuzz test found"
+        },
+        {
+          "name": "runs",
+          "status": "pass",
+          "detail": "101 executions completed"
+        },
+        {
+          "name": "plan_signals",
+          "status": "pass",
+          "detail": "lastSignals() returns every planned signal [sortComparisons]"
+        },
+        {
+          "name": "signal_varies",
+          "status": "pass",
+          "detail": "varying: [sortComparisons] (on the guidance's own inputs: [sortComparisons])"
+        },
+        {
+          "name": "reset",
+          "status": "pass",
+          "detail": "re-running inputs reproduced their values"
+        },
+        {
+          "name": "depends_on_execution",
+          "status": "pass",
+          "detail": "signals stay near zero when the target does not run"
+        },
+        {
+          "name": "instrumentation",
+          "status": "pass",
+          "detail": "rewrote [org.eclipse.jetty.http.QuotedQualityCSV]"
+        },
+        {
+          "name": "input_limit",
+          "status": "pass",
+          "detail": "with jqf.ei.MAX_INPUT_SIZE=16 the 20 generated inputs were at most 16 bytes"
+        },
+        {
+          "name": "input_growth",
+          "status": "pass",
+          "detail": "the guidance generated a 10240-byte input after 737 ms (8 executions); the target needs 7500"
+        },
+        {
+          "name": "progress",
+          "status": "skip",
+          "detail": "not compared: an execution of the guidance's own inputs ran as long as the time limit"
+        }
+      ],
+      "max_input_bytes": 10240,
+      "example_inputs": 8,
+      "executions": {
+        "own": 40,
+        "repeat": 5,
+        "random": 40,
+        "example": 16,
+        "probe": 3
+      },
+      "test_failures_not_used": 0,
+      "signals": {
+        "sortComparisons": {
+          "min": 1.0,
+          "max": 1566753033.0,
+          "distinct": 64
+        }
+      },
+      "signals_by_kind": {
+        "example": {
+          "sortComparisons": {
+            "max": 47869.0,
+            "distinct": 13,
+            "min": 1.0
+          }
+        },
+        "own": {
+          "sortComparisons": {
+            "max": 791098937.0,
+            "distinct": 32,
+            "min": 4.0
+          }
+        },
+        "random": {
+          "sortComparisons": {
+            "max": 1566753033.0,
+            "distinct": 37,
+            "min": 1.0
+          }
+        },
+        "repeat": {
+          "sortComparisons": {
+            "max": 791098937.0,
+            "distinct": 5,
+            "min": 78151226.0
+          }
+        }
+      },
+      "transformed_classes": [
+        "org.eclipse.jetty.http.QuotedQualityCSV"
+      ],
+      "ok": true,
+      "input_limit_probe": {
+        "max_input_bytes": 16,
+        "longest_input": 16,
+        "executions": {
+          "own": 20
+        }
+      },
+      "growth_probe": {
+        "needed_input_bytes": 7500,
+        "longest_input": 10240,
+        "executions": {
+          "own": 8
+        },
+        "growth": [
+          {
+            "ms": 492,
+            "execution": 1,
+            "bytes": 27
+          },
+          {
+            "ms": 501,
+            "execution": 2,
+            "bytes": 3369
+          },
+          {
+            "ms": 604,
+            "execution": 5,
+            "bytes": 3797
+          },
+          {
+            "ms": 737,
+            "execution": 8,
+            "bytes": 10240
+          }
+        ]
+      },
+      "hard_ok": true,
+      "progress_probe": {
+        "own_ms": 129277,
+        "executions": 128,
+        "longest_input": 10240,
+        "phase": "own",
+        "series_inputs": 5,
+        "comparison": {},
+        "measurements": {
+          "budget_ms": 120000,
+          "own_ms": 129277,
+          "executions": 128,
+          "longest_input": 10240,
+          "phase": "own",
+          "own_best": {
+            "sortComparisons": [
+              [
+                6,
+                4.0,
+                95954
+              ],
+              [
+                12,
+                4.0,
+                43560
+              ],
+              [
+                14,
+                4.0,
+                6052
+              ],
+              [
+                16,
+                4.0,
+                10315
+              ],
+              [
+                18,
+                4.0,
+                30863
+              ],
+              [
+                20,
+                10.0,
+                53036
+              ],
+              [
+                21,
+                10.0,
+                59987
+              ],
+              [
+                24,
+                20.0,
+                79561
+              ],
+              [
+                27,
+                8.0,
+                104546
+              ],
+              [
+                31,
+                8.0,
+                48504
+              ],
+              [
+                39,
+                4.0,
+                15029
+              ],
+              [
+                46,
+                8.0,
+                484
+              ],
+              [
+                50,
+                11.0,
+                59987
+              ],
+              [
+                64,
+                13.0,
+                62588
+              ],
+              [
+                124,
+                8.0,
+                65592
+              ],
+              [
+                132,
+                304.0,
+                40975
+              ],
+              [
+                150,
+                2401.0,
+                46136
+              ],
+              [
+                433,
+                3904.0,
+                30596
+              ],
+              [
+                486,
+                8.0,
+                53036
+              ],
+              [
+                692,
+                739.0,
+                15963
+              ],
+              [
+                2365,
+                2442388.0,
+                533
+              ],
+              [
+                2615,
+                4101205.0,
+                41054
+              ],
+              [
+                2861,
+                2035518.0,
+                40975
+              ],
+              [
+                3030,
+                40779940.0,
+                59139
+              ],
+              [
+                3321,
+                147040809.0,
+                9778
+              ],
+              [
+                3725,
+                120128724.0,
+                15962
+              ],
+              [
+                3935,
+                141582184.0,
+                58815
+              ],
+              [
+                4343,
+                119742461.0,
+                84419
+              ],
+              [
+                4766,
+                157911642.0,
+                26706
+              ],
+              [
+                4879,
+                465812104.0,
+                83367
+              ],
+              [
+                5527,
+                164970722.0,
+                30230
+              ],
+              [
+                7754,
+                6058250.0,
+                60173
+              ],
+              [
+                9470,
+                155546875.0,
+                95953
+              ],
+              [
+                10240,
+                208089696.0,
+                73967
+              ]
+            ]
+          },
+          "series": []
+        }
+      }
+    }
+  ],
+  "limits": {
+    "jvm_args": [
+      "-Xmx1g",
+      "-Xss1m"
+    ],
+    "timeout_ms": 20000,
+    "max_input_bytes": 10240
+  },
+  "hard_ok": true
+}

@@ -1,0 +1,181 @@
+{
+  "caps": {
+    "input_bytes": 2560,
+    "heap_bytes": 268435456,
+    "stack_bytes": 262144,
+    "time_ms": 2000
+  },
+  "targets": {
+    "V1": {
+      "problems": [],
+      "parameter": "alphanumeric chars in TLD position (after last dot, before non-matching trailer)",
+      "inputs": [
+        {
+          "file": "n10.bin",
+          "value": 10,
+          "input_bytes": 15,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 3.636466,
+          "wall_ms": 3.806584,
+          "allocated_bytes": 311328,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "file": "n20.bin",
+          "value": 20,
+          "input_bytes": 25,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 3.828815,
+          "wall_ms": 3.922629,
+          "allocated_bytes": 311720,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "file": "n30.bin",
+          "value": 30,
+          "input_bytes": 35,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 3.941117,
+          "wall_ms": 4.088247,
+          "allocated_bytes": 311736,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "file": "n40.bin",
+          "value": 40,
+          "input_bytes": 45,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 4.445822,
+          "wall_ms": 4.526023,
+          "allocated_bytes": 327104,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "file": "n50.bin",
+          "value": 50,
+          "input_bytes": 55,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 4.049412,
+          "wall_ms": 4.23694,
+          "allocated_bytes": 312448,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "file": "n60.bin",
+          "value": 60,
+          "input_bytes": 65,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 5.207343,
+          "wall_ms": 5.347908,
+          "allocated_bytes": 312480,
+          "peak_heap_bytes": 1048576
+        }
+      ]
+    },
+    "V2": {
+      "problems": [],
+      "parameter": "alphanumeric chars in TLD position after single dot",
+      "inputs": [
+        {
+          "file": "n100.bin",
+          "value": 100,
+          "input_bytes": 105,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 10.604574,
+          "wall_ms": 11.425733,
+          "allocated_bytes": 1364360,
+          "peak_heap_bytes": 2097152
+        },
+        {
+          "file": "n200.bin",
+          "value": 200,
+          "input_bytes": 205,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 11.064329,
+          "wall_ms": 11.160269,
+          "allocated_bytes": 1425600,
+          "peak_heap_bytes": 2097152
+        },
+        {
+          "file": "n400.bin",
+          "value": 400,
+          "input_bytes": 405,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 11.603447,
+          "wall_ms": 11.883856,
+          "allocated_bytes": 1364984,
+          "peak_heap_bytes": 2097152
+        },
+        {
+          "file": "n800.bin",
+          "value": 800,
+          "input_bytes": 805,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 12.241271,
+          "wall_ms": 12.581375,
+          "allocated_bytes": 1365784,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "file": "n1600.bin",
+          "value": 1600,
+          "input_bytes": 1605,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 12.805261,
+          "wall_ms": 13.201582,
+          "allocated_bytes": 1367400,
+          "peak_heap_bytes": 2097152
+        },
+        {
+          "file": "n2400.bin",
+          "value": 2400,
+          "input_bytes": 2405,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 13.996114,
+          "wall_ms": 14.424481,
+          "allocated_bytes": 1369000,
+          "peak_heap_bytes": 1048576
+        }
+      ]
+    }
+  },
+  "build": {
+    "ok": true
+  }
+}

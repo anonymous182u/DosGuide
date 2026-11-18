@@ -1,0 +1,128 @@
+{
+  "ordered_targets": [
+    {
+      "slot": 1,
+      "id": "V1",
+      "name": "Deflate decompression bomb causing DOM memory exhaustion in SAML redirect binding parsing",
+      "entrypoint": "SAMLRequestParserFuzzTest.fuzzSAMLRequestParserParseRequestRedirectBinding(InputStream) → SAMLRequestParser.parseRequestRedirectBinding(String) → RedirectBindingUtil.base64DeflateDecode(String) → SAML2Request.getSAML2ObjectFromStream(InputStream) → DocumentUtil.getDocument(InputStream) → DocumentBuilder.parse(InputStream)",
+      "source_path": "saml-core/src/main/java/org/keycloak/saml/SAMLRequestParser.java",
+      "sink": "DocumentBuilder#parse",
+      "mechanism": "Input is a DEFLATE-compressed XML document. DeflateUtil.decode() wraps it in an InflaterInputStream with no decompressed output size limit. DocumentBuilder.parse() reads the decompressed XML and builds a DOM tree in memory. DEFLATE achieves compression ratios exceeding 1000:1 for repetitive XML content (measured: 606:1 at 10K elements to 1009:1 at 320K elements). Each self-closing XML element <a/> (4 bytes) creates ~125 bytes of DOM objects. With 65 KB compressed input decompressing to ~65 MB XML containing ~16 million elements, the DOM tree requires ~2 GB of heap, far exceeding the 1 GB limit.",
+      "resource": "heap memory: total bytes allocated for DOM nodes (ElementNSImpl, child-node linked lists, interned name strings) grows linearly with the number of XML elements in the decompressed output",
+      "failure_mode": "out_of_memory",
+      "scale": "Measured ~133 bytes allocated per XML element (consistent across 10K–320K elements) with ~4.3 MB baseline. Extrapolating: with 1 GB heap and ~200 MB JVM/JQF overhead, ~6.2 million elements exhaust the remaining ~820 MB. That is ~25 MB of decompressed XML (6.2M × 4 bytes per <a/>). With measured deflate ratio ~1000:1 at large sizes, this needs ~25 KB of compressed input, well within the 65 KB limit.",
+      "input_bytes": 25600,
+      "cwe": "CWE-409",
+      "checkpath_status": "PASS",
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "method": "com.fuzzer.saml.SAMLRequestParserFuzzTest#fuzzSAMLRequestParserParseRequestRedirectBinding(InputStream)",
+          "location": "harness/src/test/java/com/fuzzer/saml/SAMLRequestParserFuzzTest.java:31"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "harness/src/test/java/com/fuzzer/saml/SAMLRequestParserFuzzTest.java:34"
+        },
+        {
+          "kind": "hop",
+          "method": "org.keycloak.saml.SAMLRequestParser#parseRequestRedirectBinding(String)",
+          "location": "saml-core/src/main/java/org/keycloak/saml/SAMLRequestParser.java:44"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "saml-core/src/main/java/org/keycloak/saml/SAMLRequestParser.java:47"
+        },
+        {
+          "kind": "hop",
+          "method": "org.keycloak.saml.processing.web.util.RedirectBindingUtil#base64DeflateDecode(String)",
+          "location": "saml-core/src/main/java/org/keycloak/saml/processing/web/util/RedirectBindingUtil.java:168"
+        },
+        {
+          "kind": "connection",
+          "type": "SEQUENCE",
+          "evidence": "SAMLRequestParser#parseRequestRedirectBinding(String) (saml-core/src/main/java/org/keycloak/saml/SAMLRequestParser.java:44) calls RedirectBindingUtil#base64DeflateDecode(String) at line 47 and getSAML2ObjectFromStream at line 65",
+          "site": "saml-core/src/main/java/org/keycloak/saml/SAMLRequestParser.java:44"
+        },
+        {
+          "kind": "hop",
+          "method": "org.keycloak.saml.processing.api.saml.v2.request.SAML2Request#getSAML2ObjectFromStream(InputStream)",
+          "location": "saml-core/src/main/java/org/keycloak/saml/processing/api/saml/v2/request/SAML2Request.java:175"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "saml-core/src/main/java/org/keycloak/saml/processing/api/saml/v2/request/SAML2Request.java:180"
+        },
+        {
+          "kind": "hop",
+          "method": "org.keycloak.saml.common.util.DocumentUtil#getDocument(InputStream)",
+          "location": "saml-core/src/main/java/org/keycloak/saml/common/util/DocumentUtil.java:184"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "saml-core/src/main/java/org/keycloak/saml/common/util/DocumentUtil.java:187"
+        },
+        {
+          "kind": "hop",
+          "method": "DocumentBuilder.parse(InputStream)",
+          "location": "outside the source tree"
+        }
+      ],
+      "harness_entry": "com.fuzzer.saml.SAMLRequestParserFuzzTest#fuzzSAMLRequestParserParseRequestRedirectBinding",
+      "scale_measurement": [
+        {
+          "value": 10000,
+          "input_bytes": 66,
+          "outcome": "completed",
+          "cpu_ms": 113.291192,
+          "allocated_bytes": 5865104,
+          "peak_heap_bytes": 6291456
+        },
+        {
+          "value": 20000,
+          "input_bytes": 105,
+          "outcome": "completed",
+          "cpu_ms": 110.453294,
+          "allocated_bytes": 7290840,
+          "peak_heap_bytes": 8388608
+        },
+        {
+          "value": 40000,
+          "input_bytes": 183,
+          "outcome": "completed",
+          "cpu_ms": 124.423296,
+          "allocated_bytes": 10073208,
+          "peak_heap_bytes": 10485760
+        },
+        {
+          "value": 80000,
+          "input_bytes": 338,
+          "outcome": "completed",
+          "cpu_ms": 153.012789,
+          "allocated_bytes": 15615040,
+          "peak_heap_bytes": 15728640
+        },
+        {
+          "value": 160000,
+          "input_bytes": 648,
+          "outcome": "completed",
+          "cpu_ms": 188.01886,
+          "allocated_bytes": 26640224,
+          "peak_heap_bytes": 27262968
+        },
+        {
+          "value": 320000,
+          "input_bytes": 1268,
+          "outcome": "completed",
+          "cpu_ms": 216.965894,
+          "allocated_bytes": 48850552,
+          "peak_heap_bytes": 35651584
+        }
+      ]
+    }
+  ]
+}

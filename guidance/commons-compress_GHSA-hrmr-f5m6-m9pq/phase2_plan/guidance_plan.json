@@ -1,0 +1,60 @@
+{
+  "plans": [
+    {
+      "target": "V1",
+      "signals": [
+        {
+          "name": "storedBytesRead",
+          "quantity": "total bytes returned by readStored(byte[],int,int) summed across all calls in one execution",
+          "aggregation": "sum",
+          "locations": [
+            "org.apache.commons.compress.archivers.zip.ZipArchiveInputStream#readStored"
+          ],
+          "technique": "bytecode",
+          "storage": "ThreadLocal<long[]> in fuzzing.agent.V1Counters, index 0",
+          "reset": "V1Counters.reset() called at the start of V1Guidance.getInput()",
+          "read": "V1Counters.get() called in V1Guidance.handleResult()"
+        }
+      ],
+      "retention": "Keep inputs where storedBytesRead exceeds the current best in the corpus. While signal is flat (storedBytesRead == 0), retain inputs that (a) have grown toward 32 bytes and (b) start with PK\\x03\\x04 (valid LFH signature). Corpus sorted by storedBytesRead descending; parents selected from top-10.",
+      "retention_signals": [
+        "storedBytesRead"
+      ],
+      "mutation": [
+        "Byte-level: random byte flip, random byte overwrite, random byte insertion, random byte deletion",
+        "Repetition [R45a]: copy a region of the input and repeat it k times to fill toward MAX_INPUT_SIZE; can duplicate an entire LFH+data section to create multi-entry archives",
+        "Dictionary [R45b]: tokens from the attack path source — LFH_SIG, CFH_SIG, EOCD_SIG, STORED/DEFLATED methods, UTF-8 leads, max 32-bit size",
+        "Size-field targeting: mutate bytes at LFH offsets 18-25 (compressed size, uncompressed size) to explore large declared sizes",
+        "No encoder needed [R45c]: raw ZIP bytes with no compression/checksum layer to satisfy"
+      ]
+    },
+    {
+      "target": "PkgRisk1",
+      "signals": [
+        {
+          "name": "decompressedBytes",
+          "quantity": "total bytes returned by BZip2CompressorInputStream#read(byte[],int,int) summed across all calls in one execution",
+          "aggregation": "sum",
+          "locations": [
+            "org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream#read"
+          ],
+          "technique": "bytecode",
+          "storage": "ThreadLocal<long[]> in fuzzing.agent.PkgRisk1Counters, index 0",
+          "reset": "PkgRisk1Counters.reset() called at the start of PkgRisk1Guidance.getInput()",
+          "read": "PkgRisk1Counters.get() called in PkgRisk1Guidance.handleResult()"
+        }
+      ],
+      "retention": "Keep inputs where decompressedBytes exceeds the current best or corpus is small (<20). ALWAYS retain inputs that are longer than the current longest encoded input [R46], regardless of signal value, to ensure input_growth toward 3100 bytes. Corpus cap 100; evict lowest signal then shortest.",
+      "retention_signals": [
+        "decompressedBytes"
+      ],
+      "mutation": [
+        "Grow bomb (30%): double the uniform (zeros) plaintext size from 1KB to 64MB, encoding through BZip2CompressorOutputStream [R45c]; cached per size, so each size is encoded only once; at 64MB the single entry is ~110 bytes encoded but decompresses to 67,108,864 bytes (matching the scale series structure)",
+        "Grow diverse (30%/60%): encode a fresh plaintext of increasing size (starting 500 bytes, +200-500 each step) of random bytes through BZip2CompressorOutputStream [R45c]; random data compresses at ~1:1, so a 2800-byte plaintext produces a ~3100-byte encoded input, satisfying input_bytes=3100 for input_growth [R46]",
+        "Mutate corpus (20%): select a corpus entry and flip 1-3 bytes in the bzip2 data area (after the 31-byte ZIP LFH header) for exploration",
+        "Reuse bomb (20%): resubmit the current best bomb entry for consistent high-signal measurements",
+        "Well-formed encoding [R45c]: all inputs are single ZIP entries encoded through BZip2CompressorOutputStream from the vulnerable jar on the classpath, with correct CRC32, compressed/uncompressed sizes, and method 12"
+      ]
+    }
+  ]
+}

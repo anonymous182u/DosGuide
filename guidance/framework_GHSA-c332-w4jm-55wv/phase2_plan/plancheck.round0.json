@@ -1,0 +1,391 @@
+{
+  "tool": "checkpath",
+  "version": "1.0.0",
+  "source_root": "projects/framework_GHSA-c332-w4jm-55wv",
+  "index": {
+    "files_parsed": 4125,
+    "files_failed": 0,
+    "methods": 31379,
+    "harness_fuzz_methods": [
+      "EmailValidatorFuzzTest.fuzzEmailValidatorIsValid(InputStream)",
+      "EmailValidatorFuzzTest.fuzzEmailValidatorApply(InputStream)"
+    ],
+    "index_seconds": 7.8,
+    "max_gap": 2,
+    "sink_depth": 6,
+    "symbol_resolution": true
+  },
+  "ok": true,
+  "targets": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "entrypoint": "EmailValidatorFuzzTest.fuzzEmailValidatorIsValid(InputStream) → EmailValidator.isValid(Object) → AbstractValidator.validate(Object) → RegexpValidator.isValidValue(String) → Matcher.matches()",
+      "source_path": "compatibility-server/src/main/java/com/vaadin/v7/data/validator/EmailValidator.java",
+      "start_ok": true,
+      "harness_entry": "com.vaadin.fuzz.EmailValidatorFuzzTest#fuzzEmailValidatorIsValid",
+      "end_ok": true,
+      "end": {
+        "sink_file": "compatibility-server/src/main/java/com/vaadin/v7/data/validator/EmailValidator.java",
+        "ok": true,
+        "evidence": "hop 2 invokes isValid on EmailValidator, which is declared in compatibility-server/src/main/java/com/vaadin/v7/data/validator/EmailValidator.java",
+        "level": "method",
+        "sink_method": "java.util.regex.Matcher#matches",
+        "sink_evidence": "hop 5 names java.util.regex.Matcher#matches (outside the source tree)"
+      },
+      "hops": [
+        {
+          "index": 1,
+          "raw": "EmailValidatorFuzzTest.fuzzEmailValidatorIsValid(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "com.vaadin.fuzz.EmailValidatorFuzzTest#fuzzEmailValidatorIsValid(InputStream)",
+              "location": "harness/src/test/java/com/vaadin/fuzz/EmailValidatorFuzzTest.java:34"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "raw": "EmailValidator.isValid(Object)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "com.vaadin.v7.data.validator.AbstractValidator#isValid(Object)",
+              "location": "compatibility-server/src/main/java/com/vaadin/v7/data/validator/AbstractValidator.java:77"
+            },
+            {
+              "method": "com.vaadin.v7.tests.components.window.UndefinedHeightSubWindowAndContent$anon(Validator)#isValid(Object)",
+              "location": "uitest/src/main/java/com/vaadin/v7/tests/components/window/UndefinedHeightSubWindowAndContent.java:39"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "raw": "AbstractValidator.validate(Object)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "com.vaadin.v7.data.validator.AbstractValidator#validate(Object)",
+              "location": "compatibility-server/src/main/java/com/vaadin/v7/data/validator/AbstractValidator.java:100"
+            },
+            {
+              "method": "com.vaadin.v7.data.validator.DoubleValidator#validate(Object)",
+              "location": "compatibility-server/src/main/java/com/vaadin/v7/data/validator/DoubleValidator.java:61"
+            },
+            {
+              "method": "com.vaadin.v7.data.validator.IntegerValidator#validate(Object)",
+              "location": "compatibility-server/src/main/java/com/vaadin/v7/data/validator/IntegerValidator.java:62"
+            },
+            {
+              "method": "com.vaadin.v7.data.Validator#validate(Object)",
+              "location": "compatibility-server/src/main/java/com/vaadin/v7/data/Validator.java:72"
+            },
+            {
+              "method": "com.vaadin.v7.tests.components.window.UndefinedHeightSubWindowAndContent$anon(Validator)#validate(Object)",
+              "location": "uitest/src/main/java/com/vaadin/v7/tests/components/window/UndefinedHeightSubWindowAndContent.java:33"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "raw": "RegexpValidator.isValidValue(String)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "com.vaadin.v7.data.validator.RegexpValidator#isValidValue(String)",
+              "location": "compatibility-server/src/main/java/com/vaadin/v7/data/validator/RegexpValidator.java:89"
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "raw": "Matcher.matches()",
+          "status": "EXTERNAL",
+          "candidates": [],
+          "external": [
+            "Matcher.matches()"
+          ]
+        }
+      ],
+      "path_signature": [
+        "com.vaadin.fuzz.EmailValidatorFuzzTest#fuzzEmailValidatorIsValid(InputStream)",
+        "com.vaadin.v7.data.validator.AbstractValidator#isValid(Object)",
+        "com.vaadin.v7.data.validator.AbstractValidator#validate(Object)",
+        "com.vaadin.v7.data.validator.RegexpValidator#isValidValue(String)",
+        "external:matches"
+      ],
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "written": "EmailValidatorFuzzTest.fuzzEmailValidatorIsValid(InputStream)",
+          "provenance": "agent",
+          "method": "com.vaadin.fuzz.EmailValidatorFuzzTest#fuzzEmailValidatorIsValid(InputStream)",
+          "location": "harness/src/test/java/com/vaadin/fuzz/EmailValidatorFuzzTest.java:34"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "EmailValidatorFuzzTest#fuzzEmailValidatorIsValid(InputStream) calls AbstractValidator#isValid(Object) at harness/src/test/java/com/vaadin/fuzz/EmailValidatorFuzzTest.java:38 (resolved)",
+          "site": "harness/src/test/java/com/vaadin/fuzz/EmailValidatorFuzzTest.java:38"
+        },
+        {
+          "kind": "hop",
+          "written": "EmailValidator.isValid(Object)",
+          "provenance": "agent",
+          "method": "com.vaadin.v7.data.validator.AbstractValidator#isValid(Object)",
+          "location": "compatibility-server/src/main/java/com/vaadin/v7/data/validator/AbstractValidator.java:77"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "AbstractValidator#isValid(Object) calls Validator#validate(Object) at compatibility-server/src/main/java/com/vaadin/v7/data/validator/AbstractValidator.java:79 (resolved)",
+          "site": "compatibility-server/src/main/java/com/vaadin/v7/data/validator/AbstractValidator.java:79"
+        },
+        {
+          "kind": "hop",
+          "written": "AbstractValidator.validate(Object)",
+          "provenance": "agent",
+          "method": "com.vaadin.v7.data.validator.AbstractValidator#validate(Object)",
+          "location": "compatibility-server/src/main/java/com/vaadin/v7/data/validator/AbstractValidator.java:100"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "AbstractValidator#validate(Object) calls RegexpValidator#isValidValue(String) at compatibility-server/src/main/java/com/vaadin/v7/data/validator/AbstractValidator.java:102 (resolved)",
+          "site": "compatibility-server/src/main/java/com/vaadin/v7/data/validator/AbstractValidator.java:102"
+        },
+        {
+          "kind": "hop",
+          "written": "RegexpValidator.isValidValue(String)",
+          "provenance": "agent",
+          "method": "com.vaadin.v7.data.validator.RegexpValidator#isValidValue(String)",
+          "location": "compatibility-server/src/main/java/com/vaadin/v7/data/validator/RegexpValidator.java:89"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "RegexpValidator#isValidValue(String) calls Matcher.matches() at compatibility-server/src/main/java/com/vaadin/v7/data/validator/RegexpValidator.java:94",
+          "site": "compatibility-server/src/main/java/com/vaadin/v7/data/validator/RegexpValidator.java:94"
+        },
+        {
+          "kind": "hop",
+          "written": "Matcher.matches()",
+          "provenance": "agent",
+          "method": "Matcher.matches()",
+          "location": "outside the source tree"
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "status": "CALL",
+          "evidence": "EmailValidatorFuzzTest#fuzzEmailValidatorIsValid(InputStream) calls AbstractValidator#isValid(Object) at harness/src/test/java/com/vaadin/fuzz/EmailValidatorFuzzTest.java:38 (resolved)"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "status": "CALL",
+          "evidence": "AbstractValidator#isValid(Object) calls Validator#validate(Object) at compatibility-server/src/main/java/com/vaadin/v7/data/validator/AbstractValidator.java:79 (resolved)"
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "status": "CALL",
+          "evidence": "AbstractValidator#validate(Object) calls RegexpValidator#isValidValue(String) at compatibility-server/src/main/java/com/vaadin/v7/data/validator/AbstractValidator.java:102 (resolved)"
+        },
+        {
+          "from": 4,
+          "to": 5,
+          "status": "CALL",
+          "evidence": "RegexpValidator#isValidValue(String) calls Matcher.matches() at compatibility-server/src/main/java/com/vaadin/v7/data/validator/RegexpValidator.java:94"
+        }
+      ],
+      "diagnostics": [],
+      "warnings": [
+        "Hop 5: `Matcher.matches()` belongs to JDK class java.util.regex.Matcher; its body is not analyzed"
+      ]
+    },
+    {
+      "target": "V2",
+      "status": "PASS",
+      "entrypoint": "EmailValidatorFuzzTest.fuzzEmailValidatorApply(InputStream) → EmailValidator.apply(String, ValueContext) → RegexpValidator.isValid(String) → Matcher.matches()",
+      "source_path": "server/src/main/java/com/vaadin/data/validator/EmailValidator.java",
+      "start_ok": true,
+      "harness_entry": "com.vaadin.fuzz.EmailValidatorFuzzTest#fuzzEmailValidatorApply",
+      "end_ok": true,
+      "end": {
+        "sink_file": "server/src/main/java/com/vaadin/data/validator/EmailValidator.java",
+        "ok": true,
+        "evidence": "hop 2 invokes apply on EmailValidator, which is declared in server/src/main/java/com/vaadin/data/validator/EmailValidator.java",
+        "level": "method",
+        "sink_method": "java.util.regex.Matcher#matches",
+        "sink_evidence": "hop 4 names java.util.regex.Matcher#matches (outside the source tree)"
+      },
+      "hops": [
+        {
+          "index": 1,
+          "raw": "EmailValidatorFuzzTest.fuzzEmailValidatorApply(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "com.vaadin.fuzz.EmailValidatorFuzzTest#fuzzEmailValidatorApply(InputStream)",
+              "location": "harness/src/test/java/com/vaadin/fuzz/EmailValidatorFuzzTest.java:46"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "raw": "EmailValidator.apply(String, ValueContext)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "com.vaadin.data.validator.RegexpValidator#apply(String,ValueContext)",
+              "location": "server/src/main/java/com/vaadin/data/validator/RegexpValidator.java:74"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "raw": "RegexpValidator.isValid(String)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "com.vaadin.data.validator.RegexpValidator#isValid(String)",
+              "location": "server/src/main/java/com/vaadin/data/validator/RegexpValidator.java:90"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "raw": "Matcher.matches()",
+          "status": "EXTERNAL",
+          "candidates": [],
+          "external": [
+            "Matcher.matches()"
+          ]
+        }
+      ],
+      "path_signature": [
+        "com.vaadin.fuzz.EmailValidatorFuzzTest#fuzzEmailValidatorApply(InputStream)",
+        "com.vaadin.data.validator.RegexpValidator#apply(String,ValueContext)",
+        "com.vaadin.data.validator.RegexpValidator#isValid(String)",
+        "external:matches"
+      ],
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "written": "EmailValidatorFuzzTest.fuzzEmailValidatorApply(InputStream)",
+          "provenance": "agent",
+          "method": "com.vaadin.fuzz.EmailValidatorFuzzTest#fuzzEmailValidatorApply(InputStream)",
+          "location": "harness/src/test/java/com/vaadin/fuzz/EmailValidatorFuzzTest.java:46"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "EmailValidatorFuzzTest#fuzzEmailValidatorApply(InputStream) calls RegexpValidator#apply(String,ValueContext) at harness/src/test/java/com/vaadin/fuzz/EmailValidatorFuzzTest.java:50 (resolved)",
+          "site": "harness/src/test/java/com/vaadin/fuzz/EmailValidatorFuzzTest.java:50"
+        },
+        {
+          "kind": "hop",
+          "written": "EmailValidator.apply(String, ValueContext)",
+          "provenance": "agent",
+          "method": "com.vaadin.data.validator.RegexpValidator#apply(String,ValueContext)",
+          "location": "server/src/main/java/com/vaadin/data/validator/RegexpValidator.java:74"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "RegexpValidator#apply(String,ValueContext) calls RegexpValidator#isValid(String) at server/src/main/java/com/vaadin/data/validator/RegexpValidator.java:75 (resolved)",
+          "site": "server/src/main/java/com/vaadin/data/validator/RegexpValidator.java:75"
+        },
+        {
+          "kind": "hop",
+          "written": "RegexpValidator.isValid(String)",
+          "provenance": "agent",
+          "method": "com.vaadin.data.validator.RegexpValidator#isValid(String)",
+          "location": "server/src/main/java/com/vaadin/data/validator/RegexpValidator.java:90"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "RegexpValidator#isValid(String) calls Matcher.matches() at server/src/main/java/com/vaadin/data/validator/RegexpValidator.java:95",
+          "site": "server/src/main/java/com/vaadin/data/validator/RegexpValidator.java:95"
+        },
+        {
+          "kind": "hop",
+          "written": "Matcher.matches()",
+          "provenance": "agent",
+          "method": "Matcher.matches()",
+          "location": "outside the source tree"
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "status": "CALL",
+          "evidence": "EmailValidatorFuzzTest#fuzzEmailValidatorApply(InputStream) calls RegexpValidator#apply(String,ValueContext) at harness/src/test/java/com/vaadin/fuzz/EmailValidatorFuzzTest.java:50 (resolved)"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "status": "CALL",
+          "evidence": "RegexpValidator#apply(String,ValueContext) calls RegexpValidator#isValid(String) at server/src/main/java/com/vaadin/data/validator/RegexpValidator.java:75 (resolved)"
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "status": "CALL",
+          "evidence": "RegexpValidator#isValid(String) calls Matcher.matches() at server/src/main/java/com/vaadin/data/validator/RegexpValidator.java:95"
+        }
+      ],
+      "diagnostics": [],
+      "warnings": [
+        "Hop 4: `Matcher.matches()` belongs to JDK class java.util.regex.Matcher; its body is not analyzed"
+      ]
+    }
+  ],
+  "plan_ok": true,
+  "plans": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "signals": [
+        {
+          "name": "regexSteps",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "java.util.regex.Pattern$Node#match",
+              "status": "EXTERNAL",
+              "relation": "library"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    },
+    {
+      "target": "V2",
+      "status": "PASS",
+      "signals": [
+        {
+          "name": "regexSteps",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "java.util.regex.Pattern$Node#match",
+              "status": "EXTERNAL",
+              "relation": "library"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "series_request": [
+    "PkgRisk1"
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "revision": {
+        "V1": {
+          "scale": "Measured allocation grows at 1 byte per unit of claimed CBOR byte-string length (371.8 KB at 1024 to 402.8 KB at 32768, delta matches claimed length exactly). With -Xmx1g and ~200 MB JVM overhead, a claimed length of ~800,000,000 bytes exceeds available heap (~800 MB). The CBOR encoding is always 5 bytes: 0x5A + 4-byte big-endian length.",
+          "input_bytes": 5
+        },
+        "PkgRisk-1": {
+          "scale": "Measured: 1024 nesting levels fits the 256 KB stack probe cap; 2048 levels exceeds it. Estimated ~134 bytes of stack per nesting level (crossover ~1536 levels for 256 KB, base ~50 KB). With -Xss1m: (1024 KB - 50 KB) / 134 B ≈ 7,254 nesting levels to overflow. At 1 byte per level (0x81) + 1 terminator byte (0x00), approximately 7,255 bytes of input suffice. Conservative estimate at 170 B/level: ~5,730 levels = 5,731 bytes.",
+          "input_bytes": 7255
+        }
+      },
+      "field_problems": {}
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "clone_url": "https://github.com/netplex/json-smart-v2.git",
+  "commit": "4d2c271e2ef39204cc2d32eb2c70a090d3671cb4",
+  "jdk": 17,
+  "linux_only": false,
+  "commands": [
+    "rm -rf build && mkdir -p build/accessors-classes build/json-smart-classes deps",
+    "curl -sSfL --retry 3 -o deps/asm-9.1.jar https://repo1.maven.org/maven2/org/ow2/asm/asm/9.1/asm-9.1.jar",
+    "javac -nowarn -encoding UTF-8 -source 8 -target 8 -cp deps/asm-9.1.jar -d build/accessors-classes $(find src/accessors-smart/src/main/java -name '*.java' | LC_ALL=C sort)",
+    "jar cf build/accessors-smart.jar -C build/accessors-classes .",
+    "javac -nowarn -encoding UTF-8 -source 8 -target 8 -cp deps/asm-9.1.jar:build/accessors-smart.jar -d build/json-smart-classes $(find src/json-smart/src/main/java -name '*.java' | LC_ALL=C sort)",
+    "jar cf build/json-smart.jar -C build/json-smart-classes ."
+  ],
+  "artifacts": [
+    {
+      "built": "build/accessors-smart.jar",
+      "lib": "lib/accessors-smart-2.4.8.jar",
+      "sha256": "6d1e9f717ad369f1d30b6946c95197873049555e227465796676f5bd1971367a",
+      "classes_sha256": "9a70e3de3f0ec5bd3d92f79aa51e1195c38eb618a2ecfb3781dc9692dbf17173"
+    },
+    {
+      "built": "build/json-smart.jar",
+      "lib": "lib/json-smart-2.4.8.jar",
+      "sha256": "8473943a998c7cac02b4c5c227cb2cc8d5348040a934268fedbe6fe750f9c703",
+      "classes_sha256": "d6294ac30229316b31ed86b4ba46b9bc53578494feac6924458fb46176635543"
+    }
+  ],
+  "fixed": {
+    "jars": [
+      {
+        "coords": "net.minidev:json-smart:2.4.9",
+        "sha256": "df1561f912b5a23337b7646cbde4c3e68962c27c59440bc0de8b828305e2f1c8"
+      },
+      {
+        "coords": "net.minidev:accessors-smart:2.4.9",
+        "sha256": "accdd5c7ac4c49b155890aaea1ffca2a9ccd5826b562dd95a99fc1887003e031"
+      },
+      {
+        "coords": "org.ow2.asm:asm:9.3",
+        "sha256": "1263369b59e29c943918de11d6d6152e2ec6085ce63e5710516f8c67d368e4bc"
+      }
+    ],
+    "drop": "^(json\\-smart|accessors\\-smart|asm)-[0-9]"
+  },
+  "tools": "JDK 17 (javac, jar), curl",
+  "notes": "The modules accessors-smart and json-smart of the vulnerable commit (2.4.8 plus two unreleased JSONArray/JSONObject constructors, the parent of fix 5b3205d): accessors-smart/src/main/java compiled with javac -source 8 -target 8 against asm 9.1 (Maven Central, the version the fixture pom uses), then json-smart/src/main/java against asm 9.1 and that jar, each packed with jar, as the evaluation's jars were made; the project's Maven build is not used. json-smart-action is not built (the harness does not use it). Fixed: json-smart and accessors-smart 2.4.9, the first release with 5b3205d, with asm 9.3 (their dependency), which replaces asm 9.1."
+}

@@ -1,0 +1,45 @@
+{
+  "final_ok": true,
+  "repair_rounds": 1,
+  "fuzz_tests_fixed_at_round": 0,
+  "rounds": [
+    {
+      "round": 0,
+      "ok": false,
+      "error": null,
+      "launch": [],
+      "build_ok": true,
+      "failing": [
+        "V1",
+        "V2"
+      ],
+      "progress_advisory": {},
+      "repair": {
+        "added": [
+          "META-INF/MANIFEST.MF"
+        ],
+        "modified": [
+          "analysis/launch.json",
+          "run.sh",
+          "src/test/java/fuzzing/agent/CombinedMeasureAgent.java",
+          "src/test/java/fuzzing/agent/DepthCounters.java",
+          "src/test/java/fuzzing/agent/V1Transformer.java",
+          "src/test/java/fuzzing/agent/V2Transformer.java",
+          "src/test/java/fuzzing/agent/XmlDepthCounters.java",
+          "src/test/java/fuzzing/guidance/V1Guidance.java",
+          "src/test/java/fuzzing/guidance/V2Guidance.java",
+          "src/test/resources/META-INF/MANIFEST.MF"
+        ]
+      }
+    },
+    {
+      "round": 1,
+      "ok": true,
+      "error": null,
+      "launch": [],
+      "build_ok": true,
+      "failing": [],
+      "progress_advisory": {}
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "final_ok": true,
+  "collapsed_final": [],
+  "repair_rounds": 1,
+  "rounds": [
+    {
+      "round": 0,
+      "ok": false,
+      "error": null,
+      "failing": [
+        "V3"
+      ],
+      "collapsed": []
+    },
+    {
+      "round": 1,
+      "ok": true,
+      "error": null,
+      "failing": [],
+      "collapsed": []
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "clone_url": "https://github.com/msgpack/msgpack-java.git",
+  "commit": "befe3b943fbdc59070acfea8feb317044096bc85",
+  "jdk": 8,
+  "tools": "the repository's sbt launcher script (./sbt; sbt 1.11.7 from project/build.properties)",
+  "commands": [
+    "cd src && ./sbt -batch -J-Xmx2g \"show msgpack-core/version\" \"msgpack-core/clean\" \"msgpack-core/package\""
+  ],
+  "artifacts": [
+    {
+      "built": "src/msgpack-core/target/msgpack-core-0.9.10-19-befe3b94-SNAPSHOT.jar",
+      "lib": "lib/msgpack-core-0.9.10-19-befe3b94-SNAPSHOT.jar",
+      "sha256": "7a84cc932078b5240f8835807d26b6794c76e914b662c273a29843e8470229c7",
+      "classes_sha256": "7b0268e2621d6a6694b772a89e19b53e0da6f6aecc326cc4e92964cb4ee006f2"
+    }
+  ],
+  "fixed": {
+    "jars": [
+      {
+        "coords": "org.msgpack:msgpack-core:0.9.11",
+        "sha256": "031b780833e8766fecb2af629bc04f2eb5d2c2b1e17475b9b6b8a81f932aea31"
+      }
+    ],
+    "drop": "^(msgpack\\-core)-[0-9]"
+  },
+  "notes": "Commit = v0.9.10 + 19 commits (git describe v0.9.10-19-gbefe3b9); sbt-dynver derives the version 0.9.10-19-befe3b94-SNAPSHOT from the git tags, which needs the tags and a clean work tree. JDK 8 as the project's release workflow (.github/workflows/release.yml) and the 0.9.10 jar. The build runs jcheckStyle before compile. All class and resource entries are byte-identical to Central's msgpack-core-0.9.10.jar (only META-INF/MANIFEST.MF differs); msgpack-core has no runtime dependencies. Fixed: msgpack-core 0.9.11."
+}

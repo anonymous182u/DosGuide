@@ -1,0 +1,58 @@
+{
+  "plans": [
+    {
+      "target": "V1",
+      "signals": [
+        {
+          "name": "decompressedBytes",
+          "quantity": "total bytes of decompressed output emitted by the Brotli native decoder, summed across all pull() calls in one execution",
+          "aggregation": "sum",
+          "locations": [
+            "BrotliDecoder#pull"
+          ],
+          "technique": "bytecode",
+          "storage": "ThreadLocal<long[]> in fuzzing.agent.DecompressCounters; index 0 holds cumulative decompressed bytes for the current execution",
+          "reset": "DecompressCounters.reset() called from V1Guidance.getInput() before each execution",
+          "read": "DecompressCounters.getDecompressedBytes() called from V1Guidance.handleResult() after each execution"
+        }
+      ],
+      "retention": "Primary: keep inputs that maximize decompressedBytes (highest expansion). When decompressedBytes is zero or flat across all corpus entries (the brotli stream was invalid or too small to decompress), retain inputs that grow in byte length toward input_bytes (1700) as a secondary criterion, so the search can cross the valid-brotli-stream threshold. Also retain any input that is the first to produce non-zero decompressedBytes. Among inputs with equal decompressedBytes, prefer shorter compressed inputs (higher expansion ratio per byte).",
+      "retention_signals": [
+        "decompressedBytes"
+      ],
+      "mutation": [
+        "byte-level: random bit-flip, random byte insert, random byte delete, random byte overwrite on the plaintext buffer before compression",
+        "repetition: select a random chunk of the plaintext (1 byte to half the buffer), repeat it k times in place (k chosen to fill toward the max plaintext size that compresses within input_bytes=1700), doubling the entire plaintext is a special case; this creates highly repetitive data that compresses efficiently, maximizing expansion ratio",
+        "dictionary: brotli window-size first-bytes from the format spec that the native decoder expects: {0x1B} (common WBITS prefix), {0x00} (null, common in minimal brotli headers), {0x3B} (large window WBITS=24), plus single-byte repeated-content values {0x00}, {0x20}, {0xFF} for plaintext that compresses well; these are inserted/overwritten at random positions in either the plaintext or the compressed stream",
+        "well-formed encoder: com.aayushatharva.brotli4j.encoder.Encoder.compress(byte[]) compresses mutated plaintext into a valid brotli stream, recomputing all checksums and block structures; the Guidance mutates the plaintext (uncompressed representation) and encodes it, so inputs always pass the brotli decoder's format checks and reach the decompression sink"
+      ]
+    },
+    {
+      "target": "V2",
+      "signals": [
+        {
+          "name": "decompressedBytes",
+          "quantity": "total bytes of decompressed output emitted during one ZstdDecoder.decode() execution, summed across all output buffer chunks added to the output list",
+          "aggregation": "sum",
+          "locations": [
+            "ZstdDecoder#decode"
+          ],
+          "technique": "bytecode",
+          "storage": "ThreadLocal<long[]> in fuzzing.agent.DecompressCounters; index 1 holds cumulative decompressed bytes for the current execution",
+          "reset": "DecompressCounters.reset() called from V2Guidance.getInput() before each execution",
+          "read": "DecompressCounters.getDecompressedBytes() called from V2Guidance.handleResult() after each execution"
+        }
+      ],
+      "retention": "Primary: keep inputs that maximize decompressedBytes. When signal is zero or flat, retain inputs that grow in byte length toward input_bytes (up to 10240, the max allowed). Also retain any input that first produces non-zero decompressedBytes. Among equal decompressedBytes, prefer shorter compressed inputs.",
+      "retention_signals": [
+        "decompressedBytes"
+      ],
+      "mutation": [
+        "byte-level: random bit-flip, random byte insert, random byte delete, random byte overwrite on the plaintext buffer before compression",
+        "repetition: select a random chunk of the plaintext, repeat it k times in place (k up to what fills the max plaintext size that compresses within input_bytes=10240), including doubling the entire plaintext; creates repetitive data with high zstd compression ratio",
+        "dictionary: zstd frame magic bytes {0x28, 0xB5, 0x2F, 0xFD} (the 4-byte zstd magic number the native decoder checks), plus single-byte plaintext values {0x00}, {0x20}, {0xFF} for compressible content; inserted/overwritten at random positions",
+        "well-formed encoder: com.github.luben.zstd.Zstd.compress(byte[]) compresses mutated plaintext into a valid zstd frame, producing correct magic number, block headers, and checksums; the Guidance mutates plaintext and encodes, so inputs reach the decompression sink"
+      ]
+    }
+  ]
+}

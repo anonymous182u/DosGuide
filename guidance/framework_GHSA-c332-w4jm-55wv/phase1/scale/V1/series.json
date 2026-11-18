@@ -1,0 +1,29 @@
+{
+  "parameter": "alphanumeric chars in TLD position (after last dot, before non-matching trailer)",
+  "inputs": [
+    {
+      "file": "n10.bin",
+      "value": 10
+    },
+    {
+      "file": "n20.bin",
+      "value": 20
+    },
+    {
+      "file": "n30.bin",
+      "value": 30
+    },
+    {
+      "file": "n40.bin",
+      "value": 40
+    },
+    {
+      "file": "n50.bin",
+      "value": 50
+    },
+    {
+      "file": "n60.bin",
+      "value": 60
+    }
+  ]
+}

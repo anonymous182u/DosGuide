@@ -1,0 +1,21 @@
+{
+  "series_request": [
+    "PkgRisk1"
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "revision": {
+        "V1": {
+          "scale": "Measured: with regex `(a+)+bzzz...` the JDK BnM pre-filter scans for the required literal `b`, finds none in the all-`a` text, and returns in O(n) time (~0.018 ms/char); extrapolating linearly, 20 s timeout would need ~1.1 M chars (~2.2 MB input), far exceeding the 10240-byte limit. The actual exponential mechanism requires a regex without required literals (e.g. `(a+)+$`), bypassing BnM: the NFA then explores 2^(n-1) groupings of n matching chars, each walking ~n nodes. At ~5-50 ns/node, n=28 gives ~3.8e9 evaluations ≈ 19-190 s (timeout). With the midpoint split, regex `(a+)+$` (6 B padded with `$` to 32 B) + text `a`×31+`!` (32 B) = 64 bytes total.",
+          "input_bytes": 64
+        },
+        "PkgRisk1": {
+          "scale": "Measured: with regex `(a+)+bzzz...` the JDK BnM pre-filter scans for the required literal `b`, finds none in the all-`a` text, and returns in O(n) time (~0.019 ms/char); extrapolating linearly, 20 s timeout would need ~1.0 M chars (~2.1 MB input), far exceeding the 10240-byte limit. The actual exponential mechanism requires a regex without required literals (e.g. `(a+)+$`), bypassing BnM: the NFA then explores 2^(n-1) groupings of n matching chars, each walking ~n nodes. At ~5-50 ns/node, n=28 gives ~3.8e9 evaluations ≈ 19-190 s (timeout). With the midpoint split, regex `(a+)+$` (6 B padded with `$` to 32 B) + text `a`×31+`!` (32 B) = 64 bytes total.",
+          "input_bytes": 64
+        }
+      },
+      "field_problems": {}
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "caps": {
+    "input_bytes": 2560,
+    "heap_bytes": 268435456,
+    "stack_bytes": 262144,
+    "time_ms": 2000
+  },
+  "targets": {
+    "V1": {
+      "problems": [],
+      "parameter": "input length in tab characters (each tab matches both \\s and [^: ], creating cubic backtracking)",
+      "inputs": [
+        {
+          "file": "n64.bin",
+          "value": 64,
+          "input_bytes": 64,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 11.240213,
+          "wall_ms": 30.481521,
+          "allocated_bytes": 171680,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "file": "n128.bin",
+          "value": 128,
+          "input_bytes": 128,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 35.738885,
+          "wall_ms": 70.643894,
+          "allocated_bytes": 171808,
+          "peak_heap_bytes": 0
+        },
+        {
+          "file": "n256.bin",
+          "value": 256,
+          "input_bytes": 256,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 81.156907,
+          "wall_ms": 101.146614,
+          "allocated_bytes": 172096,
+          "peak_heap_bytes": 0
+        },
+        {
+          "file": "n512.bin",
+          "value": 512,
+          "input_bytes": 512,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 351.042233,
+          "wall_ms": 408.695828,
+          "allocated_bytes": 172504,
+          "peak_heap_bytes": 0
+        },
+        {
+          "file": "n1024.bin",
+          "value": 1024,
+          "input_bytes": 1024,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "time_cap"
+        }
+      ]
+    }
+  },
+  "build": {
+    "ok": true
+  }
+}

@@ -1,0 +1,1298 @@
+{
+  "ok": true,
+  "launch": [],
+  "build": {
+    "ok": true
+  },
+  "targets": [
+    {
+      "tool": "ValidateArtifact",
+      "target": "V1",
+      "checks": [
+        {
+          "name": "contract",
+          "status": "pass",
+          "detail": "factory, lastSignals() and fuzz test found"
+        },
+        {
+          "name": "runs",
+          "status": "pass",
+          "detail": "100 executions completed"
+        },
+        {
+          "name": "plan_signals",
+          "status": "pass",
+          "detail": "lastSignals() returns every planned signal [maxDepth, nodeCount]"
+        },
+        {
+          "name": "signal_varies",
+          "status": "pass",
+          "detail": "varying: [maxDepth, nodeCount] (on the guidance's own inputs: [maxDepth, nodeCount])"
+        },
+        {
+          "name": "reset",
+          "status": "pass",
+          "detail": "re-running inputs reproduced their values"
+        },
+        {
+          "name": "depends_on_execution",
+          "status": "pass",
+          "detail": "signals stay near zero when the target does not run"
+        },
+        {
+          "name": "instrumentation",
+          "status": "pass",
+          "detail": "rewrote [net.minidev.json.parser.JSONParserBase]"
+        },
+        {
+          "name": "input_limit",
+          "status": "pass",
+          "detail": "with jqf.ei.MAX_INPUT_SIZE=16 the 20 generated inputs were at most 16 bytes"
+        },
+        {
+          "name": "input_growth",
+          "status": "pass",
+          "detail": "the guidance generated a 10240-byte input after 533 ms (6 executions); the target needs 4000"
+        },
+        {
+          "name": "progress",
+          "status": "skip",
+          "detail": "not compared: the series did not run"
+        }
+      ],
+      "max_input_bytes": 10240,
+      "example_inputs": 8,
+      "executions": {
+        "own": 40,
+        "repeat": 4,
+        "random": 40,
+        "example": 16,
+        "probe": 3
+      },
+      "test_failures_not_used": 0,
+      "signals": {
+        "maxDepth": {
+          "min": 0.0,
+          "max": 2.0,
+          "distinct": 3
+        },
+        "nodeCount": {
+          "min": 0.0,
+          "max": 3.0,
+          "distinct": 4
+        }
+      },
+      "signals_by_kind": {
+        "example": {
+          "maxDepth": {
+            "min": 1.0,
+            "max": 5.0,
+            "distinct": 4
+          },
+          "nodeCount": {
+            "min": 2.0,
+            "max": 12.0,
+            "distinct": 6
+          }
+        },
+        "own": {
+          "maxDepth": {
+            "min": 0.0,
+            "max": 2.0,
+            "distinct": 3
+          },
+          "nodeCount": {
+            "min": 0.0,
+            "max": 3.0,
+            "distinct": 4
+          }
+        },
+        "random": {
+          "maxDepth": {
+            "min": 0.0,
+            "max": 2.0,
+            "distinct": 3
+          },
+          "nodeCount": {
+            "min": 0.0,
+            "max": 3.0,
+            "distinct": 4
+          }
+        },
+        "repeat": {
+          "maxDepth": {
+            "min": 0.0,
+            "max": 2.0,
+            "distinct": 3
+          },
+          "nodeCount": {
+            "min": 0.0,
+            "max": 3.0,
+            "distinct": 4
+          }
+        }
+      },
+      "transformed_classes": [
+        "net.minidev.json.parser.JSONParserBase"
+      ],
+      "ok": true,
+      "input_limit_probe": {
+        "max_input_bytes": 16,
+        "longest_input": 16,
+        "executions": {
+          "own": 20
+        }
+      },
+      "growth_probe": {
+        "needed_input_bytes": 4000,
+        "longest_input": 10240,
+        "executions": {
+          "own": 6
+        },
+        "growth": [
+          {
+            "ms": 519,
+            "execution": 1,
+            "bytes": 4
+          },
+          {
+            "ms": 533,
+            "execution": 6,
+            "bytes": 10240
+          }
+        ]
+      },
+      "hard_ok": true,
+      "progress_probe": {
+        "own_ms": 110847,
+        "executions": 76128,
+        "longest_input": 10240,
+        "phase": "own",
+        "series_inputs": 5,
+        "comparison": {},
+        "measurements": {
+          "budget_ms": 120000,
+          "own_ms": 110847,
+          "executions": 76128,
+          "longest_input": 10240,
+          "phase": "own",
+          "own_best": {
+            "maxDepth": [
+              [
+                1,
+                1.0,
+                1877
+              ],
+              [
+                2,
+                2.0,
+                6841
+              ],
+              [
+                3,
+                2.0,
+                589
+              ],
+              [
+                4,
+                3.0,
+                2481
+              ],
+              [
+                5,
+                3.0,
+                1294
+              ],
+              [
+                6,
+                3.0,
+                1705
+              ],
+              [
+                7,
+                2.0,
+                586
+              ],
+              [
+                8,
+                2.0,
+                661
+              ],
+              [
+                9,
+                2.0,
+                598
+              ],
+              [
+                10,
+                2.0,
+                6447
+              ],
+              [
+                276,
+                276.0,
+                5807
+              ],
+              [
+                370,
+                370.0,
+                6795
+              ],
+              [
+                423,
+                1.0,
+                8282
+              ],
+              [
+                507,
+                507.0,
+                47830
+              ],
+              [
+                543,
+                543.0,
+                21056
+              ],
+              [
+                584,
+                584.0,
+                25603
+              ],
+              [
+                621,
+                621.0,
+                94720
+              ],
+              [
+                723,
+                723.0,
+                8361
+              ],
+              [
+                771,
+                771.0,
+                46317
+              ],
+              [
+                845,
+                845.0,
+                7509
+              ],
+              [
+                918,
+                918.0,
+                25520
+              ],
+              [
+                1012,
+                1012.0,
+                23003
+              ],
+              [
+                1084,
+                1084.0,
+                51075
+              ],
+              [
+                1205,
+                1205.0,
+                73320
+              ],
+              [
+                1300,
+                1300.0,
+                12572
+              ],
+              [
+                1404,
+                1404.0,
+                28238
+              ],
+              [
+                1579,
+                1579.0,
+                9562
+              ],
+              [
+                1713,
+                1713.0,
+                53859
+              ],
+              [
+                1877,
+                1877.0,
+                66257
+              ],
+              [
+                2039,
+                2039.0,
+                79496
+              ],
+              [
+                2231,
+                2231.0,
+                97283
+              ],
+              [
+                2430,
+                2430.0,
+                76103
+              ],
+              [
+                2641,
+                2641.0,
+                19287
+              ],
+              [
+                2893,
+                2893.0,
+                14697
+              ],
+              [
+                3158,
+                3158.0,
+                28901
+              ],
+              [
+                3437,
+                3437.0,
+                68479
+              ],
+              [
+                3756,
+                3756.0,
+                5733
+              ],
+              [
+                3947,
+                3925.0,
+                13593
+              ],
+              [
+                4390,
+                3925.0,
+                11039
+              ],
+              [
+                4738,
+                3925.0,
+                10887
+              ],
+              [
+                5261,
+                3925.0,
+                11133
+              ],
+              [
+                5456,
+                3925.0,
+                10714
+              ],
+              [
+                5885,
+                3925.0,
+                11469
+              ],
+              [
+                6408,
+                3925.0,
+                10773
+              ],
+              [
+                6891,
+                3925.0,
+                11029
+              ],
+              [
+                8122,
+                6533.0,
+                790
+              ],
+              [
+                8780,
+                6533.0,
+                781
+              ],
+              [
+                8940,
+                4340.0,
+                756
+              ],
+              [
+                10240,
+                6533.0,
+                776
+              ]
+            ],
+            "nodeCount": [
+              [
+                1,
+                1.0,
+                1877
+              ],
+              [
+                2,
+                3.0,
+                6841
+              ],
+              [
+                3,
+                4.0,
+                695
+              ],
+              [
+                4,
+                6.0,
+                10711
+              ],
+              [
+                5,
+                6.0,
+                6967
+              ],
+              [
+                6,
+                7.0,
+                630
+              ],
+              [
+                7,
+                5.0,
+                586
+              ],
+              [
+                8,
+                5.0,
+                661
+              ],
+              [
+                9,
+                5.0,
+                598
+              ],
+              [
+                10,
+                5.0,
+                6447
+              ],
+              [
+                276,
+                551.0,
+                5807
+              ],
+              [
+                370,
+                739.0,
+                6795
+              ],
+              [
+                423,
+                1.0,
+                8282
+              ],
+              [
+                507,
+                1013.0,
+                47830
+              ],
+              [
+                543,
+                1085.0,
+                21056
+              ],
+              [
+                584,
+                1167.0,
+                25603
+              ],
+              [
+                621,
+                1241.0,
+                94720
+              ],
+              [
+                723,
+                1445.0,
+                8361
+              ],
+              [
+                771,
+                1541.0,
+                46317
+              ],
+              [
+                845,
+                1689.0,
+                7509
+              ],
+              [
+                918,
+                1835.0,
+                25520
+              ],
+              [
+                1012,
+                2023.0,
+                23003
+              ],
+              [
+                1084,
+                2167.0,
+                51075
+              ],
+              [
+                1205,
+                2409.0,
+                73320
+              ],
+              [
+                1300,
+                2599.0,
+                12572
+              ],
+              [
+                1404,
+                2807.0,
+                28238
+              ],
+              [
+                1579,
+                3157.0,
+                9562
+              ],
+              [
+                1713,
+                3425.0,
+                53859
+              ],
+              [
+                1877,
+                3753.0,
+                66257
+              ],
+              [
+                2039,
+                4077.0,
+                79496
+              ],
+              [
+                2231,
+                4461.0,
+                97283
+              ],
+              [
+                2430,
+                4859.0,
+                76103
+              ],
+              [
+                2641,
+                5281.0,
+                19287
+              ],
+              [
+                2893,
+                5785.0,
+                14697
+              ],
+              [
+                3158,
+                6315.0,
+                28901
+              ],
+              [
+                3437,
+                6873.0,
+                68479
+              ],
+              [
+                3756,
+                7511.0,
+                5733
+              ],
+              [
+                3931,
+                7850.0,
+                14786
+              ],
+              [
+                4303,
+                7850.0,
+                14061
+              ],
+              [
+                4618,
+                7850.0,
+                15152
+              ],
+              [
+                5014,
+                7850.0,
+                13990
+              ],
+              [
+                5605,
+                7850.0,
+                13796
+              ],
+              [
+                6299,
+                8405.0,
+                53942
+              ],
+              [
+                6882,
+                9187.0,
+                20818
+              ],
+              [
+                7501,
+                10007.0,
+                4452
+              ],
+              [
+                8122,
+                13065.0,
+                790
+              ],
+              [
+                8780,
+                13065.0,
+                781
+              ],
+              [
+                9733,
+                12987.0,
+                34191
+              ],
+              [
+                10240,
+                13679.0,
+                90843
+              ]
+            ]
+          },
+          "series": []
+        }
+      }
+    },
+    {
+      "tool": "ValidateArtifact",
+      "target": "V2",
+      "checks": [
+        {
+          "name": "contract",
+          "status": "pass",
+          "detail": "factory, lastSignals() and fuzz test found"
+        },
+        {
+          "name": "runs",
+          "status": "pass",
+          "detail": "101 executions completed"
+        },
+        {
+          "name": "plan_signals",
+          "status": "pass",
+          "detail": "lastSignals() returns every planned signal [maxDepth, nodeCount]"
+        },
+        {
+          "name": "signal_varies",
+          "status": "pass",
+          "detail": "varying: [maxDepth, nodeCount] (on the guidance's own inputs: [maxDepth, nodeCount])"
+        },
+        {
+          "name": "reset",
+          "status": "pass",
+          "detail": "re-running inputs reproduced their values"
+        },
+        {
+          "name": "depends_on_execution",
+          "status": "pass",
+          "detail": "signals stay near zero when the target does not run"
+        },
+        {
+          "name": "instrumentation",
+          "status": "pass",
+          "detail": "rewrote [net.minidev.json.parser.JSONParserBase]"
+        },
+        {
+          "name": "input_limit",
+          "status": "pass",
+          "detail": "with jqf.ei.MAX_INPUT_SIZE=16 the 20 generated inputs were at most 16 bytes"
+        },
+        {
+          "name": "input_growth",
+          "status": "pass",
+          "detail": "the guidance generated a 10240-byte input after 617 ms (13 executions); the target needs 4000"
+        },
+        {
+          "name": "progress",
+          "status": "pass",
+          "ratio": 5.1195,
+          "detail": "`maxDepth` reached 512% of the series at 10239 bytes"
+        }
+      ],
+      "max_input_bytes": 10240,
+      "example_inputs": 8,
+      "executions": {
+        "own": 40,
+        "repeat": 5,
+        "random": 40,
+        "example": 16,
+        "probe": 3
+      },
+      "test_failures_not_used": 0,
+      "signals": {
+        "maxDepth": {
+          "min": 0.0,
+          "max": 2.0,
+          "distinct": 3
+        },
+        "nodeCount": {
+          "min": 0.0,
+          "max": 4.0,
+          "distinct": 5
+        }
+      },
+      "signals_by_kind": {
+        "example": {
+          "maxDepth": {
+            "max": 5.0,
+            "min": 1.0,
+            "distinct": 4
+          },
+          "nodeCount": {
+            "max": 12.0,
+            "min": 2.0,
+            "distinct": 6
+          }
+        },
+        "own": {
+          "maxDepth": {
+            "max": 2.0,
+            "min": 0.0,
+            "distinct": 3
+          },
+          "nodeCount": {
+            "max": 4.0,
+            "min": 0.0,
+            "distinct": 5
+          }
+        },
+        "random": {
+          "maxDepth": {
+            "max": 2.0,
+            "min": 0.0,
+            "distinct": 3
+          },
+          "nodeCount": {
+            "max": 4.0,
+            "min": 0.0,
+            "distinct": 4
+          }
+        },
+        "repeat": {
+          "maxDepth": {
+            "max": 2.0,
+            "min": 0.0,
+            "distinct": 3
+          },
+          "nodeCount": {
+            "max": 4.0,
+            "min": 0.0,
+            "distinct": 5
+          }
+        }
+      },
+      "transformed_classes": [
+        "net.minidev.json.parser.JSONParserBase"
+      ],
+      "ok": true,
+      "input_limit_probe": {
+        "max_input_bytes": 16,
+        "longest_input": 16,
+        "executions": {
+          "own": 20
+        }
+      },
+      "growth_probe": {
+        "needed_input_bytes": 4000,
+        "longest_input": 10240,
+        "executions": {
+          "own": 13
+        },
+        "growth": [
+          {
+            "ms": 596,
+            "execution": 1,
+            "bytes": 4
+          },
+          {
+            "ms": 617,
+            "execution": 13,
+            "bytes": 10240
+          }
+        ]
+      },
+      "hard_ok": true,
+      "progress_probe": {
+        "own_ms": 120001,
+        "executions": 88706,
+        "longest_input": 10240,
+        "phase": "series",
+        "series_inputs": 5,
+        "comparison": {
+          "maxDepth": {
+            "exponent": 1.0,
+            "series_longest": [
+              2048,
+              1024.0
+            ],
+            "best": [
+              10239,
+              10239.0,
+              703
+            ],
+            "compared_at": 4000,
+            "series_at_best": 2000.0,
+            "ratio": 5.1195
+          },
+          "nodeCount": {
+            "exponent": 1.0,
+            "series_longest": [
+              2048,
+              2047.0
+            ],
+            "best": [
+              10239,
+              20477.0,
+              703
+            ],
+            "compared_at": 4000,
+            "series_at_best": 4000.8793994507046,
+            "ratio": 5.118124780969745
+          }
+        },
+        "measurements": {
+          "budget_ms": 120000,
+          "own_ms": 120001,
+          "executions": 88706,
+          "longest_input": 10240,
+          "phase": "series",
+          "own_best": {
+            "maxDepth": [
+              [
+                1,
+                1.0,
+                634
+              ],
+              [
+                2,
+                2.0,
+                2822
+              ],
+              [
+                3,
+                2.0,
+                918
+              ],
+              [
+                4,
+                3.0,
+                3464
+              ],
+              [
+                5,
+                3.0,
+                4513
+              ],
+              [
+                6,
+                1.0,
+                634
+              ],
+              [
+                7,
+                2.0,
+                2068
+              ],
+              [
+                8,
+                2.0,
+                893
+              ],
+              [
+                9,
+                2.0,
+                852
+              ],
+              [
+                535,
+                2.0,
+                57191
+              ],
+              [
+                856,
+                856.0,
+                73726
+              ],
+              [
+                1203,
+                2.0,
+                114266
+              ],
+              [
+                1276,
+                1276.0,
+                89822
+              ],
+              [
+                1435,
+                2.0,
+                52049
+              ],
+              [
+                1522,
+                1522.0,
+                20318
+              ],
+              [
+                1750,
+                2.0,
+                47083
+              ],
+              [
+                1963,
+                1963.0,
+                110784
+              ],
+              [
+                2090,
+                2.0,
+                42626
+              ],
+              [
+                2403,
+                2403.0,
+                81497
+              ],
+              [
+                2596,
+                2596.0,
+                22356
+              ],
+              [
+                2887,
+                2887.0,
+                11809
+              ],
+              [
+                2919,
+                2.0,
+                115043
+              ],
+              [
+                3441,
+                3441.0,
+                96135
+              ],
+              [
+                3750,
+                2.0,
+                39149
+              ],
+              [
+                3981,
+                3981.0,
+                57897
+              ],
+              [
+                4462,
+                4462.0,
+                70614
+              ],
+              [
+                4773,
+                4773.0,
+                112812
+              ],
+              [
+                5309,
+                5309.0,
+                20509
+              ],
+              [
+                5680,
+                5680.0,
+                37832
+              ],
+              [
+                6088,
+                5888.0,
+                17730
+              ],
+              [
+                6360,
+                5888.0,
+                32132
+              ],
+              [
+                7404,
+                5888.0,
+                26068
+              ],
+              [
+                7942,
+                5888.0,
+                18948
+              ],
+              [
+                8562,
+                5888.0,
+                20033
+              ],
+              [
+                9225,
+                5888.0,
+                17832
+              ],
+              [
+                10239,
+                10239.0,
+                703
+              ]
+            ],
+            "nodeCount": [
+              [
+                1,
+                1.0,
+                634
+              ],
+              [
+                2,
+                3.0,
+                2822
+              ],
+              [
+                3,
+                4.0,
+                1813
+              ],
+              [
+                4,
+                6.0,
+                26326
+              ],
+              [
+                5,
+                6.0,
+                4513
+              ],
+              [
+                6,
+                2.0,
+                634
+              ],
+              [
+                7,
+                4.0,
+                2068
+              ],
+              [
+                8,
+                4.0,
+                3070
+              ],
+              [
+                9,
+                4.0,
+                852
+              ],
+              [
+                535,
+                3.0,
+                57191
+              ],
+              [
+                856,
+                1711.0,
+                73726
+              ],
+              [
+                1203,
+                3.0,
+                114266
+              ],
+              [
+                1276,
+                2551.0,
+                89822
+              ],
+              [
+                1435,
+                3.0,
+                52049
+              ],
+              [
+                1522,
+                3043.0,
+                20318
+              ],
+              [
+                1750,
+                3.0,
+                47083
+              ],
+              [
+                1963,
+                3925.0,
+                110784
+              ],
+              [
+                2090,
+                3.0,
+                42626
+              ],
+              [
+                2403,
+                4805.0,
+                81497
+              ],
+              [
+                2596,
+                5191.0,
+                22356
+              ],
+              [
+                2887,
+                5773.0,
+                11809
+              ],
+              [
+                2919,
+                3.0,
+                115043
+              ],
+              [
+                3441,
+                6881.0,
+                96135
+              ],
+              [
+                3750,
+                3.0,
+                39149
+              ],
+              [
+                3981,
+                7961.0,
+                57897
+              ],
+              [
+                4462,
+                8923.0,
+                70614
+              ],
+              [
+                4773,
+                9545.0,
+                112812
+              ],
+              [
+                5309,
+                10617.0,
+                20509
+              ],
+              [
+                5680,
+                11359.0,
+                37832
+              ],
+              [
+                6088,
+                11775.0,
+                17730
+              ],
+              [
+                6360,
+                11775.0,
+                32132
+              ],
+              [
+                7404,
+                11775.0,
+                26068
+              ],
+              [
+                7942,
+                11775.0,
+                18948
+              ],
+              [
+                8562,
+                11775.0,
+                20033
+              ],
+              [
+                9225,
+                11775.0,
+                17832
+              ],
+              [
+                10239,
+                20477.0,
+                703
+              ]
+            ]
+          },
+          "series": [
+            {
+              "bytes": 128,
+              "signals": {
+                "maxDepth": 64.0,
+                "nodeCount": 127.0
+              }
+            },
+            {
+              "bytes": 256,
+              "signals": {
+                "maxDepth": 128.0,
+                "nodeCount": 255.0
+              }
+            },
+            {
+              "bytes": 512,
+              "signals": {
+                "maxDepth": 256.0,
+                "nodeCount": 511.0
+              }
+            },
+            {
+              "bytes": 1024,
+              "signals": {
+                "maxDepth": 512.0,
+                "nodeCount": 1023.0
+              }
+            },
+            {
+              "bytes": 2048,
+              "signals": {
+                "maxDepth": 1024.0,
+                "nodeCount": 2047.0
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "limits": {
+    "jvm_args": [
+      "-Xmx1g",
+      "-Xss1m"
+    ],
+    "timeout_ms": 20000,
+    "max_input_bytes": 10240
+  },
+  "hard_ok": true
+}

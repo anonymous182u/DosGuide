@@ -1,0 +1,1 @@
+{"parameter": "estimatedSize (controls int[] allocation of estimatedSize * 4 bytes)", "inputs": [{"file": "n1024.bin", "value": 1024}, {"file": "n4096.bin", "value": 4096}, {"file": "n16384.bin", "value": 16384}, {"file": "n65536.bin", "value": 65536}, {"file": "n262144.bin", "value": 262144}, {"file": "n1048576.bin", "value": 1048576}]}

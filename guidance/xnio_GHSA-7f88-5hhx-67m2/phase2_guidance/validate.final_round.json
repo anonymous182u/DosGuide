@@ -1,0 +1,1266 @@
+{
+  "ok": true,
+  "launch": [],
+  "build": {
+    "ok": true
+  },
+  "targets": [
+    {
+      "tool": "ValidateArtifact",
+      "target": "V1",
+      "checks": [
+        {
+          "name": "contract",
+          "status": "pass",
+          "detail": "factory, lastSignals() and fuzz test found"
+        },
+        {
+          "name": "runs",
+          "status": "pass",
+          "detail": "105 executions completed"
+        },
+        {
+          "name": "plan_signals",
+          "status": "pass",
+          "detail": "lastSignals() returns every planned signal [maxDepth]"
+        },
+        {
+          "name": "signal_varies",
+          "status": "pass",
+          "detail": "varying: [maxDepth] (on the guidance's own inputs: [maxDepth])"
+        },
+        {
+          "name": "reset",
+          "status": "pass",
+          "detail": "re-running inputs reproduced their values"
+        },
+        {
+          "name": "depends_on_execution",
+          "status": "pass",
+          "detail": "signals stay near zero when the target does not run"
+        },
+        {
+          "name": "instrumentation",
+          "status": "pass",
+          "detail": "rewrote [org.xnio.AbstractIoFuture$CancellableState, org.xnio.AbstractIoFuture$NotifierState]"
+        },
+        {
+          "name": "input_limit",
+          "status": "pass",
+          "detail": "with jqf.ei.MAX_INPUT_SIZE=16 the 20 generated inputs were at most 16 bytes"
+        },
+        {
+          "name": "input_growth",
+          "status": "pass",
+          "detail": "the guidance generated a 5182-byte input after 875 ms (70 executions); the target needs 5000"
+        },
+        {
+          "name": "progress",
+          "status": "pass",
+          "ratio": 3.925999999999997,
+          "detail": "`maxDepth` reached 393% of the series at 35691 bytes"
+        }
+      ],
+      "max_input_bytes": 65536,
+      "example_inputs": 10,
+      "executions": {
+        "own": 40,
+        "repeat": 5,
+        "random": 40,
+        "example": 20,
+        "probe": 3
+      },
+      "test_failures_not_used": 0,
+      "signals": {
+        "maxDepth": {
+          "min": 1.0,
+          "max": 7000.0,
+          "distinct": 54
+        }
+      },
+      "signals_by_kind": {
+        "example": {
+          "maxDepth": {
+            "distinct": 10,
+            "max": 2000.0,
+            "min": 0.0
+          }
+        },
+        "own": {
+          "maxDepth": {
+            "distinct": 21,
+            "max": 7000.0,
+            "min": 2.0
+          }
+        },
+        "random": {
+          "maxDepth": {
+            "distinct": 37,
+            "max": 7000.0,
+            "min": 1.0
+          }
+        },
+        "repeat": {
+          "maxDepth": {
+            "distinct": 5,
+            "max": 7000.0,
+            "min": 3500.0
+          }
+        }
+      },
+      "transformed_classes": [
+        "org.xnio.AbstractIoFuture$CancellableState",
+        "org.xnio.AbstractIoFuture$NotifierState"
+      ],
+      "ok": true,
+      "input_limit_probe": {
+        "max_input_bytes": 16,
+        "longest_input": 16,
+        "executions": {
+          "own": 20
+        }
+      },
+      "growth_probe": {
+        "needed_input_bytes": 5000,
+        "longest_input": 5182,
+        "executions": {
+          "own": 70
+        },
+        "growth": [
+          {
+            "ms": 756,
+            "execution": 1,
+            "bytes": 16
+          },
+          {
+            "ms": 776,
+            "execution": 2,
+            "bytes": 20
+          },
+          {
+            "ms": 779,
+            "execution": 5,
+            "bytes": 35
+          },
+          {
+            "ms": 785,
+            "execution": 9,
+            "bytes": 191
+          },
+          {
+            "ms": 795,
+            "execution": 14,
+            "bytes": 197
+          },
+          {
+            "ms": 801,
+            "execution": 19,
+            "bytes": 394
+          },
+          {
+            "ms": 808,
+            "execution": 26,
+            "bytes": 1343
+          },
+          {
+            "ms": 825,
+            "execution": 33,
+            "bytes": 2591
+          },
+          {
+            "ms": 849,
+            "execution": 52,
+            "bytes": 2624
+          },
+          {
+            "ms": 852,
+            "execution": 56,
+            "bytes": 3384
+          },
+          {
+            "ms": 861,
+            "execution": 58,
+            "bytes": 3385
+          },
+          {
+            "ms": 872,
+            "execution": 66,
+            "bytes": 3396
+          },
+          {
+            "ms": 875,
+            "execution": 70,
+            "bytes": 5182
+          }
+        ]
+      },
+      "hard_ok": true,
+      "progress_probe": {
+        "own_ms": 120002,
+        "executions": 114096,
+        "longest_input": 65536,
+        "phase": "series",
+        "series_inputs": 6,
+        "comparison": {
+          "maxDepth": {
+            "exponent": 1.0,
+            "series_longest": [
+              16000,
+              16000.0
+            ],
+            "best": [
+              35691,
+              19630.0,
+              11992
+            ],
+            "compared_at": 5000,
+            "series_at_best": 5000.000000000004,
+            "ratio": 3.925999999999997
+          }
+        },
+        "measurements": {
+          "budget_ms": 120000,
+          "own_ms": 120002,
+          "executions": 114096,
+          "longest_input": 65536,
+          "phase": "series",
+          "own_best": {
+            "maxDepth": [
+              [
+                1,
+                1.0,
+                9410
+              ],
+              [
+                2,
+                2.0,
+                1183
+              ],
+              [
+                3,
+                3.0,
+                3915
+              ],
+              [
+                4,
+                4.0,
+                3155
+              ],
+              [
+                5,
+                5.0,
+                1134
+              ],
+              [
+                6,
+                6.0,
+                4780
+              ],
+              [
+                7,
+                7.0,
+                1076
+              ],
+              [
+                8,
+                8.0,
+                8950
+              ],
+              [
+                9,
+                9.0,
+                3486
+              ],
+              [
+                10,
+                10.0,
+                13964
+              ],
+              [
+                11,
+                11.0,
+                3958
+              ],
+              [
+                12,
+                12.0,
+                4585
+              ],
+              [
+                13,
+                13.0,
+                1047
+              ],
+              [
+                14,
+                14.0,
+                3489
+              ],
+              [
+                15,
+                15.0,
+                13522
+              ],
+              [
+                17,
+                17.0,
+                1179
+              ],
+              [
+                19,
+                19.0,
+                1269
+              ],
+              [
+                20,
+                20.0,
+                15254
+              ],
+              [
+                22,
+                22.0,
+                15840
+              ],
+              [
+                24,
+                24.0,
+                2709
+              ],
+              [
+                26,
+                26.0,
+                4322
+              ],
+              [
+                29,
+                29.0,
+                1192
+              ],
+              [
+                31,
+                31.0,
+                1724
+              ],
+              [
+                34,
+                34.0,
+                2540
+              ],
+              [
+                38,
+                38.0,
+                3096
+              ],
+              [
+                41,
+                41.0,
+                1071
+              ],
+              [
+                45,
+                45.0,
+                5808
+              ],
+              [
+                49,
+                49.0,
+                1850
+              ],
+              [
+                53,
+                53.0,
+                3171
+              ],
+              [
+                58,
+                58.0,
+                3293
+              ],
+              [
+                63,
+                63.0,
+                6303
+              ],
+              [
+                69,
+                69.0,
+                9333
+              ],
+              [
+                76,
+                76.0,
+                4828
+              ],
+              [
+                82,
+                82.0,
+                1092
+              ],
+              [
+                90,
+                90.0,
+                21668
+              ],
+              [
+                98,
+                98.0,
+                4041
+              ],
+              [
+                107,
+                107.0,
+                17485
+              ],
+              [
+                117,
+                117.0,
+                61914
+              ],
+              [
+                127,
+                127.0,
+                4704
+              ],
+              [
+                139,
+                139.0,
+                6148
+              ],
+              [
+                152,
+                152.0,
+                6815
+              ],
+              [
+                165,
+                165.0,
+                25638
+              ],
+              [
+                181,
+                181.0,
+                8744
+              ],
+              [
+                196,
+                196.0,
+                1151
+              ],
+              [
+                215,
+                215.0,
+                102136
+              ],
+              [
+                234,
+                234.0,
+                1377
+              ],
+              [
+                254,
+                254.0,
+                31419
+              ],
+              [
+                279,
+                279.0,
+                79581
+              ],
+              [
+                304,
+                304.0,
+                2900
+              ],
+              [
+                331,
+                331.0,
+                110108
+              ],
+              [
+                361,
+                361.0,
+                77833
+              ],
+              [
+                394,
+                394.0,
+                27913
+              ],
+              [
+                430,
+                430.0,
+                102154
+              ],
+              [
+                469,
+                469.0,
+                113761
+              ],
+              [
+                509,
+                509.0,
+                77575
+              ],
+              [
+                556,
+                556.0,
+                3282
+              ],
+              [
+                607,
+                607.0,
+                14521
+              ],
+              [
+                661,
+                661.0,
+                84174
+              ],
+              [
+                724,
+                724.0,
+                43281
+              ],
+              [
+                789,
+                789.0,
+                30916
+              ],
+              [
+                860,
+                860.0,
+                12701
+              ],
+              [
+                939,
+                939.0,
+                7114
+              ],
+              [
+                1020,
+                1020.0,
+                55172
+              ],
+              [
+                1116,
+                1116.0,
+                117648
+              ],
+              [
+                1216,
+                1216.0,
+                16438
+              ],
+              [
+                1322,
+                1322.0,
+                27541
+              ],
+              [
+                1444,
+                1444.0,
+                42590
+              ],
+              [
+                1576,
+                1576.0,
+                99747
+              ],
+              [
+                1715,
+                1715.0,
+                81225
+              ],
+              [
+                1833,
+                1833.0,
+                107252
+              ],
+              [
+                2025,
+                2025.0,
+                3095
+              ],
+              [
+                2210,
+                2174.0,
+                83048
+              ],
+              [
+                2434,
+                2362.0,
+                20637
+              ],
+              [
+                2620,
+                2548.0,
+                90695
+              ],
+              [
+                2808,
+                2736.0,
+                8227
+              ],
+              [
+                3097,
+                2485.0,
+                18220
+              ],
+              [
+                3436,
+                2824.0,
+                3451
+              ],
+              [
+                3736,
+                3124.0,
+                110219
+              ],
+              [
+                4060,
+                3448.0,
+                23063
+              ],
+              [
+                4466,
+                3242.0,
+                35978
+              ],
+              [
+                4865,
+                3641.0,
+                110442
+              ],
+              [
+                5300,
+                4076.0,
+                87484
+              ],
+              [
+                5730,
+                4506.0,
+                36201
+              ],
+              [
+                6264,
+                5040.0,
+                118956
+              ],
+              [
+                6789,
+                5329.0,
+                21213
+              ],
+              [
+                6913,
+                5453.0,
+                50089
+              ],
+              [
+                8933,
+                6361.0,
+                3864
+              ],
+              [
+                9738,
+                7168.0,
+                45104
+              ],
+              [
+                10620,
+                8050.0,
+                110101
+              ],
+              [
+                11066,
+                8496.0,
+                54707
+              ],
+              [
+                17864,
+                12724.0,
+                50297
+              ],
+              [
+                19472,
+                14332.0,
+                50120
+              ],
+              [
+                19868,
+                14728.0,
+                75351
+              ],
+              [
+                35691,
+                19630.0,
+                11992
+              ],
+              [
+                37414,
+                19630.0,
+                12081
+              ],
+              [
+                65525,
+                19630.0,
+                13173
+              ],
+              [
+                65536,
+                19630.0,
+                12003
+              ]
+            ]
+          },
+          "series": [
+            {
+              "bytes": 500,
+              "signals": {
+                "maxDepth": 500.0
+              }
+            },
+            {
+              "bytes": 1000,
+              "signals": {
+                "maxDepth": 1000.0
+              }
+            },
+            {
+              "bytes": 2000,
+              "signals": {
+                "maxDepth": 2000.0
+              }
+            },
+            {
+              "bytes": 4000,
+              "signals": {
+                "maxDepth": 4000.0
+              }
+            },
+            {
+              "bytes": 8000,
+              "signals": {
+                "maxDepth": 8000.0
+              }
+            },
+            {
+              "bytes": 16000,
+              "signals": {
+                "maxDepth": 16000.0
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "tool": "ValidateArtifact",
+      "target": "V2",
+      "checks": [
+        {
+          "name": "contract",
+          "status": "pass",
+          "detail": "factory, lastSignals() and fuzz test found"
+        },
+        {
+          "name": "runs",
+          "status": "pass",
+          "detail": "105 executions completed"
+        },
+        {
+          "name": "plan_signals",
+          "status": "pass",
+          "detail": "lastSignals() returns every planned signal [maxDepth]"
+        },
+        {
+          "name": "signal_varies",
+          "status": "pass",
+          "detail": "varying: [maxDepth] (on the guidance's own inputs: [maxDepth])"
+        },
+        {
+          "name": "reset",
+          "status": "pass",
+          "detail": "re-running inputs reproduced their values"
+        },
+        {
+          "name": "depends_on_execution",
+          "status": "pass",
+          "detail": "signals stay near zero when the target does not run"
+        },
+        {
+          "name": "instrumentation",
+          "status": "pass",
+          "detail": "rewrote [org.xnio.AbstractIoFuture$CancellableState, org.xnio.AbstractIoFuture$NotifierState]"
+        },
+        {
+          "name": "input_limit",
+          "status": "pass",
+          "detail": "with jqf.ei.MAX_INPUT_SIZE=16 the 20 generated inputs were at most 16 bytes"
+        },
+        {
+          "name": "input_growth",
+          "status": "pass",
+          "detail": "the guidance generated a 7000-byte input after 751 ms (120 executions); the target needs 5000"
+        },
+        {
+          "name": "progress",
+          "status": "pass",
+          "ratio": 5.881999999999996,
+          "detail": "`maxDepth` reached 588% of the series at 37168 bytes"
+        }
+      ],
+      "max_input_bytes": 65536,
+      "example_inputs": 10,
+      "executions": {
+        "own": 40,
+        "repeat": 5,
+        "random": 40,
+        "example": 20,
+        "probe": 3
+      },
+      "test_failures_not_used": 0,
+      "signals": {
+        "maxDepth": {
+          "min": 2.0,
+          "max": 7652.0,
+          "distinct": 54
+        }
+      },
+      "signals_by_kind": {
+        "example": {
+          "maxDepth": {
+            "min": 0.0,
+            "max": 2000.0,
+            "distinct": 10
+          }
+        },
+        "own": {
+          "maxDepth": {
+            "min": 3.0,
+            "max": 7652.0,
+            "distinct": 22
+          }
+        },
+        "random": {
+          "maxDepth": {
+            "min": 2.0,
+            "max": 7645.0,
+            "distinct": 35
+          }
+        },
+        "repeat": {
+          "maxDepth": {
+            "min": 1912.0,
+            "max": 7652.0,
+            "distinct": 5
+          }
+        }
+      },
+      "transformed_classes": [
+        "org.xnio.AbstractIoFuture$CancellableState",
+        "org.xnio.AbstractIoFuture$NotifierState"
+      ],
+      "ok": true,
+      "input_limit_probe": {
+        "max_input_bytes": 16,
+        "longest_input": 16,
+        "executions": {
+          "own": 20
+        }
+      },
+      "growth_probe": {
+        "needed_input_bytes": 5000,
+        "longest_input": 7000,
+        "executions": {
+          "own": 120
+        },
+        "growth": [
+          {
+            "ms": 597,
+            "execution": 1,
+            "bytes": 16
+          },
+          {
+            "ms": 608,
+            "execution": 3,
+            "bytes": 17
+          },
+          {
+            "ms": 611,
+            "execution": 6,
+            "bytes": 32
+          },
+          {
+            "ms": 615,
+            "execution": 11,
+            "bytes": 69
+          },
+          {
+            "ms": 623,
+            "execution": 23,
+            "bytes": 309
+          },
+          {
+            "ms": 632,
+            "execution": 37,
+            "bytes": 618
+          },
+          {
+            "ms": 640,
+            "execution": 51,
+            "bytes": 619
+          },
+          {
+            "ms": 642,
+            "execution": 56,
+            "bytes": 620
+          },
+          {
+            "ms": 645,
+            "execution": 59,
+            "bytes": 1236
+          },
+          {
+            "ms": 657,
+            "execution": 84,
+            "bytes": 1237
+          },
+          {
+            "ms": 661,
+            "execution": 86,
+            "bytes": 1852
+          },
+          {
+            "ms": 671,
+            "execution": 90,
+            "bytes": 2474
+          },
+          {
+            "ms": 700,
+            "execution": 107,
+            "bytes": 3500
+          },
+          {
+            "ms": 751,
+            "execution": 120,
+            "bytes": 7000
+          }
+        ]
+      },
+      "hard_ok": true,
+      "progress_probe": {
+        "own_ms": 120176,
+        "executions": 387,
+        "longest_input": 58879,
+        "phase": "series",
+        "series_inputs": 6,
+        "comparison": {
+          "maxDepth": {
+            "exponent": 1.0,
+            "series_longest": [
+              16000,
+              16000.0
+            ],
+            "best": [
+              37168,
+              29410.0,
+              3780
+            ],
+            "compared_at": 5000,
+            "series_at_best": 5000.000000000004,
+            "ratio": 5.881999999999996
+          }
+        },
+        "measurements": {
+          "budget_ms": 120000,
+          "own_ms": 120176,
+          "executions": 387,
+          "longest_input": 58879,
+          "phase": "series",
+          "own_best": {
+            "maxDepth": [
+              [
+                2,
+                2.0,
+                52403
+              ],
+              [
+                9,
+                9.0,
+                580
+              ],
+              [
+                17,
+                17.0,
+                16594
+              ],
+              [
+                26,
+                26.0,
+                62413
+              ],
+              [
+                32,
+                32.0,
+                570
+              ],
+              [
+                42,
+                37.0,
+                594
+              ],
+              [
+                48,
+                41.0,
+                93064
+              ],
+              [
+                67,
+                67.0,
+                582
+              ],
+              [
+                71,
+                65.0,
+                827
+              ],
+              [
+                82,
+                82.0,
+                586
+              ],
+              [
+                104,
+                104.0,
+                21210
+              ],
+              [
+                123,
+                123.0,
+                63803
+              ],
+              [
+                128,
+                128.0,
+                597
+              ],
+              [
+                148,
+                148.0,
+                604
+              ],
+              [
+                178,
+                178.0,
+                49197
+              ],
+              [
+                200,
+                200.0,
+                587
+              ],
+              [
+                255,
+                248.0,
+                590
+              ],
+              [
+                256,
+                256.0,
+                581
+              ],
+              [
+                302,
+                302.0,
+                93064
+              ],
+              [
+                365,
+                365.0,
+                695
+              ],
+              [
+                464,
+                464.0,
+                89237
+              ],
+              [
+                488,
+                488.0,
+                15294
+              ],
+              [
+                512,
+                512.0,
+                19838
+              ],
+              [
+                723,
+                718.0,
+                7111
+              ],
+              [
+                725,
+                722.0,
+                116125
+              ],
+              [
+                844,
+                844.0,
+                64838
+              ],
+              [
+                1004,
+                1004.0,
+                64129
+              ],
+              [
+                1074,
+                1074.0,
+                747
+              ],
+              [
+                1207,
+                1207.0,
+                2526
+              ],
+              [
+                1324,
+                1324.0,
+                8329
+              ],
+              [
+                1432,
+                1432.0,
+                665
+              ],
+              [
+                1530,
+                1530.0,
+                64131
+              ],
+              [
+                1643,
+                1643.0,
+                1384
+              ],
+              [
+                1818,
+                1818.0,
+                95056
+              ],
+              [
+                1908,
+                1908.0,
+                76087
+              ],
+              [
+                2402,
+                2402.0,
+                50647
+              ],
+              [
+                2912,
+                2912.0,
+                2414
+              ],
+              [
+                4667,
+                4667.0,
+                5406
+              ],
+              [
+                5446,
+                5446.0,
+                70985
+              ],
+              [
+                9547,
+                9539.0,
+                47958
+              ],
+              [
+                10492,
+                10484.0,
+                95161
+              ],
+              [
+                19379,
+                19363.0,
+                2405
+              ],
+              [
+                19724,
+                19708.0,
+                32086
+              ],
+              [
+                37168,
+                29410.0,
+                3780
+              ],
+              [
+                39720,
+                29410.0,
+                63798
+              ],
+              [
+                58878,
+                0.0,
+                19836
+              ]
+            ]
+          },
+          "series": [
+            {
+              "bytes": 500,
+              "signals": {
+                "maxDepth": 500.0
+              }
+            },
+            {
+              "bytes": 1000,
+              "signals": {
+                "maxDepth": 1000.0
+              }
+            },
+            {
+              "bytes": 2000,
+              "signals": {
+                "maxDepth": 2000.0
+              }
+            },
+            {
+              "bytes": 4000,
+              "signals": {
+                "maxDepth": 4000.0
+              }
+            },
+            {
+              "bytes": 8000,
+              "signals": {
+                "maxDepth": 8000.0
+              }
+            },
+            {
+              "bytes": 16000,
+              "signals": {
+                "maxDepth": 16000.0
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "limits": {
+    "jvm_args": [
+      "-Xmx1g",
+      "-Xss1m"
+    ],
+    "timeout_ms": 20000,
+    "max_input_bytes": 65536
+  },
+  "hard_ok": true
+}

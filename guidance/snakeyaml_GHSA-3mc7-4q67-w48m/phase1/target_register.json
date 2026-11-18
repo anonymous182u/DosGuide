@@ -1,0 +1,120 @@
+{
+  "ordered_targets": [
+    {
+      "slot": 1,
+      "id": "V1",
+      "name": "Unbounded recursive descent in Composer.composeNode / BaseConstructor.constructObject causes StackOverflowError on deeply nested YAML",
+      "entrypoint": "SnakeYamlFuzzTest.fuzzYamlLoad(InputStream) → Yaml.load(String) → BaseConstructor.getSingleData(Class) → Composer.getSingleNode() → Composer.composeNode(Node) → Composer.composeSequenceNode(String)",
+      "source_path": "src/main/java/org/yaml/snakeyaml/composer/Composer.java",
+      "sink": "Composer#composeNode",
+      "mechanism": "Each flow sequence nesting level ([) triggers a recursive call from composeSequenceNode back into composeNode, adding ~2 stack frames per level. No nesting depth limit exists in this version of LoaderOptions. After composition, the Constructor also recurses (~3-5 frames per level) on the same node tree without depth limit.",
+      "resource": "stack depth: ~2 Composer frames (composeNode + composeSequenceNode) per nesting level during composition, then ~5 Constructor frames (constructObject + constructObjectNoCheck + construct + constructSequence + constructSequenceStep2) per nesting level during construction",
+      "failure_mode": "stack_overflow",
+      "scale": "Measured: 256 nesting levels (513 bytes) completes within 256 KB stack; 512 levels (1025 bytes) exceeds 256 KB stack. Estimated stack cost ~540 bytes per nesting level (Composer: ~2 frames, then Constructor: ~5 frames per level; the Constructor is deeper). Extrapolating to the evaluation's 1 MB stack (-Xss1m): overflow at approximately 1800 nesting levels. Input encoding [×N + '1' + ]×N costs 2N+1 bytes; at N=1800 that is 3601 bytes. Denser encoding: N bytes of '[' alone (overflow occurs during descent before closings are needed), giving ~1800 bytes.",
+      "input_bytes": 4001,
+      "cwe": "CWE-674",
+      "checkpath_status": "PASS",
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "method": "com.fuzz.snakeyaml.SnakeYamlFuzzTest#fuzzYamlLoad(InputStream)",
+          "location": "harness/src/test/java/com/fuzz/snakeyaml/SnakeYamlFuzzTest.java:29"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "harness/src/test/java/com/fuzz/snakeyaml/SnakeYamlFuzzTest.java:31"
+        },
+        {
+          "kind": "hop",
+          "method": "org.yaml.snakeyaml.Yaml#load(String)",
+          "location": "src/main/java/org/yaml/snakeyaml/Yaml.java:415"
+        },
+        {
+          "kind": "connection",
+          "type": "INDIRECT",
+          "evidence": "1 omitted call(s)"
+        },
+        {
+          "kind": "hop",
+          "provenance": "checkpath (omitted call)",
+          "method": "org.yaml.snakeyaml.Yaml#loadFromReader(StreamReader,Class)",
+          "location": "src/main/java/org/yaml/snakeyaml/Yaml.java:487"
+        },
+        {
+          "kind": "hop",
+          "method": "org.yaml.snakeyaml.constructor.BaseConstructor#getSingleData(Class)",
+          "location": "src/main/java/org/yaml/snakeyaml/constructor/BaseConstructor.java:149"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "src/main/java/org/yaml/snakeyaml/constructor/BaseConstructor.java:151"
+        },
+        {
+          "kind": "hop",
+          "method": "org.yaml.snakeyaml.composer.Composer#getSingleNode()",
+          "location": "src/main/java/org/yaml/snakeyaml/composer/Composer.java:137"
+        },
+        {
+          "kind": "connection",
+          "type": "DATAFLOW",
+          "evidence": "Composer#getSingleNode() (src/main/java/org/yaml/snakeyaml/composer/Composer.java:137) writes field `nonScalarAliasesCount`, which Composer#composeNode(Node) (src/main/java/org/yaml/snakeyaml/composer/Composer.java:157) reads (through helper calls)",
+          "site": "src/main/java/org/yaml/snakeyaml/composer/Composer.java:137"
+        },
+        {
+          "kind": "hop",
+          "method": "org.yaml.snakeyaml.composer.Composer#composeNode(Node)",
+          "location": "src/main/java/org/yaml/snakeyaml/composer/Composer.java:157"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "src/main/java/org/yaml/snakeyaml/composer/Composer.java:189"
+        },
+        {
+          "kind": "hop",
+          "method": "org.yaml.snakeyaml.composer.Composer#composeSequenceNode(String)",
+          "location": "src/main/java/org/yaml/snakeyaml/composer/Composer.java:221"
+        }
+      ],
+      "harness_entry": "com.fuzz.snakeyaml.SnakeYamlFuzzTest#fuzzYamlLoad",
+      "scale_measurement": [
+        {
+          "value": 64,
+          "input_bytes": 129,
+          "outcome": "completed",
+          "cpu_ms": 27.062583,
+          "allocated_bytes": 2485120,
+          "peak_heap_bytes": 4194304
+        },
+        {
+          "value": 128,
+          "input_bytes": 257,
+          "outcome": "completed",
+          "cpu_ms": 34.724555,
+          "allocated_bytes": 3308800,
+          "peak_heap_bytes": 4194304
+        },
+        {
+          "value": 256,
+          "input_bytes": 513,
+          "outcome": "completed",
+          "cpu_ms": 52.048444,
+          "allocated_bytes": 6071576,
+          "peak_heap_bytes": 6291456
+        },
+        {
+          "value": 512,
+          "input_bytes": 1025,
+          "outcome": "stack_cap"
+        },
+        {
+          "value": 1024,
+          "input_bytes": 2049,
+          "outcome": "stack_cap"
+        }
+      ]
+    }
+  ]
+}

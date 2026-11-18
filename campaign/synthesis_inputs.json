@@ -1,0 +1,200 @@
+{
+  "JSON-java_GHSA-3vqj-43w4-2q58": {
+    "main_class": "src/main/java/org/json/JSONML.java",
+    "fix": "a6e412b (PR #723): depth limit in JSONML.parse; the earlier XML.parse limit (PR #720) is already in this checkout",
+    "clone_url": "https://github.com/stleary/JSON-java.git",
+    "vuln_ref": "2391d248cc77202eb31d0e4df0edecfbde4ab2dc"
+  },
+  "JSON-java_GHSA-whgh-g24c-3j5q": {
+    "main_class": "src/main/java/org/json/JSONTokener.java",
+    "fix": "7a124d8: JSONTokener.nextValue catches StackOverflowError; JSONObject(JSONTokener) rejects '{'/'[' as key",
+    "clone_url": "https://github.com/stleary/JSON-java.git",
+    "vuln_ref": "f1b0210b8acdbc5f5316bc5507e2f3630506a9a3"
+  },
+  "OpenSearch_GHSA-mw3v-mmfw-3x2g": {
+    "main_class": "server/src/main/java/org/opensearch/index/search/QueryStringQueryParser.java",
+    "fix": "PR #19491: QueryStringQueryParser.parse rejects query strings longer than search.query.max_query_string_length",
+    "clone_url": "https://github.com/opensearch-project/OpenSearch.git",
+    "vuln_ref": "a90f864b8524bc75570a8461ccb569d2a4bfed42"
+  },
+  "activemq_GHSA-whxr-3p84-rf3c": {
+    "main_class": "activemq-client/src/main/java/org/apache/activemq/openwire/OpenWireFormat.java",
+    "fix": "fc4372b (AMQ-6596): buffer size checks in BaseDataStreamMarshaller.*UnmarshalByteArray/ByteSequence via OpenWireUtil.validateBufferSize; OpenWireFormat.unmarshal tracks the frame size",
+    "clone_url": "https://github.com/apache/activemq.git",
+    "vuln_ref": "78ee3434256b59138b948b43db9e232f9c4ddcf5"
+  },
+  "bc-java_GHSA-m44j-cfrm-g8qc": {
+    "main_class": "core/src/main/java/org/bouncycastle/math/ec/rfc8032/Ed25519.java",
+    "fix": "9c16579, ebe1c75: Scalar25519.reduceBasisVar copies p and bounds its loop; Ed25519.implVerify throws when the bound is hit",
+    "clone_url": "https://github.com/bcgit/bc-java.git",
+    "vuln_ref": "f1367f0b89962b29460eea381a12063fa7cd2428"
+  },
+  "commons-compress_GHSA-hrmr-f5m6-m9pq": {
+    "main_class": "src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveInputStream.java",
+    "fix": "a41ce68 (COMPRESS-463): ZipArchiveInputStream.readStored throws on a truncated STORED entry",
+    "clone_url": "https://github.com/apache/commons-compress.git",
+    "vuln_ref": "d9993f8ff119d4a3eb1259b460c53401f619d655"
+  },
+  "commons-fileupload_GHSA-vv7r-c36w-3prj": {
+    "main_class": "src/main/java/org/apache/commons/fileupload/MultipartStream.java",
+    "fix": "2108495: MultipartStream.readHeaders enforces partHeaderSizeMax (default 512)",
+    "clone_url": "https://github.com/apache/commons-fileupload.git",
+    "vuln_ref": "fc9d1a41d9f583aea4dcc01b117fe32f514697cf"
+  },
+  "cxf_GHSA-36wv-v2qp-v4g4": {
+    "main_class": "core/src/main/java/org/apache/cxf/io/DelayedCachedOutputStreamCleaner.java",
+    "fix": "1c1d687 (PR #2258): DelayedCleanerImpl.clean logs the stream's hash code instead of the stream",
+    "clone_url": "https://github.com/apache/cxf.git",
+    "vuln_ref": "51ad92012fbcfbdd77b722214631303850315799"
+  },
+  "dnssecjava-keytrap_CVE-2023-50387": {
+    "main_class": "src/main/java/org/jitsi/dnssec/validator/DnsSecVerifier.java",
+    "fix": "no dnssecjava fix; in dnsjava 3.6.0, 3ddc45c limits the RRSIG validations in DnsSecVerifier.verify (and 07ac36a the DS match attempts)",
+    "clone_url": "https://github.com/ibauersachs/dnssecjava.git",
+    "vuln_ref": "b1b943db3072aef3d8631c171bc734cc8bc53ca4"
+  },
+  "elasticsearch_GHSA-gphj-4h6p-37xq": {
+    "main_class": "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/data/AbstractBlockBuilder.java",
+    "fix": "PR #138132: long arithmetic for the breaker delta in AbstractBlockBuilder.ensureCapacity and the block builder constructors",
+    "clone_url": "https://github.com/elastic/elasticsearch.git",
+    "vuln_ref": "198d86868932741b4e0d184425510217febc27d1"
+  },
+  "framework_GHSA-c332-w4jm-55wv": {
+    "main_class": "compatibility-server/src/main/java/com/vaadin/v7/data/validator/EmailValidator.java",
+    "fix": "PR 12241: new EmailValidator pattern without the nested quantifier",
+    "clone_url": "https://github.com/vaadin/framework.git",
+    "vuln_ref": "9978eec85cb95df26170006a04d2285cfd7bcc7d"
+  },
+  "jackson-dataformats-binary_GHSA-xmc8-26q4-qjhx": {
+    "main_class": "cbor/src/main/java/com/fasterxml/jackson/dataformat/cbor/CBORParser.java",
+    "fix": "de072d3, 3d7de83 (issue #186): CBORParser._finishBytes reads long byte strings incrementally",
+    "clone_url": "https://github.com/FasterXML/jackson-dataformats-binary.git",
+    "vuln_ref": "961b128a100c6f0da36b1deaae3a4946b9321b90"
+  },
+  "jetty.project_GHSA-m394-8rww-3jr7": {
+    "main_class": "jetty-http/src/main/java/org/eclipse/jetty/http/QuotedQualityCSV.java",
+    "fix": "10e5317: QuotedQualityCSV.sort uses List.sort instead of the restarting bubble sort",
+    "clone_url": "https://github.com/eclipse/jetty.project.git",
+    "vuln_ref": "238ec6997c7806b055319a6d11f8ae7564adc0de"
+  },
+  "jose4j_GHSA-3677-xxcr-wjqv": {
+    "main_class": "src/main/java/org/jose4j/zip/DeflateRFC1951CompressionAlgorithm.java",
+    "fix": "19a90a6: DeflateRFC1951CompressionAlgorithm.decompress stops above decompress-max-bytes",
+    "clone_url": "https://bitbucket.org/b_c/jose4j.git",
+    "vuln_ref": "a3a21a6c3169e2fea87153a4fad53896f953abf2"
+  },
+  "json-smart-v2_GHSA-493p-pfq6-5258": {
+    "main_class": "json-smart/src/main/java/net/minidev/json/parser/JSONParserBase.java",
+    "fix": "5b3205d (+ e2791ae): depth limit in JSONParserBase.readArray/readObject",
+    "clone_url": "https://github.com/netplex/json-smart-v2.git",
+    "vuln_ref": "4d2c271e2ef39204cc2d32eb2c70a090d3671cb4"
+  },
+  "keycloak_GHSA-wq8x-cg39-8mrr": {
+    "main_class": "services/src/main/java/org/keycloak/utils/SearchQueryUtils.java",
+    "fix": "5d6c91f: SearchQueryUtils.getFields uses a character scanner instead of the regex",
+    "clone_url": "https://github.com/keycloak/keycloak.git",
+    "vuln_ref": "05116f7951a9e1413c0a90c24b4648ee4a81ef4d"
+  },
+  "keycloak_GHSA-xv6h-r36f-3gp5": {
+    "main_class": "saml-core/src/main/java/org/keycloak/saml/SAMLRequestParser.java",
+    "fix": "4f90ef6: DeflateUtil.decode wraps the inflater in LimitedInflaterInputStream; SAMLRequestParser passes the limit",
+    "clone_url": "https://github.com/keycloak/keycloak.git",
+    "vuln_ref": "4253a79eb2a1cc1440eb37613f307e5d5a1556dc"
+  },
+  "kwik_GHSA-9f57-9rhg-4hvm": {
+    "main_class": "core/src/main/java/tech/kwik/core/server/impl/ConnectionSource.java",
+    "fix": "b0733d7: ConnectionSource.hashCode uses a keyed SipHash",
+    "clone_url": "https://github.com/ptrd/kwik.git",
+    "vuln_ref": "da84ebe4918df599052de9a4dca8584ff23166d6"
+  },
+  "micronaut-core_GHSA-2hcp-gjrf-7fhc": {
+    "main_class": "http-server/src/main/java/io/micronaut/http/server/exceptions/response/DefaultHtmlErrorResponseBodyProvider.java",
+    "fix": "1e2ba2c: the error-page cache is bounded to 100 entries",
+    "clone_url": "https://github.com/micronaut-projects/micronaut-core.git",
+    "vuln_ref": "37e2a1bc54d4a6d4a165615c5d9fe4de33038bec"
+  },
+  "msgpack-java_GHSA-cw39-r4h6-8j3x": {
+    "main_class": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java",
+    "fix": "daa2ea6: MessageUnpacker.readPayload allocates large payloads gradually",
+    "clone_url": "https://github.com/msgpack/msgpack-java.git",
+    "vuln_ref": "befe3b943fbdc59070acfea8feb317044096bc85"
+  },
+  "netty-incubator-codec-quic_GHSA-hqqc-jr88-p6x2": {
+    "main_class": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java",
+    "fix": "e059bd9: QuicheQuicCodec.connectionIdToChannel becomes a SipHash-keyed ConnectionIdChannelMap",
+    "clone_url": "https://github.com/netty/netty-incubator-codec-quic.git",
+    "vuln_ref": "dca355aa8a1f63dfaf6aa2fe88734e4bd5314c14"
+  },
+  "netty_GHSA-3p8m-j85q-pgmj": {
+    "main_class": "codec-compression/src/main/java/io/netty/handler/codec/compression/BrotliDecoder.java",
+    "fix": "9d804c5: BrotliDecoder forwards each output buffer instead of collecting all of them",
+    "clone_url": "https://github.com/netty/netty.git",
+    "vuln_ref": "edb55fd8e0a3bcbd85881e423464f585183d1284"
+  },
+  "netty_GHSA-9vjp-v76f-g363": {
+    "main_class": "codec/src/main/java/io/netty/handler/codec/compression/SnappyFrameDecoder.java",
+    "fix": "6da4956: SnappyFrameDecoder checks the uncompressed chunk size and bounds its buffers",
+    "clone_url": "https://github.com/netty/netty.git",
+    "vuln_ref": "41d3d61a61608f2223bb364955ab2045dd5e4020"
+  },
+  "netty_GHSA-grg4-wf29-r9vv": {
+    "main_class": "codec/src/main/java/io/netty/handler/codec/compression/Bzip2Decoder.java",
+    "fix": "41d3d61: Bzip2Decoder.decode returns after each block",
+    "clone_url": "https://github.com/netty/netty.git",
+    "vuln_ref": "deb048985bd74a825131e51849446d1e905b5e93"
+  },
+  "powsybl-core_GHSA-8qjw-9xgm-c9ff": {
+    "main_class": "iidm/iidm-criteria/src/main/java/com/powsybl/iidm/criteria/RegexCriterion.java",
+    "fix": "d8398f6: RegexCriterion uses RE2J",
+    "clone_url": "https://github.com/powsybl/powsybl-core.git",
+    "vuln_ref": "e6c7c4997ae8758b54a2f23ce1a499e25113acdc"
+  },
+  "rhino_GHSA-3w8q-xq97-5j7x": {
+    "main_class": "src/org/mozilla/javascript/NativeNumber.java",
+    "fix": "2bcf4c4: NativeNumber.toFixed/toExponential/toPrecision use DecimalFormatter instead of DToA",
+    "clone_url": "https://github.com/mozilla/rhino.git",
+    "vuln_ref": "fc7024acf598e2499734ab4a708e5f4fb978f6a8"
+  },
+  "snakeyaml_GHSA-3mc7-4q67-w48m": {
+    "main_class": "src/main/java/org/yaml/snakeyaml/composer/Composer.java",
+    "fix": "fc30078: nesting depth limit in Composer.composeNode (LoaderOptions.nestingDepthLimit)",
+    "clone_url": "https://bitbucket.org/snakeyaml/snakeyaml.git",
+    "vuln_ref": "4b8d1af4bd422a015fbb07d235f282412c863220"
+  },
+  "snappy-java_GHSA-55g7-9cwv-5qfv": {
+    "main_class": "src/main/java/org/xerial/snappy/SnappyInputStream.java",
+    "fix": "9f8c3cf: SnappyInputStream.hasNextChunk rejects chunk sizes above the maximum before allocating",
+    "clone_url": "https://github.com/xerial/snappy-java.git",
+    "vuln_ref": "49d700175f18ed5f8c5d371b7c2f80c75979bd68"
+  },
+  "spring-framework_GHSA-2rmj-mq67-h97g": {
+    "main_class": "spring-web/src/main/java/org/springframework/http/HttpHeaders.java",
+    "fix": "582bfcc, 8d16a50, bb17ad8: HttpHeaders.getETagValuesAsList uses ETag.parse instead of the regex",
+    "clone_url": "https://github.com/spring-projects/spring-framework.git",
+    "vuln_ref": "406b33d380925740d6221f357c85c8dd92d52f16"
+  },
+  "token-macro-plugin_GHSA-23h9-m55m-c5jp": {
+    "main_class": "src/main/java/org/jenkinsci/plugins/tokenmacro/Parser.java",
+    "fix": "7016360: Parser.processToken caps nested expansion at MAX_RECURSION_LEVEL",
+    "clone_url": "https://github.com/jenkinsci/token-macro-plugin.git",
+    "vuln_ref": "f74697a6e54087f9334eef153948ba85f33fe596"
+  },
+  "vfsjfilechooser2_GHSA-c7fh-chf7-jr5x": {
+    "main_class": "src/main/java/com/googlecode/vfsjfilechooser2/utils/VFSURIValidator.java",
+    "fix": "9c9f2c3: VFSURIValidator's ftp patterns no longer nest (.+:.+@)*",
+    "clone_url": "https://github.com/fracpete/vfsjfilechooser2.git",
+    "vuln_ref": "5a5f3487dd44066beb2351a332751932df39973b"
+  },
+  "woodstox_GHSA-3f7h-mf4q-vrm4": {
+    "main_class": "src/main/java/com/ctc/wstx/dtd/FullDTDReader.java",
+    "fix": "PR #159: depth limit in FullDTDReader.readContentSpec",
+    "clone_url": "https://github.com/FasterXML/woodstox.git",
+    "vuln_ref": "09f310b910afe074b493dc6ba2a70a6ae8939c1e"
+  },
+  "xnio_GHSA-7f88-5hhx-67m2": {
+    "main_class": "api/src/main/java/org/xnio/AbstractIoFuture.java",
+    "fix": "ffabdcd: AbstractIoFuture's notifier chains are walked in a loop (NestedState)",
+    "clone_url": "https://github.com/xnio/xnio.git",
+    "vuln_ref": "de55d0acfbcf922f56daf135a45ff74a763bf267"
+  }
+}

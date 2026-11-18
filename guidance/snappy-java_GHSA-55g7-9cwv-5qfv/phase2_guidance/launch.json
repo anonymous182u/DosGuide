@@ -1,0 +1,28 @@
+{
+  "build": [
+    "mvn package -DskipTests -q 2>&1 | tail -30",
+    "mkdir -p target/agent-staging && cd target/agent-staging && jar xf ../dependency/asm-9.8.jar org/objectweb/asm && cd ../..",
+    "jar cfm target/agent.jar src/test/resources/META-INF/MANIFEST.MF -C target/test-classes org/xerial/snappy/fuzz/AllocationMeasureAgent.class -C target/test-classes org/xerial/snappy/fuzz/AllocationMeasureAgent$AllocTransformer.class -C target/test-classes org/xerial/snappy/fuzz/AllocationMeasureAgent$AllocTransformer$1.class -C target/test-classes org/xerial/snappy/fuzz/AllocationMeasureAgent$AllocMethodVisitor.class -C target/test-classes org/xerial/snappy/fuzz/AllocCounters.class -C target/agent-staging org/objectweb/asm"
+  ],
+  "classpath": "target/test-classes:target/classes:lib/snappy-java-1.1.10.3-17-49d70017-SNAPSHOT.jar:target/dependency/*",
+  "javaagent": {
+    "jar": "target/agent.jar",
+    "args": ""
+  },
+  "jvm_args": [],
+  "guidance_factory": "org.xerial.snappy.fuzz.FuzzRunner#createGuidance",
+  "targets": {
+    "V1": {
+      "test_class": "org.xerial.snappy.fuzz.SnappyFuzzTest",
+      "method": "fuzzSnappyInputStreamRead"
+    },
+    "V2": {
+      "test_class": "org.xerial.snappy.fuzz.SnappyFuzzTest",
+      "method": "fuzzSnappyInputStreamRead"
+    },
+    "V3": {
+      "test_class": "org.xerial.snappy.fuzz.SnappyFuzzTest",
+      "method": "fuzzSnappyUncompress"
+    }
+  }
+}

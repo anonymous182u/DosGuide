@@ -1,0 +1,33 @@
+{
+  "clone_url": "https://github.com/apache/commons-fileupload.git",
+  "commit": "fc9d1a41d9f583aea4dcc01b117fe32f514697cf",
+  "jdk": 17,
+  "linux_only": false,
+  "commands": [
+    "rm -rf build && mkdir -p build/classes deps",
+    "curl -sSfL --retry 3 -o deps/commons-io-2.19.0.jar https://repo1.maven.org/maven2/commons-io/commons-io/2.19.0/commons-io-2.19.0.jar",
+    "curl -sSfL --retry 3 -o deps/servlet-api-2.5.jar https://repo1.maven.org/maven2/javax/servlet/servlet-api/2.5/servlet-api-2.5.jar",
+    "curl -sSfL --retry 3 -o deps/portlet-api-1.0.jar https://repo1.maven.org/maven2/portlet-api/portlet-api/1.0/portlet-api-1.0.jar",
+    "javac -nowarn -encoding UTF-8 --release 8 -cp 'deps/*' -d build/classes $(find src/src/main/java -name '*.java' | LC_ALL=C sort)",
+    "jar cf build/commons-fileupload.jar -C build/classes ."
+  ],
+  "artifacts": [
+    {
+      "built": "build/commons-fileupload.jar",
+      "lib": "lib/commons-fileupload-1.6.0-SNAPSHOT.jar",
+      "sha256": "9692670b2184fd3d25bee013602d9bdef46797f2a753eb8954ace9250143662c",
+      "classes_sha256": "7c0a44140a4098bc30c503f454b082ec966c25ffc5bb5adac7876a076ffbfdc3"
+    }
+  ],
+  "fixed": {
+    "jars": [
+      {
+        "coords": "commons-fileupload:commons-fileupload:1.6.0",
+        "sha256": "9383272c93569afeabedb16923a94a6dc8a5bd7a2f9f83bf326af4ee68434629"
+      }
+    ],
+    "drop": "^(commons\\-fileupload)-[0-9]"
+  },
+  "tools": "JDK 17 (javac, jar), curl",
+  "notes": "The library is src/main/java of the vulnerable commit (1.6.0-SNAPSHOT, the parent of fix 2108495) compiled with javac --release 8 against commons-io 2.19.0, servlet-api 2.5 and portlet-api 1.0 (Maven Central; portlet-api only for the portlet package, which the harness does not use) and packed with jar, as the evaluation's jar was made; the project's Maven build is not used. The tree has no main resources. Fixed: commons-fileupload 1.6.0, the first release with 2108495 (it uses the same commons-io 2.19.0)."
+}

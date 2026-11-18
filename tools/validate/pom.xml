@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>dosguide</groupId>
+  <artifactId>validate-artifact</artifactId>
+  <version>1.0.0</version>
+  <packaging>jar</packaging>
+  <name>ValidateArtifact: checks synthesized DoSGuide guidance by execution on random inputs</name>
+
+  <properties>
+    <maven.compiler.release>17</maven.compiler.release>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <jqf.version>2.1</jqf.version>
+  </properties>
+
+  <dependencies>
+    <!-- Provided by the run directory's class path at validation time. -->
+    <dependency>
+      <groupId>edu.berkeley.cs.jqf</groupId>
+      <artifactId>jqf-fuzz</artifactId>
+      <version>${jqf.version}</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <finalName>validate-artifact</finalName>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.4.2</version>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>dosguide.validate.ValidateArtifact</mainClass>
+            </manifest>
+            <manifestEntries>
+              <Premain-Class>dosguide.validate.TransformObserver</Premain-Class>
+              <Can-Retransform-Classes>true</Can-Retransform-Classes>
+            </manifestEntries>
+          </archive>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

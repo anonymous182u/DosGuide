@@ -1,0 +1,80 @@
+{
+  "caps": {
+    "input_bytes": 2560,
+    "heap_bytes": 268435456,
+    "stack_bytes": 262144,
+    "time_ms": 2000
+  },
+  "targets": {
+    "V1": {
+      "problems": [],
+      "parameter": "DTD content spec nesting depth (recursive readContentSpec calls)",
+      "inputs": [
+        {
+          "file": "n64.bin",
+          "value": 64,
+          "input_bytes": 184,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 25.947249,
+          "wall_ms": 26.170269,
+          "allocated_bytes": 2298568,
+          "peak_heap_bytes": 2097152
+        },
+        {
+          "file": "n128.bin",
+          "value": 128,
+          "input_bytes": 312,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 17.271616,
+          "wall_ms": 17.476647,
+          "allocated_bytes": 2303688,
+          "peak_heap_bytes": 3145728
+        },
+        {
+          "file": "n256.bin",
+          "value": 256,
+          "input_bytes": 568,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 19.548318,
+          "wall_ms": 19.945931,
+          "allocated_bytes": 2313928,
+          "peak_heap_bytes": 2097152
+        },
+        {
+          "file": "n512.bin",
+          "value": 512,
+          "input_bytes": 1080,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 18.239815,
+          "wall_ms": 18.383122,
+          "allocated_bytes": 2334424,
+          "peak_heap_bytes": 2097152
+        },
+        {
+          "file": "n1024.bin",
+          "value": 1024,
+          "input_bytes": 2104,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "stack_cap"
+        }
+      ]
+    }
+  },
+  "build": {
+    "ok": true
+  }
+}

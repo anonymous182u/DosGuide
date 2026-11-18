@@ -1,0 +1,30 @@
+{
+  "clone_url": "https://github.com/stleary/JSON-java.git",
+  "commit": "2391d248cc77202eb31d0e4df0edecfbde4ab2dc",
+  "jdk": 17,
+  "linux_only": false,
+  "commands": [
+    "rm -rf build && mkdir -p build/classes",
+    "javac -nowarn -encoding UTF-8 --release 8 -d build/classes $(find src/src/main/java -name '*.java' | LC_ALL=C sort)",
+    "jar cf build/json.jar -C build/classes ."
+  ],
+  "artifacts": [
+    {
+      "built": "build/json.jar",
+      "lib": "lib/json-20220924-2391d24.jar",
+      "sha256": "f15b74d41caa06a6e7c467440fd063b8f6213e00cb9c0d2de304261a13da3184",
+      "classes_sha256": "b8817211f482c2a75537f3f8c2e31d9e1871331006007b6a51c62f5eda0b6a35"
+    }
+  ],
+  "fixed": {
+    "jars": [
+      {
+        "coords": "org.json:json:20230227",
+        "sha256": "9ed26791dc2d8629fdf8a207f1aebadcb50d641be637664310ef51c0f73e269b"
+      }
+    ],
+    "drop": "^(json)-[0-9]"
+  },
+  "tools": "JDK 17 (javac, jar)",
+  "notes": "The library is src/main/java of the vulnerable commit (the parent of fix a6e412b) compiled with javac --release 8 and packed with jar, as the evaluation's jar was made; the project's Maven build is not used. The pom version at this commit is 20220924, but the commit is not the 20220924 release (XML.parse already has the depth guard of PR #720, JSONML.parse does not), hence the commit in the jar name. Fixed: org.json:json 20230227, the first release with a6e412b."
+}

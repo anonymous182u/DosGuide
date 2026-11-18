@@ -1,0 +1,3 @@
+# Store every file byte-for-byte (no line-ending conversion).
+# Required: some benchmark inputs (e.g. multipart .bin) depend on CRLF.
+* -text

@@ -1,0 +1,86 @@
+{
+  "ordered_targets": [
+    {
+      "slot": 1,
+      "id": "V1",
+      "name": "Cubic ReDoS in queryPattern via \\s* / [^: ]+ dual-backtracking on whitespace input",
+      "entrypoint": "SearchQueryFuzzTest.fuzzSearchQueryUtilsGetFields(InputStream) → SearchQueryUtils.getFields(String) → java.util.regex.Matcher.find()",
+      "source_path": "services/src/main/java/org/keycloak/utils/SearchQueryUtils.java",
+      "sink": "java.util.regex.Matcher#find",
+      "mechanism": "Characters matching both \\s and [^: ] (e.g., tab 0x09) create nested backtracking: \\s* at the regex prefix greedily consumes all tabs then backtracks O(n) times; at each backtrack position, [^\"][^: ]+ in the name group greedily matches exposed tabs and backtracks O(n) times seeking a colon; find() repeats this at O(n) start positions. Total: O(n^3/6) regex backtracking steps.",
+      "resource": "CPU time: regex backtracking steps growing as n^3/6 with input length n",
+      "failure_mode": "timeout",
+      "scale": "Measured CPU time: 11ms at 64B, 36ms at 128B, 81ms at 256B, 351ms at 512B, ≥2000ms (capped) at 1024B. Doubling ratios accelerate from 3.2× to ≥5.7×, consistent with O(n^3/6) cubic growth where lower-order terms depress ratios at small n. Conservative extrapolation using exponent 2.5 from n=1024 (≥2000ms): timeout (20s) at ~2560 tab bytes; at n=10240: ~1.2 million ms. Tab 0x09 is the densest encoding: one byte per unit of the parameter (input length), with each tab matching both \\s* and [^: ]+ to drive the dual-backtracking cubic mechanism.",
+      "input_bytes": 2560,
+      "cwe": "CWE-1333",
+      "checkpath_status": "PASS",
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "method": "org.keycloak.fuzzing.SearchQueryFuzzTest#fuzzSearchQueryUtilsGetFields(InputStream)",
+          "location": "harness/src/test/java/org/keycloak/fuzzing/SearchQueryFuzzTest.java:32"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "harness/src/test/java/org/keycloak/fuzzing/SearchQueryFuzzTest.java:34"
+        },
+        {
+          "kind": "hop",
+          "method": "org.keycloak.utils.SearchQueryUtils#getFields(String)",
+          "location": "services/src/main/java/org/keycloak/utils/SearchQueryUtils.java:32"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "services/src/main/java/org/keycloak/utils/SearchQueryUtils.java:35"
+        },
+        {
+          "kind": "hop",
+          "method": "java.util.regex.Matcher.find()",
+          "location": "outside the source tree"
+        }
+      ],
+      "harness_entry": "org.keycloak.fuzzing.SearchQueryFuzzTest#fuzzSearchQueryUtilsGetFields",
+      "scale_measurement": [
+        {
+          "value": 64,
+          "input_bytes": 64,
+          "outcome": "completed",
+          "cpu_ms": 11.240213,
+          "allocated_bytes": 171680,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "value": 128,
+          "input_bytes": 128,
+          "outcome": "completed",
+          "cpu_ms": 35.738885,
+          "allocated_bytes": 171808,
+          "peak_heap_bytes": 0
+        },
+        {
+          "value": 256,
+          "input_bytes": 256,
+          "outcome": "completed",
+          "cpu_ms": 81.156907,
+          "allocated_bytes": 172096,
+          "peak_heap_bytes": 0
+        },
+        {
+          "value": 512,
+          "input_bytes": 512,
+          "outcome": "completed",
+          "cpu_ms": 351.042233,
+          "allocated_bytes": 172504,
+          "peak_heap_bytes": 0
+        },
+        {
+          "value": 1024,
+          "input_bytes": 1024,
+          "outcome": "time_cap"
+        }
+      ]
+    }
+  ]
+}

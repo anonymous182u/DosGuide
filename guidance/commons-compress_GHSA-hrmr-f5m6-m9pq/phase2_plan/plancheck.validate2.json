@@ -1,0 +1,328 @@
+{
+  "tool": "checkpath",
+  "version": "1.0.0",
+  "source_root": "projects/commons-compress_GHSA-hrmr-f5m6-m9pq",
+  "index": {
+    "files_parsed": 207,
+    "files_failed": 0,
+    "methods": 2357,
+    "harness_fuzz_methods": [
+      "ZipArchiveInputStreamFuzzTest.fuzzZipArchiveInputStreamReadAllowStoredDataDescriptor(InputStream)",
+      "ZipArchiveInputStreamFuzzTest.fuzzZipArchiveInputStreamReadBytes(InputStream)",
+      "ZipArchiveInputStreamFuzzTest.fuzzZipArchiveInputStreamReadText(InputStream)"
+    ],
+    "index_seconds": 1.2,
+    "max_gap": 2,
+    "sink_depth": 6,
+    "symbol_resolution": true
+  },
+  "ok": true,
+  "targets": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "entrypoint": "ZipArchiveInputStreamFuzzTest.fuzzZipArchiveInputStreamReadText(InputStream) → InputStreamReader.read(char[]) → ZipArchiveInputStream.read(byte[], int, int) → ZipArchiveInputStream.readStored(byte[], int, int)",
+      "source_path": "src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveInputStream.java",
+      "start_ok": true,
+      "harness_entry": "fuzzing.tests.ZipArchiveInputStreamFuzzTest#fuzzZipArchiveInputStreamReadText",
+      "end_ok": true,
+      "end": {
+        "sink_file": "src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveInputStream.java",
+        "ok": true,
+        "evidence": "hop 4 ZipArchiveInputStream#readStored(byte[],int,int) is declared in src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveInputStream.java:508",
+        "level": "method",
+        "sink_method": "org.apache.commons.compress.archivers.zip.ZipArchiveInputStream#readStored",
+        "sink_evidence": "hop 4 is ZipArchiveInputStream#readStored(byte[],int,int)"
+      },
+      "hops": [
+        {
+          "index": 1,
+          "raw": "ZipArchiveInputStreamFuzzTest.fuzzZipArchiveInputStreamReadText(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "fuzzing.tests.ZipArchiveInputStreamFuzzTest#fuzzZipArchiveInputStreamReadText(InputStream)",
+              "location": "harness/src/test/java/fuzzing/tests/ZipArchiveInputStreamFuzzTest.java:84"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "raw": "InputStreamReader.read(char[])",
+          "status": "EXTERNAL",
+          "candidates": [],
+          "external": [
+            "InputStreamReader.read(char[])"
+          ]
+        },
+        {
+          "index": 3,
+          "raw": "ZipArchiveInputStream.read(byte[], int, int)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.apache.commons.compress.archivers.zip.ZipArchiveInputStream#read(byte[],int,int)",
+              "location": "src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveInputStream.java:428"
+            },
+            {
+              "method": "org.apache.commons.compress.archivers.sevenz.AES256SHA256Decoder$anon(InputStream)#read(byte[],int,int)",
+              "location": "src/main/java/org/apache/commons/compress/archivers/sevenz/AES256SHA256Decoder.java:109"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "raw": "ZipArchiveInputStream.readStored(byte[], int, int)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.apache.commons.compress.archivers.zip.ZipArchiveInputStream#readStored(byte[],int,int)",
+              "location": "src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveInputStream.java:508"
+            }
+          ]
+        }
+      ],
+      "path_signature": [
+        "fuzzing.tests.ZipArchiveInputStreamFuzzTest#fuzzZipArchiveInputStreamReadText(InputStream)",
+        "external:read",
+        "org.apache.commons.compress.archivers.zip.ZipArchiveInputStream#read(byte[],int,int)",
+        "org.apache.commons.compress.archivers.zip.ZipArchiveInputStream#readStored(byte[],int,int)"
+      ],
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "written": "ZipArchiveInputStreamFuzzTest.fuzzZipArchiveInputStreamReadText(InputStream)",
+          "provenance": "agent",
+          "method": "fuzzing.tests.ZipArchiveInputStreamFuzzTest#fuzzZipArchiveInputStreamReadText(InputStream)",
+          "location": "harness/src/test/java/fuzzing/tests/ZipArchiveInputStreamFuzzTest.java:84"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "ZipArchiveInputStreamFuzzTest#fuzzZipArchiveInputStreamReadText(InputStream) calls InputStreamReader.read(char[]) at harness/src/test/java/fuzzing/tests/ZipArchiveInputStreamFuzzTest.java:94",
+          "site": "harness/src/test/java/fuzzing/tests/ZipArchiveInputStreamFuzzTest.java:94"
+        },
+        {
+          "kind": "hop",
+          "written": "InputStreamReader.read(char[])",
+          "provenance": "agent",
+          "method": "InputStreamReader.read(char[])",
+          "location": "outside the source tree"
+        },
+        {
+          "kind": "connection",
+          "type": "UNCHECKED",
+          "evidence": "hop 2 is outside the source tree, so calls made inside it cannot be inspected"
+        },
+        {
+          "kind": "hop",
+          "written": "ZipArchiveInputStream.read(byte[], int, int)",
+          "provenance": "agent",
+          "method": "org.apache.commons.compress.archivers.zip.ZipArchiveInputStream#read(byte[],int,int)",
+          "location": "src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveInputStream.java:428"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "ZipArchiveInputStream#read(byte[],int,int) calls ZipArchiveInputStream#readStored(byte[],int,int) at src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveInputStream.java:454 (resolved)",
+          "site": "src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveInputStream.java:454"
+        },
+        {
+          "kind": "hop",
+          "written": "ZipArchiveInputStream.readStored(byte[], int, int)",
+          "provenance": "agent",
+          "method": "org.apache.commons.compress.archivers.zip.ZipArchiveInputStream#readStored(byte[],int,int)",
+          "location": "src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveInputStream.java:508"
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "status": "CALL",
+          "evidence": "ZipArchiveInputStreamFuzzTest#fuzzZipArchiveInputStreamReadText(InputStream) calls InputStreamReader.read(char[]) at harness/src/test/java/fuzzing/tests/ZipArchiveInputStreamFuzzTest.java:94"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "status": "UNCHECKED",
+          "evidence": "hop 2 is outside the source tree, so calls made inside it cannot be inspected"
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "status": "CALL",
+          "evidence": "ZipArchiveInputStream#read(byte[],int,int) calls ZipArchiveInputStream#readStored(byte[],int,int) at src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveInputStream.java:454 (resolved)"
+        }
+      ],
+      "diagnostics": [],
+      "warnings": [
+        "Hop 2: `InputStreamReader.read(char[])` belongs to JDK class java.io.InputStreamReader; its body is not analyzed",
+        "Edge 2→3 not checked: hop 2 is outside the source tree, so calls made inside it cannot be inspected"
+      ]
+    },
+    {
+      "target": "PkgRisk1",
+      "status": "PASS",
+      "entrypoint": "ZipArchiveInputStreamFuzzTest.fuzzZipArchiveInputStreamReadBytes(InputStream) → ZipArchiveInputStream.read(byte[], int, int) → BZip2CompressorInputStream.read(byte[], int, int)",
+      "source_path": "src/main/java/org/apache/commons/compress/compressors/bzip2/BZip2CompressorInputStream.java",
+      "start_ok": true,
+      "harness_entry": "fuzzing.tests.ZipArchiveInputStreamFuzzTest#fuzzZipArchiveInputStreamReadBytes",
+      "end_ok": true,
+      "end": {
+        "sink_file": "src/main/java/org/apache/commons/compress/compressors/bzip2/BZip2CompressorInputStream.java",
+        "ok": true,
+        "evidence": "hop 3 BZip2CompressorInputStream#read(byte[],int,int) is declared in src/main/java/org/apache/commons/compress/compressors/bzip2/BZip2CompressorInputStream.java:155",
+        "level": "method",
+        "sink_method": "org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream#read",
+        "sink_evidence": "hop 3 is BZip2CompressorInputStream#read()"
+      },
+      "hops": [
+        {
+          "index": 1,
+          "raw": "ZipArchiveInputStreamFuzzTest.fuzzZipArchiveInputStreamReadBytes(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "fuzzing.tests.ZipArchiveInputStreamFuzzTest#fuzzZipArchiveInputStreamReadBytes(InputStream)",
+              "location": "harness/src/test/java/fuzzing/tests/ZipArchiveInputStreamFuzzTest.java:63"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "raw": "ZipArchiveInputStream.read(byte[], int, int)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.apache.commons.compress.archivers.zip.ZipArchiveInputStream#read(byte[],int,int)",
+              "location": "src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveInputStream.java:428"
+            },
+            {
+              "method": "org.apache.commons.compress.archivers.sevenz.AES256SHA256Decoder$anon(InputStream)#read(byte[],int,int)",
+              "location": "src/main/java/org/apache/commons/compress/archivers/sevenz/AES256SHA256Decoder.java:109"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "raw": "BZip2CompressorInputStream.read(byte[], int, int)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream#read(byte[],int,int)",
+              "location": "src/main/java/org/apache/commons/compress/compressors/bzip2/BZip2CompressorInputStream.java:155"
+            },
+            {
+              "method": "org.apache.commons.compress.archivers.sevenz.AES256SHA256Decoder$anon(InputStream)#read(byte[],int,int)",
+              "location": "src/main/java/org/apache/commons/compress/archivers/sevenz/AES256SHA256Decoder.java:109"
+            }
+          ]
+        }
+      ],
+      "path_signature": [
+        "fuzzing.tests.ZipArchiveInputStreamFuzzTest#fuzzZipArchiveInputStreamReadBytes(InputStream)",
+        "org.apache.commons.compress.archivers.zip.ZipArchiveInputStream#read(byte[],int,int)",
+        "org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream#read(byte[],int,int)"
+      ],
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "written": "ZipArchiveInputStreamFuzzTest.fuzzZipArchiveInputStreamReadBytes(InputStream)",
+          "provenance": "agent",
+          "method": "fuzzing.tests.ZipArchiveInputStreamFuzzTest#fuzzZipArchiveInputStreamReadBytes(InputStream)",
+          "location": "harness/src/test/java/fuzzing/tests/ZipArchiveInputStreamFuzzTest.java:63"
+        },
+        {
+          "kind": "connection",
+          "type": "SEQUENCE",
+          "evidence": "ZipArchiveInputStreamFuzzTest#fuzzZipArchiveInputStreamReadBytes(InputStream) creates a ZipArchiveInputStream (harness/src/test/java/fuzzing/tests/ZipArchiveInputStreamFuzzTest.java:67), on which the next hop is invoked",
+          "site": "harness/src/test/java/fuzzing/tests/ZipArchiveInputStreamFuzzTest.java:67"
+        },
+        {
+          "kind": "hop",
+          "written": "ZipArchiveInputStream.read(byte[], int, int)",
+          "provenance": "agent",
+          "method": "org.apache.commons.compress.archivers.zip.ZipArchiveInputStream#read(byte[],int,int)",
+          "location": "src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveInputStream.java:428"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "ZipArchiveInputStream#read(byte[],int,int) calls InputStream#read(byte[],int,int) at src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveInputStream.java:461 (resolved)",
+          "site": "src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveInputStream.java:461"
+        },
+        {
+          "kind": "hop",
+          "written": "BZip2CompressorInputStream.read(byte[], int, int)",
+          "provenance": "agent",
+          "method": "org.apache.commons.compress.archivers.sevenz.AES256SHA256Decoder$anon(InputStream)#read(byte[],int,int)",
+          "location": "src/main/java/org/apache/commons/compress/archivers/sevenz/AES256SHA256Decoder.java:109"
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "status": "SEQUENCE",
+          "evidence": "ZipArchiveInputStreamFuzzTest#fuzzZipArchiveInputStreamReadBytes(InputStream) creates a ZipArchiveInputStream (harness/src/test/java/fuzzing/tests/ZipArchiveInputStreamFuzzTest.java:67), on which the next hop is invoked"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "status": "CALL",
+          "evidence": "ZipArchiveInputStream#read(byte[],int,int) calls InputStream#read(byte[],int,int) at src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveInputStream.java:461 (resolved)"
+        }
+      ],
+      "diagnostics": [],
+      "warnings": [
+        "Edge 1→2 is a call sequence, not a call chain: ZipArchiveInputStreamFuzzTest#fuzzZipArchiveInputStreamReadBytes(InputStream) creates a ZipArchiveInputStream (harness/src/test/java/fuzzing/tests/ZipArchiveInputStreamFuzzTest.java:67), on which the next hop is invoked"
+      ]
+    }
+  ],
+  "plan_ok": true,
+  "plans": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "signals": [
+        {
+          "name": "storedBytesRead",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "org.apache.commons.compress.archivers.zip.ZipArchiveInputStream#readStored",
+              "status": "RESOLVED",
+              "method": "org.apache.commons.compress.archivers.zip.ZipArchiveInputStream#readStored",
+              "declared_at": "src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveInputStream.java:508",
+              "relation": "on_path"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    },
+    {
+      "target": "PkgRisk1",
+      "status": "PASS",
+      "signals": [
+        {
+          "name": "decompressedBytes",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream#read",
+              "status": "RESOLVED",
+              "method": "org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream#read",
+              "declared_at": "src/main/java/org/apache/commons/compress/compressors/bzip2/BZip2CompressorInputStream.java:140",
+              "relation": "on_path"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    }
+  ]
+}

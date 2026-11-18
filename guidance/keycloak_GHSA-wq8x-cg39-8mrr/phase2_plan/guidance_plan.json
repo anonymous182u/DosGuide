@@ -1,0 +1,42 @@
+{
+  "plans": [
+    {
+      "target": "V1",
+      "signals": [
+        {
+          "name": "regexSteps",
+          "quantity": "total calls to Pattern$Node.match(Matcher, int, CharSequence) across all Pattern$* subclasses during one fuzz execution — i.e., total regex NFA backtracking steps",
+          "aggregation": "count",
+          "locations": [
+            "java.util.regex.Pattern$Node#match",
+            "java.util.regex.Pattern$Curly#match",
+            "java.util.regex.Pattern$GroupHead#match",
+            "java.util.regex.Pattern$CharProperty#match",
+            "java.util.regex.Pattern$Slice#match",
+            "java.util.regex.Pattern$Branch#match",
+            "java.util.regex.Pattern$Loop#match",
+            "java.util.regex.Pattern$GroupTail#match",
+            "java.util.regex.Pattern$Start#match",
+            "java.util.regex.Pattern$BnM#match"
+          ],
+          "technique": "bytecode",
+          "storage": "ThreadLocal<long[]> in org.keycloak.fuzzing.agent.RegexStepCounter.STEPS — single-element array for unboxed increment",
+          "reset": "V1Guidance.getInput() calls RegexStepCounter.getAndReset() before providing the next input",
+          "read": "V1Guidance.handleResult() calls RegexStepCounter.get() to read the total NFA steps; value returned by lastSignals() as {\"regexSteps\": <count>}"
+        }
+      ],
+      "retention": "Primary: retain if regexSteps exceeds the best step count seen in the corpus (or is in the top percentile). Secondary (while signal is flat): retain if input length exceeds the longest corpus entry, ensuring growth toward input_bytes and beyond. Diversity: periodically retain a random input regardless of step count. Prioritization for parent selection: weighted by regexSteps (or by input length when all steps are zero).",
+      "retention_signals": [
+        "regexSteps"
+      ],
+      "mutation": [
+        "byte-level: random byte flip at a random position",
+        "byte-level: random byte insertion at a random position",
+        "byte-level: random byte deletion at a random position",
+        "byte-level: random block overwrite with random or dictionary bytes",
+        "repetition: select a random byte range [start, end) and repeat it k times (k up to maxInputSize/chunkLen), including special case of doubling the entire input, to grow toward 10240 bytes — reaches input_bytes (2560) from a 16-byte seed in ~8 doublings (<1 minute)",
+        "dictionary: insert or overwrite with tokens from the source on the attack path — 0x09 (tab, matches \\s and [^: ]), 0x0D (CR), 0x0C (FF), 0x0B (VT), 0x22 (double-quote), 0x3A (colon), 0x5C (backslash), 0x20 (space) — each a single syntactic unit from SearchQueryUtils.queryPattern"
+      ]
+    }
+  ]
+}

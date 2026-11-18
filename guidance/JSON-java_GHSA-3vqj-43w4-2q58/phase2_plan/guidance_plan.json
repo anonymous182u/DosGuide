@@ -1,0 +1,36 @@
+{
+  "plans": [
+    {
+      "target": "V1",
+      "signals": [
+        {
+          "name": "maxDepth",
+          "quantity": "maximum recursion depth of JSONML.parse() — count of concurrently active recursive frames",
+          "aggregation": "max",
+          "locations": [
+            "JSONML#parse"
+          ],
+          "technique": "bytecode",
+          "storage": "ThreadLocal<long[]> in fuzzing.agent.V1DepthCounters where [0]=current depth, [1]=max depth this execution",
+          "reset": "V1DepthCounters.reset() called in V1Guidance.getInput() before each execution",
+          "read": "V1DepthCounters.maxDepth() called in V1Guidance.handleResult() after each execution"
+        }
+      ],
+      "retention": "Primary: retain inputs that achieve strictly higher maxDepth than any corpus entry. Secondary (flat signal per R46): retain inputs that are longer (growing toward input_bytes=10500) or achieve equal maxDepth with different structure. Corpus entries are prioritized by maxDepth for mutation selection (highest depth mutated 70% of the time). When maxDepth=0, retain inputs that grow in length to cross the parsing threshold. Bootstrap generates well-formed XML open tags (<X>) that immediately reach the recursive code.",
+      "retention_signals": [
+        "maxDepth"
+      ],
+      "mutation": [
+        "XML tag block insert (25%): insert 1-to-many complete <X> open tags (3 bytes each, varied single-char tag names a-z) at a random position, with aggressive growth bias (60% of the time inserts enough to approximately double the input)",
+        "Tag-aligned chunk repetition (R45a, 30%): select a random chunk, preferring alignment to <X> tag boundaries (70% tries to start at a '<' character), and repeat it k times to grow toward MAX_INPUT_SIZE",
+        "Dictionary insert (R45b, 15%): insert a random token from the XML dictionary at a random position. Dictionary includes 26 complete open tags (<a> through <z>) plus structural tokens (<, >, /, =, </, />, <!--, -->, <?, ?>, <![CDATA[, ]]>, etc.)",
+        "Dictionary overwrite (R45b, 10%): overwrite bytes at a random position with a random dictionary token",
+        "Byte flip (6%): flip 1-8 random bits for diversity",
+        "Byte insert (5%): insert 1-4 random bytes at a random position",
+        "Byte delete (3%): delete 1-4 bytes from a random position",
+        "Byte overwrite (3%): overwrite 1-4 bytes with random values",
+        "Tag name randomization (3%): change tag names in existing <X> patterns to random letters, preserving XML structure while varying diversity"
+      ]
+    }
+  ]
+}

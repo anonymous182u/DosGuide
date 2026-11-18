@@ -1,0 +1,242 @@
+{
+  "tool": "checkpath",
+  "version": "1.0.0",
+  "source_root": "projects/cxf_GHSA-36wv-v2qp-v4g4",
+  "index": {
+    "files_parsed": 4078,
+    "files_failed": 3,
+    "methods": 36112,
+    "harness_fuzz_methods": [
+      "CachedOutputStreamFuzzTest.fuzzCachedOutputStreamWriteRange(InputStream)",
+      "CachedOutputStreamFuzzTest.fuzzCachedOutputStreamToString(InputStream)",
+      "CachedOutputStreamFuzzTest.fuzzCachedOutputStreamWriteChunks(InputStream)",
+      "CachedOutputStreamFuzzTest.fuzzCachedOutputStreamCleanerForceClean(InputStream)"
+    ],
+    "index_seconds": 11.1,
+    "max_gap": 2,
+    "sink_depth": 6,
+    "symbol_resolution": true
+  },
+  "ok": true,
+  "targets": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "entrypoint": "CachedOutputStreamFuzzTest.fuzzCachedOutputStreamCleanerForceClean(InputStream) → DelayedCachedOutputStreamCleaner.forceClean() → DelayedCleanerImpl.clean(Collection) → CachedOutputStream.toString() → CachedOutputStream.writeCacheTo(StringBuilder, String)",
+      "source_path": "core/src/main/java/org/apache/cxf/io/CachedOutputStream.java",
+      "start_ok": true,
+      "harness_entry": "org.apache.cxf.io.fuzz.CachedOutputStreamFuzzTest#fuzzCachedOutputStreamCleanerForceClean",
+      "end_ok": true,
+      "end": {
+        "sink_file": "core/src/main/java/org/apache/cxf/io/CachedOutputStream.java",
+        "ok": true,
+        "evidence": "hop 5 CachedOutputStream#writeCacheTo(StringBuilder,String) is declared in core/src/main/java/org/apache/cxf/io/CachedOutputStream.java:385",
+        "level": "method",
+        "sink_method": "CachedOutputStream#writeCacheTo(StringBuilder, String)",
+        "sink_evidence": "hop 5 is CachedOutputStream#writeCacheTo(StringBuilder,String)"
+      },
+      "hops": [
+        {
+          "index": 1,
+          "raw": "CachedOutputStreamFuzzTest.fuzzCachedOutputStreamCleanerForceClean(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.apache.cxf.io.fuzz.CachedOutputStreamFuzzTest#fuzzCachedOutputStreamCleanerForceClean(InputStream)",
+              "location": "harness/src/test/java/org/apache/cxf/io/fuzz/CachedOutputStreamFuzzTest.java:85"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "raw": "DelayedCachedOutputStreamCleaner.forceClean()",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.apache.cxf.io.DelayedCachedOutputStreamCleaner#forceClean()",
+              "location": "core/src/main/java/org/apache/cxf/io/DelayedCachedOutputStreamCleaner.java:253"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "raw": "DelayedCleanerImpl.clean(Collection)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.apache.cxf.io.DelayedCachedOutputStreamCleaner.DelayedCleanerImpl#clean(Collection)",
+              "location": "core/src/main/java/org/apache/cxf/io/DelayedCachedOutputStreamCleaner.java:116"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "raw": "CachedOutputStream.toString()",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.apache.cxf.io.CachedOutputStream#toString()",
+              "location": "core/src/main/java/org/apache/cxf/io/CachedOutputStream.java:423"
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "raw": "CachedOutputStream.writeCacheTo(StringBuilder, String)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.apache.cxf.io.CachedOutputStream#writeCacheTo(StringBuilder,String)",
+              "location": "core/src/main/java/org/apache/cxf/io/CachedOutputStream.java:385"
+            }
+          ]
+        }
+      ],
+      "path_signature": [
+        "org.apache.cxf.io.fuzz.CachedOutputStreamFuzzTest#fuzzCachedOutputStreamCleanerForceClean(InputStream)",
+        "org.apache.cxf.io.DelayedCachedOutputStreamCleaner#forceClean()",
+        "org.apache.cxf.io.DelayedCachedOutputStreamCleaner.DelayedCleanerImpl#clean(Collection)",
+        "org.apache.cxf.io.CachedOutputStream#toString()",
+        "org.apache.cxf.io.CachedOutputStream#writeCacheTo(StringBuilder,String)"
+      ],
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "written": "CachedOutputStreamFuzzTest.fuzzCachedOutputStreamCleanerForceClean(InputStream)",
+          "provenance": "agent",
+          "method": "org.apache.cxf.io.fuzz.CachedOutputStreamFuzzTest#fuzzCachedOutputStreamCleanerForceClean(InputStream)",
+          "location": "harness/src/test/java/org/apache/cxf/io/fuzz/CachedOutputStreamFuzzTest.java:85"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "CachedOutputStreamFuzzTest#fuzzCachedOutputStreamCleanerForceClean(InputStream) calls DelayedCachedOutputStreamCleaner#forceClean() at harness/src/test/java/org/apache/cxf/io/fuzz/CachedOutputStreamFuzzTest.java:94 (resolved)",
+          "site": "harness/src/test/java/org/apache/cxf/io/fuzz/CachedOutputStreamFuzzTest.java:94"
+        },
+        {
+          "kind": "hop",
+          "written": "DelayedCachedOutputStreamCleaner.forceClean()",
+          "provenance": "agent",
+          "method": "org.apache.cxf.io.DelayedCachedOutputStreamCleaner#forceClean()",
+          "location": "core/src/main/java/org/apache/cxf/io/DelayedCachedOutputStreamCleaner.java:253"
+        },
+        {
+          "kind": "connection",
+          "type": "INDIRECT",
+          "evidence": "1 omitted call(s)"
+        },
+        {
+          "kind": "hop",
+          "written": null,
+          "provenance": "checkpath (omitted call)",
+          "method": "org.apache.cxf.io.DelayedCachedOutputStreamCleaner.DelayedCleanerImpl#forceClean()",
+          "location": "core/src/main/java/org/apache/cxf/io/DelayedCachedOutputStreamCleaner.java:106"
+        },
+        {
+          "kind": "hop",
+          "written": "DelayedCleanerImpl.clean(Collection)",
+          "provenance": "agent",
+          "method": "org.apache.cxf.io.DelayedCachedOutputStreamCleaner.DelayedCleanerImpl#clean(Collection)",
+          "location": "core/src/main/java/org/apache/cxf/io/DelayedCachedOutputStreamCleaner.java:116"
+        },
+        {
+          "kind": "connection",
+          "type": "INDIRECT",
+          "evidence": "1 omitted call(s)"
+        },
+        {
+          "kind": "hop",
+          "written": null,
+          "provenance": "checkpath (omitted call)",
+          "method": "org.apache.cxf.transport.jms.MessageStreamUtil.SendingWriter#close()",
+          "location": "rt/transports/jms/src/main/java/org/apache/cxf/transport/jms/MessageStreamUtil.java:64"
+        },
+        {
+          "kind": "hop",
+          "written": "CachedOutputStream.toString()",
+          "provenance": "agent",
+          "method": "org.apache.cxf.io.CachedOutputStream#toString()",
+          "location": "core/src/main/java/org/apache/cxf/io/CachedOutputStream.java:423"
+        },
+        {
+          "kind": "connection",
+          "type": "DATAFLOW",
+          "evidence": "CachedOutputStream#toString() (core/src/main/java/org/apache/cxf/io/CachedOutputStream.java:423) writes field `skipFlushingFlowThroughStream`, which CachedOutputStream#writeCacheTo(StringBuilder,String) (core/src/main/java/org/apache/cxf/io/CachedOutputStream.java:385) reads (through helper calls)",
+          "site": "core/src/main/java/org/apache/cxf/io/CachedOutputStream.java:423"
+        },
+        {
+          "kind": "hop",
+          "written": "CachedOutputStream.writeCacheTo(StringBuilder, String)",
+          "provenance": "agent",
+          "method": "org.apache.cxf.io.CachedOutputStream#writeCacheTo(StringBuilder,String)",
+          "location": "core/src/main/java/org/apache/cxf/io/CachedOutputStream.java:385"
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "status": "CALL",
+          "evidence": "CachedOutputStreamFuzzTest#fuzzCachedOutputStreamCleanerForceClean(InputStream) calls DelayedCachedOutputStreamCleaner#forceClean() at harness/src/test/java/org/apache/cxf/io/fuzz/CachedOutputStreamFuzzTest.java:94 (resolved)"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "status": "INDIRECT",
+          "evidence": "1 omitted call(s)",
+          "chain": [
+            "DelayedCachedOutputStreamCleaner#forceClean()",
+            "DelayedCleanerImpl#forceClean()",
+            "DelayedCleanerImpl#clean(Collection)"
+          ]
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "status": "INDIRECT",
+          "evidence": "1 omitted call(s)",
+          "chain": [
+            "DelayedCleanerImpl#clean(Collection)",
+            "SendingWriter#close()",
+            "CachedOutputStream#toString()"
+          ]
+        },
+        {
+          "from": 4,
+          "to": 5,
+          "status": "DATAFLOW",
+          "evidence": "CachedOutputStream#toString() (core/src/main/java/org/apache/cxf/io/CachedOutputStream.java:423) writes field `skipFlushingFlowThroughStream`, which CachedOutputStream#writeCacheTo(StringBuilder,String) (core/src/main/java/org/apache/cxf/io/CachedOutputStream.java:385) reads (through helper calls)"
+        }
+      ],
+      "diagnostics": [],
+      "warnings": [
+        "Edge 2→3 is indirect: DelayedCachedOutputStreamCleaner#forceClean() → DelayedCleanerImpl#forceClean() → DelayedCleanerImpl#clean(Collection)",
+        "Edge 3→4 is indirect: DelayedCleanerImpl#clean(Collection) → SendingWriter#close() → CachedOutputStream#toString()"
+      ]
+    }
+  ],
+  "plan_ok": true,
+  "plans": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "signals": [
+        {
+          "name": "charsAppended",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "CachedOutputStream#writeCacheTo(StringBuilder, String)",
+              "status": "RESOLVED",
+              "method": "org.apache.cxf.io.CachedOutputStream#writeCacheTo",
+              "declared_at": "core/src/main/java/org/apache/cxf/io/CachedOutputStream.java:385",
+              "relation": "on_path"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    }
+  ]
+}

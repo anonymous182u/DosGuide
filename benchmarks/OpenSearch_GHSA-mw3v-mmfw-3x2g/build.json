@@ -1,0 +1,118 @@
+{
+  "clone_url": "https://github.com/opensearch-project/OpenSearch.git",
+  "commit": "a90f864b8524bc75570a8461ccb569d2a4bfed42",
+  "jdk": 21,
+  "tools": "the project's Gradle wrapper (./gradlew, Gradle 8.12.1); reference build on Amazon Corretto 21",
+  "commands": [
+    "cat > no-spotless-steps.init.gradle <<'EOF'\n// gradle/formatting.gradle configures Spotless (a source formatting check; it does not take part in compilation)\n// with the Eclipse P2 mirror https://mirror.umd.edu/eclipse/, which no longer serves eclipse/updates/4.29, and the\n// build realizes every task at configuration time, so the Spotless tasks cannot be created (\"Failed to load eclipse\n// jdt formatter\"). This init script appends, to every Spotless format, a last configuration action that removes its\n// formatter steps (FormatExtension.clearSteps()), so no formatter is downloaded. No Spotless task is run in this\n// build; the sources and build files of the project are unchanged.\nallprojects { p ->\n  p.afterEvaluate {\n    def ext = p.extensions.findByName(\"spotless\")\n    if (ext != null) {\n      ext.@formats.values().each { f -> f.@lazyActions.add({ fe -> fe.clearSteps() } as org.gradle.api.Action) }\n    }\n  }\n}\nEOF",
+    "cd src && ./gradlew --no-daemon --init-script ../no-spotless-steps.init.gradle \"-Dorg.gradle.jvmargs=-Xmx6g -XX:+HeapDumpOnOutOfMemoryError -Xss2m --add-exports jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED --add-exports jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED --add-exports jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED --add-exports jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED --add-exports jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED\" --max-workers=4 :server:jar :libs:opensearch-cli:jar :libs:opensearch-common:jar :libs:opensearch-compress:jar :libs:opensearch-core:jar :libs:opensearch-geo:jar :libs:opensearch-secure-sm:jar :libs:opensearch-task-commons:jar :libs:opensearch-telemetry:jar :libs:opensearch-x-content:jar -x test"
+  ],
+  "artifacts": [
+    {
+      "built": "src/server/build/distributions/opensearch-2.19.3-SNAPSHOT.jar",
+      "lib": "lib/opensearch-2.19.3-SNAPSHOT.jar",
+      "sha256": "f85e988148e3fb39d416ea7ca57232db33a1ef1bd1ab4cb9ff38d3fa5eabf9b3",
+      "classes_sha256": "97a07bb40c7f1e017f99e154e98ca0b6e4f80717c5e630ec48d5a6b47fa9379d"
+    },
+    {
+      "built": "src/libs/cli/build/distributions/opensearch-cli-2.19.3-SNAPSHOT.jar",
+      "lib": "lib/opensearch-cli-2.19.3-SNAPSHOT.jar",
+      "sha256": "958b51c68bca607d38924a10736a080e1df559b8a60410f742e5a4740c0c1580",
+      "classes_sha256": "29f786aa4c27883a3cd7ba39290d5391d799cae56c7b94527cf79b024c875bca"
+    },
+    {
+      "built": "src/libs/common/build/distributions/opensearch-common-2.19.3-SNAPSHOT.jar",
+      "lib": "lib/opensearch-common-2.19.3-SNAPSHOT.jar",
+      "sha256": "ab200809ade19b2f974afeee72d0b6dfc0875d8164e71fcf97cbf191969918a5",
+      "classes_sha256": "e010d71b66c7af8aefd6da02c71ec8a17203dc223bc561123205bd0290cfe431"
+    },
+    {
+      "built": "src/libs/compress/build/distributions/opensearch-compress-2.19.3-SNAPSHOT.jar",
+      "lib": "lib/opensearch-compress-2.19.3-SNAPSHOT.jar",
+      "sha256": "fc49a7d851ae30816a2f46bb5c43a0f914ba72635deebcc4e6a0844ae28f886f",
+      "classes_sha256": "f0ed7d5f20108be42be2572db495b28247c5db4be9c753bd52af2c7afa326198"
+    },
+    {
+      "built": "src/libs/core/build/distributions/opensearch-core-2.19.3-SNAPSHOT.jar",
+      "lib": "lib/opensearch-core-2.19.3-SNAPSHOT.jar",
+      "sha256": "6d4e11b8e67ffd7966ec473b628c7a16f5414c9319c2a58808af87155fe511b2",
+      "classes_sha256": "52e2771226bbc8031127b46d722b92df5e0b97df68aa88990defb57da2e56a59"
+    },
+    {
+      "built": "src/libs/geo/build/distributions/opensearch-geo-2.19.3-SNAPSHOT.jar",
+      "lib": "lib/opensearch-geo-2.19.3-SNAPSHOT.jar",
+      "sha256": "ea290bd18f25486c6e00eedc830382c207f9cf19da5d82e75f833e2946a9dcba",
+      "classes_sha256": "995ea2474ad3c5477684f3ee6b17dd511bd203d44069798dd770861a97a96efe"
+    },
+    {
+      "built": "src/libs/secure-sm/build/distributions/opensearch-secure-sm-2.19.3-SNAPSHOT.jar",
+      "lib": "lib/opensearch-secure-sm-2.19.3-SNAPSHOT.jar",
+      "sha256": "343f428d52556477f4dddfbd34e8715241d1d2302e0cc7e407ee9f4083674b6d",
+      "classes_sha256": "8e32531f6fbdbded04e537f0243838129e7638102fb9cd9fb4c12451c57260fa"
+    },
+    {
+      "built": "src/libs/task-commons/build/distributions/opensearch-task-commons-2.19.3-SNAPSHOT.jar",
+      "lib": "lib/opensearch-task-commons-2.19.3-SNAPSHOT.jar",
+      "sha256": "a42d16ab9d54ffbe28b97b6d421e3b6389a43ca58b4662cee864319eb6f182f5",
+      "classes_sha256": "9856d86c22f6b90a1e462f9a1c838af7fa4846ecd454e81e70eb17fdc566061a"
+    },
+    {
+      "built": "src/libs/telemetry/build/distributions/opensearch-telemetry-2.19.3-SNAPSHOT.jar",
+      "lib": "lib/opensearch-telemetry-2.19.3-SNAPSHOT.jar",
+      "sha256": "dacecd87e3b351b5704b41ad5cbffb7d65375101e80b647e5808ed5950cb969b",
+      "classes_sha256": "3293e7bc65d8a11ca1b1c2e28e28c1e5339007a08b3b6a6a8cd506cbe1a9eb88"
+    },
+    {
+      "built": "src/libs/x-content/build/distributions/opensearch-x-content-2.19.3-SNAPSHOT.jar",
+      "lib": "lib/opensearch-x-content-2.19.3-SNAPSHOT.jar",
+      "sha256": "9aacc95f446c8f3bc196dd2ffb8d5cef784a4beb59eae3e2cde9c849ec2280e5",
+      "classes_sha256": "c206839f1c3943df5ea204dff178d00b3bb960b7bf7cb22a8cf1f56710f50bb1"
+    }
+  ],
+  "fixed": {
+    "jars": [
+      {
+        "coords": "org.opensearch:opensearch:2.19.4",
+        "sha256": "abdbfc68f6ddbe59dc422dd5b991967d43ffcac2e4a2d12881aca9f01592fc08"
+      },
+      {
+        "coords": "org.opensearch:opensearch-cli:2.19.4",
+        "sha256": "bd24d53723cbf5c2395b5da120a10935735c85c99550776afe367d0c27ce9b24"
+      },
+      {
+        "coords": "org.opensearch:opensearch-common:2.19.4",
+        "sha256": "cbd495f8f7208fe459f2a69f9e180f6e85c165e3e459405653f56991495d52d6"
+      },
+      {
+        "coords": "org.opensearch:opensearch-compress:2.19.4",
+        "sha256": "e8df04161033039157906561b811b889aee375b5c09b316af8aa9cd13947c83f"
+      },
+      {
+        "coords": "org.opensearch:opensearch-core:2.19.4",
+        "sha256": "0d5cf6df39ee1f73069d4fddac95f99f1df75529f3b9a4f72b4ce41c653f91be"
+      },
+      {
+        "coords": "org.opensearch:opensearch-geo:2.19.4",
+        "sha256": "f488e1478f4618c0772bfd015fa3a2ee69e997e5aa6a603e2311a5475a4fc48c"
+      },
+      {
+        "coords": "org.opensearch:opensearch-secure-sm:2.19.4",
+        "sha256": "9b3ba930ce10cd765fe2027bea5c57158021333fd52bccba4c6c3a3610ae9539"
+      },
+      {
+        "coords": "org.opensearch:opensearch-task-commons:2.19.4",
+        "sha256": "096816d19680926b00343043d75b96b7ef3ab992691cf4913dd4f176417e85e3"
+      },
+      {
+        "coords": "org.opensearch:opensearch-telemetry:2.19.4",
+        "sha256": "2499f4fea752bcb7d7d4d94841b9da9ea434b4f22e781d4d7b3a3c0e46aef8fd"
+      },
+      {
+        "coords": "org.opensearch:opensearch-x-content:2.19.4",
+        "sha256": "66d0b1c51c18040ad5a136c3e3ea106d49c7e97266f4e7c129940772d1488e23"
+      }
+    ],
+    "drop": "^(opensearch|opensearch\\-cli|opensearch\\-common|opensearch\\-compress|opensearch\\-core|opensearch\\-geo|opensearch\\-secure\\-sm|opensearch\\-task\\-commons|opensearch\\-telemetry|opensearch\\-x\\-content)-[0-9]"
+  },
+  "notes": "Commit = tag 2.19.3 (the 2.19 line of the advisory; the benchmark's 3.x source needs Java 21 at run time, the fixture runs on Java 17). Gradle projects :server and :libs:opensearch-{cli,common,compress,core,geo,secure-sm,task-commons,telemetry,x-content}; only the jar tasks, tests not run. The init script (written into the work directory, outside the source tree) disables the Spotless formatting check: gradle/formatting.gradle points the Spotless Eclipse formatter to a P2 mirror that no longer serves eclipse/updates/4.29 and buildSrc realizes every task at configuration time, so configuration would fail ('Failed to load eclipse jdt formatter'); no Spotless task runs. org.gradle.jvmargs = the project's gradle.properties with -Xmx6g; --max-workers is a resource flag. Version: build.snapshot defaults to true, so the jars are 2.19.3-SNAPSHOT; every entry equals the Central 2.19.3 jars' except META-INF/MANIFEST.MF. The original recipe also generated the POMs (generatePomFileForNebulaPublication) to check the fixture's third-party declarations; that step is not needed for the jars. Fixed: the ten artifacts at 2.19.4 (PR #19491 backport); 2.19.4 also bumps Lucene to 9.12.3, which drop does not replace (the fixture keeps its Lucene 9.12.2)."
+}

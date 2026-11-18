@@ -1,0 +1,168 @@
+{
+  "clone_url": "https://github.com/elastic/elasticsearch.git",
+  "commit": "198d86868932741b4e0d184425510217febc27d1",
+  "jdk": 21,
+  "tools": "the project's Gradle wrapper (./gradlew, Gradle 9.1.0); Gradle provisions the Adoptium JDKs the build requests (daemon JDK 21 from gradle/gradle-daemon-jvm.properties, toolchains 17-23); reference build launched on Amazon Corretto 21",
+  "commands": [
+    "git -C src show 78b39a83f6cbc634fc5c60575bb0fd4bfaed146e:branches.json > branches-main-20251024.json && python3 -c \"import hashlib,sys; sys.exit(hashlib.sha256(open('branches-main-20251024.json','rb').read()).hexdigest() != '51c36a99fa8ab2149919d8c6af86c84553f67ce0fe5db02765d695d4420f62ac')\"",
+    "BR=\"$PWD/branches-main-20251024.json\" && cd src && ./gradlew --no-daemon \"-Dorg.gradle.jvmargs=-Xmx6g -XX:+HeapDumpOnOutOfMemoryError -Xss2m --add-exports jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED --add-exports jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED --add-exports jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED --add-exports jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED --add-exports jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED --add-opens java.base/java.time=ALL-UNNAMED\" --max-workers=4 \"-Porg.elasticsearch.build.branches-file-location=$BR\" :server:jar :libs:cli:jar :libs:core:jar :libs:entitlement:jar :libs:geo:jar :libs:grok:jar :libs:logging:jar :libs:lz4:jar :libs:native:jar :libs:plugin-analysis-api:jar :libs:plugin-api:jar :libs:simdvec:jar :libs:tdigest:jar :libs:x-content:jar :x-pack:plugin:esql:compute:jar -x test"
+  ],
+  "artifacts": [
+    {
+      "built": "src/server/build/distributions/elasticsearch-8.19.7-SNAPSHOT.jar",
+      "lib": "lib/elasticsearch-8.19.7-SNAPSHOT.jar",
+      "sha256": "483013b391ecfac0b6d922a2579901c1b7c72910f8eba88e0d50bda676e48bc5",
+      "classes_sha256": "0b1e6ca6f32db5285f2b535c3d9cbc2204274170007915b05e4f1262a4218f0a"
+    },
+    {
+      "built": "src/libs/cli/build/distributions/elasticsearch-cli-8.19.7-SNAPSHOT.jar",
+      "lib": "lib/elasticsearch-cli-8.19.7-SNAPSHOT.jar",
+      "sha256": "decabd5539ac6b3b7bfbc42a915eae8a919fcb52b6a8f09959abb91ed2e71f64",
+      "classes_sha256": "b484bac2a2f4d15a5ef2165d2f6286c7c4ff4023fd7e52767800974372bc639c"
+    },
+    {
+      "built": "src/libs/core/build/distributions/elasticsearch-core-8.19.7-SNAPSHOT.jar",
+      "lib": "lib/elasticsearch-core-8.19.7-SNAPSHOT.jar",
+      "sha256": "0dc5a2d3aa3ca900a87a5fce5b00c2a193bdd11e06b276c92298b49982f4f2fa",
+      "classes_sha256": "9f327f3b586033a26d2cd29f777d332b6425d872a7c908855dae1b22414051c3"
+    },
+    {
+      "built": "src/libs/entitlement/build/distributions/elasticsearch-entitlement-8.19.7-SNAPSHOT.jar",
+      "lib": "lib/elasticsearch-entitlement-8.19.7-SNAPSHOT.jar",
+      "sha256": "0b7a7f86bc12ce9e28f93769d85c30dc215c4cb63ccd899991ad7cb0e16db322",
+      "classes_sha256": "37414734d1ebc7dde853fa3b68d6ed1a812808cd02e3cc50eb0b0c8183a12a59"
+    },
+    {
+      "built": "src/libs/geo/build/distributions/elasticsearch-geo-8.19.7-SNAPSHOT.jar",
+      "lib": "lib/elasticsearch-geo-8.19.7-SNAPSHOT.jar",
+      "sha256": "e538e3172f82aba6454566254ccdb23f8e32c6ce4371d69df411ba83bca4eab8",
+      "classes_sha256": "f55328dfa59d7720805e7b2edf17fed3936a423824a88422d29f02472e37dc77"
+    },
+    {
+      "built": "src/libs/grok/build/distributions/elasticsearch-grok-8.19.7-SNAPSHOT.jar",
+      "lib": "lib/elasticsearch-grok-8.19.7-SNAPSHOT.jar",
+      "sha256": "492806bea8b76431140f405faac75e91744030492457ddcd44bb46a15cf57493",
+      "classes_sha256": "c381435a53f85f15b5292ef5aa12f581de42b42a2771328e7951a5ebea88b580"
+    },
+    {
+      "built": "src/libs/logging/build/distributions/elasticsearch-logging-8.19.7-SNAPSHOT.jar",
+      "lib": "lib/elasticsearch-logging-8.19.7-SNAPSHOT.jar",
+      "sha256": "5e6bac74e903875a90f2a70959fc691412f8c212fa9460a491f38d1bfdfa3b72",
+      "classes_sha256": "5cad2c56b52fdb79118a7720810f6f0361987e26cde09bd508e3396c29ceba99"
+    },
+    {
+      "built": "src/libs/lz4/build/distributions/elasticsearch-lz4-8.19.7-SNAPSHOT.jar",
+      "lib": "lib/elasticsearch-lz4-8.19.7-SNAPSHOT.jar",
+      "sha256": "cc4da1b012f9b777a41b23626e80378bee996c711c3a0161445e054bf7242488",
+      "classes_sha256": "ee3556cc8a3f7fc69f4dca2a247edfef1cdb6ea1bb5e29726fa7f1b15b9c744e"
+    },
+    {
+      "built": "src/libs/native/build/distributions/elasticsearch-native-8.19.7-SNAPSHOT.jar",
+      "lib": "lib/elasticsearch-native-8.19.7-SNAPSHOT.jar",
+      "sha256": "8146193aa2514e129c7ed4e16552e2e62a41745d20632fc216b332bdace06c8e",
+      "classes_sha256": "0754cee3a7a3c4b002bbe4541acf0bc003b9eb52f26f02178ed6b7c38e00adf7"
+    },
+    {
+      "built": "src/libs/plugin-analysis-api/build/distributions/elasticsearch-plugin-analysis-api-8.19.7-SNAPSHOT.jar",
+      "lib": "lib/elasticsearch-plugin-analysis-api-8.19.7-SNAPSHOT.jar",
+      "sha256": "9c9fc4038d1f6ac9d6947fbf8b87135578f11032d802a4b3272a5433322d0e2c",
+      "classes_sha256": "c5cd3bbb392b2ee3c936763d874a22b14d2281671f7d1e2b6d0df7841d07d58e"
+    },
+    {
+      "built": "src/libs/plugin-api/build/distributions/elasticsearch-plugin-api-8.19.7-SNAPSHOT.jar",
+      "lib": "lib/elasticsearch-plugin-api-8.19.7-SNAPSHOT.jar",
+      "sha256": "7b8c5f4e040794624829279bcc36b4aa351e72b5f99bf44c5dc46eec42653fd4",
+      "classes_sha256": "47d730d06d250946f7e138a85de8665ab5af5f0a765e2406b91a97ac364d3265"
+    },
+    {
+      "built": "src/libs/simdvec/build/distributions/elasticsearch-simdvec-8.19.7-SNAPSHOT.jar",
+      "lib": "lib/elasticsearch-simdvec-8.19.7-SNAPSHOT.jar",
+      "sha256": "29922f858fb4c97564cdc71edb76f19e80a767ec30cc5341fe122da97828b7b9",
+      "classes_sha256": "0028223e15edbc6d1a0e1171558b10bd34d32d15a8906b7c4ca9be6f4b9d6e67"
+    },
+    {
+      "built": "src/libs/tdigest/build/distributions/elasticsearch-tdigest-8.19.7-SNAPSHOT.jar",
+      "lib": "lib/elasticsearch-tdigest-8.19.7-SNAPSHOT.jar",
+      "sha256": "9fdcd7ebeeb85b156a54a0c1828a63fe0bc51cd5cd16d31e03e75ae784e13152",
+      "classes_sha256": "2600cc1e1244a031e0e8e7a059777bdcc43e51e1f07cdc276cacece0711fdc3d"
+    },
+    {
+      "built": "src/libs/x-content/build/distributions/elasticsearch-x-content-8.19.7-SNAPSHOT.jar",
+      "lib": "lib/elasticsearch-x-content-8.19.7-SNAPSHOT.jar",
+      "sha256": "d3577e70da422bcc0fe472a720b805912e1db333460028b35ebe0265eddcb1d8",
+      "classes_sha256": "20e2a650d5cbb528a16a2107bee0afa3483d36a8049c09d02c685cb94dff91ad"
+    },
+    {
+      "built": "src/x-pack/plugin/esql/compute/build/distributions/x-pack-esql-compute-8.19.7-SNAPSHOT.jar",
+      "lib": "lib/x-pack-esql-compute-8.19.7-SNAPSHOT.jar",
+      "sha256": "37e6ebf2e41d6b8c4ebaa6e40143635162de5544d684ed26f1fc63a1919899e8",
+      "classes_sha256": "fbf9164c5673951a437addaaa40e94c1c016d8613d9fb7aef4151cbc6334ad37"
+    }
+  ],
+  "fixed": {
+    "jars": [
+      {
+        "coords": "org.elasticsearch:elasticsearch:8.19.8",
+        "sha256": "336e0f3def95a67ea4dca2e2894202e3f100573f122340309e56d983f52e8a7c"
+      },
+      {
+        "coords": "org.elasticsearch:elasticsearch-cli:8.19.8",
+        "sha256": "5b4ad65186eba7864d506265fa9f3d809ba3b2d0cb5b7b06dec6a42964186f76"
+      },
+      {
+        "coords": "org.elasticsearch:elasticsearch-core:8.19.8",
+        "sha256": "f541cc9f501caf8baf77aff1483cf36fa753c2eba29d86dbbb894eaa3218f789"
+      },
+      {
+        "coords": "org.elasticsearch:elasticsearch-entitlement:8.19.8",
+        "sha256": "dddea6b96922d8c89929cc412530b74c5f253bf311a41060775c1d8a2c561616"
+      },
+      {
+        "coords": "org.elasticsearch:elasticsearch-geo:8.19.8",
+        "sha256": "763320402bfa66ae1b2c8b474a458f218e504984fc087147f766f2d96a2df112"
+      },
+      {
+        "coords": "org.elasticsearch:elasticsearch-grok:8.19.8",
+        "sha256": "16c91dd5866207c13e1d4c68637e0258b80887a4b99cdedb9439237fe6baaf63"
+      },
+      {
+        "coords": "org.elasticsearch:elasticsearch-logging:8.19.8",
+        "sha256": "d72ef470a6043226f3833ee3adb824ed77ad010ee620b5f03ee30612e45f9663"
+      },
+      {
+        "coords": "org.elasticsearch:elasticsearch-lz4:8.19.8",
+        "sha256": "ae5332201d9c5e8813a2f30d4a0677e704dcd95d447504177c24309937cae521"
+      },
+      {
+        "coords": "org.elasticsearch:elasticsearch-native:8.19.8",
+        "sha256": "e8c55a4d778ea06b23cc570ab7c95c0ba1db209d1cc7258ceb0280596d2d498a"
+      },
+      {
+        "coords": "org.elasticsearch.plugin:elasticsearch-plugin-analysis-api:8.19.8",
+        "sha256": "47871aaa2149a967b6bf360359acb28d4832ce51fe779a029c9f41a96772533e"
+      },
+      {
+        "coords": "org.elasticsearch.plugin:elasticsearch-plugin-api:8.19.8",
+        "sha256": "246039ea47888d193b6b640971aaa7b32eafb50a3ca2f39b0def9add5460f2f6"
+      },
+      {
+        "coords": "org.elasticsearch:elasticsearch-simdvec:8.19.8",
+        "sha256": "e2d66fc06809f10ce3be6d87d3689fddf9c647755d6ba8a59674b6eca3641832"
+      },
+      {
+        "coords": "org.elasticsearch:elasticsearch-tdigest:8.19.8",
+        "sha256": "449365a78ca905bd46ac8397a071f5b0ab0d0457fbd72ecaf7b0fb2ba2e105f9"
+      },
+      {
+        "coords": "org.elasticsearch:elasticsearch-x-content:8.19.8",
+        "sha256": "7d7b383477cefb63407839f728b5d92d9ce9543785c7135a14413135261cd481"
+      },
+      {
+        "coords": "org.elasticsearch.plugin:x-pack-esql-compute:8.19.8",
+        "sha256": "c7ee0211fed0646e272ade7df17d66ab71beebae41a2b879d1c96b26b4d5c6df"
+      }
+    ],
+    "drop": "^(elasticsearch|elasticsearch\\-cli|elasticsearch\\-core|elasticsearch\\-entitlement|elasticsearch\\-geo|elasticsearch\\-grok|elasticsearch\\-logging|elasticsearch\\-lz4|elasticsearch\\-native|elasticsearch\\-plugin\\-analysis\\-api|elasticsearch\\-plugin\\-api|elasticsearch\\-simdvec|elasticsearch\\-tdigest|elasticsearch\\-x\\-content|x\\-pack\\-esql\\-compute)-[0-9]"
+  },
+  "notes": "Commit = tag v8.19.7 (the Java 17 line of the advisory; the benchmark's 9.x source needs Java 21 at run time). The daemon runs on the Adoptium JDK 21 that gradle/gradle-daemon-jvm.properties requires, and the multi-release source sets of libs/native, libs/simdvec and libs/entitlement are compiled with the toolchain of their version, all provisioned by Gradle. -Porg.elasticsearch.build.branches-file-location: by default the build downloads branches.json from the current main branch, which no longer lists 7.17, and configuration fails ('Failed to apply plugin elasticsearch.yaml-rest-compat-test > No value present'); the flag points it to main's branches.json at commit 78b39a83 (2025-10-24, the last change before the tag date; sha256 checked), which only feeds the BWC/compat test configuration. org.gradle.jvmargs = the project's gradle.properties with -Xmx6g; --max-workers is a resource flag. Gradle projects :server, :libs:{cli,core,entitlement,geo,grok,logging,lz4,native,plugin-analysis-api,plugin-api,simdvec,tdigest,x-content}, :x-pack:plugin:esql:compute; only the jar tasks, tests not run (the original recipe also generated the POMs to check the fixture's third-party declarations; not needed for the jars). Version: build.snapshot defaults to true, so the jars are 8.19.7-SNAPSHOT; their class files equal the Central 8.19.7 jars' except module-info.class (module version string). Fixed: the 15 artifacts at 8.19.8."
+}

@@ -1,0 +1,40 @@
+{
+  "final_ok": true,
+  "repair_rounds": 1,
+  "fuzz_tests_fixed_at_round": 0,
+  "rounds": [
+    {
+      "round": 0,
+      "ok": false,
+      "error": null,
+      "launch": [],
+      "build_ok": true,
+      "failing": [
+        "V1"
+      ],
+      "progress_advisory": {
+        "PkgRisk1": 3.98477060180535e-07
+      },
+      "repair": {
+        "modified": [
+          "src/test/java/dosguide/agent/DoSCounters.java",
+          "src/test/java/dosguide/agent/DoSMeasureAgent.java",
+          "src/test/java/dosguide/agent/DoSTransformer.java",
+          "src/test/java/dosguide/guidance/PkgRisk1Guidance.java",
+          "src/test/java/dosguide/guidance/RecordMutator.java",
+          "src/test/java/dosguide/guidance/V1Guidance.java"
+        ],
+        "plan_revised": true
+      }
+    },
+    {
+      "round": 1,
+      "ok": true,
+      "error": null,
+      "launch": [],
+      "build_ok": true,
+      "failing": [],
+      "progress_advisory": {}
+    }
+  ]
+}

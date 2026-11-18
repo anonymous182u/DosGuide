@@ -1,0 +1,29 @@
+{
+  "parameter": "number of repeated chars in text triggering exponential NFA backtracking",
+  "inputs": [
+    {
+      "file": "n10.bin",
+      "value": 10
+    },
+    {
+      "file": "n20.bin",
+      "value": 20
+    },
+    {
+      "file": "n40.bin",
+      "value": 40
+    },
+    {
+      "file": "n80.bin",
+      "value": 80
+    },
+    {
+      "file": "n160.bin",
+      "value": 160
+    },
+    {
+      "file": "n320.bin",
+      "value": 320
+    }
+  ]
+}

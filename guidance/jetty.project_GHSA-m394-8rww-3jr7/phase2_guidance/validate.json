@@ -1,0 +1,50 @@
+{
+  "final_ok": true,
+  "repair_rounds": 2,
+  "fuzz_tests_fixed_at_round": 0,
+  "rounds": [
+    {
+      "round": 0,
+      "ok": false,
+      "error": null,
+      "launch": [],
+      "build_ok": true,
+      "failing": [
+        "V1"
+      ],
+      "progress_advisory": {},
+      "repair": {
+        "modified": [
+          "src/test/java/com/fuzzer/guidance/V1Guidance.java"
+        ],
+        "plan_revised": true
+      }
+    },
+    {
+      "round": 1,
+      "ok": true,
+      "error": null,
+      "launch": [],
+      "build_ok": true,
+      "failing": [],
+      "progress_advisory": {
+        "V1": 0.07510247154754092
+      },
+      "repair": {
+        "modified": [
+          "src/test/java/com/fuzzer/guidance/V1Guidance.java"
+        ],
+        "plan_revised": true
+      }
+    },
+    {
+      "round": 2,
+      "ok": true,
+      "error": null,
+      "launch": [],
+      "build_ok": true,
+      "failing": [],
+      "progress_advisory": {}
+    }
+  ]
+}

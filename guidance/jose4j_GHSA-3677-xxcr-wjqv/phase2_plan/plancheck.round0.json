@@ -1,0 +1,227 @@
+{
+  "tool": "checkpath",
+  "version": "1.0.0",
+  "source_root": "projects/jose4j_GHSA-3677-xxcr-wjqv",
+  "index": {
+    "files_parsed": 156,
+    "files_failed": 0,
+    "methods": 1211,
+    "harness_fuzz_methods": [
+      "JsonWebEncryptionFuzzTest.fuzzJsonWebEncryptionGetPlaintextBytes(InputStream)"
+    ],
+    "index_seconds": 0.8,
+    "max_gap": 2,
+    "sink_depth": 6,
+    "symbol_resolution": true
+  },
+  "ok": true,
+  "targets": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "entrypoint": "JsonWebEncryptionFuzzTest.fuzzJsonWebEncryptionGetPlaintextBytes(InputStream) → JsonWebEncryption.getPlaintextBytes() → JsonWebEncryption.decrypt() → JsonWebEncryption.decompress(Headers, byte[]) → DeflateRFC1951CompressionAlgorithm.decompress(byte[])",
+      "source_path": "src/main/java/org/jose4j/zip/DeflateRFC1951CompressionAlgorithm.java",
+      "start_ok": true,
+      "harness_entry": "org.jose4j.fuzz.JsonWebEncryptionFuzzTest#fuzzJsonWebEncryptionGetPlaintextBytes",
+      "end_ok": true,
+      "end": {
+        "sink_file": "src/main/java/org/jose4j/zip/DeflateRFC1951CompressionAlgorithm.java",
+        "ok": true,
+        "evidence": "hop 5 DeflateRFC1951CompressionAlgorithm#decompress(byte[]) is declared in src/main/java/org/jose4j/zip/DeflateRFC1951CompressionAlgorithm.java:55",
+        "level": "method",
+        "sink_method": "DeflateRFC1951CompressionAlgorithm#decompress",
+        "sink_evidence": "hop 5 is DeflateRFC1951CompressionAlgorithm#decompress(byte[])"
+      },
+      "hops": [
+        {
+          "index": 1,
+          "raw": "JsonWebEncryptionFuzzTest.fuzzJsonWebEncryptionGetPlaintextBytes(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.jose4j.fuzz.JsonWebEncryptionFuzzTest#fuzzJsonWebEncryptionGetPlaintextBytes(InputStream)",
+              "location": "harness/src/test/java/org/jose4j/fuzz/JsonWebEncryptionFuzzTest.java:49"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "raw": "JsonWebEncryption.getPlaintextBytes()",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.jose4j.jwe.JsonWebEncryption#getPlaintextBytes()",
+              "location": "src/main/java/org/jose4j/jwe/JsonWebEncryption.java:92"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "raw": "JsonWebEncryption.decrypt()",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.jose4j.jwe.JsonWebEncryption#decrypt()",
+              "location": "src/main/java/org/jose4j/jwe/JsonWebEncryption.java:242"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "raw": "JsonWebEncryption.decompress(Headers, byte[])",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.jose4j.jwe.JsonWebEncryption#decompress(Headers,byte[])",
+              "location": "src/main/java/org/jose4j/jwe/JsonWebEncryption.java:290"
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "raw": "DeflateRFC1951CompressionAlgorithm.decompress(byte[])",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.jose4j.zip.DeflateRFC1951CompressionAlgorithm#decompress(byte[])",
+              "location": "src/main/java/org/jose4j/zip/DeflateRFC1951CompressionAlgorithm.java:55"
+            },
+            {
+              "method": "org.jose4j.zip.CompressionAlgorithm#decompress(byte[])",
+              "location": "src/main/java/org/jose4j/zip/CompressionAlgorithm.java:27"
+            }
+          ]
+        }
+      ],
+      "path_signature": [
+        "org.jose4j.fuzz.JsonWebEncryptionFuzzTest#fuzzJsonWebEncryptionGetPlaintextBytes(InputStream)",
+        "org.jose4j.jwe.JsonWebEncryption#getPlaintextBytes()",
+        "org.jose4j.jwe.JsonWebEncryption#decrypt()",
+        "org.jose4j.jwe.JsonWebEncryption#decompress(Headers,byte[])",
+        "org.jose4j.zip.DeflateRFC1951CompressionAlgorithm#decompress(byte[])"
+      ],
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "written": "JsonWebEncryptionFuzzTest.fuzzJsonWebEncryptionGetPlaintextBytes(InputStream)",
+          "provenance": "agent",
+          "method": "org.jose4j.fuzz.JsonWebEncryptionFuzzTest#fuzzJsonWebEncryptionGetPlaintextBytes(InputStream)",
+          "location": "harness/src/test/java/org/jose4j/fuzz/JsonWebEncryptionFuzzTest.java:49"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "JsonWebEncryptionFuzzTest#fuzzJsonWebEncryptionGetPlaintextBytes(InputStream) calls JsonWebEncryption#getPlaintextBytes() at harness/src/test/java/org/jose4j/fuzz/JsonWebEncryptionFuzzTest.java:56 (resolved)",
+          "site": "harness/src/test/java/org/jose4j/fuzz/JsonWebEncryptionFuzzTest.java:56"
+        },
+        {
+          "kind": "hop",
+          "written": "JsonWebEncryption.getPlaintextBytes()",
+          "provenance": "agent",
+          "method": "org.jose4j.jwe.JsonWebEncryption#getPlaintextBytes()",
+          "location": "src/main/java/org/jose4j/jwe/JsonWebEncryption.java:92"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "JsonWebEncryption#getPlaintextBytes() calls JsonWebEncryption#decrypt() at src/main/java/org/jose4j/jwe/JsonWebEncryption.java:96 (resolved)",
+          "site": "src/main/java/org/jose4j/jwe/JsonWebEncryption.java:96"
+        },
+        {
+          "kind": "hop",
+          "written": "JsonWebEncryption.decrypt()",
+          "provenance": "agent",
+          "method": "org.jose4j.jwe.JsonWebEncryption#decrypt()",
+          "location": "src/main/java/org/jose4j/jwe/JsonWebEncryption.java:242"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "JsonWebEncryption#decrypt() calls JsonWebEncryption#decompress(Headers,byte[]) at src/main/java/org/jose4j/jwe/JsonWebEncryption.java:262 (resolved)",
+          "site": "src/main/java/org/jose4j/jwe/JsonWebEncryption.java:262"
+        },
+        {
+          "kind": "hop",
+          "written": "JsonWebEncryption.decompress(Headers, byte[])",
+          "provenance": "agent",
+          "method": "org.jose4j.jwe.JsonWebEncryption#decompress(Headers,byte[])",
+          "location": "src/main/java/org/jose4j/jwe/JsonWebEncryption.java:290"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "JsonWebEncryption#decompress(Headers,byte[]) calls CompressionAlgorithm#decompress(byte[]) at src/main/java/org/jose4j/jwe/JsonWebEncryption.java:298 (resolved)",
+          "site": "src/main/java/org/jose4j/jwe/JsonWebEncryption.java:298"
+        },
+        {
+          "kind": "hop",
+          "written": "DeflateRFC1951CompressionAlgorithm.decompress(byte[])",
+          "provenance": "agent",
+          "method": "org.jose4j.zip.CompressionAlgorithm#decompress(byte[])",
+          "location": "src/main/java/org/jose4j/zip/CompressionAlgorithm.java:27"
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "status": "CALL",
+          "evidence": "JsonWebEncryptionFuzzTest#fuzzJsonWebEncryptionGetPlaintextBytes(InputStream) calls JsonWebEncryption#getPlaintextBytes() at harness/src/test/java/org/jose4j/fuzz/JsonWebEncryptionFuzzTest.java:56 (resolved)"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "status": "CALL",
+          "evidence": "JsonWebEncryption#getPlaintextBytes() calls JsonWebEncryption#decrypt() at src/main/java/org/jose4j/jwe/JsonWebEncryption.java:96 (resolved)"
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "status": "CALL",
+          "evidence": "JsonWebEncryption#decrypt() calls JsonWebEncryption#decompress(Headers,byte[]) at src/main/java/org/jose4j/jwe/JsonWebEncryption.java:262 (resolved)"
+        },
+        {
+          "from": 4,
+          "to": 5,
+          "status": "CALL",
+          "evidence": "JsonWebEncryption#decompress(Headers,byte[]) calls CompressionAlgorithm#decompress(byte[]) at src/main/java/org/jose4j/jwe/JsonWebEncryption.java:298 (resolved)"
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    }
+  ],
+  "plan_ok": true,
+  "plans": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "signals": [
+        {
+          "name": "inflatedBytes",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "Inflater#inflate",
+              "status": "EXTERNAL",
+              "relation": "library"
+            }
+          ]
+        },
+        {
+          "name": "inflateCallCount",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "Inflater#inflate",
+              "status": "EXTERNAL",
+              "relation": "library"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    }
+  ]
+}

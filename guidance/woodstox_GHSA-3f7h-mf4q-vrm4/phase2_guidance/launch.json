@@ -1,0 +1,16 @@
+{
+  "build": [
+    "mvn -q package -DskipTests",
+    "bash build-agent.sh"
+  ],
+  "classpath_command": "echo target/test-classes:lib/woodstox-core-5.3.1-SNAPSHOT.jar:$(find target/deps -name '*.jar' 2>/dev/null | tr '\\n' ':')target/v1-agent.jar",
+  "javaagent": {"jar": "target/v1-agent.jar", "args": ""},
+  "jvm_args": [],
+  "guidance_factory": "fuzzing.runner.FuzzRunner#createGuidance",
+  "targets": {
+    "V1": {
+      "test_class": "fuzzing.harness.WoodstoxFuzzTest",
+      "method": "fuzzXMLStreamReaderNextNonValidating"
+    }
+  }
+}

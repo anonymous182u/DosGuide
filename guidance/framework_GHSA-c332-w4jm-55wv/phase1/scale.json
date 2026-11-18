@@ -1,0 +1,19 @@
+{
+  "series_request": null,
+  "rounds": [
+    {
+      "round": 1,
+      "revision": {
+        "V1": {
+          "scale": "Measured: CPU time essentially flat 3.6–5.2 ms for N=10 to N=60 (TLD alphanumeric length). The theoretical exponential backtracking in ([a-zA-Z0-9]{2,4})+$ does NOT manifest on JDK 17: the regex engine applies a dead-state optimization recognizing that all partitions of the TLD group terminate at the same non-matchable character, making $ deterministically fail without exploring partitions. Measured growth rate ~0.03 ms/char (attributable to string creation overhead, not backtracking). Linear extrapolation to maximum input N≈10235: ~310 ms, which is 64× below the 20,000 ms timeout. Triggering a timeout with input shape a@b.<alphanums><non-alphanum> appears infeasible under these evaluation limits on this JDK.",
+          "input_bytes": 10240
+        },
+        "V2": {
+          "scale": "Measured: CPU time nearly flat 10.6–14.0 ms for N=100 to N=2400 (domain TLD length). Growth ~0.0015 ms/char (sublinear, dominated by string allocation). Extrapolated to max N≈10235: ~26 ms, 770× below the 20,000 ms timeout. The v8 regex has no nested quantifiers; backtracking is at most O(N). Confirmed not triggerable under these evaluation limits.",
+          "input_bytes": 10240
+        }
+      },
+      "field_problems": {}
+    }
+  ]
+}

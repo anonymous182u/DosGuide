@@ -1,0 +1,13 @@
+{
+  "timeout_ms": 20000,
+  "jvm_args": [
+    "-Xmx1g",
+    "-Xss1m"
+  ],
+  "max_input_bytes": 10240,
+  "justification": {},
+  "fixed": {
+    "lib": "fixed/lib/*",
+    "drop": "^(elasticsearch|elasticsearch\\-cli|elasticsearch\\-core|elasticsearch\\-entitlement|elasticsearch\\-geo|elasticsearch\\-grok|elasticsearch\\-logging|elasticsearch\\-lz4|elasticsearch\\-native|elasticsearch\\-plugin\\-analysis\\-api|elasticsearch\\-plugin\\-api|elasticsearch\\-simdvec|elasticsearch\\-tdigest|elasticsearch\\-x\\-content|x\\-pack\\-esql\\-compute)-[0-9]"
+  }
+}

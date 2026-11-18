@@ -1,0 +1,371 @@
+{
+  "ok": true,
+  "launch": [],
+  "build": {
+    "ok": true
+  },
+  "targets": [
+    {
+      "tool": "ValidateArtifact",
+      "target": "V1",
+      "checks": [
+        {
+          "name": "contract",
+          "status": "pass",
+          "detail": "factory, lastSignals() and fuzz test found"
+        },
+        {
+          "name": "runs",
+          "status": "pass",
+          "detail": "95 executions completed"
+        },
+        {
+          "name": "plan_signals",
+          "status": "pass",
+          "detail": "lastSignals() returns every planned signal [capacityGrowth]"
+        },
+        {
+          "name": "signal_varies",
+          "status": "pass",
+          "detail": "varying: [capacityGrowth] (on the guidance's own inputs: [capacityGrowth])"
+        },
+        {
+          "name": "reset",
+          "status": "pass",
+          "detail": "re-running inputs reproduced their values"
+        },
+        {
+          "name": "depends_on_execution",
+          "status": "pass",
+          "detail": "signals stay near zero when the target does not run"
+        },
+        {
+          "name": "instrumentation",
+          "status": "pass",
+          "detail": "rewrote [io.netty.handler.codec.compression.Snappy]"
+        },
+        {
+          "name": "input_limit",
+          "status": "pass",
+          "detail": "with jqf.ei.MAX_INPUT_SIZE=16 the 20 generated inputs were at most 16 bytes"
+        },
+        {
+          "name": "input_growth",
+          "status": "pass",
+          "detail": "the guidance generated a 76-byte input after 1013 ms (4 executions); the target needs 58"
+        },
+        {
+          "name": "progress",
+          "status": "pass",
+          "ratio": 26.06272258720502,
+          "detail": "`capacityGrowth` reached 2606% of the series at 784 bytes"
+        }
+      ],
+      "max_input_bytes": 10240,
+      "example_inputs": 5,
+      "executions": {
+        "own": 40,
+        "repeat": 5,
+        "random": 40,
+        "example": 10,
+        "probe": 3
+      },
+      "test_failures_not_used": 3,
+      "signals": {
+        "capacityGrowth": {
+          "min": 0.0,
+          "max": 22009344.0,
+          "distinct": 26
+        }
+      },
+      "signals_by_kind": {
+        "example": {
+          "capacityGrowth": {
+            "min": 0.0,
+            "max": 0.0,
+            "distinct": 1
+          }
+        },
+        "own": {
+          "capacityGrowth": {
+            "min": 0.0,
+            "max": 11004672.0,
+            "distinct": 21
+          }
+        },
+        "random": {
+          "capacityGrowth": {
+            "min": 0.0,
+            "max": 22009344.0,
+            "distinct": 13
+          }
+        },
+        "repeat": {
+          "capacityGrowth": {
+            "min": 7861248.0,
+            "max": 11004672.0,
+            "distinct": 5
+          }
+        }
+      },
+      "transformed_classes": [
+        "io.netty.handler.codec.compression.Snappy"
+      ],
+      "ok": true,
+      "input_limit_probe": {
+        "max_input_bytes": 16,
+        "longest_input": 16,
+        "executions": {
+          "own": 20
+        }
+      },
+      "growth_probe": {
+        "needed_input_bytes": 58,
+        "longest_input": 76,
+        "executions": {
+          "own": 4
+        },
+        "growth": [
+          {
+            "ms": 981,
+            "execution": 1,
+            "bytes": 16
+          },
+          {
+            "ms": 1008,
+            "execution": 3,
+            "bytes": 21
+          },
+          {
+            "ms": 1013,
+            "execution": 4,
+            "bytes": 76
+          }
+        ]
+      },
+      "hard_ok": true,
+      "progress_probe": {
+        "own_ms": 120086,
+        "executions": 1012,
+        "longest_input": 852,
+        "phase": "series",
+        "series_inputs": 6,
+        "comparison": {
+          "capacityGrowth": {
+            "exponent": 3.0,
+            "series_longest": [
+              22,
+              2096896.0
+            ],
+            "best": [
+              784,
+              1001411584.0,
+              106361
+            ],
+            "compared_at": 58,
+            "series_at_best": 38423137.89932381,
+            "ratio": 26.06272258720502
+          }
+        },
+        "measurements": {
+          "budget_ms": 120000,
+          "own_ms": 120086,
+          "executions": 1012,
+          "longest_input": 852,
+          "phase": "series",
+          "own_best": {
+            "capacityGrowth": [
+              [
+                16,
+                0.0,
+                1073
+              ],
+              [
+                19,
+                0.0,
+                1118
+              ],
+              [
+                20,
+                0.0,
+                1135
+              ],
+              [
+                28,
+                0.0,
+                1119
+              ],
+              [
+                30,
+                32256.0,
+                1136
+              ],
+              [
+                64,
+                0.0,
+                1075
+              ],
+              [
+                132,
+                75674624.0,
+                2870
+              ],
+              [
+                152,
+                75706880.0,
+                1920
+              ],
+              [
+                164,
+                222499072.0,
+                84265
+              ],
+              [
+                172,
+                75739136.0,
+                2370
+              ],
+              [
+                192,
+                75771392.0,
+                2344
+              ],
+              [
+                213,
+                76835840.0,
+                7012
+              ],
+              [
+                232,
+                75835904.0,
+                1491
+              ],
+              [
+                252,
+                75868160.0,
+                1445
+              ],
+              [
+                272,
+                75900416.0,
+                4704
+              ],
+              [
+                304,
+                109486848.0,
+                50582
+              ],
+              [
+                325,
+                296149248.0,
+                4992
+              ],
+              [
+                359,
+                510074368.0,
+                11533
+              ],
+              [
+                385,
+                296246016.0,
+                8616
+              ],
+              [
+                427,
+                522786560.0,
+                29411
+              ],
+              [
+                469,
+                552194816.0,
+                48368
+              ],
+              [
+                509,
+                757780224.0,
+                41914
+              ],
+              [
+                551,
+                996903680.0,
+                47546
+              ],
+              [
+                602,
+                999065088.0,
+                62593
+              ],
+              [
+                642,
+                999129600.0,
+                73730
+              ],
+              [
+                722,
+                999258624.0,
+                114572
+              ],
+              [
+                784,
+                1001411584.0,
+                106361
+              ],
+              [
+                852,
+                999460096.0,
+                108818
+              ]
+            ]
+          },
+          "series": [
+            {
+              "bytes": 21,
+              "signals": {
+                "capacityGrowth": 65280.0
+              }
+            },
+            {
+              "bytes": 21,
+              "signals": {
+                "capacityGrowth": 130816.0
+              }
+            },
+            {
+              "bytes": 21,
+              "signals": {
+                "capacityGrowth": 261888.0
+              }
+            },
+            {
+              "bytes": 21,
+              "signals": {
+                "capacityGrowth": 524032.0
+              }
+            },
+            {
+              "bytes": 21,
+              "signals": {
+                "capacityGrowth": 1048320.0
+              }
+            },
+            {
+              "bytes": 22,
+              "signals": {
+                "capacityGrowth": 2096896.0
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "limits": {
+    "jvm_args": [
+      "-Xmx1g",
+      "-Xss1m"
+    ],
+    "timeout_ms": 20000,
+    "max_input_bytes": 10240
+  },
+  "hard_ok": true
+}

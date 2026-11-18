@@ -1,0 +1,80 @@
+{
+  "final_ok": true,
+  "repair_rounds": 3,
+  "fuzz_tests_fixed_at_round": 1,
+  "rounds": [
+    {
+      "round": 0,
+      "ok": false,
+      "error": null,
+      "launch": [
+        "\"build\" must be a list of shell commands",
+        "give \"classpath\" or \"classpath_command\"",
+        "\"guidance_factory\" must look like \"pkg.FuzzRunner#createGuidance\""
+      ],
+      "build_ok": null,
+      "failing": [],
+      "progress_advisory": {},
+      "repair": {
+        "modified": [
+          "analysis/launch.json",
+          "src/test/java/fuzz/guidance/V3Guidance.java"
+        ]
+      }
+    },
+    {
+      "round": 1,
+      "ok": false,
+      "error": null,
+      "launch": [],
+      "build_ok": true,
+      "failing": [
+        "V1",
+        "V2",
+        "V3"
+      ],
+      "progress_advisory": {},
+      "repair": {
+        "modified": [
+          "src/test/java/fuzz/guidance/AbstractCGFGuidance.java",
+          "src/test/java/fuzz/guidance/V1Guidance.java",
+          "src/test/java/fuzz/guidance/V2Guidance.java",
+          "src/test/java/fuzz/guidance/V3Guidance.java"
+        ],
+        "restored_fuzz_tests": [
+          "src/test/java/fuzz/runner/FuzzRunner.java"
+        ]
+      }
+    },
+    {
+      "round": 2,
+      "ok": false,
+      "error": null,
+      "launch": [],
+      "build_ok": false,
+      "failing": [],
+      "progress_advisory": {},
+      "repair": {
+        "added": [
+          "src/test/java/fuzz/runner/DoSGuideFactory.java"
+        ],
+        "modified": [
+          "analysis/launch.json",
+          "src/test/java/fuzz/guidance/AbstractCGFGuidance.java",
+          "src/test/java/fuzz/guidance/V1Guidance.java",
+          "src/test/java/fuzz/guidance/V2Guidance.java",
+          "src/test/java/fuzz/guidance/V3Guidance.java"
+        ]
+      }
+    },
+    {
+      "round": 3,
+      "ok": true,
+      "error": null,
+      "launch": [],
+      "build_ok": true,
+      "failing": [],
+      "progress_advisory": {}
+    }
+  ]
+}

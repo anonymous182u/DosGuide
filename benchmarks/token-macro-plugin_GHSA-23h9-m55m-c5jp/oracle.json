@@ -1,0 +1,27 @@
+{
+  "timeout_ms": 20000,
+  "jvm_args": [
+    "-Xmx1g",
+    "-Xss1m",
+    "--add-opens",
+    "java.base/java.lang=ALL-UNNAMED",
+    "--add-opens",
+    "java.base/java.util=ALL-UNNAMED",
+    "--add-opens",
+    "java.base/java.lang.reflect=ALL-UNNAMED",
+    "--add-opens",
+    "java.base/java.text=ALL-UNNAMED",
+    "--add-opens",
+    "java.base/java.io=ALL-UNNAMED",
+    "--add-opens",
+    "java.desktop/java.awt.font=ALL-UNNAMED"
+  ],
+  "max_input_bytes": 10240,
+  "justification": {
+    "jvm_args": "--add-opens flags (the same set the subject's run scripts use) let parboiled define its generated parser class and let Jenkins core 1.642's XStream initialise on Java 17; without them every token expansion fails inside the library. No limit is changed."
+  },
+  "fixed": {
+    "lib": "fixed/lib/*",
+    "drop": "^(token\\-macro|parboiled\\-java|parboiled\\-core)-[0-9]"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "timeout_ms": 20000,
+  "jvm_args": [
+    "-Xmx1g",
+    "-Xss1m"
+  ],
+  "max_input_bytes": 131072,
+  "justification": {
+    "max_input_bytes": "The CVE's regex backtracking is quadratic in the header length: the slowest 10,240-byte header values take under 1 s on the vulnerable version, and 20 s needs roughly 55 KB; 128 KiB leaves margin for faster CPUs."
+  },
+  "fixed": {
+    "lib": "fixed/lib/*",
+    "drop": "^(spring\\-core|spring\\-jcl|spring\\-web)-[0-9]"
+  }
+}

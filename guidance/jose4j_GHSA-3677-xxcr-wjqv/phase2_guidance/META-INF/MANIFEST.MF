@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Premain-Class: org.jose4j.fuzz.agent.V1MeasureAgent
+Can-Retransform-Classes: true
+Can-Redefine-Classes: true
+Created-By: 17.0.20.1 (Amazon.com Inc.)
+

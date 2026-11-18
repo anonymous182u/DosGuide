@@ -1,0 +1,631 @@
+{
+  "tool": "checkpath",
+  "version": "1.0.0",
+  "source_root": "projects/netty_GHSA-grg4-wf29-r9vv",
+  "index": {
+    "files_parsed": 1906,
+    "files_failed": 0,
+    "methods": 24253,
+    "harness_fuzz_methods": [
+      "Bzip2DecoderFuzzTest.fuzzBzip2DecoderDecode(InputStream)",
+      "Bzip2DecoderFuzzTest.fuzzBzip2DecoderDecode2(InputStream)"
+    ],
+    "index_seconds": 5.4,
+    "max_gap": 2,
+    "sink_depth": 6,
+    "symbol_resolution": true
+  },
+  "ok": true,
+  "targets": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "entrypoint": "Bzip2DecoderFuzzTest.fuzzBzip2DecoderDecode(InputStream) → Bzip2DecoderFuzzTest.decodeAll(byte[]) → EmbeddedChannel.writeInbound(Object[]) → DefaultChannelPipeline.fireChannelRead(Object) → AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext, Object) → AbstractChannelHandlerContext.invokeChannelRead(Object) → HeadContext.channelRead(ChannelHandlerContext, Object) → AbstractChannelHandlerContext.fireChannelRead(Object) → AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext, Object) → AbstractChannelHandlerContext.invokeChannelRead(Object) → ByteToMessageDecoder.channelRead(ChannelHandlerContext, Object) → ByteToMessageDecoder.callDecode(ChannelHandlerContext, ByteBuf, List) → ByteToMessageDecoder.decodeRemovalReentryProtection(ChannelHandlerContext, ByteBuf, List) → Bzip2Decoder.decode(ChannelHandlerContext, ByteBuf, List) → Bzip2BlockDecompressor.read()",
+      "source_path": "codec/src/main/java/io/netty/handler/codec/compression/Bzip2Decoder.java",
+      "start_ok": true,
+      "harness_entry": "fuzzing.Bzip2DecoderFuzzTest#fuzzBzip2DecoderDecode",
+      "end_ok": true,
+      "end": {
+        "sink_file": "codec/src/main/java/io/netty/handler/codec/compression/Bzip2Decoder.java",
+        "ok": true,
+        "evidence": "hop 14 Bzip2Decoder#decode(ChannelHandlerContext,ByteBuf,List) is declared in codec/src/main/java/io/netty/handler/codec/compression/Bzip2Decoder.java:80",
+        "level": "method",
+        "sink_method": "io.netty.handler.codec.compression.Bzip2Decoder#decode",
+        "sink_evidence": "hop 14 is Bzip2Decoder#decode(ChannelHandlerContext,ByteBuf,List)"
+      },
+      "hops": [
+        {
+          "index": 1,
+          "raw": "Bzip2DecoderFuzzTest.fuzzBzip2DecoderDecode(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "fuzzing.Bzip2DecoderFuzzTest#fuzzBzip2DecoderDecode(InputStream)",
+              "location": "harness/src/test/java/fuzzing/Bzip2DecoderFuzzTest.java:35"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "raw": "Bzip2DecoderFuzzTest.decodeAll(byte[])",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "fuzzing.Bzip2DecoderFuzzTest#decodeAll(byte[])",
+              "location": "harness/src/test/java/fuzzing/Bzip2DecoderFuzzTest.java:48"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "raw": "EmbeddedChannel.writeInbound(Object[])",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "io.netty.channel.embedded.EmbeddedChannel#writeInbound(Object...)",
+              "location": "transport/src/main/java/io/netty/channel/embedded/EmbeddedChannel.java:335"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "raw": "DefaultChannelPipeline.fireChannelRead(Object)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "io.netty.channel.DefaultChannelPipeline#fireChannelRead(Object)",
+              "location": "transport/src/main/java/io/netty/channel/DefaultChannelPipeline.java:918"
+            },
+            {
+              "method": "io.netty.channel.ChannelInboundInvoker#fireChannelRead(Object)",
+              "location": "transport/src/main/java/io/netty/channel/ChannelInboundInvoker.java:81"
+            },
+            {
+              "method": "io.netty.channel.ChannelPipeline#fireChannelRead(Object)",
+              "location": "transport/src/main/java/io/netty/channel/ChannelPipeline.java:622"
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "raw": "AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext, Object)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "io.netty.channel.AbstractChannelHandlerContext#invokeChannelRead(AbstractChannelHandlerContext,Object)",
+              "location": "transport/src/main/java/io/netty/channel/AbstractChannelHandlerContext.java:361"
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "raw": "AbstractChannelHandlerContext.invokeChannelRead(Object)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "io.netty.channel.AbstractChannelHandlerContext#invokeChannelRead(Object)",
+              "location": "transport/src/main/java/io/netty/channel/AbstractChannelHandlerContext.java:376"
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "raw": "HeadContext.channelRead(ChannelHandlerContext, Object)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "io.netty.channel.DefaultChannelPipeline.HeadContext#channelRead(ChannelHandlerContext,Object)",
+              "location": "transport/src/main/java/io/netty/channel/DefaultChannelPipeline.java:1409"
+            },
+            {
+              "method": "io.netty.channel.ChannelInboundHandler#channelRead(ChannelHandlerContext,Object)",
+              "location": "transport/src/main/java/io/netty/channel/ChannelInboundHandler.java:48"
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "raw": "AbstractChannelHandlerContext.fireChannelRead(Object)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "io.netty.channel.AbstractChannelHandlerContext#fireChannelRead(Object)",
+              "location": "transport/src/main/java/io/netty/channel/AbstractChannelHandlerContext.java:356"
+            },
+            {
+              "method": "io.netty.channel.ChannelHandlerContext#fireChannelRead(Object)",
+              "location": "transport/src/main/java/io/netty/channel/ChannelHandlerContext.java:137"
+            },
+            {
+              "method": "io.netty.channel.ChannelInboundInvoker#fireChannelRead(Object)",
+              "location": "transport/src/main/java/io/netty/channel/ChannelInboundInvoker.java:81"
+            }
+          ]
+        },
+        {
+          "index": 9,
+          "raw": "AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext, Object)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "io.netty.channel.AbstractChannelHandlerContext#invokeChannelRead(AbstractChannelHandlerContext,Object)",
+              "location": "transport/src/main/java/io/netty/channel/AbstractChannelHandlerContext.java:361"
+            }
+          ]
+        },
+        {
+          "index": 10,
+          "raw": "AbstractChannelHandlerContext.invokeChannelRead(Object)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "io.netty.channel.AbstractChannelHandlerContext#invokeChannelRead(Object)",
+              "location": "transport/src/main/java/io/netty/channel/AbstractChannelHandlerContext.java:376"
+            }
+          ]
+        },
+        {
+          "index": 11,
+          "raw": "ByteToMessageDecoder.channelRead(ChannelHandlerContext, Object)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "io.netty.handler.codec.ByteToMessageDecoder#channelRead(ChannelHandlerContext,Object)",
+              "location": "codec/src/main/java/io/netty/handler/codec/ByteToMessageDecoder.java:269"
+            },
+            {
+              "method": "io.netty.handler.codec.haproxy.HAProxyMessageDecoder#channelRead(ChannelHandlerContext,Object)",
+              "location": "codec-haproxy/src/main/java/io/netty/handler/codec/haproxy/HAProxyMessageDecoder.java:227"
+            },
+            {
+              "method": "io.netty.handler.codec.http2.Http2MultiplexCodec#channelRead(ChannelHandlerContext,Object)",
+              "location": "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2MultiplexCodec.java:270"
+            },
+            {
+              "method": "io.netty.example.http2.helloworld.frame.server.HelloWorldHttp2Handler#channelRead(ChannelHandlerContext,Object)",
+              "location": "example/src/main/java/io/netty/example/http2/helloworld/frame/server/HelloWorldHttp2Handler.java:55"
+            },
+            {
+              "method": "io.netty.example.http2.helloworld.multiplex.server.HelloWorldHttp2Handler#channelRead(ChannelHandlerContext,Object)",
+              "location": "example/src/main/java/io/netty/example/http2/helloworld/multiplex/server/HelloWorldHttp2Handler.java:53"
+            },
+            {
+              "method": "io.netty.channel.ChannelInboundHandler#channelRead(ChannelHandlerContext,Object)",
+              "location": "transport/src/main/java/io/netty/channel/ChannelInboundHandler.java:48"
+            },
+            {
+              "method": "io.netty.channel.ChannelInboundHandlerAdapter#channelRead(ChannelHandlerContext,Object)",
+              "location": "transport/src/main/java/io/netty/channel/ChannelInboundHandlerAdapter.java:92"
+            },
+            {
+              "method": "io.netty.resolver.dns.DnsNameResolver.DnsResponseHandler$anon(ChannelInboundHandlerAdapter)#channelRead(ChannelHandlerContext,Object)",
+              "location": "resolver-dns/src/main/java/io/netty/resolver/dns/DnsNameResolver.java:1333"
+            }
+          ],
+          "more_candidates": 7
+        },
+        {
+          "index": 12,
+          "raw": "ByteToMessageDecoder.callDecode(ChannelHandlerContext, ByteBuf, List)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "io.netty.handler.codec.ByteToMessageDecoder#callDecode(ChannelHandlerContext,ByteBuf,List)",
+              "location": "codec/src/main/java/io/netty/handler/codec/ByteToMessageDecoder.java:426"
+            },
+            {
+              "method": "io.netty.handler.codec.ReplayingDecoder#callDecode(ChannelHandlerContext,ByteBuf,List)",
+              "location": "codec/src/main/java/io/netty/handler/codec/ReplayingDecoder.java:341"
+            }
+          ]
+        },
+        {
+          "index": 13,
+          "raw": "ByteToMessageDecoder.decodeRemovalReentryProtection(ChannelHandlerContext, ByteBuf, List)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "io.netty.handler.codec.ByteToMessageDecoder#decodeRemovalReentryProtection(ChannelHandlerContext,ByteBuf,List)",
+              "location": "codec/src/main/java/io/netty/handler/codec/ByteToMessageDecoder.java:503"
+            }
+          ]
+        },
+        {
+          "index": 14,
+          "raw": "Bzip2Decoder.decode(ChannelHandlerContext, ByteBuf, List)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "io.netty.handler.codec.compression.Bzip2Decoder#decode(ChannelHandlerContext,ByteBuf,List)",
+              "location": "codec/src/main/java/io/netty/handler/codec/compression/Bzip2Decoder.java:80"
+            },
+            {
+              "method": "io.netty.handler.codec.ByteToMessageDecoder#decode(ChannelHandlerContext,ByteBuf,List)",
+              "location": "codec/src/main/java/io/netty/handler/codec/ByteToMessageDecoder.java:491"
+            },
+            {
+              "method": "io.netty.handler.codec.ByteToMessageCodec$anon(ByteToMessageDecoder)#decode(ChannelHandlerContext,ByteBuf,List)",
+              "location": "codec/src/main/java/io/netty/handler/codec/ByteToMessageCodec.java:41"
+            },
+            {
+              "method": "io.netty.testsuite.transport.socket.SocketChannelNotYetConnectedTest$anon(ByteToMessageDecoder)#decode(ChannelHandlerContext,ByteBuf,List)",
+              "location": "testsuite/src/main/java/io/netty/testsuite/transport/socket/SocketChannelNotYetConnectedTest.java:107"
+            }
+          ]
+        },
+        {
+          "index": 15,
+          "raw": "Bzip2BlockDecompressor.read()",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "io.netty.handler.codec.compression.Bzip2BlockDecompressor#read()",
+              "location": "codec/src/main/java/io/netty/handler/codec/compression/Bzip2BlockDecompressor.java:273"
+            }
+          ]
+        }
+      ],
+      "path_signature": [
+        "fuzzing.Bzip2DecoderFuzzTest#fuzzBzip2DecoderDecode(InputStream)",
+        "fuzzing.Bzip2DecoderFuzzTest#decodeAll(byte[])",
+        "io.netty.channel.embedded.EmbeddedChannel#writeInbound(Object...)",
+        "io.netty.channel.DefaultChannelPipeline#fireChannelRead(Object)",
+        "io.netty.channel.AbstractChannelHandlerContext#invokeChannelRead(AbstractChannelHandlerContext,Object)",
+        "io.netty.channel.AbstractChannelHandlerContext#invokeChannelRead(Object)",
+        "io.netty.channel.DefaultChannelPipeline.HeadContext#channelRead(ChannelHandlerContext,Object)",
+        "io.netty.channel.AbstractChannelHandlerContext#fireChannelRead(Object)",
+        "io.netty.channel.AbstractChannelHandlerContext#invokeChannelRead(AbstractChannelHandlerContext,Object)",
+        "io.netty.channel.AbstractChannelHandlerContext#invokeChannelRead(Object)",
+        "io.netty.handler.codec.ByteToMessageDecoder#channelRead(ChannelHandlerContext,Object)",
+        "io.netty.handler.codec.ByteToMessageDecoder#callDecode(ChannelHandlerContext,ByteBuf,List)",
+        "io.netty.handler.codec.ByteToMessageDecoder#decodeRemovalReentryProtection(ChannelHandlerContext,ByteBuf,List)",
+        "io.netty.handler.codec.compression.Bzip2Decoder#decode(ChannelHandlerContext,ByteBuf,List)",
+        "io.netty.handler.codec.compression.Bzip2BlockDecompressor#read()"
+      ],
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "written": "Bzip2DecoderFuzzTest.fuzzBzip2DecoderDecode(InputStream)",
+          "provenance": "agent",
+          "method": "fuzzing.Bzip2DecoderFuzzTest#fuzzBzip2DecoderDecode(InputStream)",
+          "location": "harness/src/test/java/fuzzing/Bzip2DecoderFuzzTest.java:35"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "Bzip2DecoderFuzzTest#fuzzBzip2DecoderDecode(InputStream) calls Bzip2DecoderFuzzTest#decodeAll(byte[]) at harness/src/test/java/fuzzing/Bzip2DecoderFuzzTest.java:36 (resolved)",
+          "site": "harness/src/test/java/fuzzing/Bzip2DecoderFuzzTest.java:36"
+        },
+        {
+          "kind": "hop",
+          "written": "Bzip2DecoderFuzzTest.decodeAll(byte[])",
+          "provenance": "agent",
+          "method": "fuzzing.Bzip2DecoderFuzzTest#decodeAll(byte[])",
+          "location": "harness/src/test/java/fuzzing/Bzip2DecoderFuzzTest.java:48"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "Bzip2DecoderFuzzTest#decodeAll(byte[]) calls EmbeddedChannel#writeInbound(Object...) at harness/src/test/java/fuzzing/Bzip2DecoderFuzzTest.java:50 (resolved)",
+          "site": "harness/src/test/java/fuzzing/Bzip2DecoderFuzzTest.java:50"
+        },
+        {
+          "kind": "hop",
+          "written": "EmbeddedChannel.writeInbound(Object[])",
+          "provenance": "agent",
+          "method": "io.netty.channel.embedded.EmbeddedChannel#writeInbound(Object...)",
+          "location": "transport/src/main/java/io/netty/channel/embedded/EmbeddedChannel.java:335"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "EmbeddedChannel#writeInbound(Object...) calls ChannelInboundInvoker#fireChannelRead(Object) at transport/src/main/java/io/netty/channel/embedded/EmbeddedChannel.java:343 (resolved)",
+          "site": "transport/src/main/java/io/netty/channel/embedded/EmbeddedChannel.java:343"
+        },
+        {
+          "kind": "hop",
+          "written": "DefaultChannelPipeline.fireChannelRead(Object)",
+          "provenance": "agent",
+          "method": "io.netty.channel.DefaultChannelPipeline#fireChannelRead(Object)",
+          "location": "transport/src/main/java/io/netty/channel/DefaultChannelPipeline.java:918"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "DefaultChannelPipeline#fireChannelRead(Object) calls AbstractChannelHandlerContext#invokeChannelRead(AbstractChannelHandlerContext,Object) at transport/src/main/java/io/netty/channel/DefaultChannelPipeline.java:919 (resolved)",
+          "site": "transport/src/main/java/io/netty/channel/DefaultChannelPipeline.java:919"
+        },
+        {
+          "kind": "hop",
+          "written": "AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext, Object)",
+          "provenance": "agent",
+          "method": "io.netty.channel.AbstractChannelHandlerContext#invokeChannelRead(AbstractChannelHandlerContext,Object)",
+          "location": "transport/src/main/java/io/netty/channel/AbstractChannelHandlerContext.java:361"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "AbstractChannelHandlerContext#invokeChannelRead(AbstractChannelHandlerContext,Object) calls AbstractChannelHandlerContext#invokeChannelRead(Object) at transport/src/main/java/io/netty/channel/AbstractChannelHandlerContext.java:365 (resolved)",
+          "site": "transport/src/main/java/io/netty/channel/AbstractChannelHandlerContext.java:365"
+        },
+        {
+          "kind": "hop",
+          "written": "AbstractChannelHandlerContext.invokeChannelRead(Object)",
+          "provenance": "agent",
+          "method": "io.netty.channel.AbstractChannelHandlerContext#invokeChannelRead(Object)",
+          "location": "transport/src/main/java/io/netty/channel/AbstractChannelHandlerContext.java:376"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "AbstractChannelHandlerContext#invokeChannelRead(Object) calls ChannelInboundHandler#channelRead(ChannelHandlerContext,Object) at transport/src/main/java/io/netty/channel/AbstractChannelHandlerContext.java:379 (resolved)",
+          "site": "transport/src/main/java/io/netty/channel/AbstractChannelHandlerContext.java:379"
+        },
+        {
+          "kind": "hop",
+          "written": "HeadContext.channelRead(ChannelHandlerContext, Object)",
+          "provenance": "agent",
+          "method": "io.netty.channel.DefaultChannelPipeline.HeadContext#channelRead(ChannelHandlerContext,Object)",
+          "location": "transport/src/main/java/io/netty/channel/DefaultChannelPipeline.java:1409"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "HeadContext#channelRead(ChannelHandlerContext,Object) calls AbstractChannelHandlerContext#fireChannelRead(Object) at transport/src/main/java/io/netty/channel/DefaultChannelPipeline.java:1410 (resolved)",
+          "site": "transport/src/main/java/io/netty/channel/DefaultChannelPipeline.java:1410"
+        },
+        {
+          "kind": "hop",
+          "written": "AbstractChannelHandlerContext.fireChannelRead(Object)",
+          "provenance": "agent",
+          "method": "io.netty.channel.AbstractChannelHandlerContext#fireChannelRead(Object)",
+          "location": "transport/src/main/java/io/netty/channel/AbstractChannelHandlerContext.java:356"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "AbstractChannelHandlerContext#fireChannelRead(Object) calls AbstractChannelHandlerContext#invokeChannelRead(AbstractChannelHandlerContext,Object) at transport/src/main/java/io/netty/channel/AbstractChannelHandlerContext.java:357 (resolved)",
+          "site": "transport/src/main/java/io/netty/channel/AbstractChannelHandlerContext.java:357"
+        },
+        {
+          "kind": "hop",
+          "written": "AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext, Object)",
+          "provenance": "agent",
+          "method": "io.netty.channel.AbstractChannelHandlerContext#invokeChannelRead(AbstractChannelHandlerContext,Object)",
+          "location": "transport/src/main/java/io/netty/channel/AbstractChannelHandlerContext.java:361"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "AbstractChannelHandlerContext#invokeChannelRead(AbstractChannelHandlerContext,Object) calls AbstractChannelHandlerContext#invokeChannelRead(Object) at transport/src/main/java/io/netty/channel/AbstractChannelHandlerContext.java:365 (resolved)",
+          "site": "transport/src/main/java/io/netty/channel/AbstractChannelHandlerContext.java:365"
+        },
+        {
+          "kind": "hop",
+          "written": "AbstractChannelHandlerContext.invokeChannelRead(Object)",
+          "provenance": "agent",
+          "method": "io.netty.channel.AbstractChannelHandlerContext#invokeChannelRead(Object)",
+          "location": "transport/src/main/java/io/netty/channel/AbstractChannelHandlerContext.java:376"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "AbstractChannelHandlerContext#invokeChannelRead(Object) calls HAProxyMessageDecoder#channelRead(ChannelHandlerContext,Object) at transport/src/main/java/io/netty/channel/AbstractChannelHandlerContext.java:379 (resolved)",
+          "site": "transport/src/main/java/io/netty/channel/AbstractChannelHandlerContext.java:379"
+        },
+        {
+          "kind": "hop",
+          "written": "ByteToMessageDecoder.channelRead(ChannelHandlerContext, Object)",
+          "provenance": "agent",
+          "method": "io.netty.handler.codec.ByteToMessageDecoder#channelRead(ChannelHandlerContext,Object)",
+          "location": "codec/src/main/java/io/netty/handler/codec/ByteToMessageDecoder.java:269"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "ByteToMessageDecoder#channelRead(ChannelHandlerContext,Object) calls ByteToMessageDecoder#callDecode(ChannelHandlerContext,ByteBuf,List) at codec/src/main/java/io/netty/handler/codec/ByteToMessageDecoder.java:276 (resolved)",
+          "site": "codec/src/main/java/io/netty/handler/codec/ByteToMessageDecoder.java:276"
+        },
+        {
+          "kind": "hop",
+          "written": "ByteToMessageDecoder.callDecode(ChannelHandlerContext, ByteBuf, List)",
+          "provenance": "agent",
+          "method": "io.netty.handler.codec.ByteToMessageDecoder#callDecode(ChannelHandlerContext,ByteBuf,List)",
+          "location": "codec/src/main/java/io/netty/handler/codec/ByteToMessageDecoder.java:426"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "ByteToMessageDecoder#callDecode(ChannelHandlerContext,ByteBuf,List) calls ByteToMessageDecoder#decodeRemovalReentryProtection(ChannelHandlerContext,ByteBuf,List) at codec/src/main/java/io/netty/handler/codec/ByteToMessageDecoder.java:446 (resolved)",
+          "site": "codec/src/main/java/io/netty/handler/codec/ByteToMessageDecoder.java:446"
+        },
+        {
+          "kind": "hop",
+          "written": "ByteToMessageDecoder.decodeRemovalReentryProtection(ChannelHandlerContext, ByteBuf, List)",
+          "provenance": "agent",
+          "method": "io.netty.handler.codec.ByteToMessageDecoder#decodeRemovalReentryProtection(ChannelHandlerContext,ByteBuf,List)",
+          "location": "codec/src/main/java/io/netty/handler/codec/ByteToMessageDecoder.java:503"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "ByteToMessageDecoder#decodeRemovalReentryProtection(ChannelHandlerContext,ByteBuf,List) calls ByteToMessageDecoder#decode(ChannelHandlerContext,ByteBuf,List) at codec/src/main/java/io/netty/handler/codec/ByteToMessageDecoder.java:507 (resolved)",
+          "site": "codec/src/main/java/io/netty/handler/codec/ByteToMessageDecoder.java:507"
+        },
+        {
+          "kind": "hop",
+          "written": "Bzip2Decoder.decode(ChannelHandlerContext, ByteBuf, List)",
+          "provenance": "agent",
+          "method": "io.netty.handler.codec.compression.Bzip2Decoder#decode(ChannelHandlerContext,ByteBuf,List)",
+          "location": "codec/src/main/java/io/netty/handler/codec/compression/Bzip2Decoder.java:80"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "Bzip2Decoder#decode(ChannelHandlerContext,ByteBuf,List) calls Bzip2BlockDecompressor#read() at codec/src/main/java/io/netty/handler/codec/compression/Bzip2Decoder.java:298 (resolved)",
+          "site": "codec/src/main/java/io/netty/handler/codec/compression/Bzip2Decoder.java:298"
+        },
+        {
+          "kind": "hop",
+          "written": "Bzip2BlockDecompressor.read()",
+          "provenance": "agent",
+          "method": "io.netty.handler.codec.compression.Bzip2BlockDecompressor#read()",
+          "location": "codec/src/main/java/io/netty/handler/codec/compression/Bzip2BlockDecompressor.java:273"
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "status": "CALL",
+          "evidence": "Bzip2DecoderFuzzTest#fuzzBzip2DecoderDecode(InputStream) calls Bzip2DecoderFuzzTest#decodeAll(byte[]) at harness/src/test/java/fuzzing/Bzip2DecoderFuzzTest.java:36 (resolved)"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "status": "CALL",
+          "evidence": "Bzip2DecoderFuzzTest#decodeAll(byte[]) calls EmbeddedChannel#writeInbound(Object...) at harness/src/test/java/fuzzing/Bzip2DecoderFuzzTest.java:50 (resolved)"
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "status": "CALL",
+          "evidence": "EmbeddedChannel#writeInbound(Object...) calls ChannelInboundInvoker#fireChannelRead(Object) at transport/src/main/java/io/netty/channel/embedded/EmbeddedChannel.java:343 (resolved)"
+        },
+        {
+          "from": 4,
+          "to": 5,
+          "status": "CALL",
+          "evidence": "DefaultChannelPipeline#fireChannelRead(Object) calls AbstractChannelHandlerContext#invokeChannelRead(AbstractChannelHandlerContext,Object) at transport/src/main/java/io/netty/channel/DefaultChannelPipeline.java:919 (resolved)"
+        },
+        {
+          "from": 5,
+          "to": 6,
+          "status": "CALL",
+          "evidence": "AbstractChannelHandlerContext#invokeChannelRead(AbstractChannelHandlerContext,Object) calls AbstractChannelHandlerContext#invokeChannelRead(Object) at transport/src/main/java/io/netty/channel/AbstractChannelHandlerContext.java:365 (resolved)"
+        },
+        {
+          "from": 6,
+          "to": 7,
+          "status": "CALL",
+          "evidence": "AbstractChannelHandlerContext#invokeChannelRead(Object) calls ChannelInboundHandler#channelRead(ChannelHandlerContext,Object) at transport/src/main/java/io/netty/channel/AbstractChannelHandlerContext.java:379 (resolved)"
+        },
+        {
+          "from": 7,
+          "to": 8,
+          "status": "CALL",
+          "evidence": "HeadContext#channelRead(ChannelHandlerContext,Object) calls AbstractChannelHandlerContext#fireChannelRead(Object) at transport/src/main/java/io/netty/channel/DefaultChannelPipeline.java:1410 (resolved)"
+        },
+        {
+          "from": 8,
+          "to": 9,
+          "status": "CALL",
+          "evidence": "AbstractChannelHandlerContext#fireChannelRead(Object) calls AbstractChannelHandlerContext#invokeChannelRead(AbstractChannelHandlerContext,Object) at transport/src/main/java/io/netty/channel/AbstractChannelHandlerContext.java:357 (resolved)"
+        },
+        {
+          "from": 9,
+          "to": 10,
+          "status": "CALL",
+          "evidence": "AbstractChannelHandlerContext#invokeChannelRead(AbstractChannelHandlerContext,Object) calls AbstractChannelHandlerContext#invokeChannelRead(Object) at transport/src/main/java/io/netty/channel/AbstractChannelHandlerContext.java:365 (resolved)"
+        },
+        {
+          "from": 10,
+          "to": 11,
+          "status": "CALL",
+          "evidence": "AbstractChannelHandlerContext#invokeChannelRead(Object) calls HAProxyMessageDecoder#channelRead(ChannelHandlerContext,Object) at transport/src/main/java/io/netty/channel/AbstractChannelHandlerContext.java:379 (resolved)"
+        },
+        {
+          "from": 11,
+          "to": 12,
+          "status": "CALL",
+          "evidence": "ByteToMessageDecoder#channelRead(ChannelHandlerContext,Object) calls ByteToMessageDecoder#callDecode(ChannelHandlerContext,ByteBuf,List) at codec/src/main/java/io/netty/handler/codec/ByteToMessageDecoder.java:276 (resolved)"
+        },
+        {
+          "from": 12,
+          "to": 13,
+          "status": "CALL",
+          "evidence": "ByteToMessageDecoder#callDecode(ChannelHandlerContext,ByteBuf,List) calls ByteToMessageDecoder#decodeRemovalReentryProtection(ChannelHandlerContext,ByteBuf,List) at codec/src/main/java/io/netty/handler/codec/ByteToMessageDecoder.java:446 (resolved)"
+        },
+        {
+          "from": 13,
+          "to": 14,
+          "status": "CALL",
+          "evidence": "ByteToMessageDecoder#decodeRemovalReentryProtection(ChannelHandlerContext,ByteBuf,List) calls ByteToMessageDecoder#decode(ChannelHandlerContext,ByteBuf,List) at codec/src/main/java/io/netty/handler/codec/ByteToMessageDecoder.java:507 (resolved)"
+        },
+        {
+          "from": 14,
+          "to": 15,
+          "status": "CALL",
+          "evidence": "Bzip2Decoder#decode(ChannelHandlerContext,ByteBuf,List) calls Bzip2BlockDecompressor#read() at codec/src/main/java/io/netty/handler/codec/compression/Bzip2Decoder.java:298 (resolved)"
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    }
+  ],
+  "plan_ok": true,
+  "plans": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "signals": [
+        {
+          "name": "retainedBytes",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "io.netty.handler.codec.compression.Bzip2BlockDecompressor#checkCRC",
+              "status": "RESOLVED",
+              "method": "io.netty.handler.codec.compression.Bzip2BlockDecompressor#checkCRC",
+              "declared_at": "codec/src/main/java/io/netty/handler/codec/compression/Bzip2BlockDecompressor.java:335",
+              "relation": "called_from_path",
+              "chain": [
+                "Bzip2Decoder#decode(ChannelHandlerContext,ByteBuf,List)",
+                "Bzip2BlockDecompressor#checkCRC()"
+              ]
+            },
+            {
+              "written": "io.netty.handler.codec.compression.Bzip2BlockDecompressor#read",
+              "status": "RESOLVED",
+              "method": "io.netty.handler.codec.compression.Bzip2BlockDecompressor#read",
+              "declared_at": "codec/src/main/java/io/netty/handler/codec/compression/Bzip2BlockDecompressor.java:273",
+              "relation": "on_path"
+            }
+          ]
+        },
+        {
+          "name": "decodedBytes",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "io.netty.handler.codec.compression.Bzip2BlockDecompressor#read",
+              "status": "RESOLVED",
+              "method": "io.netty.handler.codec.compression.Bzip2BlockDecompressor#read",
+              "declared_at": "codec/src/main/java/io/netty/handler/codec/compression/Bzip2BlockDecompressor.java:273",
+              "relation": "on_path"
+            }
+          ]
+        },
+        {
+          "name": "bwtBytes",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "io.netty.handler.codec.compression.Bzip2BlockDecompressor#blockLength",
+              "status": "RESOLVED",
+              "method": "io.netty.handler.codec.compression.Bzip2BlockDecompressor#blockLength",
+              "declared_at": "codec/src/main/java/io/netty/handler/codec/compression/Bzip2BlockDecompressor.java:326",
+              "relation": "called_from_path",
+              "chain": [
+                "Bzip2Decoder#decode(ChannelHandlerContext,ByteBuf,List)",
+                "Bzip2BlockDecompressor#blockLength()"
+              ]
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    }
+  ]
+}

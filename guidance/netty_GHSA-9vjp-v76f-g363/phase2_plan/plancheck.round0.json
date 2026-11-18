@@ -1,0 +1,351 @@
+{
+  "tool": "checkpath",
+  "version": "1.0.0",
+  "source_root": "projects/netty_GHSA-9vjp-v76f-g363",
+  "index": {
+    "files_parsed": 1907,
+    "files_failed": 0,
+    "methods": 24252,
+    "harness_fuzz_methods": [
+      "SnappyFuzzTest.fuzzSnappyFrameDecoderDecode(InputStream)",
+      "SnappyFuzzTest.fuzzSnappyDecode(InputStream)"
+    ],
+    "index_seconds": 8.5,
+    "max_gap": 2,
+    "sink_depth": 6,
+    "symbol_resolution": true
+  },
+  "ok": true,
+  "targets": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "entrypoint": "SnappyFuzzTest.fuzzSnappyFrameDecoderDecode(InputStream) → EmbeddedChannel.writeInbound(Object...) → DefaultChannelPipeline.fireChannelRead(Object) → ByteToMessageDecoder.channelRead(ChannelHandlerContext, Object) → ByteToMessageDecoder.callDecode(ChannelHandlerContext, ByteBuf, List) → SnappyFrameDecoder.decode(ChannelHandlerContext, ByteBuf, List) → Snappy.decode(ByteBuf, ByteBuf)",
+      "source_path": "codec/src/main/java/io/netty/handler/codec/compression/Snappy.java",
+      "start_ok": true,
+      "harness_entry": "com.fuzzer.harness.SnappyFuzzTest#fuzzSnappyFrameDecoderDecode",
+      "end_ok": true,
+      "end": {
+        "sink_file": "codec/src/main/java/io/netty/handler/codec/compression/Snappy.java",
+        "ok": true,
+        "evidence": "hop 7 Snappy#decode(ByteBuf,ByteBuf) is declared in codec/src/main/java/io/netty/handler/codec/compression/Snappy.java:270",
+        "level": "method",
+        "sink_method": "Snappy#decode",
+        "sink_evidence": "hop 7 is Snappy#decode(ByteBuf,ByteBuf)"
+      },
+      "hops": [
+        {
+          "index": 1,
+          "raw": "SnappyFuzzTest.fuzzSnappyFrameDecoderDecode(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "com.fuzzer.harness.SnappyFuzzTest#fuzzSnappyFrameDecoderDecode(InputStream)",
+              "location": "harness/src/test/java/com/fuzzer/harness/SnappyFuzzTest.java:34"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "raw": "EmbeddedChannel.writeInbound(Object...)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "io.netty.channel.embedded.EmbeddedChannel#writeInbound(Object...)",
+              "location": "transport/src/main/java/io/netty/channel/embedded/EmbeddedChannel.java:335"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "raw": "DefaultChannelPipeline.fireChannelRead(Object)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "io.netty.channel.DefaultChannelPipeline#fireChannelRead(Object)",
+              "location": "transport/src/main/java/io/netty/channel/DefaultChannelPipeline.java:918"
+            },
+            {
+              "method": "io.netty.channel.ChannelInboundInvoker#fireChannelRead(Object)",
+              "location": "transport/src/main/java/io/netty/channel/ChannelInboundInvoker.java:81"
+            },
+            {
+              "method": "io.netty.channel.ChannelPipeline#fireChannelRead(Object)",
+              "location": "transport/src/main/java/io/netty/channel/ChannelPipeline.java:622"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "raw": "ByteToMessageDecoder.channelRead(ChannelHandlerContext, Object)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "io.netty.handler.codec.ByteToMessageDecoder#channelRead(ChannelHandlerContext,Object)",
+              "location": "codec/src/main/java/io/netty/handler/codec/ByteToMessageDecoder.java:269"
+            },
+            {
+              "method": "io.netty.handler.codec.haproxy.HAProxyMessageDecoder#channelRead(ChannelHandlerContext,Object)",
+              "location": "codec-haproxy/src/main/java/io/netty/handler/codec/haproxy/HAProxyMessageDecoder.java:227"
+            },
+            {
+              "method": "io.netty.handler.codec.http2.Http2MultiplexCodec#channelRead(ChannelHandlerContext,Object)",
+              "location": "codec-http2/src/main/java/io/netty/handler/codec/http2/Http2MultiplexCodec.java:270"
+            },
+            {
+              "method": "io.netty.example.http2.helloworld.frame.server.HelloWorldHttp2Handler#channelRead(ChannelHandlerContext,Object)",
+              "location": "example/src/main/java/io/netty/example/http2/helloworld/frame/server/HelloWorldHttp2Handler.java:55"
+            },
+            {
+              "method": "io.netty.example.http2.helloworld.multiplex.server.HelloWorldHttp2Handler#channelRead(ChannelHandlerContext,Object)",
+              "location": "example/src/main/java/io/netty/example/http2/helloworld/multiplex/server/HelloWorldHttp2Handler.java:53"
+            },
+            {
+              "method": "io.netty.channel.ChannelInboundHandler#channelRead(ChannelHandlerContext,Object)",
+              "location": "transport/src/main/java/io/netty/channel/ChannelInboundHandler.java:48"
+            },
+            {
+              "method": "io.netty.channel.ChannelInboundHandlerAdapter#channelRead(ChannelHandlerContext,Object)",
+              "location": "transport/src/main/java/io/netty/channel/ChannelInboundHandlerAdapter.java:92"
+            },
+            {
+              "method": "io.netty.resolver.dns.DnsNameResolver.DnsResponseHandler$anon(ChannelInboundHandlerAdapter)#channelRead(ChannelHandlerContext,Object)",
+              "location": "resolver-dns/src/main/java/io/netty/resolver/dns/DnsNameResolver.java:1333"
+            }
+          ],
+          "more_candidates": 7
+        },
+        {
+          "index": 5,
+          "raw": "ByteToMessageDecoder.callDecode(ChannelHandlerContext, ByteBuf, List)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "io.netty.handler.codec.ByteToMessageDecoder#callDecode(ChannelHandlerContext,ByteBuf,List)",
+              "location": "codec/src/main/java/io/netty/handler/codec/ByteToMessageDecoder.java:426"
+            },
+            {
+              "method": "io.netty.handler.codec.ReplayingDecoder#callDecode(ChannelHandlerContext,ByteBuf,List)",
+              "location": "codec/src/main/java/io/netty/handler/codec/ReplayingDecoder.java:341"
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "raw": "SnappyFrameDecoder.decode(ChannelHandlerContext, ByteBuf, List)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "io.netty.handler.codec.compression.SnappyFrameDecoder#decode(ChannelHandlerContext,ByteBuf,List)",
+              "location": "codec/src/main/java/io/netty/handler/codec/compression/SnappyFrameDecoder.java:79"
+            },
+            {
+              "method": "io.netty.handler.codec.ByteToMessageDecoder#decode(ChannelHandlerContext,ByteBuf,List)",
+              "location": "codec/src/main/java/io/netty/handler/codec/ByteToMessageDecoder.java:491"
+            },
+            {
+              "method": "io.netty.handler.codec.ByteToMessageCodec$anon(ByteToMessageDecoder)#decode(ChannelHandlerContext,ByteBuf,List)",
+              "location": "codec/src/main/java/io/netty/handler/codec/ByteToMessageCodec.java:41"
+            },
+            {
+              "method": "io.netty.testsuite.transport.socket.SocketChannelNotYetConnectedTest$anon(ByteToMessageDecoder)#decode(ChannelHandlerContext,ByteBuf,List)",
+              "location": "testsuite/src/main/java/io/netty/testsuite/transport/socket/SocketChannelNotYetConnectedTest.java:107"
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "raw": "Snappy.decode(ByteBuf, ByteBuf)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "io.netty.handler.codec.compression.Snappy#decode(ByteBuf,ByteBuf)",
+              "location": "codec/src/main/java/io/netty/handler/codec/compression/Snappy.java:270"
+            }
+          ]
+        }
+      ],
+      "path_signature": [
+        "com.fuzzer.harness.SnappyFuzzTest#fuzzSnappyFrameDecoderDecode(InputStream)",
+        "io.netty.channel.embedded.EmbeddedChannel#writeInbound(Object...)",
+        "io.netty.channel.DefaultChannelPipeline#fireChannelRead(Object)",
+        "io.netty.handler.codec.ByteToMessageDecoder#channelRead(ChannelHandlerContext,Object)",
+        "io.netty.handler.codec.ByteToMessageDecoder#callDecode(ChannelHandlerContext,ByteBuf,List)",
+        "io.netty.handler.codec.compression.SnappyFrameDecoder#decode(ChannelHandlerContext,ByteBuf,List)",
+        "io.netty.handler.codec.compression.Snappy#decode(ByteBuf,ByteBuf)"
+      ],
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "written": "SnappyFuzzTest.fuzzSnappyFrameDecoderDecode(InputStream)",
+          "provenance": "agent",
+          "method": "com.fuzzer.harness.SnappyFuzzTest#fuzzSnappyFrameDecoderDecode(InputStream)",
+          "location": "harness/src/test/java/com/fuzzer/harness/SnappyFuzzTest.java:34"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "SnappyFuzzTest#fuzzSnappyFrameDecoderDecode(InputStream) calls EmbeddedChannel#writeInbound(Object...) at harness/src/test/java/com/fuzzer/harness/SnappyFuzzTest.java:39 (resolved)",
+          "site": "harness/src/test/java/com/fuzzer/harness/SnappyFuzzTest.java:39"
+        },
+        {
+          "kind": "hop",
+          "written": "EmbeddedChannel.writeInbound(Object...)",
+          "provenance": "agent",
+          "method": "io.netty.channel.embedded.EmbeddedChannel#writeInbound(Object...)",
+          "location": "transport/src/main/java/io/netty/channel/embedded/EmbeddedChannel.java:335"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "EmbeddedChannel#writeInbound(Object...) calls ChannelInboundInvoker#fireChannelRead(Object) at transport/src/main/java/io/netty/channel/embedded/EmbeddedChannel.java:343 (resolved)",
+          "site": "transport/src/main/java/io/netty/channel/embedded/EmbeddedChannel.java:343"
+        },
+        {
+          "kind": "hop",
+          "written": "DefaultChannelPipeline.fireChannelRead(Object)",
+          "provenance": "agent",
+          "method": "io.netty.channel.DefaultChannelPipeline#fireChannelRead(Object)",
+          "location": "transport/src/main/java/io/netty/channel/DefaultChannelPipeline.java:918"
+        },
+        {
+          "kind": "connection",
+          "type": "INDIRECT",
+          "evidence": "2 omitted call(s)"
+        },
+        {
+          "kind": "hop",
+          "written": null,
+          "provenance": "checkpath (omitted call)",
+          "method": "io.netty.channel.AbstractChannelHandlerContext#invokeChannelRead(AbstractChannelHandlerContext,Object)",
+          "location": "transport/src/main/java/io/netty/channel/AbstractChannelHandlerContext.java:361"
+        },
+        {
+          "kind": "hop",
+          "written": null,
+          "provenance": "checkpath (omitted call)",
+          "method": "io.netty.channel.AbstractChannelHandlerContext#invokeChannelRead(Object)",
+          "location": "transport/src/main/java/io/netty/channel/AbstractChannelHandlerContext.java:376"
+        },
+        {
+          "kind": "hop",
+          "written": "ByteToMessageDecoder.channelRead(ChannelHandlerContext, Object)",
+          "provenance": "agent",
+          "method": "io.netty.handler.codec.ByteToMessageDecoder#channelRead(ChannelHandlerContext,Object)",
+          "location": "codec/src/main/java/io/netty/handler/codec/ByteToMessageDecoder.java:269"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "ByteToMessageDecoder#channelRead(ChannelHandlerContext,Object) calls ByteToMessageDecoder#callDecode(ChannelHandlerContext,ByteBuf,List) at codec/src/main/java/io/netty/handler/codec/ByteToMessageDecoder.java:276 (resolved)",
+          "site": "codec/src/main/java/io/netty/handler/codec/ByteToMessageDecoder.java:276"
+        },
+        {
+          "kind": "hop",
+          "written": "ByteToMessageDecoder.callDecode(ChannelHandlerContext, ByteBuf, List)",
+          "provenance": "agent",
+          "method": "io.netty.handler.codec.ByteToMessageDecoder#callDecode(ChannelHandlerContext,ByteBuf,List)",
+          "location": "codec/src/main/java/io/netty/handler/codec/ByteToMessageDecoder.java:426"
+        },
+        {
+          "kind": "connection",
+          "type": "DATAFLOW",
+          "evidence": "ByteToMessageDecoder#callDecode(ChannelHandlerContext,ByteBuf,List) (codec/src/main/java/io/netty/handler/codec/ByteToMessageDecoder.java:426) writes field `corrupted`, which SnappyFrameDecoder#decode(ChannelHandlerContext,ByteBuf,List) (codec/src/main/java/io/netty/handler/codec/compression/SnappyFrameDecoder.java:79) reads (through helper calls)",
+          "site": "codec/src/main/java/io/netty/handler/codec/ByteToMessageDecoder.java:426"
+        },
+        {
+          "kind": "hop",
+          "written": "SnappyFrameDecoder.decode(ChannelHandlerContext, ByteBuf, List)",
+          "provenance": "agent",
+          "method": "io.netty.handler.codec.compression.SnappyFrameDecoder#decode(ChannelHandlerContext,ByteBuf,List)",
+          "location": "codec/src/main/java/io/netty/handler/codec/compression/SnappyFrameDecoder.java:79"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "SnappyFrameDecoder#decode(ChannelHandlerContext,ByteBuf,List) calls Snappy#decode(ByteBuf,ByteBuf) at codec/src/main/java/io/netty/handler/codec/compression/SnappyFrameDecoder.java:177 (resolved)",
+          "site": "codec/src/main/java/io/netty/handler/codec/compression/SnappyFrameDecoder.java:177"
+        },
+        {
+          "kind": "hop",
+          "written": "Snappy.decode(ByteBuf, ByteBuf)",
+          "provenance": "agent",
+          "method": "io.netty.handler.codec.compression.Snappy#decode(ByteBuf,ByteBuf)",
+          "location": "codec/src/main/java/io/netty/handler/codec/compression/Snappy.java:270"
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "status": "CALL",
+          "evidence": "SnappyFuzzTest#fuzzSnappyFrameDecoderDecode(InputStream) calls EmbeddedChannel#writeInbound(Object...) at harness/src/test/java/com/fuzzer/harness/SnappyFuzzTest.java:39 (resolved)"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "status": "CALL",
+          "evidence": "EmbeddedChannel#writeInbound(Object...) calls ChannelInboundInvoker#fireChannelRead(Object) at transport/src/main/java/io/netty/channel/embedded/EmbeddedChannel.java:343 (resolved)"
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "status": "INDIRECT",
+          "evidence": "2 omitted call(s)",
+          "chain": [
+            "DefaultChannelPipeline#fireChannelRead(Object)",
+            "AbstractChannelHandlerContext#invokeChannelRead(AbstractChannelHandlerContext,Object)",
+            "AbstractChannelHandlerContext#invokeChannelRead(Object)",
+            "HAProxyMessageDecoder#channelRead(ChannelHandlerContext,Object)"
+          ]
+        },
+        {
+          "from": 4,
+          "to": 5,
+          "status": "CALL",
+          "evidence": "ByteToMessageDecoder#channelRead(ChannelHandlerContext,Object) calls ByteToMessageDecoder#callDecode(ChannelHandlerContext,ByteBuf,List) at codec/src/main/java/io/netty/handler/codec/ByteToMessageDecoder.java:276 (resolved)"
+        },
+        {
+          "from": 5,
+          "to": 6,
+          "status": "DATAFLOW",
+          "evidence": "ByteToMessageDecoder#callDecode(ChannelHandlerContext,ByteBuf,List) (codec/src/main/java/io/netty/handler/codec/ByteToMessageDecoder.java:426) writes field `corrupted`, which SnappyFrameDecoder#decode(ChannelHandlerContext,ByteBuf,List) (codec/src/main/java/io/netty/handler/codec/compression/SnappyFrameDecoder.java:79) reads (through helper calls)"
+        },
+        {
+          "from": 6,
+          "to": 7,
+          "status": "CALL",
+          "evidence": "SnappyFrameDecoder#decode(ChannelHandlerContext,ByteBuf,List) calls Snappy#decode(ByteBuf,ByteBuf) at codec/src/main/java/io/netty/handler/codec/compression/SnappyFrameDecoder.java:177 (resolved)"
+        }
+      ],
+      "diagnostics": [],
+      "warnings": [
+        "Edge 3→4 is indirect: DefaultChannelPipeline#fireChannelRead(Object) → AbstractChannelHandlerContext#invokeChannelRead(AbstractChannelHandlerContext,Object) → AbstractChannelHandlerContext#invokeChannelRead(Object) → HAProxyMessageDecoder#channelRead(ChannelHandlerContext,Object)"
+      ]
+    }
+  ],
+  "plan_ok": true,
+  "plans": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "signals": [
+        {
+          "name": "capacityGrowth",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "Snappy#decode",
+              "status": "RESOLVED",
+              "method": "io.netty.handler.codec.compression.Snappy#decode",
+              "declared_at": "codec/src/main/java/io/netty/handler/codec/compression/Snappy.java:270",
+              "relation": "on_path"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    }
+  ]
+}

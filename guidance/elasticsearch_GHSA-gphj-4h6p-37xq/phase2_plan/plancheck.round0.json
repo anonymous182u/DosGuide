@@ -1,0 +1,352 @@
+{
+  "tool": "checkpath",
+  "version": "1.0.0",
+  "source_root": "projects/elasticsearch_GHSA-gphj-4h6p-37xq",
+  "index": {
+    "files_parsed": 16042,
+    "files_failed": 0,
+    "methods": 180495,
+    "harness_fuzz_methods": [
+      "BlockBuilderFuzzTest.fuzzBlockFactoryNewIntBlockBuilder(InputStream)",
+      "BlockBuilderFuzzTest.fuzzBlockFactoryNewLongBlockBuilder(InputStream)"
+    ],
+    "index_seconds": 73.8,
+    "max_gap": 2,
+    "sink_depth": 6,
+    "symbol_resolution": true
+  },
+  "ok": true,
+  "targets": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "entrypoint": "BlockBuilderFuzzTest.fuzzBlockFactoryNewIntBlockBuilder(InputStream) → BlockFactory.newIntBlockBuilder(int) → IntBlockBuilder.<init>(int, BlockFactory) → AbstractBlockBuilder.adjustBreaker(long)",
+      "source_path": "x-pack/plugin/esql/compute/src/main/generated-src/org/elasticsearch/compute/data/IntBlockBuilder.java",
+      "start_ok": true,
+      "harness_entry": "org.elasticsearch.compute.data.fuzz.BlockBuilderFuzzTest#fuzzBlockFactoryNewIntBlockBuilder",
+      "end_ok": true,
+      "end": {
+        "sink_file": "x-pack/plugin/esql/compute/src/main/generated-src/org/elasticsearch/compute/data/IntBlockBuilder.java",
+        "ok": true,
+        "evidence": "hop 3 IntBlockBuilder#IntBlockBuilder(int,BlockFactory) is declared in x-pack/plugin/esql/compute/src/main/generated-src/org/elasticsearch/compute/data/IntBlockBuilder.java:29",
+        "level": "method",
+        "sink_method": "IntBlockBuilder#<init>(int, BlockFactory)",
+        "sink_evidence": "hop 3 is IntBlockBuilder#IntBlockBuilder(int,BlockFactory)"
+      },
+      "hops": [
+        {
+          "index": 1,
+          "raw": "BlockBuilderFuzzTest.fuzzBlockFactoryNewIntBlockBuilder(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.elasticsearch.compute.data.fuzz.BlockBuilderFuzzTest#fuzzBlockFactoryNewIntBlockBuilder(InputStream)",
+              "location": "harness/src/test/java/org/elasticsearch/compute/data/fuzz/BlockBuilderFuzzTest.java:56"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "raw": "BlockFactory.newIntBlockBuilder(int)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.elasticsearch.compute.data.BlockFactory#newIntBlockBuilder(int)",
+              "location": "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/data/BlockFactory.java:171"
+            },
+            {
+              "method": "org.elasticsearch.compute.test.MockBlockFactory#newIntBlockBuilder(int)",
+              "location": "x-pack/plugin/esql/compute/test/src/main/java/org/elasticsearch/compute/test/MockBlockFactory.java:224"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "raw": "IntBlockBuilder.<init>(int, BlockFactory)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.elasticsearch.compute.data.IntBlockBuilder#IntBlockBuilder(int,BlockFactory)",
+              "location": "x-pack/plugin/esql/compute/src/main/generated-src/org/elasticsearch/compute/data/IntBlockBuilder.java:29"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "raw": "AbstractBlockBuilder.adjustBreaker(long)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.elasticsearch.compute.data.AbstractBlockBuilder#adjustBreaker(long)",
+              "location": "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/data/AbstractBlockBuilder.java:169"
+            }
+          ]
+        }
+      ],
+      "path_signature": [
+        "org.elasticsearch.compute.data.fuzz.BlockBuilderFuzzTest#fuzzBlockFactoryNewIntBlockBuilder(InputStream)",
+        "org.elasticsearch.compute.data.BlockFactory#newIntBlockBuilder(int)",
+        "org.elasticsearch.compute.data.IntBlockBuilder#IntBlockBuilder(int,BlockFactory)",
+        "org.elasticsearch.compute.data.AbstractBlockBuilder#adjustBreaker(long)"
+      ],
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "written": "BlockBuilderFuzzTest.fuzzBlockFactoryNewIntBlockBuilder(InputStream)",
+          "provenance": "agent",
+          "method": "org.elasticsearch.compute.data.fuzz.BlockBuilderFuzzTest#fuzzBlockFactoryNewIntBlockBuilder(InputStream)",
+          "location": "harness/src/test/java/org/elasticsearch/compute/data/fuzz/BlockBuilderFuzzTest.java:56"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "BlockBuilderFuzzTest#fuzzBlockFactoryNewIntBlockBuilder(InputStream) calls BlockFactory#newIntBlockBuilder(int) at harness/src/test/java/org/elasticsearch/compute/data/fuzz/BlockBuilderFuzzTest.java:63 (resolved)",
+          "site": "harness/src/test/java/org/elasticsearch/compute/data/fuzz/BlockBuilderFuzzTest.java:63"
+        },
+        {
+          "kind": "hop",
+          "written": "BlockFactory.newIntBlockBuilder(int)",
+          "provenance": "agent",
+          "method": "org.elasticsearch.compute.data.BlockFactory#newIntBlockBuilder(int)",
+          "location": "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/data/BlockFactory.java:171"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "BlockFactory#newIntBlockBuilder(int) calls IntBlockBuilder#IntBlockBuilder(int,BlockFactory) at x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/data/BlockFactory.java:172 (resolved)",
+          "site": "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/data/BlockFactory.java:172"
+        },
+        {
+          "kind": "hop",
+          "written": "IntBlockBuilder.<init>(int, BlockFactory)",
+          "provenance": "agent",
+          "method": "org.elasticsearch.compute.data.IntBlockBuilder#IntBlockBuilder(int,BlockFactory)",
+          "location": "x-pack/plugin/esql/compute/src/main/generated-src/org/elasticsearch/compute/data/IntBlockBuilder.java:29"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "IntBlockBuilder#IntBlockBuilder(int,BlockFactory) calls AbstractBlockBuilder#adjustBreaker(long) at x-pack/plugin/esql/compute/src/main/generated-src/org/elasticsearch/compute/data/IntBlockBuilder.java:32 (name match)",
+          "site": "x-pack/plugin/esql/compute/src/main/generated-src/org/elasticsearch/compute/data/IntBlockBuilder.java:32"
+        },
+        {
+          "kind": "hop",
+          "written": "AbstractBlockBuilder.adjustBreaker(long)",
+          "provenance": "agent",
+          "method": "org.elasticsearch.compute.data.AbstractBlockBuilder#adjustBreaker(long)",
+          "location": "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/data/AbstractBlockBuilder.java:169"
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "status": "CALL",
+          "evidence": "BlockBuilderFuzzTest#fuzzBlockFactoryNewIntBlockBuilder(InputStream) calls BlockFactory#newIntBlockBuilder(int) at harness/src/test/java/org/elasticsearch/compute/data/fuzz/BlockBuilderFuzzTest.java:63 (resolved)"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "status": "CALL",
+          "evidence": "BlockFactory#newIntBlockBuilder(int) calls IntBlockBuilder#IntBlockBuilder(int,BlockFactory) at x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/data/BlockFactory.java:172 (resolved)"
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "status": "CALL",
+          "evidence": "IntBlockBuilder#IntBlockBuilder(int,BlockFactory) calls AbstractBlockBuilder#adjustBreaker(long) at x-pack/plugin/esql/compute/src/main/generated-src/org/elasticsearch/compute/data/IntBlockBuilder.java:32 (name match)"
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    },
+    {
+      "target": "V2",
+      "status": "PASS",
+      "entrypoint": "BlockBuilderFuzzTest.fuzzBlockFactoryNewLongBlockBuilder(InputStream) → BlockFactory.newLongBlockBuilder(int) → LongBlockBuilder.<init>(int, BlockFactory) → AbstractBlockBuilder.adjustBreaker(long)",
+      "source_path": "x-pack/plugin/esql/compute/src/main/generated-src/org/elasticsearch/compute/data/LongBlockBuilder.java",
+      "start_ok": true,
+      "harness_entry": "org.elasticsearch.compute.data.fuzz.BlockBuilderFuzzTest#fuzzBlockFactoryNewLongBlockBuilder",
+      "end_ok": true,
+      "end": {
+        "sink_file": "x-pack/plugin/esql/compute/src/main/generated-src/org/elasticsearch/compute/data/LongBlockBuilder.java",
+        "ok": true,
+        "evidence": "hop 3 LongBlockBuilder#LongBlockBuilder(int,BlockFactory) is declared in x-pack/plugin/esql/compute/src/main/generated-src/org/elasticsearch/compute/data/LongBlockBuilder.java:29",
+        "level": "method",
+        "sink_method": "LongBlockBuilder#<init>(int, BlockFactory)",
+        "sink_evidence": "hop 3 is LongBlockBuilder#LongBlockBuilder(int,BlockFactory)"
+      },
+      "hops": [
+        {
+          "index": 1,
+          "raw": "BlockBuilderFuzzTest.fuzzBlockFactoryNewLongBlockBuilder(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.elasticsearch.compute.data.fuzz.BlockBuilderFuzzTest#fuzzBlockFactoryNewLongBlockBuilder(InputStream)",
+              "location": "harness/src/test/java/org/elasticsearch/compute/data/fuzz/BlockBuilderFuzzTest.java:76"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "raw": "BlockFactory.newLongBlockBuilder(int)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.elasticsearch.compute.data.BlockFactory#newLongBlockBuilder(int)",
+              "location": "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/data/BlockFactory.java:290"
+            },
+            {
+              "method": "org.elasticsearch.compute.test.MockBlockFactory#newLongBlockBuilder(int)",
+              "location": "x-pack/plugin/esql/compute/test/src/main/java/org/elasticsearch/compute/test/MockBlockFactory.java:267"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "raw": "LongBlockBuilder.<init>(int, BlockFactory)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.elasticsearch.compute.data.LongBlockBuilder#LongBlockBuilder(int,BlockFactory)",
+              "location": "x-pack/plugin/esql/compute/src/main/generated-src/org/elasticsearch/compute/data/LongBlockBuilder.java:29"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "raw": "AbstractBlockBuilder.adjustBreaker(long)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.elasticsearch.compute.data.AbstractBlockBuilder#adjustBreaker(long)",
+              "location": "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/data/AbstractBlockBuilder.java:169"
+            }
+          ]
+        }
+      ],
+      "path_signature": [
+        "org.elasticsearch.compute.data.fuzz.BlockBuilderFuzzTest#fuzzBlockFactoryNewLongBlockBuilder(InputStream)",
+        "org.elasticsearch.compute.data.BlockFactory#newLongBlockBuilder(int)",
+        "org.elasticsearch.compute.data.LongBlockBuilder#LongBlockBuilder(int,BlockFactory)",
+        "org.elasticsearch.compute.data.AbstractBlockBuilder#adjustBreaker(long)"
+      ],
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "written": "BlockBuilderFuzzTest.fuzzBlockFactoryNewLongBlockBuilder(InputStream)",
+          "provenance": "agent",
+          "method": "org.elasticsearch.compute.data.fuzz.BlockBuilderFuzzTest#fuzzBlockFactoryNewLongBlockBuilder(InputStream)",
+          "location": "harness/src/test/java/org/elasticsearch/compute/data/fuzz/BlockBuilderFuzzTest.java:76"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "BlockBuilderFuzzTest#fuzzBlockFactoryNewLongBlockBuilder(InputStream) calls BlockFactory#newLongBlockBuilder(int) at harness/src/test/java/org/elasticsearch/compute/data/fuzz/BlockBuilderFuzzTest.java:83 (resolved)",
+          "site": "harness/src/test/java/org/elasticsearch/compute/data/fuzz/BlockBuilderFuzzTest.java:83"
+        },
+        {
+          "kind": "hop",
+          "written": "BlockFactory.newLongBlockBuilder(int)",
+          "provenance": "agent",
+          "method": "org.elasticsearch.compute.data.BlockFactory#newLongBlockBuilder(int)",
+          "location": "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/data/BlockFactory.java:290"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "BlockFactory#newLongBlockBuilder(int) calls LongBlockBuilder#LongBlockBuilder(int,BlockFactory) at x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/data/BlockFactory.java:291 (resolved)",
+          "site": "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/data/BlockFactory.java:291"
+        },
+        {
+          "kind": "hop",
+          "written": "LongBlockBuilder.<init>(int, BlockFactory)",
+          "provenance": "agent",
+          "method": "org.elasticsearch.compute.data.LongBlockBuilder#LongBlockBuilder(int,BlockFactory)",
+          "location": "x-pack/plugin/esql/compute/src/main/generated-src/org/elasticsearch/compute/data/LongBlockBuilder.java:29"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "LongBlockBuilder#LongBlockBuilder(int,BlockFactory) calls AbstractBlockBuilder#adjustBreaker(long) at x-pack/plugin/esql/compute/src/main/generated-src/org/elasticsearch/compute/data/LongBlockBuilder.java:32 (name match)",
+          "site": "x-pack/plugin/esql/compute/src/main/generated-src/org/elasticsearch/compute/data/LongBlockBuilder.java:32"
+        },
+        {
+          "kind": "hop",
+          "written": "AbstractBlockBuilder.adjustBreaker(long)",
+          "provenance": "agent",
+          "method": "org.elasticsearch.compute.data.AbstractBlockBuilder#adjustBreaker(long)",
+          "location": "x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/data/AbstractBlockBuilder.java:169"
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "status": "CALL",
+          "evidence": "BlockBuilderFuzzTest#fuzzBlockFactoryNewLongBlockBuilder(InputStream) calls BlockFactory#newLongBlockBuilder(int) at harness/src/test/java/org/elasticsearch/compute/data/fuzz/BlockBuilderFuzzTest.java:83 (resolved)"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "status": "CALL",
+          "evidence": "BlockFactory#newLongBlockBuilder(int) calls LongBlockBuilder#LongBlockBuilder(int,BlockFactory) at x-pack/plugin/esql/compute/src/main/java/org/elasticsearch/compute/data/BlockFactory.java:291 (resolved)"
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "status": "CALL",
+          "evidence": "LongBlockBuilder#LongBlockBuilder(int,BlockFactory) calls AbstractBlockBuilder#adjustBreaker(long) at x-pack/plugin/esql/compute/src/main/generated-src/org/elasticsearch/compute/data/LongBlockBuilder.java:32 (name match)"
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    }
+  ],
+  "plan_ok": true,
+  "plans": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "signals": [
+        {
+          "name": "allocRequestedBytes",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "IntBlockBuilder#<init>(int, BlockFactory)",
+              "status": "RESOLVED",
+              "method": "org.elasticsearch.compute.data.IntBlockBuilder#IntBlockBuilder",
+              "declared_at": "x-pack/plugin/esql/compute/src/main/generated-src/org/elasticsearch/compute/data/IntBlockBuilder.java:29",
+              "relation": "on_path"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    },
+    {
+      "target": "V2",
+      "status": "PASS",
+      "signals": [
+        {
+          "name": "allocRequestedBytes",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "LongBlockBuilder#<init>(int, BlockFactory)",
+              "status": "RESOLVED",
+              "method": "org.elasticsearch.compute.data.LongBlockBuilder#LongBlockBuilder",
+              "declared_at": "x-pack/plugin/esql/compute/src/main/generated-src/org/elasticsearch/compute/data/LongBlockBuilder.java:29",
+              "relation": "on_path"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    }
+  ]
+}

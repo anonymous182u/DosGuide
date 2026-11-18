@@ -1,0 +1,34 @@
+{
+  "final_ok": true,
+  "repair_rounds": 1,
+  "fuzz_tests_fixed_at_round": 1,
+  "rounds": [
+    {
+      "round": 0,
+      "ok": false,
+      "error": null,
+      "launch": [
+        "\"classpath\" must be one string (for \"classpath\": the entries separated by \":\"), not a dict",
+        "\"guidance_factory\" must look like \"pkg.FuzzRunner#createGuidance\"",
+        "\"targets\" must map each target id to {\"test_class\", \"method\"}"
+      ],
+      "build_ok": null,
+      "failing": [],
+      "progress_advisory": {},
+      "repair": {
+        "modified": [
+          "analysis/launch.json"
+        ]
+      }
+    },
+    {
+      "round": 1,
+      "ok": true,
+      "error": null,
+      "launch": [],
+      "build_ok": true,
+      "failing": [],
+      "progress_advisory": {}
+    }
+  ]
+}

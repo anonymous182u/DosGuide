@@ -1,0 +1,219 @@
+{
+  "ordered_targets": [
+    {
+      "slot": 1,
+      "id": "V1",
+      "name": "Uncontrolled byte array allocation via CBOR byte-string length field",
+      "entrypoint": "CBORFuzzTest.fuzzCBORParserNextTokenScalarValues(InputStream) → CBORParser.nextToken() → CBORParser.getBinaryValue() → CBORParser._finishToken() → CBORParser._finishBytes(int)",
+      "source_path": "cbor/src/main/java/com/fasterxml/jackson/dataformat/cbor/CBORParser.java",
+      "sink": "CBORParser#_finishBytes",
+      "mechanism": "_finishBytes(int len) pre-allocates new byte[len] where len is an attacker-controlled CBOR byte-string length field (up to Integer.MAX_VALUE from 4 input bytes), without checking that the input actually contains that many bytes.",
+      "resource": "heap memory: allocated byte array size equals the CBOR 4-byte length field value",
+      "failure_mode": "out_of_memory",
+      "scale": "Measured allocation grows at 1 byte per unit of claimed CBOR byte-string length (371.8 KB at 1024 to 402.8 KB at 32768, delta matches claimed length exactly). With -Xmx1g and ~200 MB JVM overhead, a claimed length of ~800,000,000 bytes exceeds available heap (~800 MB). The CBOR encoding is always 5 bytes: 0x5A + 4-byte big-endian length.",
+      "input_bytes": 5,
+      "cwe": "CWE-770",
+      "checkpath_status": "PASS",
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "method": "com.fasterxml.jackson.fuzz.harness.CBORFuzzTest#fuzzCBORParserNextTokenScalarValues(InputStream)",
+          "location": "harness/src/test/java/com/fasterxml/jackson/fuzz/harness/CBORFuzzTest.java:58"
+        },
+        {
+          "kind": "connection",
+          "type": "DISPATCH",
+          "evidence": "CBORFuzzTest#fuzzCBORParserNextTokenScalarValues(InputStream) calls nextToken on a com.fasterxml.jackson.core.JsonParser (outside the source tree, not resolved) at harness/src/test/java/com/fasterxml/jackson/fuzz/harness/CBORFuzzTest.java:62, which may dispatch to CBORParser#nextToken() (cbor/src/main/java/com/fasterxml/jackson/dataformat/cbor/CBORParser.java:580); CBORParser's supertype com.fasterxml.jackson.core.base.ParserMinimalBase could not be resolved, so CBORParser is not confirmed to be a com.fasterxml.jackson.core.JsonParser (unresolved ancestor)",
+          "site": "harness/src/test/java/com/fasterxml/jackson/fuzz/harness/CBORFuzzTest.java:62"
+        },
+        {
+          "kind": "hop",
+          "method": "com.fasterxml.jackson.dataformat.cbor.CBORParser#nextToken()",
+          "location": "cbor/src/main/java/com/fasterxml/jackson/dataformat/cbor/CBORParser.java:580"
+        },
+        {
+          "kind": "connection",
+          "type": "DATAFLOW",
+          "evidence": "CBORParser#nextToken() (cbor/src/main/java/com/fasterxml/jackson/dataformat/cbor/CBORParser.java:580) writes field `_binaryValue`, which CBORParser#getBinaryValue(Base64Variant) (cbor/src/main/java/com/fasterxml/jackson/dataformat/cbor/CBORParser.java:1653) reads",
+          "site": "cbor/src/main/java/com/fasterxml/jackson/dataformat/cbor/CBORParser.java:580"
+        },
+        {
+          "kind": "hop",
+          "method": "com.fasterxml.jackson.dataformat.cbor.CBORParser#getBinaryValue(Base64Variant)",
+          "location": "cbor/src/main/java/com/fasterxml/jackson/dataformat/cbor/CBORParser.java:1653"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "cbor/src/main/java/com/fasterxml/jackson/dataformat/cbor/CBORParser.java:1656"
+        },
+        {
+          "kind": "hop",
+          "method": "com.fasterxml.jackson.dataformat.cbor.CBORParser#_finishToken()",
+          "location": "cbor/src/main/java/com/fasterxml/jackson/dataformat/cbor/CBORParser.java:2080"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "cbor/src/main/java/com/fasterxml/jackson/dataformat/cbor/CBORParser.java:2090"
+        },
+        {
+          "kind": "hop",
+          "method": "com.fasterxml.jackson.dataformat.cbor.CBORParser#_finishBytes(int)",
+          "location": "cbor/src/main/java/com/fasterxml/jackson/dataformat/cbor/CBORParser.java:2430"
+        }
+      ],
+      "harness_entry": "com.fasterxml.jackson.fuzz.harness.CBORFuzzTest#fuzzCBORParserNextTokenScalarValues",
+      "scale_measurement": [
+        {
+          "value": 1024,
+          "input_bytes": 5,
+          "outcome": "completed",
+          "cpu_ms": 5.476685,
+          "allocated_bytes": 380728,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "value": 2048,
+          "input_bytes": 5,
+          "outcome": "completed",
+          "cpu_ms": 5.261947,
+          "allocated_bytes": 381752,
+          "peak_heap_bytes": 0
+        },
+        {
+          "value": 4096,
+          "input_bytes": 5,
+          "outcome": "completed",
+          "cpu_ms": 5.384925,
+          "allocated_bytes": 383800,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "value": 8192,
+          "input_bytes": 5,
+          "outcome": "completed",
+          "cpu_ms": 6.509667,
+          "allocated_bytes": 387896,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "value": 16384,
+          "input_bytes": 5,
+          "outcome": "completed",
+          "cpu_ms": 5.178386,
+          "allocated_bytes": 396088,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "value": 32768,
+          "input_bytes": 5,
+          "outcome": "completed",
+          "cpu_ms": 5.229546,
+          "allocated_bytes": 412472,
+          "peak_heap_bytes": 1048576
+        }
+      ]
+    },
+    {
+      "slot": 2,
+      "id": "PkgRisk1",
+      "name": "Deep CBOR nesting causes StackOverflowError in jackson-databind recursive tree deserialization",
+      "entrypoint": "CBORFuzzTest.fuzzObjectMapperReadTree(InputStream) → ObjectMapper.readTree(byte[]) → BaseNodeDeserializer.deserializeArray(JsonParser, DeserializationContext, JsonNodeFactory) → CBORParser.nextToken()",
+      "source_path": "cbor/src/main/java/com/fasterxml/jackson/dataformat/cbor/CBORParser.java",
+      "sink": "BaseNodeDeserializer#deserializeArray",
+      "mechanism": "deserializeArray and deserializeObject in jackson-databind BaseNodeDeserializer are mutually recursive. Each recursive call invokes CBORParser.nextToken() which returns START_ARRAY for nested arrays and creates child contexts via createChildArrayContext without any nesting depth limit. CBOR encodes nesting at 1 byte per level (0x81 = 1-element array), enabling ~10000 levels in 10 KB.",
+      "resource": "stack depth: one stack frame (~200-400 bytes) per nesting level in the recursive tree deserializer",
+      "failure_mode": "stack_overflow",
+      "scale": "With -Xss1m, approximately 3000-4000 nesting levels overflow the stack. At 1 byte per level (0x81), about 3500 bytes of input suffice.",
+      "input_bytes": 4000,
+      "cwe": "CWE-674",
+      "checkpath_status": "PASS",
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "method": "com.fasterxml.jackson.fuzz.harness.CBORFuzzTest#fuzzObjectMapperReadTree(InputStream)",
+          "location": "harness/src/test/java/com/fasterxml/jackson/fuzz/harness/CBORFuzzTest.java:86"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "harness/src/test/java/com/fasterxml/jackson/fuzz/harness/CBORFuzzTest.java:88"
+        },
+        {
+          "kind": "hop",
+          "method": "ObjectMapper.readTree(byte[])",
+          "location": "outside the source tree"
+        },
+        {
+          "kind": "connection",
+          "type": "UNCHECKED",
+          "evidence": "hop 2 is outside the source tree, so calls made inside it cannot be inspected"
+        },
+        {
+          "kind": "hop",
+          "method": "BaseNodeDeserializer.deserializeArray(JsonParser, DeserializationContext, JsonNodeFactory)",
+          "location": "outside the source tree"
+        },
+        {
+          "kind": "connection",
+          "type": "UNCHECKED",
+          "evidence": "hop 3 is outside the source tree, so calls made inside it cannot be inspected"
+        },
+        {
+          "kind": "hop",
+          "method": "com.fasterxml.jackson.dataformat.cbor.CBORParser#nextToken()",
+          "location": "cbor/src/main/java/com/fasterxml/jackson/dataformat/cbor/CBORParser.java:580"
+        }
+      ],
+      "harness_entry": "com.fasterxml.jackson.fuzz.harness.CBORFuzzTest#fuzzObjectMapperReadTree",
+      "scale_measurement": [
+        {
+          "value": 64,
+          "input_bytes": 65,
+          "outcome": "completed",
+          "cpu_ms": 7.07714,
+          "allocated_bytes": 599144,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "value": 128,
+          "input_bytes": 129,
+          "outcome": "completed",
+          "cpu_ms": 7.401825,
+          "allocated_bytes": 608952,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "value": 256,
+          "input_bytes": 257,
+          "outcome": "completed",
+          "cpu_ms": 7.743773,
+          "allocated_bytes": 628552,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "value": 512,
+          "input_bytes": 513,
+          "outcome": "completed",
+          "cpu_ms": 9.634161,
+          "allocated_bytes": 667720,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "value": 1024,
+          "input_bytes": 1025,
+          "outcome": "completed",
+          "cpu_ms": 9.367985,
+          "allocated_bytes": 746072,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "value": 2048,
+          "input_bytes": 2049,
+          "outcome": "stack_cap"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,201 @@
+{
+  "ordered_targets": [
+    {
+      "slot": 1,
+      "id": "V1",
+      "name": "ZipArchiveInputStream STORED entry returns stale buffer data after EOF (infinite stream through InputStreamReader, CVE-2018-11771)",
+      "entrypoint": "ZipArchiveInputStreamFuzzTest.fuzzZipArchiveInputStreamReadText(InputStream) → InputStreamReader.read(char[]) → ZipArchiveInputStream.read(byte[], int, int) → ZipArchiveInputStream.readStored(byte[], int, int)",
+      "source_path": "src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveInputStream.java",
+      "sink": "org.apache.commons.compress.archivers.zip.ZipArchiveInputStream#readStored",
+      "mechanism": "When the underlying stream reaches EOF, readStored resets buf.position(0) but keeps the old buf.limit(), so each later read re-serves the last chunk until bytesRead reaches the header-declared size; an entry ending in an incomplete UTF-8 sequence makes StreamDecoder return a replacement char instead of -1 at each EOF, so the harness keeps reading",
+      "resource": "CPU time: one re-serve cycle (two zis.read calls, one decode pass and one CRC update) per stale chunk; cycles = declared size / stale chunk length",
+      "failure_mode": "timeout",
+      "scale": "Measured: CPU time is linear in the declared STORED size; the marginal cost is about 128 ns per re-serve cycle (512Ki->1Mi: 121->188 ms). Extrapolating, 20 s ≈ 1.6e8 cycles, so a declared size of at least about 2e8 is needed; the 32-bit maximum (about 4.29e9) gives about 550 s. Input length does not change with the parameter. Allocation is short-lived (peak heap levels off at about 29 MB), so the failure is a timeout, not out of memory. Densest encoding: 30-byte LFH + 1-byte name + 1 stale data byte ending in an incomplete UTF-8 sequence; ZIP64 is not needed.",
+      "input_bytes": 32,
+      "cwe": "CWE-835",
+      "checkpath_status": "PASS",
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "method": "fuzzing.tests.ZipArchiveInputStreamFuzzTest#fuzzZipArchiveInputStreamReadText(InputStream)",
+          "location": "harness/src/test/java/fuzzing/tests/ZipArchiveInputStreamFuzzTest.java:84"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "harness/src/test/java/fuzzing/tests/ZipArchiveInputStreamFuzzTest.java:94"
+        },
+        {
+          "kind": "hop",
+          "method": "InputStreamReader.read(char[])",
+          "location": "outside the source tree"
+        },
+        {
+          "kind": "connection",
+          "type": "UNCHECKED",
+          "evidence": "hop 2 is outside the source tree, so calls made inside it cannot be inspected"
+        },
+        {
+          "kind": "hop",
+          "method": "org.apache.commons.compress.archivers.zip.ZipArchiveInputStream#read(byte[],int,int)",
+          "location": "src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveInputStream.java:428"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveInputStream.java:454"
+        },
+        {
+          "kind": "hop",
+          "method": "org.apache.commons.compress.archivers.zip.ZipArchiveInputStream#readStored(byte[],int,int)",
+          "location": "src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveInputStream.java:508"
+        }
+      ],
+      "harness_entry": "fuzzing.tests.ZipArchiveInputStreamFuzzTest#fuzzZipArchiveInputStreamReadText",
+      "scale_measurement": [
+        {
+          "value": 32768,
+          "input_bytes": 32,
+          "outcome": "completed",
+          "cpu_ms": 42.936321,
+          "allocated_bytes": 3199312,
+          "peak_heap_bytes": 4194304
+        },
+        {
+          "value": 65536,
+          "input_bytes": 32,
+          "outcome": "completed",
+          "cpu_ms": 47.388301,
+          "allocated_bytes": 5027744,
+          "peak_heap_bytes": 5242880
+        },
+        {
+          "value": 131072,
+          "input_bytes": 32,
+          "outcome": "completed",
+          "cpu_ms": 64.753655,
+          "allocated_bytes": 8697760,
+          "peak_heap_bytes": 8388608
+        },
+        {
+          "value": 262144,
+          "input_bytes": 32,
+          "outcome": "completed",
+          "cpu_ms": 87.026807,
+          "allocated_bytes": 16037792,
+          "peak_heap_bytes": 16777216
+        },
+        {
+          "value": 524288,
+          "input_bytes": 32,
+          "outcome": "completed",
+          "cpu_ms": 121.131881,
+          "allocated_bytes": 30724432,
+          "peak_heap_bytes": 30408704
+        },
+        {
+          "value": 1048576,
+          "input_bytes": 32,
+          "outcome": "completed",
+          "cpu_ms": 188.529791,
+          "allocated_bytes": 60077984,
+          "peak_heap_bytes": 30408704
+        }
+      ]
+    },
+    {
+      "slot": 2,
+      "id": "PkgRisk1",
+      "name": "BZIP2 (method 12) ZIP entry decompression bomb in BZip2CompressorInputStream",
+      "entrypoint": "ZipArchiveInputStreamFuzzTest.fuzzZipArchiveInputStreamReadBytes(InputStream) → ZipArchiveInputStream.read(byte[], int, int) → BZip2CompressorInputStream.read(byte[], int, int)",
+      "source_path": "src/main/java/org/apache/commons/compress/compressors/bzip2/BZip2CompressorInputStream.java",
+      "sink": "org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream#read",
+      "mechanism": "Highly repetitive bzip2 blocks (about 32 compressed bytes each) expand through RLE and BWT to about 45 MB each; the decoder produces every output byte one at a time through read0()/setupNoRandPartC with a per-byte CRC update, and ZipArchiveInputStream reads all of it",
+      "resource": "CPU time: per-byte decode work, growing with total decompressed bytes (about 45 MB per 32-byte block)",
+      "failure_mode": "timeout",
+      "scale": "Measured: CPU time is linear in decompressed bytes at about 205 MB/s, about 4.9 ns per output byte (32->64 MiB: +163 ms per 32 MiB). Each 900k bzip2 block of a repeated byte expands to about 45 MB and costs about 31 compressed bytes (1 block 79 B, 2 blocks 110 B). Extrapolating, 20 s ≈ 4.1 GB ≈ 91 blocks ≈ 50 B of headers + 2.85 KB, so about 2.9 KB, rounded up to about 3.1 KB for margin. Densest encoding: one method-12 entry holding a single multi-block bzip2 stream (more entries add 30+ header bytes each; only one stream per entry is decoded). The 10 KB limit holds about 320 blocks, about 14 GB, roughly 70 s. Heap stays at 3-7 MB, so CPU time only.",
+      "input_bytes": 3100,
+      "cwe": "CWE-409",
+      "checkpath_status": "PASS",
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "method": "fuzzing.tests.ZipArchiveInputStreamFuzzTest#fuzzZipArchiveInputStreamReadBytes(InputStream)",
+          "location": "harness/src/test/java/fuzzing/tests/ZipArchiveInputStreamFuzzTest.java:63"
+        },
+        {
+          "kind": "connection",
+          "type": "SEQUENCE",
+          "evidence": "ZipArchiveInputStreamFuzzTest#fuzzZipArchiveInputStreamReadBytes(InputStream) creates a ZipArchiveInputStream (harness/src/test/java/fuzzing/tests/ZipArchiveInputStreamFuzzTest.java:67), on which the next hop is invoked",
+          "site": "harness/src/test/java/fuzzing/tests/ZipArchiveInputStreamFuzzTest.java:67"
+        },
+        {
+          "kind": "hop",
+          "method": "org.apache.commons.compress.archivers.zip.ZipArchiveInputStream#read(byte[],int,int)",
+          "location": "src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveInputStream.java:428"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveInputStream.java:461"
+        },
+        {
+          "kind": "hop",
+          "method": "org.apache.commons.compress.archivers.sevenz.AES256SHA256Decoder$anon(InputStream)#read(byte[],int,int)",
+          "location": "src/main/java/org/apache/commons/compress/archivers/sevenz/AES256SHA256Decoder.java:109"
+        }
+      ],
+      "harness_entry": "fuzzing.tests.ZipArchiveInputStreamFuzzTest#fuzzZipArchiveInputStreamReadBytes",
+      "scale_measurement": [
+        {
+          "value": 2097152,
+          "input_bytes": 79,
+          "outcome": "completed",
+          "cpu_ms": 43.90177,
+          "allocated_bytes": 2522552,
+          "peak_heap_bytes": 3145728
+        },
+        {
+          "value": 4194304,
+          "input_bytes": 79,
+          "outcome": "completed",
+          "cpu_ms": 72.146728,
+          "allocated_bytes": 2694408,
+          "peak_heap_bytes": 3145728
+        },
+        {
+          "value": 8388608,
+          "input_bytes": 79,
+          "outcome": "completed",
+          "cpu_ms": 68.400118,
+          "allocated_bytes": 3023368,
+          "peak_heap_bytes": 3145728
+        },
+        {
+          "value": 16777216,
+          "input_bytes": 76,
+          "outcome": "completed",
+          "cpu_ms": 118.479668,
+          "allocated_bytes": 3673912,
+          "peak_heap_bytes": 5242880
+        },
+        {
+          "value": 33554432,
+          "input_bytes": 77,
+          "outcome": "completed",
+          "cpu_ms": 156.889082,
+          "allocated_bytes": 4989776,
+          "peak_heap_bytes": 6291456
+        },
+        {
+          "value": 67108864,
+          "input_bytes": 110,
+          "outcome": "completed",
+          "cpu_ms": 319.680296,
+          "allocated_bytes": 5958648,
+          "peak_heap_bytes": 7340032
+        }
+      ]
+    }
+  ]
+}

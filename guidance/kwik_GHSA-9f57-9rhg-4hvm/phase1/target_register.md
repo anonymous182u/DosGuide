@@ -1,0 +1,117 @@
+{
+  "ordered_targets": [
+    {
+      "slot": 1,
+      "id": "V1",
+      "name": "Hash Collision DoS on ConcurrentHashMap via ConnectionSource",
+      "entrypoint": "KwikFuzzTest.fuzzServerConnectionRegistryRegisterConnection(InputStream) → KwikFuzzTest.processInitial(ServerConnectionRegistryImpl, byte[]) → ServerConnectionRegistryImpl.registerConnection(ServerConnectionProxy, byte[]) → ConcurrentHashMap.put(Object, Object) → ConnectionSource.equals(Object)",
+      "source_path": "core/src/main/java/tech/kwik/core/server/impl/ConnectionSource.java",
+      "sink": "ConnectionSource#equals",
+      "mechanism": "ConnectionSource.hashCode() delegates to Arrays.hashCode(byte[]) (base-31 polynomial), which is trivially multi-collision-constructible (9 interchangeable 2-byte atoms yield 9^k collisions for 2k-byte IDs). ConnectionSource does not implement Comparable, so ConcurrentHashMap TreeBin.find/putTreeVal degrade to O(n) full tree traversal per operation, calling ConnectionSource.equals(Object) at each node. Registering n unique hash-colliding connection IDs costs O(n^2) total equals comparisons.",
+      "resource": "CPU time: number of ConnectionSource.equals (Arrays.equals on byte[]) comparisons in ConcurrentHashMap tree traversal grows quadratically with the number of hash-colliding entries",
+      "failure_mode": "timeout",
+      "scale": "Measured growth is quadratic (O(n^2) equals comparisons in ConcurrentHashMap TreeBin DFS traversal). Fit from n=1024 (23.7ms) and n=2048 (51.5ms): cpu ≈ 14.4ms baseline + 8.83ns per comparison pair × n(n-1). Extrapolating to 20,000ms timeout: n ≈ 47,570 unique hash-colliding 10-byte connection IDs; at 11 bytes per ID (1 length + 10 data), ≈ 524,000 bytes. Available collision IDs: 9^5 = 59,049 (sufficient). Well within 1MB input limit.",
+      "input_bytes": 524000,
+      "cwe": "CWE-407",
+      "checkpath_status": "PASS",
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "method": "tech.kwik.fuzz.harness.KwikFuzzTest#fuzzServerConnectionRegistryRegisterConnection(InputStream)",
+          "location": "harness/src/test/java/tech/kwik/fuzz/harness/KwikFuzzTest.java:94"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "harness/src/test/java/tech/kwik/fuzz/harness/KwikFuzzTest.java:98"
+        },
+        {
+          "kind": "hop",
+          "method": "tech.kwik.fuzz.harness.KwikFuzzTest#processInitial(ServerConnectionRegistryImpl,byte[])",
+          "location": "harness/src/test/java/tech/kwik/fuzz/harness/KwikFuzzTest.java:125"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "harness/src/test/java/tech/kwik/fuzz/harness/KwikFuzzTest.java:129"
+        },
+        {
+          "kind": "hop",
+          "method": "tech.kwik.core.server.impl.ServerConnectionRegistryImpl#registerConnection(ServerConnectionProxy,byte[])",
+          "location": "core/src/main/java/tech/kwik/core/server/impl/ServerConnectionRegistryImpl.java:56"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "core/src/main/java/tech/kwik/core/server/impl/ServerConnectionRegistryImpl.java:57"
+        },
+        {
+          "kind": "hop",
+          "method": "ConcurrentHashMap.put(Object, Object)",
+          "location": "outside the source tree"
+        },
+        {
+          "kind": "connection",
+          "type": "UNCHECKED",
+          "evidence": "hop 4 is outside the source tree, so calls made inside it cannot be inspected"
+        },
+        {
+          "kind": "hop",
+          "method": "tech.kwik.core.server.impl.ConnectionSource#equals(Object)",
+          "location": "core/src/main/java/tech/kwik/core/server/impl/ConnectionSource.java:39"
+        }
+      ],
+      "harness_entry": "tech.kwik.fuzz.harness.KwikFuzzTest#fuzzServerConnectionRegistryRegisterConnection",
+      "scale_measurement": [
+        {
+          "value": 64,
+          "input_bytes": 704,
+          "outcome": "completed",
+          "cpu_ms": 6.335,
+          "allocated_bytes": 200632,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "value": 128,
+          "input_bytes": 1408,
+          "outcome": "completed",
+          "cpu_ms": 10.60977,
+          "allocated_bytes": 206712,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "value": 256,
+          "input_bytes": 2816,
+          "outcome": "completed",
+          "cpu_ms": 12.758473,
+          "allocated_bytes": 239208,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "value": 512,
+          "input_bytes": 5632,
+          "outcome": "completed",
+          "cpu_ms": 19.385735,
+          "allocated_bytes": 301632,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "value": 1024,
+          "input_bytes": 11264,
+          "outcome": "completed",
+          "cpu_ms": 23.748959,
+          "allocated_bytes": 441672,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "value": 2048,
+          "input_bytes": 22528,
+          "outcome": "completed",
+          "cpu_ms": 51.524067,
+          "allocated_bytes": 712184,
+          "peak_heap_bytes": 1048576
+        }
+      ]
+    }
+  ]
+}

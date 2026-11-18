@@ -1,0 +1,15 @@
+{
+  "series_request": null,
+  "rounds": [
+    {
+      "round": 1,
+      "revision": {
+        "V1": {
+          "scale": "Measured CPU growth: ~2.8 µs per header byte (linear). At maximum header size within input limit (~10226 bytes in a 10240-byte input), extrapolated CPU ≈ 38 ms, far below the 20s timeout. Allocation grows at ~60 bytes per header byte; at max ≈ 1.3 MB, far below 1 GB heap. Neither timeout nor OOM is reachable. The failure is the harness oracle: readHeaders() returns a header of > 512 bytes (up to HEADER_PART_SIZE_MAX = 10240), the fuzz test throws AssertionError (undeclared throwable). Any input producing > 512 header bytes triggers it; minimum is 513 header bytes in a 527-byte input (1 byte boundary line + 5 byte delimiter + 509 bytes content + 4 byte CRLFCRLF + 7 byte close delimiter). Encoding is 1:1 — each input byte beyond the 14-byte framing becomes one header byte.",
+          "input_bytes": 527
+        }
+      },
+      "field_problems": {}
+    }
+  ]
+}

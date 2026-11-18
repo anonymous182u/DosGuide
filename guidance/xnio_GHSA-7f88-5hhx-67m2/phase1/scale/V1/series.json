@@ -1,0 +1,11 @@
+{
+  "parameter": "number of notifiers registered (recursion depth of notifyDone chain)",
+  "inputs": [
+    {"file": "n500.bin", "value": 500},
+    {"file": "n1000.bin", "value": 1000},
+    {"file": "n2000.bin", "value": 2000},
+    {"file": "n4000.bin", "value": 4000},
+    {"file": "n8000.bin", "value": 8000},
+    {"file": "n16000.bin", "value": 16000}
+  ]
+}

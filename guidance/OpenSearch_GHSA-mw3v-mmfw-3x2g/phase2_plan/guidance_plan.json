@@ -1,0 +1,47 @@
+{
+  "plans": [
+    {
+      "target": "V1",
+      "signals": [
+        {
+          "name": "maxClauseDepth",
+          "quantity": "peak number of simultaneously active classic-parser recursive production frames (Clause entries minus exits), i.e. the recursion depth reached by nested groups while QueryStringQueryParser.parse runs",
+          "aggregation": "max",
+          "locations": [
+            "org.apache.lucene.queryparser.classic.QueryParser#Clause",
+            "org.apache.lucene.queryparser.classic.QueryParser#Query",
+            "org.opensearch.index.search.QueryStringQueryParser#parse"
+          ],
+          "technique": "bytecode",
+          "storage": "static int cur/max fields in org.opensearch.fuzz.agent.V1Counters (single JQF fuzzing thread), incremented on method entry and decremented on normal or exceptional exit by ASM AdviceAdapter hooks injected by V1MeasureAgent; counting is active only between QueryStringQueryParser#parse entry and exit",
+          "reset": "V1Guidance.getInput() calls V1Counters.reset() immediately before handing the input to the harness",
+          "read": "V1Guidance.handleResult()"
+        },
+        {
+          "name": "parserVisits",
+          "quantity": "total invocations of the recursive productions Clause and Query during the parse (parse nodes visited)",
+          "aggregation": "count",
+          "locations": [
+            "org.apache.lucene.queryparser.classic.QueryParser#Clause",
+            "org.apache.lucene.queryparser.classic.QueryParser#Query"
+          ],
+          "technique": "bytecode",
+          "storage": "static long visits field in org.opensearch.fuzz.agent.V1Counters, incremented by the same entry hooks",
+          "reset": "V1Guidance.getInput() calls V1Counters.reset()",
+          "read": "V1Guidance.handleResult()"
+        }
+      ],
+      "retention": "Keep an input if maxClauseDepth exceeds the best so far (primary); else if parserVisits reaches a new maximum while depth is at least the parent's; else, while depth is flat, keep it if it is longer than the longest kept input and its measured depth is no lower than its parent's, so inputs keep growing towards input_bytes ([R46]). Inputs ending in a throwable are kept like any other, using the measured counters; the Guidance never labels a run as failed. Parent selection is weighted towards the highest maxClauseDepth and the highest measured depth per input byte (specific to this method: one group-open token should yield one Clause frame), and repetition is applied more often to such parents.",
+      "retention_signals": [
+        "maxClauseDepth",
+        "parserVisits"
+      ],
+      "mutation": [
+        "byte-level: random bit/byte flip, byte insert, byte delete, splice of two corpus inputs",
+        "repetition: copy a chunk (random, or starting at a group-boundary dictionary token) and repeat it k times in place, k up to filling jqf.ei.MAX_INPUT_SIZE, including doubling a region or the whole input; about 11 doublings reach 2048 bytes",
+        "dictionary insert/overwrite of single tokens from the classic QueryParser grammar and harness mapping: ( ) + - ! AND OR NOT && || : ^ ~ \" * ? [ ] { } TO / \\ whitespace, and field names f1 f2 f3 f_multi f_int f_date",
+        "no encoder: input is plain UTF-8 query text with no compression, checksum or length fields"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "clone_url": "https://github.com/keycloak/keycloak.git",
+  "commit": "4253a79eb2a1cc1440eb37613f307e5d5a1556dc",
+  "jdk": 17,
+  "tools": "the project's Maven wrapper (./mvnw, Maven 3.9.8)",
+  "commands": [
+    "cd src && MAVEN_OPTS=-Xmx2g ./mvnw -B -DskipTests -pl saml-core,common,saml-core-api -am clean package"
+  ],
+  "artifacts": [
+    {
+      "built": "src/saml-core/target/keycloak-saml-core-999.0.0-SNAPSHOT.jar",
+      "lib": "lib/keycloak-saml-core-999.0.0-SNAPSHOT.jar",
+      "sha256": "2f5e3e0b9394ccd67a39be17b88b324ba625f38daf7ba8be0ad117a97d0eb50d",
+      "classes_sha256": "f9b41b02c933f17190181ba00c9e6d9f70bed0a7c6b51ffa7243f8c44cf24d16"
+    },
+    {
+      "built": "src/saml-core-api/target/keycloak-saml-core-public-999.0.0-SNAPSHOT.jar",
+      "lib": "lib/keycloak-saml-core-public-999.0.0-SNAPSHOT.jar",
+      "sha256": "777c721665901080591ad29cb005534f0870dfabbaeba95c38f416d4225b0ce6",
+      "classes_sha256": "3eb8e65dfc97e271f31bdccaa1cb6bc4ae97d73eaf62a86067a56aaaf54537e9"
+    },
+    {
+      "built": "src/common/target/keycloak-common-999.0.0-SNAPSHOT.jar",
+      "lib": "lib/keycloak-common-999.0.0-SNAPSHOT.jar",
+      "sha256": "95b468c43ba37299b7d85563d722fea2d9eb6e98857eba9d25387e194085a6bb",
+      "classes_sha256": "7964dd956faf26ac0b01dc367210f3e750393c43a6dd33bf9afafffaa10ca04c"
+    }
+  ],
+  "fixed": {
+    "jars": [
+      {
+        "coords": "org.keycloak:keycloak-saml-core:26.5.4",
+        "sha256": "f562d175d8bba1f889f4ceacc3dc4030b261f211ed10cab76cf66179285963b7"
+      },
+      {
+        "coords": "org.keycloak:keycloak-saml-core-public:26.5.4",
+        "sha256": "e46d7b246e93248524aa1a6fad2655ec2391d6c599cb24f46686309bb13d726b"
+      },
+      {
+        "coords": "org.keycloak:keycloak-common:26.5.4",
+        "sha256": "4a312d043be137b78287e81e89ee9a609fdda181a7ae3428441cb3e739992747"
+      }
+    ],
+    "drop": "^(keycloak\\-saml\\-core|keycloak\\-saml\\-core\\-public|keycloak\\-common)-[0-9]"
+  },
+  "notes": "Project version at this commit: 999.0.0-SNAPSHOT. Reactor (-am): keycloak-parent, keycloak-common, keycloak-core, keycloak-server-spi, keycloak-server-spi-private, keycloak-crypto-parent, keycloak-crypto-default (test-scope dependency of saml-core), keycloak-saml-core-public (module saml-core-api), keycloak-saml-core. -Dmaven.test.skip=true does not work here (keycloak-crypto-default needs the keycloak-core tests jar), so tests are compiled but not run (-DskipTests). The jars contain every entry of the 26.5.3 releases (saml-core adds SubjectConfirmationDataValidator; ConditionsValidator, Profile*, DerUtils, Environment differ). Fixed: the three artifacts at 26.5.4."
+}

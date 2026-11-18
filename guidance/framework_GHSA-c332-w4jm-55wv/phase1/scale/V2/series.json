@@ -1,0 +1,29 @@
+{
+  "parameter": "alphanumeric chars in TLD position after single dot",
+  "inputs": [
+    {
+      "file": "n100.bin",
+      "value": 100
+    },
+    {
+      "file": "n200.bin",
+      "value": 200
+    },
+    {
+      "file": "n400.bin",
+      "value": 400
+    },
+    {
+      "file": "n800.bin",
+      "value": 800
+    },
+    {
+      "file": "n1600.bin",
+      "value": 1600
+    },
+    {
+      "file": "n2400.bin",
+      "value": 2400
+    }
+  ]
+}

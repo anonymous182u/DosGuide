@@ -1,0 +1,252 @@
+{
+  "ordered_targets": [
+    {
+      "slot": 1,
+      "id": "V1",
+      "name": "RegexCriterion.filter() ReDoS via user-controlled regex",
+      "entrypoint": "RegexCriterionFuzzTest.fuzzRegexCriterionFilter(InputStream) → RegexCriterion(String) → RegexCriterion.filter(Identifiable, IdentifiableType) → Pattern.compile(String) → Matcher.find()",
+      "source_path": "iidm/iidm-criteria/src/main/java/com/powsybl/iidm/criteria/RegexCriterion.java",
+      "sink": "Matcher#find()",
+      "mechanism": "User-controlled regex with nested quantifiers (e.g. (a+)+b) causes the JDK NFA backtracking engine to explore 2^(n-1) groupings of n matching characters before failing, consuming exponential CPU time",
+      "resource": "CPU time: NFA backtracking steps grow as O(2^n) where n is the number of text characters matching the inner quantified group",
+      "failure_mode": "timeout",
+      "scale": "Measured: with regex `(a+)+bzzz...` the JDK BnM pre-filter scans for the required literal `b`, finds none in the all-`a` text, and returns in O(n) time (~0.018 ms/char); extrapolating linearly, 20 s timeout would need ~1.1 M chars (~2.2 MB input), far exceeding the 10240-byte limit. The actual exponential mechanism requires a regex without required literals (e.g. `(a+)+$`), bypassing BnM: the NFA then explores 2^(n-1) groupings of n matching chars, each walking ~n nodes. At ~5-50 ns/node, n=28 gives ~3.8e9 evaluations ≈ 19-190 s (timeout). With the midpoint split, regex `(a+)+$` (6 B padded with `$` to 32 B) + text `a`×31+`!` (32 B) = 64 bytes total.",
+      "input_bytes": 64,
+      "cwe": "CWE-1333",
+      "checkpath_status": "PASS",
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "method": "com.powsybl.fuzzing.tests.RegexCriterionFuzzTest#fuzzRegexCriterionFilter(InputStream)",
+          "location": "harness/src/test/java/com/powsybl/fuzzing/tests/RegexCriterionFuzzTest.java:39"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "harness/src/test/java/com/powsybl/fuzzing/tests/RegexCriterionFuzzTest.java:45"
+        },
+        {
+          "kind": "hop",
+          "method": "com.powsybl.iidm.criteria.RegexCriterion#RegexCriterion(String)",
+          "location": "iidm/iidm-criteria/src/main/java/com/powsybl/iidm/criteria/RegexCriterion.java:22"
+        },
+        {
+          "kind": "connection",
+          "type": "DATAFLOW",
+          "evidence": "RegexCriterion#RegexCriterion(String) (iidm/iidm-criteria/src/main/java/com/powsybl/iidm/criteria/RegexCriterion.java:22) writes field `regex`, which RegexCriterion#filter(Identifiable,IdentifiableType) (iidm/iidm-criteria/src/main/java/com/powsybl/iidm/criteria/RegexCriterion.java:32) reads",
+          "site": "iidm/iidm-criteria/src/main/java/com/powsybl/iidm/criteria/RegexCriterion.java:22"
+        },
+        {
+          "kind": "hop",
+          "method": "com.powsybl.iidm.criteria.RegexCriterion#filter(Identifiable,IdentifiableType)",
+          "location": "iidm/iidm-criteria/src/main/java/com/powsybl/iidm/criteria/RegexCriterion.java:32"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "iidm/iidm-criteria/src/main/java/com/powsybl/iidm/criteria/RegexCriterion.java:33"
+        },
+        {
+          "kind": "hop",
+          "method": "Pattern.compile(String)",
+          "location": "outside the source tree"
+        },
+        {
+          "kind": "connection",
+          "type": "UNCHECKED",
+          "evidence": "hop 4 is outside the source tree, so calls made inside it cannot be inspected"
+        },
+        {
+          "kind": "hop",
+          "method": "Matcher.find()",
+          "location": "outside the source tree"
+        }
+      ],
+      "harness_entry": "com.powsybl.fuzzing.tests.RegexCriterionFuzzTest#fuzzRegexCriterionFilter",
+      "scale_measurement": [
+        {
+          "value": 10,
+          "input_bytes": 20,
+          "outcome": "completed",
+          "cpu_ms": 3.479448,
+          "allocated_bytes": 220448,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "value": 20,
+          "input_bytes": 40,
+          "outcome": "completed",
+          "cpu_ms": 3.50488,
+          "allocated_bytes": 220920,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "value": 40,
+          "input_bytes": 80,
+          "outcome": "completed",
+          "cpu_ms": 5.907293,
+          "allocated_bytes": 222104,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "value": 80,
+          "input_bytes": 160,
+          "outcome": "completed",
+          "cpu_ms": 6.495886,
+          "allocated_bytes": 224464,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "value": 160,
+          "input_bytes": 320,
+          "outcome": "completed",
+          "cpu_ms": 7.979483,
+          "allocated_bytes": 229064,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "value": 320,
+          "input_bytes": 640,
+          "outcome": "completed",
+          "cpu_ms": 9.197344,
+          "allocated_bytes": 238208,
+          "peak_heap_bytes": 1048576
+        }
+      ]
+    },
+    {
+      "slot": 2,
+      "id": "PkgRisk1",
+      "name": "java.util.regex NFA catastrophic backtracking via RegexCriterion.filter()",
+      "entrypoint": "RegexCriterionFuzzTest.fuzzRegexCriterionFilter(InputStream) → RegexCriterion(String) → RegexCriterion.filter(Identifiable, IdentifiableType) → Pattern.compile(String) → Matcher.find() → Matcher.search(int) → Pattern$Node.match(Matcher, int, CharSequence)",
+      "source_path": "iidm/iidm-criteria/src/main/java/com/powsybl/iidm/criteria/RegexCriterion.java",
+      "sink": "Pattern$Node#match()",
+      "mechanism": "JDK java.util.regex NFA engine explores exponential backtracking paths for patterns with nested/overlapping quantifiers against non-matching text of repeated characters",
+      "resource": "CPU time: NFA backtracking steps grow as O(2^n) where n is the number of text characters matching the inner quantified group",
+      "failure_mode": "timeout",
+      "scale": "Measured: with regex `(a+)+bzzz...` the JDK BnM pre-filter scans for the required literal `b`, finds none in the all-`a` text, and returns in O(n) time (~0.019 ms/char); extrapolating linearly, 20 s timeout would need ~1.0 M chars (~2.1 MB input), far exceeding the 10240-byte limit. The actual exponential mechanism requires a regex without required literals (e.g. `(a+)+$`), bypassing BnM: the NFA then explores 2^(n-1) groupings of n matching chars, each walking ~n nodes. At ~5-50 ns/node, n=28 gives ~3.8e9 evaluations ≈ 19-190 s (timeout). With the midpoint split, regex `(a+)+$` (6 B padded with `$` to 32 B) + text `a`×31+`!` (32 B) = 64 bytes total.",
+      "input_bytes": 64,
+      "cwe": "CWE-1333",
+      "checkpath_status": "PASS",
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "method": "com.powsybl.fuzzing.tests.RegexCriterionFuzzTest#fuzzRegexCriterionFilter(InputStream)",
+          "location": "harness/src/test/java/com/powsybl/fuzzing/tests/RegexCriterionFuzzTest.java:39"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "harness/src/test/java/com/powsybl/fuzzing/tests/RegexCriterionFuzzTest.java:45"
+        },
+        {
+          "kind": "hop",
+          "method": "com.powsybl.iidm.criteria.RegexCriterion#RegexCriterion(String)",
+          "location": "iidm/iidm-criteria/src/main/java/com/powsybl/iidm/criteria/RegexCriterion.java:22"
+        },
+        {
+          "kind": "connection",
+          "type": "DATAFLOW",
+          "evidence": "RegexCriterion#RegexCriterion(String) (iidm/iidm-criteria/src/main/java/com/powsybl/iidm/criteria/RegexCriterion.java:22) writes field `regex`, which RegexCriterion#filter(Identifiable,IdentifiableType) (iidm/iidm-criteria/src/main/java/com/powsybl/iidm/criteria/RegexCriterion.java:32) reads",
+          "site": "iidm/iidm-criteria/src/main/java/com/powsybl/iidm/criteria/RegexCriterion.java:22"
+        },
+        {
+          "kind": "hop",
+          "method": "com.powsybl.iidm.criteria.RegexCriterion#filter(Identifiable,IdentifiableType)",
+          "location": "iidm/iidm-criteria/src/main/java/com/powsybl/iidm/criteria/RegexCriterion.java:32"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "iidm/iidm-criteria/src/main/java/com/powsybl/iidm/criteria/RegexCriterion.java:33"
+        },
+        {
+          "kind": "hop",
+          "method": "Pattern.compile(String)",
+          "location": "outside the source tree"
+        },
+        {
+          "kind": "connection",
+          "type": "UNCHECKED",
+          "evidence": "hop 4 is outside the source tree, so calls made inside it cannot be inspected"
+        },
+        {
+          "kind": "hop",
+          "method": "Matcher.find()",
+          "location": "outside the source tree"
+        },
+        {
+          "kind": "connection",
+          "type": "UNCHECKED",
+          "evidence": "hop 5 is outside the source tree, so calls made inside it cannot be inspected"
+        },
+        {
+          "kind": "hop",
+          "method": "Matcher.search(int)",
+          "location": "outside the source tree"
+        },
+        {
+          "kind": "connection",
+          "type": "UNCHECKED",
+          "evidence": "hop 6 is outside the source tree, so calls made inside it cannot be inspected"
+        },
+        {
+          "kind": "hop",
+          "method": "Pattern$Node.match(Matcher, int, CharSequence)",
+          "location": "outside the source tree"
+        }
+      ],
+      "harness_entry": "com.powsybl.fuzzing.tests.RegexCriterionFuzzTest#fuzzRegexCriterionFilter",
+      "scale_measurement": [
+        {
+          "value": 10,
+          "input_bytes": 20,
+          "outcome": "completed",
+          "cpu_ms": 3.451756,
+          "allocated_bytes": 220448,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "value": 20,
+          "input_bytes": 40,
+          "outcome": "completed",
+          "cpu_ms": 3.537308,
+          "allocated_bytes": 220920,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "value": 40,
+          "input_bytes": 80,
+          "outcome": "completed",
+          "cpu_ms": 3.954574,
+          "allocated_bytes": 222104,
+          "peak_heap_bytes": 0
+        },
+        {
+          "value": 80,
+          "input_bytes": 160,
+          "outcome": "completed",
+          "cpu_ms": 4.610861,
+          "allocated_bytes": 224464,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "value": 160,
+          "input_bytes": 320,
+          "outcome": "completed",
+          "cpu_ms": 5.929997,
+          "allocated_bytes": 229064,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "value": 320,
+          "input_bytes": 640,
+          "outcome": "completed",
+          "cpu_ms": 9.846193,
+          "allocated_bytes": 238208,
+          "peak_heap_bytes": 1048576
+        }
+      ]
+    }
+  ]
+}

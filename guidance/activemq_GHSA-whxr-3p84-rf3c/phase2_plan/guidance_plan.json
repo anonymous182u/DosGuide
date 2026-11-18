@@ -1,0 +1,95 @@
+{
+  "plans": [
+    {
+      "target": "V1",
+      "signals": [
+        {
+          "name": "allocBytes",
+          "quantity": "size argument (in bytes) passed to new byte[size] in the unchecked allocation at BaseDataStreamMarshaller.looseUnmarshalByteArray line 624-625; a single PartialCommand frame triggers exactly one allocation, so this value equals the attacker-controlled 4-byte int field",
+          "aggregation": "sum",
+          "locations": [
+            "org.apache.activemq.openwire.v12.BaseDataStreamMarshaller#looseUnmarshalByteArray(DataInput) — line 624-625: int size = dataIn.readInt(); rc = new byte[size];"
+          ],
+          "technique": "bytecode",
+          "storage": "ThreadLocal<long[]> in dosguide.agent.SignalCollector (ALLOC_BYTES field); set by injected bytecode that DUPs the int size on the operand stack before NEWARRAY T_BYTE, then calls SignalCollector.recordAlloc(int)",
+          "reset": "SignalCollector.reset() called by V1AllocGuidance at the start of getInput(), before each trial execution",
+          "read": "V1AllocGuidance.handleResult() reads SignalCollector.getAllocBytes() and stores it as the lastSignals value"
+        }
+      ],
+      "retention": "Keep the input whose allocBytes is strictly greater than the previous best. The guidance maintains a single best_input byte[] and best_allocBytes long. On each handleResult, if the current allocBytes exceeds best_allocBytes, replace both. Secondary: when signal is flat (zero), retain inputs that grow toward input_bytes (14 bytes for V1). Priority is monotonically increasing allocation size toward OOM.",
+      "retention_signals": [
+        "allocBytes"
+      ],
+      "mutation": [
+        "structure-aware: seed is a 14-byte valid PartialCommand frame [frameLen:4=0x0000000A][type:1=0x3C][commandId:4=0x00000001][boolTrue:1=0x01][allocSize:4=0x00100000]; the frame layout is fixed and every mutation produces a structurally valid frame via ensureFrameValid() repair",
+        "targeted field doubling: read the 4-byte big-endian allocSize field at offset 10-13, double its value, write back; primary escalation operator",
+        "targeted field set: overwrite allocSize with specific large values from a table: 128MB, 256MB, 512MB, 768MB, 896MB, 928MB, 960MB, 1023MB",
+        "random large int: set allocSize to a random int in [1MB, 1023MB] range to explore the OOM boundary",
+        "bit flip on allocSize: flip 1-3 random bits in the allocSize field (bytes 10-13) for fine-grained exploration",
+        "byte-level random: mutate 1-3 random bytes anywhere in the frame, then repair header",
+        "dictionary tokens from source: [0x3C] (PartialCommand type=60), [0x01] (boolean true), [0x00] (zero/false), [0xFF,0xFF,0xFF,0xFF] (max int); inserted at random positions",
+        "repetition [R45]: duplicate the entire frame to grow input length toward maxInputSize"
+      ]
+    },
+    {
+      "target": "V2",
+      "signals": [
+        {
+          "name": "throwableDepth",
+          "quantity": "maximum recursion depth of looseUnmarsalThrowable during a single unmarshal execution; each recursive call at line 545 (o.initCause(looseUnmarsalThrowable(wireFormat, dataIn))) adds one level",
+          "aggregation": "max",
+          "locations": [
+            "org.apache.activemq.openwire.v12.BaseDataStreamMarshaller#looseUnmarsalThrowable(OpenWireFormat, DataInput) — line 514 entry and line 545 recursive self-call"
+          ],
+          "technique": "bytecode",
+          "storage": "ThreadLocal<int[]> in dosguide.agent.SignalCollector (THROWABLE_DEPTH field holding [currentDepth, maxDepth]); on method entry: currentDepth++ then maxDepth = max(maxDepth, currentDepth); on every method exit (return/athrow): currentDepth--",
+          "reset": "SignalCollector.reset() called by V2ThrowableGuidance at the start of getInput(); sets both currentDepth and maxDepth to 0",
+          "read": "V2ThrowableGuidance.handleResult() reads SignalCollector.getThrowableDepth() (the maxDepth) as the signal value"
+        }
+      ],
+      "retention": "Keep the input whose throwableDepth is strictly greater than the previous best. Secondary: when signal is flat or equal, retain inputs that grow toward input_bytes (10240 bytes for V2). Goal is to reach theoretical maximum depth of 2045.",
+      "retention_signals": [
+        "throwableDepth"
+      ],
+      "mutation": [
+        "structure-aware: seed is a valid ExceptionResponse frame with 16-level throwable cause chain; header is [frameLen:4][type:1=0x1F][commandId:4][responseRequired:1][correlationId:4] = 14 bytes; each throwable level is [boolTrue:1=0x01][classNull:1=0x00][messageNull:1=0x00][stackCount:2=0x0000] = 5 bytes; chain terminated by [boolFalse:1=0x00]",
+        "chain extension: rebuild chain with more 5-byte recursion blocks to increase depth",
+        "maximize depth: construct the maximum-depth input filling the entire maxInputSize budget (~2045 levels)",
+        "repetition [R45]: duplicate the throwable body region to grow toward maxInputSize",
+        "byte-level random: mutate 1-3 random bytes in the body (not header), then repair header type and frame length",
+        "dictionary tokens from source: [0x1F] (ExceptionResponse type=31), [0x01] (boolean true), [0x00] (boolean false/null string), [0x00,0x00] (zero stack trace count)",
+        "chain truncation: reduce chain length for diversity"
+      ]
+    },
+    {
+      "target": "V3",
+      "signals": [
+        {
+          "name": "nestingDepth",
+          "quantity": "maximum nesting depth of looseUnmarsalNestedObject calls during a single unmarshal execution; each DataResponse nested inside another DataResponse adds one level",
+          "aggregation": "max",
+          "locations": [
+            "org.apache.activemq.openwire.v12.BaseDataStreamMarshaller#looseUnmarsalNestedObject(OpenWireFormat, DataInput) — line 471-472: delegates to wireFormat.looseUnmarshalNestedObject(dataIn)"
+          ],
+          "technique": "bytecode",
+          "storage": "ThreadLocal<int[]> in dosguide.agent.SignalCollector (NESTING_DEPTH field holding [currentDepth, maxDepth]); on method entry: currentDepth++ then maxDepth = max(maxDepth, currentDepth); on every method exit: currentDepth--",
+          "reset": "SignalCollector.reset() called by V3NestingGuidance at the start of getInput(); sets both currentDepth and maxDepth to 0",
+          "read": "V3NestingGuidance.handleResult() reads SignalCollector.getNestingDepth() (the maxDepth) as the signal value"
+        }
+      ],
+      "retention": "Keep the input whose nestingDepth is strictly greater than the previous best. Secondary: when signal is flat, retain inputs that grow toward input_bytes (10240 bytes for V3). Goal is to reach theoretical maximum depth of 929.",
+      "retention_signals": [
+        "nestingDepth"
+      ],
+      "mutation": [
+        "structure-aware: seed is a valid DataResponse frame with 16-level nesting; header is [frameLen:4][type:1=0x20][commandId:4][responseRequired:1][correlationId:4] = 14 bytes; each nested level is [boolTrue:1=0x01][type:1=0x20][commandId:4][responseRequired:1][correlationId:4] = 11 bytes; nesting terminated by [boolFalse:1=0x00]",
+        "nesting extension: rebuild chain with more 11-byte nesting blocks to increase depth",
+        "maximize depth: construct the maximum-depth input filling the entire maxInputSize budget (~929 levels)",
+        "repetition [R45]: duplicate the nesting body region to grow toward maxInputSize, then repair nesting blocks to ensure valid structure",
+        "byte-level random: mutate 1-3 random bytes in the body, then repair header",
+        "dictionary tokens from source: [0x20] (DataResponse type=32), [0x01] (boolean true/nested present), [0x00] (boolean false/terminator), [0x00,0x00,0x00,0x01] (commandId=1), [0x00,0x00,0x00,0x00] (correlationId=0)",
+        "nesting truncation: reduce nesting for diversity"
+      ]
+    }
+  ]
+}

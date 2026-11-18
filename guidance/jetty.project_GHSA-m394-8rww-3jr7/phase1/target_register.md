@@ -1,0 +1,110 @@
+{
+  "ordered_targets": [
+    {
+      "slot": 1,
+      "id": "V1",
+      "name": "QuotedQualityCSV.sort() cubic-time algorithmic complexity DoS",
+      "entrypoint": "JettyFuzzTest.fuzzHttpFieldsGetQualityCSV(InputStream) → HttpFields.getQualityCSV(HttpHeader, ToIntFunction) → QuotedQualityCSV.addValue(String) → QuotedQualityCSV.getValues() → QuotedQualityCSV.sort()",
+      "source_path": "jetty-http/src/main/java/org/eclipse/jetty/http/QuotedQualityCSV.java",
+      "sink": "QuotedQualityCSV#sort()",
+      "mechanism": "The sort() method implements a gnome-sort variant that restarts scanning from the end after every adjacent swap. With n comma-separated values having mixed MOST_SPECIFIC_MIME_ORDERING secondary ordering (order-2 values like 'a' before order-3 values like ';x'), the number of inversions is k*m and each swap triggers an O(n) restart, giving Theta(k*m*n) = Theta(n^3) total iterations for balanced k=m=n/2.",
+      "resource": "CPU time: loop iterations in sort() grow cubically with the number of parsed comma-separated values",
+      "failure_mode": "timeout",
+      "scale": "Measured: at n=1024 values (2559 bytes), CPU time is 1099.5ms. Growth exponent 2.66 from 512->1024 interval, trending toward cubic (O(n^3)) as n increases. Cost per n^3: ~1.02e-6 ms. Extrapolating the measured k=2.66 power-law: n~3050 values (~7620 bytes) reaches 20s timeout; pure cubic model gives n~2690 (~6730 bytes). At full 10240 bytes (n=4096 values): predicted 44-70 seconds, well above 20s timeout. Using ~7500 bytes (n~3000) as conservative threshold.",
+      "input_bytes": 7500,
+      "cwe": "CWE-407",
+      "checkpath_status": "PASS",
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "method": "com.fuzzer.harness.JettyFuzzTest#fuzzHttpFieldsGetQualityCSV(InputStream)",
+          "location": "harness/src/test/java/com/fuzzer/harness/JettyFuzzTest.java:117"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "harness/src/test/java/com/fuzzer/harness/JettyFuzzTest.java:122"
+        },
+        {
+          "kind": "hop",
+          "method": "org.eclipse.jetty.http.HttpFields#getQualityCSV(HttpHeader,ToIntFunction)",
+          "location": "jetty-http/src/main/java/org/eclipse/jetty/http/HttpFields.java:647"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "jetty-http/src/main/java/org/eclipse/jetty/http/HttpFields.java:656"
+        },
+        {
+          "kind": "hop",
+          "method": "org.eclipse.jetty.http.QuotedCSVParser#addValue(String)",
+          "location": "jetty-http/src/main/java/org/eclipse/jetty/http/QuotedCSVParser.java:96"
+        },
+        {
+          "kind": "connection",
+          "type": "SEQUENCE",
+          "evidence": "HttpFields#getQualityCSV(HttpHeader,ToIntFunction) (jetty-http/src/main/java/org/eclipse/jetty/http/HttpFields.java:647) calls QuotedCSVParser#addValue(String) at line 656 and getValues at line 660",
+          "site": "jetty-http/src/main/java/org/eclipse/jetty/http/HttpFields.java:647"
+        },
+        {
+          "kind": "hop",
+          "method": "org.eclipse.jetty.http.QuotedQualityCSV#getValues()",
+          "location": "jetty-http/src/main/java/org/eclipse/jetty/http/QuotedQualityCSV.java:144"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "jetty-http/src/main/java/org/eclipse/jetty/http/QuotedQualityCSV.java:147"
+        },
+        {
+          "kind": "hop",
+          "method": "org.eclipse.jetty.http.QuotedQualityCSV#sort()",
+          "location": "jetty-http/src/main/java/org/eclipse/jetty/http/QuotedQualityCSV.java:159"
+        }
+      ],
+      "harness_entry": "com.fuzzer.harness.JettyFuzzTest#fuzzHttpFieldsGetQualityCSV",
+      "scale_measurement": [
+        {
+          "value": 64,
+          "input_bytes": 159,
+          "outcome": "completed",
+          "cpu_ms": 18.610493,
+          "allocated_bytes": 925272,
+          "peak_heap_bytes": 2097152
+        },
+        {
+          "value": 128,
+          "input_bytes": 319,
+          "outcome": "completed",
+          "cpu_ms": 23.14986,
+          "allocated_bytes": 1006184,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "value": 256,
+          "input_bytes": 639,
+          "outcome": "completed",
+          "cpu_ms": 40.42595,
+          "allocated_bytes": 1315896,
+          "peak_heap_bytes": 2097152
+        },
+        {
+          "value": 512,
+          "input_bytes": 1279,
+          "outcome": "completed",
+          "cpu_ms": 173.993665,
+          "allocated_bytes": 2519704,
+          "peak_heap_bytes": 3145728
+        },
+        {
+          "value": 1024,
+          "input_bytes": 2559,
+          "outcome": "completed",
+          "cpu_ms": 1099.543288,
+          "allocated_bytes": 7322920,
+          "peak_heap_bytes": 7340032
+        }
+      ]
+    }
+  ]
+}

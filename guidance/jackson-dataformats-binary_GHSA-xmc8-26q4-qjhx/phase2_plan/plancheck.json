@@ -1,0 +1,17 @@
+{
+  "final_ok": true,
+  "repair_rounds": 1,
+  "rounds": [
+    {
+      "round": 0,
+      "ok": false,
+      "missing": true
+    },
+    {
+      "round": 1,
+      "ok": true,
+      "error": null,
+      "failing": []
+    }
+  ]
+}

@@ -1,0 +1,341 @@
+{
+  "tool": "checkpath",
+  "version": "1.0.0",
+  "source_root": "projects/OpenSearch_GHSA-mw3v-mmfw-3x2g",
+  "index": {
+    "files_parsed": 6643,
+    "files_failed": 0,
+    "methods": 76683,
+    "harness_fuzz_methods": [
+      "QueryParserFuzzTest.fuzzQueryStringQueryBuilderToQuery(InputStream)",
+      "QueryParserFuzzTest.fuzzRegexpQueryConstructor(InputStream)",
+      "QueryParserFuzzTest.fuzzXQueryParserParse(InputStream)",
+      "QueryParserFuzzTest.fuzzRegExpToAutomaton(InputStream)"
+    ],
+    "index_seconds": 21.8,
+    "max_gap": 2,
+    "sink_depth": 6,
+    "symbol_resolution": true
+  },
+  "ok": true,
+  "targets": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "entrypoint": "QueryParserFuzzTest.fuzzQueryStringQueryBuilderToQuery(InputStream) → AbstractQueryBuilder.toQuery(QueryShardContext) → QueryStringQueryBuilder.doToQuery(QueryShardContext) → QueryStringQueryParser.parse(String) → QueryParserBase.parse(String) → QueryParser.TopLevelQuery(String) → QueryParser.Clause(String) → QueryParser.Clause(String)",
+      "source_path": "server/src/main/java/org/opensearch/index/search/QueryStringQueryParser.java",
+      "start_ok": true,
+      "harness_entry": "org.opensearch.fuzz.tests.QueryParserFuzzTest#fuzzQueryStringQueryBuilderToQuery",
+      "end_ok": true,
+      "end": {
+        "sink_file": "server/src/main/java/org/opensearch/index/search/QueryStringQueryParser.java",
+        "ok": true,
+        "evidence": "hop 4 QueryStringQueryParser#parse(String) is declared in server/src/main/java/org/opensearch/index/search/QueryStringQueryParser.java:859",
+        "level": "method",
+        "sink_method": "QueryStringQueryParser#parse",
+        "sink_evidence": "hop 4 is QueryStringQueryParser#parse(String)"
+      },
+      "hops": [
+        {
+          "index": 1,
+          "raw": "QueryParserFuzzTest.fuzzQueryStringQueryBuilderToQuery(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.opensearch.fuzz.tests.QueryParserFuzzTest#fuzzQueryStringQueryBuilderToQuery(InputStream)",
+              "location": "harness/src/test/java/org/opensearch/fuzz/tests/QueryParserFuzzTest.java:126"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "raw": "AbstractQueryBuilder.toQuery(QueryShardContext)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.opensearch.index.query.AbstractQueryBuilder#toQuery(QueryShardContext)",
+              "location": "server/src/main/java/org/opensearch/index/query/AbstractQueryBuilder.java:116"
+            },
+            {
+              "method": "org.opensearch.index.query.QueryBuilder#toQuery(QueryShardContext)",
+              "location": "server/src/main/java/org/opensearch/index/query/QueryBuilder.java:58"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "raw": "QueryStringQueryBuilder.doToQuery(QueryShardContext)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.opensearch.index.query.QueryStringQueryBuilder#doToQuery(QueryShardContext)",
+              "location": "server/src/main/java/org/opensearch/index/query/QueryStringQueryBuilder.java:882"
+            },
+            {
+              "method": "org.opensearch.index.query.AbstractQueryBuilder#doToQuery(QueryShardContext)",
+              "location": "server/src/main/java/org/opensearch/index/query/AbstractQueryBuilder.java:131"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "raw": "QueryStringQueryParser.parse(String)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.opensearch.index.search.QueryStringQueryParser#parse(String)",
+              "location": "server/src/main/java/org/opensearch/index/search/QueryStringQueryParser.java:859"
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "raw": "QueryParserBase.parse(String)",
+          "status": "EXTERNAL",
+          "candidates": [],
+          "external": [
+            "QueryParserBase.parse(String)"
+          ]
+        },
+        {
+          "index": 6,
+          "raw": "QueryParser.TopLevelQuery(String)",
+          "status": "EXTERNAL",
+          "candidates": [],
+          "external": [
+            "QueryParser.TopLevelQuery(String)"
+          ]
+        },
+        {
+          "index": 7,
+          "raw": "QueryParser.Clause(String)",
+          "status": "EXTERNAL",
+          "candidates": [],
+          "external": [
+            "QueryParser.Clause(String)"
+          ]
+        },
+        {
+          "index": 8,
+          "raw": "QueryParser.Clause(String)",
+          "status": "EXTERNAL",
+          "candidates": [],
+          "external": [
+            "QueryParser.Clause(String)"
+          ]
+        }
+      ],
+      "path_signature": [
+        "org.opensearch.fuzz.tests.QueryParserFuzzTest#fuzzQueryStringQueryBuilderToQuery(InputStream)",
+        "org.opensearch.index.query.AbstractQueryBuilder#toQuery(QueryShardContext)",
+        "org.opensearch.index.query.QueryStringQueryBuilder#doToQuery(QueryShardContext)",
+        "org.opensearch.index.search.QueryStringQueryParser#parse(String)",
+        "external:parse",
+        "external:TopLevelQuery",
+        "external:Clause",
+        "external:Clause"
+      ],
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "written": "QueryParserFuzzTest.fuzzQueryStringQueryBuilderToQuery(InputStream)",
+          "provenance": "agent",
+          "method": "org.opensearch.fuzz.tests.QueryParserFuzzTest#fuzzQueryStringQueryBuilderToQuery(InputStream)",
+          "location": "harness/src/test/java/org/opensearch/fuzz/tests/QueryParserFuzzTest.java:126"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "QueryParserFuzzTest#fuzzQueryStringQueryBuilderToQuery(InputStream) calls AbstractQueryBuilder#toQuery(QueryShardContext) at harness/src/test/java/org/opensearch/fuzz/tests/QueryParserFuzzTest.java:128 (name match)",
+          "site": "harness/src/test/java/org/opensearch/fuzz/tests/QueryParserFuzzTest.java:128"
+        },
+        {
+          "kind": "hop",
+          "written": "AbstractQueryBuilder.toQuery(QueryShardContext)",
+          "provenance": "agent",
+          "method": "org.opensearch.index.query.AbstractQueryBuilder#toQuery(QueryShardContext)",
+          "location": "server/src/main/java/org/opensearch/index/query/AbstractQueryBuilder.java:116"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "AbstractQueryBuilder#toQuery(QueryShardContext) calls AbstractQueryBuilder#doToQuery(QueryShardContext) at server/src/main/java/org/opensearch/index/query/AbstractQueryBuilder.java:117 (name match)",
+          "site": "server/src/main/java/org/opensearch/index/query/AbstractQueryBuilder.java:117"
+        },
+        {
+          "kind": "hop",
+          "written": "QueryStringQueryBuilder.doToQuery(QueryShardContext)",
+          "provenance": "agent",
+          "method": "org.opensearch.index.query.QueryStringQueryBuilder#doToQuery(QueryShardContext)",
+          "location": "server/src/main/java/org/opensearch/index/query/QueryStringQueryBuilder.java:882"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "QueryStringQueryBuilder#doToQuery(QueryShardContext) calls QueryStringQueryParser#parse(String) at server/src/main/java/org/opensearch/index/query/QueryStringQueryBuilder.java:958 (name match)",
+          "site": "server/src/main/java/org/opensearch/index/query/QueryStringQueryBuilder.java:958"
+        },
+        {
+          "kind": "hop",
+          "written": "QueryStringQueryParser.parse(String)",
+          "provenance": "agent",
+          "method": "org.opensearch.index.search.QueryStringQueryParser#parse(String)",
+          "location": "server/src/main/java/org/opensearch/index/search/QueryStringQueryParser.java:859"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "QueryStringQueryParser#parse(String) calls QueryParserBase.parse(String) at server/src/main/java/org/opensearch/index/search/QueryStringQueryParser.java:863",
+          "site": "server/src/main/java/org/opensearch/index/search/QueryStringQueryParser.java:863"
+        },
+        {
+          "kind": "hop",
+          "written": "QueryParserBase.parse(String)",
+          "provenance": "agent",
+          "method": "QueryParserBase.parse(String)",
+          "location": "outside the source tree"
+        },
+        {
+          "kind": "connection",
+          "type": "UNCHECKED",
+          "evidence": "hop 5 is outside the source tree, so calls made inside it cannot be inspected"
+        },
+        {
+          "kind": "hop",
+          "written": "QueryParser.TopLevelQuery(String)",
+          "provenance": "agent",
+          "method": "QueryParser.TopLevelQuery(String)",
+          "location": "outside the source tree"
+        },
+        {
+          "kind": "connection",
+          "type": "UNCHECKED",
+          "evidence": "hop 6 is outside the source tree, so calls made inside it cannot be inspected"
+        },
+        {
+          "kind": "hop",
+          "written": "QueryParser.Clause(String)",
+          "provenance": "agent",
+          "method": "QueryParser.Clause(String)",
+          "location": "outside the source tree"
+        },
+        {
+          "kind": "connection",
+          "type": "UNCHECKED",
+          "evidence": "hop 7 is outside the source tree, so calls made inside it cannot be inspected"
+        },
+        {
+          "kind": "hop",
+          "written": "QueryParser.Clause(String)",
+          "provenance": "agent",
+          "method": "QueryParser.Clause(String)",
+          "location": "outside the source tree"
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "status": "CALL",
+          "evidence": "QueryParserFuzzTest#fuzzQueryStringQueryBuilderToQuery(InputStream) calls AbstractQueryBuilder#toQuery(QueryShardContext) at harness/src/test/java/org/opensearch/fuzz/tests/QueryParserFuzzTest.java:128 (name match)"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "status": "CALL",
+          "evidence": "AbstractQueryBuilder#toQuery(QueryShardContext) calls AbstractQueryBuilder#doToQuery(QueryShardContext) at server/src/main/java/org/opensearch/index/query/AbstractQueryBuilder.java:117 (name match)"
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "status": "CALL",
+          "evidence": "QueryStringQueryBuilder#doToQuery(QueryShardContext) calls QueryStringQueryParser#parse(String) at server/src/main/java/org/opensearch/index/query/QueryStringQueryBuilder.java:958 (name match)"
+        },
+        {
+          "from": 4,
+          "to": 5,
+          "status": "CALL",
+          "evidence": "QueryStringQueryParser#parse(String) calls QueryParserBase.parse(String) at server/src/main/java/org/opensearch/index/search/QueryStringQueryParser.java:863"
+        },
+        {
+          "from": 5,
+          "to": 6,
+          "status": "UNCHECKED",
+          "evidence": "hop 5 is outside the source tree, so calls made inside it cannot be inspected"
+        },
+        {
+          "from": 6,
+          "to": 7,
+          "status": "UNCHECKED",
+          "evidence": "hop 6 is outside the source tree, so calls made inside it cannot be inspected"
+        },
+        {
+          "from": 7,
+          "to": 8,
+          "status": "UNCHECKED",
+          "evidence": "hop 7 is outside the source tree, so calls made inside it cannot be inspected"
+        }
+      ],
+      "diagnostics": [],
+      "warnings": [
+        "Hop 5: `QueryParserBase.parse(String)` belongs to a class outside the source tree; its body is not analyzed",
+        "Hop 6: `QueryParser.TopLevelQuery(String)` belongs to a class outside the source tree; its body is not analyzed",
+        "Hop 7: `QueryParser.Clause(String)` belongs to a class outside the source tree; its body is not analyzed",
+        "Hop 8: `QueryParser.Clause(String)` belongs to a class outside the source tree; its body is not analyzed",
+        "Edge 5→6 not checked: hop 5 is outside the source tree, so calls made inside it cannot be inspected",
+        "Edge 6→7 not checked: hop 6 is outside the source tree, so calls made inside it cannot be inspected",
+        "Edge 7→8 not checked: hop 7 is outside the source tree, so calls made inside it cannot be inspected"
+      ]
+    }
+  ],
+  "plan_ok": true,
+  "plans": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "signals": [
+        {
+          "name": "maxClauseDepth",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "org.apache.lucene.queryparser.classic.QueryParser#Clause",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "org.apache.lucene.queryparser.classic.QueryParser#Query",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "org.opensearch.index.search.QueryStringQueryParser#parse",
+              "status": "RESOLVED",
+              "method": "org.opensearch.index.search.QueryStringQueryParser#parse",
+              "declared_at": "server/src/main/java/org/opensearch/index/search/QueryStringQueryParser.java:859",
+              "relation": "on_path"
+            }
+          ]
+        },
+        {
+          "name": "parserVisits",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "org.apache.lucene.queryparser.classic.QueryParser#Clause",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "org.apache.lucene.queryparser.classic.QueryParser#Query",
+              "status": "EXTERNAL",
+              "relation": "library"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    }
+  ]
+}

@@ -1,0 +1,433 @@
+{
+  "tool": "checkpath",
+  "version": "1.0.0",
+  "source_root": "projects/JSON-java_GHSA-whgh-g24c-3j5q",
+  "index": {
+    "files_parsed": 23,
+    "files_failed": 0,
+    "methods": 340,
+    "harness_fuzz_methods": [
+      "JsonFuzzTest.fuzzJSONObjectAndJSONArrayConstructors(InputStream)",
+      "JsonFuzzTest.fuzzXMLToJSONObject(InputStream)",
+      "JsonFuzzTest.fuzzJSONObjectConstructor(InputStream)"
+    ],
+    "index_seconds": 0.5,
+    "max_gap": 2,
+    "sink_depth": 6,
+    "symbol_resolution": true
+  },
+  "ok": true,
+  "targets": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "entrypoint": "JsonFuzzTest.fuzzJSONObjectAndJSONArrayConstructors(InputStream) → JSONArray.<init>(String) → JSONArray.<init>(JSONTokener) → JSONTokener.nextValue() → JSONArray.<init>(JSONTokener)",
+      "source_path": "src/main/java/org/json/JSONTokener.java",
+      "start_ok": true,
+      "harness_entry": "fuzzing.harness.JsonFuzzTest#fuzzJSONObjectAndJSONArrayConstructors",
+      "end_ok": true,
+      "end": {
+        "sink_file": "src/main/java/org/json/JSONTokener.java",
+        "ok": true,
+        "evidence": "hop 4 JSONTokener#nextValue() is declared in src/main/java/org/json/JSONTokener.java:421",
+        "level": "method",
+        "sink_method": "JSONTokener#nextValue",
+        "sink_evidence": "hop 4 is JSONTokener#nextValue()"
+      },
+      "hops": [
+        {
+          "index": 1,
+          "raw": "JsonFuzzTest.fuzzJSONObjectAndJSONArrayConstructors(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "fuzzing.harness.JsonFuzzTest#fuzzJSONObjectAndJSONArrayConstructors(InputStream)",
+              "location": "harness/src/test/java/fuzzing/harness/JsonFuzzTest.java:36"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "raw": "JSONArray.<init>(String)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.json.JSONArray#JSONArray(String)",
+              "location": "src/main/java/org/json/JSONArray.java:161"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "raw": "JSONArray.<init>(JSONTokener)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.json.JSONArray#JSONArray(JSONTokener)",
+              "location": "src/main/java/org/json/JSONArray.java:106"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "raw": "JSONTokener.nextValue()",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.json.JSONTokener#nextValue()",
+              "location": "src/main/java/org/json/JSONTokener.java:421"
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "raw": "JSONArray.<init>(JSONTokener)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.json.JSONArray#JSONArray(JSONTokener)",
+              "location": "src/main/java/org/json/JSONArray.java:106"
+            }
+          ]
+        }
+      ],
+      "path_signature": [
+        "fuzzing.harness.JsonFuzzTest#fuzzJSONObjectAndJSONArrayConstructors(InputStream)",
+        "org.json.JSONArray#JSONArray(String)",
+        "org.json.JSONArray#JSONArray(JSONTokener)",
+        "org.json.JSONTokener#nextValue()",
+        "org.json.JSONArray#JSONArray(JSONTokener)"
+      ],
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "written": "JsonFuzzTest.fuzzJSONObjectAndJSONArrayConstructors(InputStream)",
+          "provenance": "agent",
+          "method": "fuzzing.harness.JsonFuzzTest#fuzzJSONObjectAndJSONArrayConstructors(InputStream)",
+          "location": "harness/src/test/java/fuzzing/harness/JsonFuzzTest.java:36"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "JsonFuzzTest#fuzzJSONObjectAndJSONArrayConstructors(InputStream) calls JSONArray#JSONArray(String) at harness/src/test/java/fuzzing/harness/JsonFuzzTest.java:46 (resolved)",
+          "site": "harness/src/test/java/fuzzing/harness/JsonFuzzTest.java:46"
+        },
+        {
+          "kind": "hop",
+          "written": "JSONArray.<init>(String)",
+          "provenance": "agent",
+          "method": "org.json.JSONArray#JSONArray(String)",
+          "location": "src/main/java/org/json/JSONArray.java:161"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "JSONArray#JSONArray(String) calls JSONArray#JSONArray(JSONTokener) at src/main/java/org/json/JSONArray.java:162 (name match)",
+          "site": "src/main/java/org/json/JSONArray.java:162"
+        },
+        {
+          "kind": "hop",
+          "written": "JSONArray.<init>(JSONTokener)",
+          "provenance": "agent",
+          "method": "org.json.JSONArray#JSONArray(JSONTokener)",
+          "location": "src/main/java/org/json/JSONArray.java:106"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "JSONArray#JSONArray(JSONTokener) calls JSONTokener#nextValue() at src/main/java/org/json/JSONArray.java:125 (resolved)",
+          "site": "src/main/java/org/json/JSONArray.java:125"
+        },
+        {
+          "kind": "hop",
+          "written": "JSONTokener.nextValue()",
+          "provenance": "agent",
+          "method": "org.json.JSONTokener#nextValue()",
+          "location": "src/main/java/org/json/JSONTokener.java:421"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "JSONTokener#nextValue() calls JSONArray#JSONArray(JSONTokener) at src/main/java/org/json/JSONTokener.java:434 (resolved)",
+          "site": "src/main/java/org/json/JSONTokener.java:434"
+        },
+        {
+          "kind": "hop",
+          "written": "JSONArray.<init>(JSONTokener)",
+          "provenance": "agent",
+          "method": "org.json.JSONArray#JSONArray(JSONTokener)",
+          "location": "src/main/java/org/json/JSONArray.java:106"
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "status": "CALL",
+          "evidence": "JsonFuzzTest#fuzzJSONObjectAndJSONArrayConstructors(InputStream) calls JSONArray#JSONArray(String) at harness/src/test/java/fuzzing/harness/JsonFuzzTest.java:46 (resolved)"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "status": "CALL",
+          "evidence": "JSONArray#JSONArray(String) calls JSONArray#JSONArray(JSONTokener) at src/main/java/org/json/JSONArray.java:162 (name match)"
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "status": "CALL",
+          "evidence": "JSONArray#JSONArray(JSONTokener) calls JSONTokener#nextValue() at src/main/java/org/json/JSONArray.java:125 (resolved)"
+        },
+        {
+          "from": 4,
+          "to": 5,
+          "status": "CALL",
+          "evidence": "JSONTokener#nextValue() calls JSONArray#JSONArray(JSONTokener) at src/main/java/org/json/JSONTokener.java:434 (resolved)"
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    },
+    {
+      "target": "V2",
+      "status": "PASS",
+      "entrypoint": "JsonFuzzTest.fuzzXMLToJSONObject(InputStream) → XML.toJSONObject(String) → XML.toJSONObject(Reader, XMLParserConfiguration) → XML.parse(XMLTokener, JSONObject, String, XMLParserConfiguration) → XML.parse(XMLTokener, JSONObject, String, XMLParserConfiguration)",
+      "source_path": "src/main/java/org/json/XML.java",
+      "start_ok": true,
+      "harness_entry": "fuzzing.harness.JsonFuzzTest#fuzzXMLToJSONObject",
+      "end_ok": true,
+      "end": {
+        "sink_file": "src/main/java/org/json/XML.java",
+        "ok": true,
+        "evidence": "hop 5 XML#parse(XMLTokener,JSONObject,String,XMLParserConfiguration) is declared in src/main/java/org/json/XML.java:256",
+        "level": "method",
+        "sink_method": "XML#parse",
+        "sink_evidence": "hop 4 is XML#parse(XMLTokener,JSONObject,String,XMLParserConfiguration)"
+      },
+      "hops": [
+        {
+          "index": 1,
+          "raw": "JsonFuzzTest.fuzzXMLToJSONObject(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "fuzzing.harness.JsonFuzzTest#fuzzXMLToJSONObject(InputStream)",
+              "location": "harness/src/test/java/fuzzing/harness/JsonFuzzTest.java:57"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "raw": "XML.toJSONObject(String)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.json.XML#toJSONObject(String)",
+              "location": "src/main/java/org/json/XML.java:601"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "raw": "XML.toJSONObject(Reader, XMLParserConfiguration)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.json.XML#toJSONObject(Reader,XMLParserConfiguration)",
+              "location": "src/main/java/org/json/XML.java:673"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "raw": "XML.parse(XMLTokener, JSONObject, String, XMLParserConfiguration)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.json.XML#parse(XMLTokener,JSONObject,String,XMLParserConfiguration)",
+              "location": "src/main/java/org/json/XML.java:256"
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "raw": "XML.parse(XMLTokener, JSONObject, String, XMLParserConfiguration)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.json.XML#parse(XMLTokener,JSONObject,String,XMLParserConfiguration)",
+              "location": "src/main/java/org/json/XML.java:256"
+            }
+          ]
+        }
+      ],
+      "path_signature": [
+        "fuzzing.harness.JsonFuzzTest#fuzzXMLToJSONObject(InputStream)",
+        "org.json.XML#toJSONObject(String)",
+        "org.json.XML#toJSONObject(Reader,XMLParserConfiguration)",
+        "org.json.XML#parse(XMLTokener,JSONObject,String,XMLParserConfiguration)",
+        "org.json.XML#parse(XMLTokener,JSONObject,String,XMLParserConfiguration)"
+      ],
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "written": "JsonFuzzTest.fuzzXMLToJSONObject(InputStream)",
+          "provenance": "agent",
+          "method": "fuzzing.harness.JsonFuzzTest#fuzzXMLToJSONObject(InputStream)",
+          "location": "harness/src/test/java/fuzzing/harness/JsonFuzzTest.java:57"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "JsonFuzzTest#fuzzXMLToJSONObject(InputStream) calls XML#toJSONObject(String) at harness/src/test/java/fuzzing/harness/JsonFuzzTest.java:59 (resolved)",
+          "site": "harness/src/test/java/fuzzing/harness/JsonFuzzTest.java:59"
+        },
+        {
+          "kind": "hop",
+          "written": "XML.toJSONObject(String)",
+          "provenance": "agent",
+          "method": "org.json.XML#toJSONObject(String)",
+          "location": "src/main/java/org/json/XML.java:601"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "XML#toJSONObject(String) calls XML#toJSONObject(Reader,XMLParserConfiguration) at src/main/java/org/json/XML.java:602 (resolved)",
+          "site": "src/main/java/org/json/XML.java:602"
+        },
+        {
+          "kind": "hop",
+          "written": "XML.toJSONObject(Reader, XMLParserConfiguration)",
+          "provenance": "agent",
+          "method": "org.json.XML#toJSONObject(Reader,XMLParserConfiguration)",
+          "location": "src/main/java/org/json/XML.java:673"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "XML#toJSONObject(Reader,XMLParserConfiguration) calls XML#parse(XMLTokener,JSONObject,String,XMLParserConfiguration) at src/main/java/org/json/XML.java:679 (resolved)",
+          "site": "src/main/java/org/json/XML.java:679"
+        },
+        {
+          "kind": "hop",
+          "written": "XML.parse(XMLTokener, JSONObject, String, XMLParserConfiguration)",
+          "provenance": "agent",
+          "method": "org.json.XML#parse(XMLTokener,JSONObject,String,XMLParserConfiguration)",
+          "location": "src/main/java/org/json/XML.java:256"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "XML#parse(XMLTokener,JSONObject,String,XMLParserConfiguration) calls XML#parse(XMLTokener,JSONObject,String,XMLParserConfiguration) at src/main/java/org/json/XML.java:426 (resolved)",
+          "site": "src/main/java/org/json/XML.java:426"
+        },
+        {
+          "kind": "hop",
+          "written": "XML.parse(XMLTokener, JSONObject, String, XMLParserConfiguration)",
+          "provenance": "agent",
+          "method": "org.json.XML#parse(XMLTokener,JSONObject,String,XMLParserConfiguration)",
+          "location": "src/main/java/org/json/XML.java:256"
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "status": "CALL",
+          "evidence": "JsonFuzzTest#fuzzXMLToJSONObject(InputStream) calls XML#toJSONObject(String) at harness/src/test/java/fuzzing/harness/JsonFuzzTest.java:59 (resolved)"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "status": "CALL",
+          "evidence": "XML#toJSONObject(String) calls XML#toJSONObject(Reader,XMLParserConfiguration) at src/main/java/org/json/XML.java:602 (resolved)"
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "status": "CALL",
+          "evidence": "XML#toJSONObject(Reader,XMLParserConfiguration) calls XML#parse(XMLTokener,JSONObject,String,XMLParserConfiguration) at src/main/java/org/json/XML.java:679 (resolved)"
+        },
+        {
+          "from": 4,
+          "to": 5,
+          "status": "CALL",
+          "evidence": "XML#parse(XMLTokener,JSONObject,String,XMLParserConfiguration) calls XML#parse(XMLTokener,JSONObject,String,XMLParserConfiguration) at src/main/java/org/json/XML.java:426 (resolved)"
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    }
+  ],
+  "plan_ok": true,
+  "plans": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "signals": [
+        {
+          "name": "maxDepth",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "JSONTokener#nextValue",
+              "status": "RESOLVED",
+              "method": "org.json.JSONTokener#nextValue",
+              "declared_at": "src/main/java/org/json/JSONTokener.java:421",
+              "relation": "on_path"
+            }
+          ]
+        },
+        {
+          "name": "nodeCount",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "JSONTokener#nextValue",
+              "status": "RESOLVED",
+              "method": "org.json.JSONTokener#nextValue",
+              "declared_at": "src/main/java/org/json/JSONTokener.java:421",
+              "relation": "on_path"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    },
+    {
+      "target": "V2",
+      "status": "PASS",
+      "signals": [
+        {
+          "name": "maxDepth",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "XML#parse",
+              "status": "RESOLVED",
+              "method": "org.json.XML#parse",
+              "declared_at": "src/main/java/org/json/XML.java:256",
+              "relation": "on_path"
+            }
+          ]
+        },
+        {
+          "name": "nodeCount",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "XML#parse",
+              "status": "RESOLVED",
+              "method": "org.json.XML#parse",
+              "declared_at": "src/main/java/org/json/XML.java:256",
+              "relation": "on_path"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    }
+  ]
+}

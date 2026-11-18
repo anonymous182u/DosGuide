@@ -1,0 +1,35 @@
+{
+  "clone_url": "https://github.com/FasterXML/woodstox.git",
+  "commit": "09f310b910afe074b493dc6ba2a70a6ae8939c1e",
+  "jdk": 17,
+  "commands": [
+    "rm -rf build && mkdir -p build/deps build/classes",
+    "curl -fsSL --retry 3 -o build/deps/stax2-api-4.2.jar https://repo1.maven.org/maven2/org/codehaus/woodstox/stax2-api/4.2/stax2-api-4.2.jar",
+    "find src/src/main/java -name '*.java' ! -path '*/com/ctc/wstx/msv/*' ! -path '*/com/ctc/wstx/osgi/*' | sort > build/sources.txt",
+    "javac -nowarn -encoding UTF-8 -source 8 -target 8 -cp build/deps/stax2-api-4.2.jar -d build/classes @build/sources.txt",
+    "jar cf build/woodstox-core-5.3.1-SNAPSHOT.jar -C build/classes ."
+  ],
+  "artifacts": [
+    {
+      "built": "build/woodstox-core-5.3.1-SNAPSHOT.jar",
+      "lib": "lib/woodstox-core-5.3.1-SNAPSHOT.jar",
+      "sha256": "d5c637840a6b1fed0db61504a77ef51df2d83b9e9984a3538438820ae285db6a",
+      "classes_sha256": "b7f36f930fe36f24128b06ee643a4c5bfab87db230d3325fb153235f071d1979"
+    }
+  ],
+  "fixed": {
+    "jars": [
+      {
+        "coords": "org.codehaus.woodstox:stax2-api:4.2",
+        "sha256": "badf6081a0bb526fd2c01951dfefad91b6846b6dd0eb0048587e30d1dd334e68"
+      },
+      {
+        "coords": "com.fasterxml.woodstox:woodstox-core:5.4.0",
+        "sha256": "dbb958cb89f1d45238b061e146249494ff887f5f42b671a3956e98956e0d5c53"
+      }
+    ],
+    "drop": "^(stax2\\-api|woodstox\\-core)-[0-9]"
+  },
+  "tools": "git, curl, JDK 17 (javac, jar)",
+  "notes": "As the evaluation's jar was made: javac -source 8 -target 8 (JDK 17) of every .java file under src/main/java except the optional packages com.ctc.wstx.msv and com.ctc.wstx.osgi (they need MSV/OSGi libraries and are not used for StAX/DTD parsing), against stax2-api 4.2 (Maven Central), packed with jar cf; no resources (no META-INF/services; the harness creates WstxInputFactory directly); the project's Maven build is not used. The commit's pom version is 5.3.1-SNAPSHOT (the parent of the fix). Fixed version: woodstox-core 5.4.0, the first patched release, with stax2-api 4.2."
+}

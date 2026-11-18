@@ -1,0 +1,31 @@
+{
+  "plans": [
+    {
+      "target": "V1",
+      "signals": [
+        {
+          "name": "charsAppended",
+          "quantity": "total characters appended to the StringBuilder during CachedOutputStream.writeCacheTo(StringBuilder, String) — measures the unbounded content materialized at the sink",
+          "aggregation": "sum",
+          "locations": [
+            "CachedOutputStream#writeCacheTo(StringBuilder, String)"
+          ],
+          "technique": "bytecode",
+          "storage": "ThreadLocal<long[]> in V1Counters: index 0 = StringBuilder.length() at method entry, index 1 = chars appended (exit length - entry length)",
+          "reset": "V1Counters.reset() called in V1Guidance.getInput() before each execution",
+          "read": "V1Guidance.handleResult() reads V1Counters.getCharsAppended()"
+        }
+      ],
+      "retention": "Primary: retain inputs where charsAppended exceeds the current best (higher allocation at the sink). Secondary (while charsAppended is zero — signal flat because input has not yet crossed the 1024-byte spill threshold): retain inputs that are longer than the longest saved, so the search grows toward the threshold. Once any input crosses 1024 bytes and reaches the sink, charsAppended becomes non-zero and the primary criterion takes over.",
+      "retention_signals": [
+        "charsAppended"
+      ],
+      "mutation": [
+        "byte-level: random byte flip at a random position; random insertion of 1-8 random bytes; random deletion of 1-8 bytes",
+        "repetition [R45(a)]: select a random region [start, start+len) of the input and repeat it k times in-place, with k chosen so the result approaches maxInputSize (10240); special case: double the entire input. Grows a 1-byte seed to 1025+ bytes in ~11 mutations.",
+        "dictionary [R45(b)]: tokens from the code on the attack path — 0x0A (newline), 0x0D (carriage return), 0x5B '[', 0x5D ']', 'Content: ' (toString prefix), 'cos' (temp file prefix), 'tmp' (temp file suffix) — inserted or overwritten at random positions. These are single syntactic units from the source, not assembled triggering inputs.",
+        "no encoder [R45(c)]: the input is raw bytes with no format checks, checksums, or compression; any bytes reach the sink once the total length exceeds the spill threshold"
+      ]
+    }
+  ]
+}

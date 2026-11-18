@@ -1,0 +1,401 @@
+{
+  "tool": "checkpath",
+  "version": "1.0.0",
+  "source_root": "projects/token-macro-plugin_GHSA-23h9-m55m-c5jp",
+  "index": {
+    "files_parsed": 35,
+    "files_failed": 0,
+    "methods": 257,
+    "harness_fuzz_methods": [
+      "TokenMacroFuzzTest.fuzzParserProcess(InputStream)",
+      "TokenMacroFuzzTest.fuzzTokenMacroExpand(InputStream)",
+      "TokenMacroFuzzTest.fuzzBeginningOrEndMatchTransormTransform(InputStream)"
+    ],
+    "index_seconds": 0.8,
+    "max_gap": 2,
+    "sink_depth": 6,
+    "symbol_resolution": true
+  },
+  "ok": true,
+  "targets": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "entrypoint": "TokenMacroFuzzTest.fuzzTokenMacroExpand(InputStream) → TokenMacro.expand(Run, FilePath, TaskListener, String, boolean, List) → Parser.process(Run, FilePath, TaskListener, String, boolean, List) → Parser.DelimitedToken() → Parser.processToken() → Parser.process(Run, FilePath, TaskListener, String, boolean, List)",
+      "source_path": "src/main/java/org/jenkinsci/plugins/tokenmacro/Parser.java",
+      "start_ok": true,
+      "harness_entry": "edu.berkeley.cs.jqf.examples.tokenmacro.TokenMacroFuzzTest#fuzzTokenMacroExpand",
+      "end_ok": true,
+      "end": {
+        "sink_file": "src/main/java/org/jenkinsci/plugins/tokenmacro/Parser.java",
+        "ok": true,
+        "evidence": "hop 6 Parser#process(Run,FilePath,TaskListener,String,boolean,List) is declared in src/main/java/org/jenkinsci/plugins/tokenmacro/Parser.java:60",
+        "level": "method",
+        "sink_method": "Parser#processToken",
+        "sink_evidence": "hop 5 is Parser#processToken()"
+      },
+      "hops": [
+        {
+          "index": 1,
+          "raw": "TokenMacroFuzzTest.fuzzTokenMacroExpand(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "edu.berkeley.cs.jqf.examples.tokenmacro.TokenMacroFuzzTest#fuzzTokenMacroExpand(InputStream)",
+              "location": "harness/src/test/java/edu/berkeley/cs/jqf/examples/tokenmacro/TokenMacroFuzzTest.java:62"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "raw": "TokenMacro.expand(Run, FilePath, TaskListener, String, boolean, List)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.jenkinsci.plugins.tokenmacro.TokenMacro#expand(Run,FilePath,TaskListener,String,boolean,List)",
+              "location": "src/main/java/org/jenkinsci/plugins/tokenmacro/TokenMacro.java:203"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "raw": "Parser.process(Run, FilePath, TaskListener, String, boolean, List)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.jenkinsci.plugins.tokenmacro.Parser#process(Run,FilePath,TaskListener,String,boolean,List)",
+              "location": "src/main/java/org/jenkinsci/plugins/tokenmacro/Parser.java:60"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "raw": "Parser.DelimitedToken()",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.jenkinsci.plugins.tokenmacro.Parser#DelimitedToken()",
+              "location": "src/main/java/org/jenkinsci/plugins/tokenmacro/Parser.java:94"
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "raw": "Parser.processToken()",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.jenkinsci.plugins.tokenmacro.Parser#processToken()",
+              "location": "src/main/java/org/jenkinsci/plugins/tokenmacro/Parser.java:283"
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "raw": "Parser.process(Run, FilePath, TaskListener, String, boolean, List)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.jenkinsci.plugins.tokenmacro.Parser#process(Run,FilePath,TaskListener,String,boolean,List)",
+              "location": "src/main/java/org/jenkinsci/plugins/tokenmacro/Parser.java:60"
+            }
+          ]
+        }
+      ],
+      "path_signature": [
+        "edu.berkeley.cs.jqf.examples.tokenmacro.TokenMacroFuzzTest#fuzzTokenMacroExpand(InputStream)",
+        "org.jenkinsci.plugins.tokenmacro.TokenMacro#expand(Run,FilePath,TaskListener,String,boolean,List)",
+        "org.jenkinsci.plugins.tokenmacro.Parser#process(Run,FilePath,TaskListener,String,boolean,List)",
+        "org.jenkinsci.plugins.tokenmacro.Parser#DelimitedToken()",
+        "org.jenkinsci.plugins.tokenmacro.Parser#processToken()",
+        "org.jenkinsci.plugins.tokenmacro.Parser#process(Run,FilePath,TaskListener,String,boolean,List)"
+      ],
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "written": "TokenMacroFuzzTest.fuzzTokenMacroExpand(InputStream)",
+          "provenance": "agent",
+          "method": "edu.berkeley.cs.jqf.examples.tokenmacro.TokenMacroFuzzTest#fuzzTokenMacroExpand(InputStream)",
+          "location": "harness/src/test/java/edu/berkeley/cs/jqf/examples/tokenmacro/TokenMacroFuzzTest.java:62"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "TokenMacroFuzzTest#fuzzTokenMacroExpand(InputStream) calls TokenMacro#expand(Run,FilePath,TaskListener,String,boolean,List) at harness/src/test/java/edu/berkeley/cs/jqf/examples/tokenmacro/TokenMacroFuzzTest.java:69 (name match)",
+          "site": "harness/src/test/java/edu/berkeley/cs/jqf/examples/tokenmacro/TokenMacroFuzzTest.java:69"
+        },
+        {
+          "kind": "hop",
+          "written": "TokenMacro.expand(Run, FilePath, TaskListener, String, boolean, List)",
+          "provenance": "agent",
+          "method": "org.jenkinsci.plugins.tokenmacro.TokenMacro#expand(Run,FilePath,TaskListener,String,boolean,List)",
+          "location": "src/main/java/org/jenkinsci/plugins/tokenmacro/TokenMacro.java:203"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "TokenMacro#expand(Run,FilePath,TaskListener,String,boolean,List) calls Parser#process(Run,FilePath,TaskListener,String,boolean,List) at src/main/java/org/jenkinsci/plugins/tokenmacro/TokenMacro.java:204 (name match)",
+          "site": "src/main/java/org/jenkinsci/plugins/tokenmacro/TokenMacro.java:204"
+        },
+        {
+          "kind": "hop",
+          "written": "Parser.process(Run, FilePath, TaskListener, String, boolean, List)",
+          "provenance": "agent",
+          "method": "org.jenkinsci.plugins.tokenmacro.Parser#process(Run,FilePath,TaskListener,String,boolean,List)",
+          "location": "src/main/java/org/jenkinsci/plugins/tokenmacro/Parser.java:60"
+        },
+        {
+          "kind": "connection",
+          "type": "INDIRECT",
+          "evidence": "2 omitted call(s)"
+        },
+        {
+          "kind": "hop",
+          "written": null,
+          "provenance": "checkpath (omitted call)",
+          "method": "org.jenkinsci.plugins.tokenmacro.Parser#Text()",
+          "location": "src/main/java/org/jenkinsci/plugins/tokenmacro/Parser.java:78"
+        },
+        {
+          "kind": "hop",
+          "written": null,
+          "provenance": "checkpath (omitted call)",
+          "method": "org.jenkinsci.plugins.tokenmacro.Parser#Token()",
+          "location": "src/main/java/org/jenkinsci/plugins/tokenmacro/Parser.java:87"
+        },
+        {
+          "kind": "hop",
+          "written": "Parser.DelimitedToken()",
+          "provenance": "agent",
+          "method": "org.jenkinsci.plugins.tokenmacro.Parser#DelimitedToken()",
+          "location": "src/main/java/org/jenkinsci/plugins/tokenmacro/Parser.java:94"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "Parser#DelimitedToken() calls Parser#processToken() at src/main/java/org/jenkinsci/plugins/tokenmacro/Parser.java:102 (resolved)",
+          "site": "src/main/java/org/jenkinsci/plugins/tokenmacro/Parser.java:102"
+        },
+        {
+          "kind": "hop",
+          "written": "Parser.processToken()",
+          "provenance": "agent",
+          "method": "org.jenkinsci.plugins.tokenmacro.Parser#processToken()",
+          "location": "src/main/java/org/jenkinsci/plugins/tokenmacro/Parser.java:283"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "Parser#processToken() calls Parser#process(Run,FilePath,TaskListener,String,boolean,List) at src/main/java/org/jenkinsci/plugins/tokenmacro/Parser.java:312 (name match)",
+          "site": "src/main/java/org/jenkinsci/plugins/tokenmacro/Parser.java:312"
+        },
+        {
+          "kind": "hop",
+          "written": "Parser.process(Run, FilePath, TaskListener, String, boolean, List)",
+          "provenance": "agent",
+          "method": "org.jenkinsci.plugins.tokenmacro.Parser#process(Run,FilePath,TaskListener,String,boolean,List)",
+          "location": "src/main/java/org/jenkinsci/plugins/tokenmacro/Parser.java:60"
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "status": "CALL",
+          "evidence": "TokenMacroFuzzTest#fuzzTokenMacroExpand(InputStream) calls TokenMacro#expand(Run,FilePath,TaskListener,String,boolean,List) at harness/src/test/java/edu/berkeley/cs/jqf/examples/tokenmacro/TokenMacroFuzzTest.java:69 (name match)"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "status": "CALL",
+          "evidence": "TokenMacro#expand(Run,FilePath,TaskListener,String,boolean,List) calls Parser#process(Run,FilePath,TaskListener,String,boolean,List) at src/main/java/org/jenkinsci/plugins/tokenmacro/TokenMacro.java:204 (name match)"
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "status": "INDIRECT",
+          "evidence": "2 omitted call(s)",
+          "chain": [
+            "Parser#process(Run,FilePath,TaskListener,String,boolean,List)",
+            "Parser#Text()",
+            "Parser#Token()",
+            "Parser#DelimitedToken()"
+          ]
+        },
+        {
+          "from": 4,
+          "to": 5,
+          "status": "CALL",
+          "evidence": "Parser#DelimitedToken() calls Parser#processToken() at src/main/java/org/jenkinsci/plugins/tokenmacro/Parser.java:102 (resolved)"
+        },
+        {
+          "from": 5,
+          "to": 6,
+          "status": "CALL",
+          "evidence": "Parser#processToken() calls Parser#process(Run,FilePath,TaskListener,String,boolean,List) at src/main/java/org/jenkinsci/plugins/tokenmacro/Parser.java:312 (name match)"
+        }
+      ],
+      "diagnostics": [],
+      "warnings": [
+        "Edge 3→4 is indirect: Parser#process(Run,FilePath,TaskListener,String,boolean,List) → Parser#Text() → Parser#Token() → Parser#DelimitedToken()"
+      ]
+    },
+    {
+      "target": "V2",
+      "status": "PASS",
+      "entrypoint": "TokenMacroFuzzTest.fuzzBeginningOrEndMatchTransormTransform(InputStream) → BeginningOrEndMatchTransorm.transform(String) → Matcher.find()",
+      "source_path": "src/main/java/org/jenkinsci/plugins/tokenmacro/transform/BeginningOrEndMatchTransorm.java",
+      "start_ok": true,
+      "harness_entry": "edu.berkeley.cs.jqf.examples.tokenmacro.TokenMacroFuzzTest#fuzzBeginningOrEndMatchTransormTransform",
+      "end_ok": true,
+      "end": {
+        "sink_file": "src/main/java/org/jenkinsci/plugins/tokenmacro/transform/BeginningOrEndMatchTransorm.java",
+        "ok": true,
+        "evidence": "hop 2 BeginningOrEndMatchTransorm#transform(String) is declared in src/main/java/org/jenkinsci/plugins/tokenmacro/transform/BeginningOrEndMatchTransorm.java:21",
+        "level": "method",
+        "sink_method": "Matcher#find",
+        "sink_evidence": "hop 3 names Matcher#find (outside the source tree)"
+      },
+      "hops": [
+        {
+          "index": 1,
+          "raw": "TokenMacroFuzzTest.fuzzBeginningOrEndMatchTransormTransform(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "edu.berkeley.cs.jqf.examples.tokenmacro.TokenMacroFuzzTest#fuzzBeginningOrEndMatchTransormTransform(InputStream)",
+              "location": "harness/src/test/java/edu/berkeley/cs/jqf/examples/tokenmacro/TokenMacroFuzzTest.java:81"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "raw": "BeginningOrEndMatchTransorm.transform(String)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.jenkinsci.plugins.tokenmacro.transform.BeginningOrEndMatchTransorm#transform(String)",
+              "location": "src/main/java/org/jenkinsci/plugins/tokenmacro/transform/BeginningOrEndMatchTransorm.java:21"
+            },
+            {
+              "method": "org.jenkinsci.plugins.tokenmacro.Transform#transform(String)",
+              "location": "src/main/java/org/jenkinsci/plugins/tokenmacro/Transform.java:9"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "raw": "Matcher.find()",
+          "status": "EXTERNAL",
+          "candidates": [],
+          "external": [
+            "Matcher.find()"
+          ]
+        }
+      ],
+      "path_signature": [
+        "edu.berkeley.cs.jqf.examples.tokenmacro.TokenMacroFuzzTest#fuzzBeginningOrEndMatchTransormTransform(InputStream)",
+        "org.jenkinsci.plugins.tokenmacro.transform.BeginningOrEndMatchTransorm#transform(String)",
+        "external:find"
+      ],
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "written": "TokenMacroFuzzTest.fuzzBeginningOrEndMatchTransormTransform(InputStream)",
+          "provenance": "agent",
+          "method": "edu.berkeley.cs.jqf.examples.tokenmacro.TokenMacroFuzzTest#fuzzBeginningOrEndMatchTransormTransform(InputStream)",
+          "location": "harness/src/test/java/edu/berkeley/cs/jqf/examples/tokenmacro/TokenMacroFuzzTest.java:81"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "TokenMacroFuzzTest#fuzzBeginningOrEndMatchTransormTransform(InputStream) calls Transform#transform(String) at harness/src/test/java/edu/berkeley/cs/jqf/examples/tokenmacro/TokenMacroFuzzTest.java:102 (resolved)",
+          "site": "harness/src/test/java/edu/berkeley/cs/jqf/examples/tokenmacro/TokenMacroFuzzTest.java:102"
+        },
+        {
+          "kind": "hop",
+          "written": "BeginningOrEndMatchTransorm.transform(String)",
+          "provenance": "agent",
+          "method": "org.jenkinsci.plugins.tokenmacro.transform.BeginningOrEndMatchTransorm#transform(String)",
+          "location": "src/main/java/org/jenkinsci/plugins/tokenmacro/transform/BeginningOrEndMatchTransorm.java:21"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "BeginningOrEndMatchTransorm#transform(String) calls Matcher.find() at src/main/java/org/jenkinsci/plugins/tokenmacro/transform/BeginningOrEndMatchTransorm.java:24",
+          "site": "src/main/java/org/jenkinsci/plugins/tokenmacro/transform/BeginningOrEndMatchTransorm.java:24"
+        },
+        {
+          "kind": "hop",
+          "written": "Matcher.find()",
+          "provenance": "agent",
+          "method": "Matcher.find()",
+          "location": "outside the source tree"
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "status": "CALL",
+          "evidence": "TokenMacroFuzzTest#fuzzBeginningOrEndMatchTransormTransform(InputStream) calls Transform#transform(String) at harness/src/test/java/edu/berkeley/cs/jqf/examples/tokenmacro/TokenMacroFuzzTest.java:102 (resolved)"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "status": "CALL",
+          "evidence": "BeginningOrEndMatchTransorm#transform(String) calls Matcher.find() at src/main/java/org/jenkinsci/plugins/tokenmacro/transform/BeginningOrEndMatchTransorm.java:24"
+        }
+      ],
+      "diagnostics": [],
+      "warnings": [
+        "Hop 3: `Matcher.find()` belongs to JDK class java.util.regex.Matcher; its body is not analyzed"
+      ]
+    }
+  ],
+  "plan_ok": true,
+  "plans": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "signals": [
+        {
+          "name": "processTokenCount",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "org.jenkinsci.plugins.tokenmacro.Parser#processToken",
+              "status": "RESOLVED",
+              "method": "org.jenkinsci.plugins.tokenmacro.Parser#processToken",
+              "declared_at": "src/main/java/org/jenkinsci/plugins/tokenmacro/Parser.java:283",
+              "relation": "on_path"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    },
+    {
+      "target": "V2",
+      "status": "PASS",
+      "signals": [
+        {
+          "name": "findNanos",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "org.jenkinsci.plugins.tokenmacro.transform.BeginningOrEndMatchTransorm#transform",
+              "status": "RESOLVED",
+              "method": "org.jenkinsci.plugins.tokenmacro.transform.BeginningOrEndMatchTransorm#transform",
+              "declared_at": "src/main/java/org/jenkinsci/plugins/tokenmacro/transform/BeginningOrEndMatchTransorm.java:21",
+              "relation": "on_path"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    }
+  ]
+}

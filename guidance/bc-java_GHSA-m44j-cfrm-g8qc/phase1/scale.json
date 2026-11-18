@@ -1,0 +1,15 @@
+{
+  "series_request": null,
+  "rounds": [
+    {
+      "round": 1,
+      "revision": {
+        "V1": {
+          "scale": "Measured base verification cost is ~14 ms constant for all input sizes (no growth with message_length; the parameter does not control the mechanism). The vulnerability is binary: the hash SHA-512(R||A||m) mod L either produces a scalar that triggers the carry-truncation bug in reduceBasisVar (loop oscillates indefinitely → timeout at 20,000 ms) or it does not (~14 ms, ~300 loop iterations). The loop cost per iteration is negligible (nanoseconds); the pathology is non-convergence, not per-iteration expense. The fuzzer must search across different sig/pk/msg byte combinations to find one whose hash yields a pathological scalar; any input ≥97 bytes that passes point-validity checks can potentially trigger it.",
+          "input_bytes": 97
+        }
+      },
+      "field_problems": {}
+    }
+  ]
+}

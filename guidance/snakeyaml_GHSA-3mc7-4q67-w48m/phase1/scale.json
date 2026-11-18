@@ -1,0 +1,15 @@
+{
+  "series_request": null,
+  "rounds": [
+    {
+      "round": 1,
+      "revision": {
+        "V1": {
+          "scale": "Measured: 256 nesting levels (513 bytes) completes within 256 KB stack; 512 levels (1025 bytes) exceeds 256 KB stack. Estimated stack cost ~540 bytes per nesting level (Composer: ~2 frames, then Constructor: ~5 frames per level; the Constructor is deeper). Extrapolating to the evaluation's 1 MB stack (-Xss1m): overflow at approximately 1800 nesting levels. Input encoding [×N + '1' + ]×N costs 2N+1 bytes; at N=1800 that is 3601 bytes. Denser encoding: N bytes of '[' alone (overflow occurs during descent before closings are needed), giving ~1800 bytes.",
+          "input_bytes": 4001
+        }
+      },
+      "field_problems": {}
+    }
+  ]
+}

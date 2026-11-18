@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Premain-Class: com.fasterxml.jackson.fuzz.agent.PkgRisk1MeasureAgent
+Can-Retransform-Classes: true
+Boot-Class-Path: dependency/asm-9.8.jar

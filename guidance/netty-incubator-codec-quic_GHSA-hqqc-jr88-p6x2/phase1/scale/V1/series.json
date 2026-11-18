@@ -1,0 +1,25 @@
+{
+ "parameter": "number of Initial packets whose DCIDs share one ByteBuffer.hashCode (colliding map keys)",
+ "inputs": [
+  {
+   "file": "n512.bin",
+   "value": 512
+  },
+  {
+   "file": "n1024.bin",
+   "value": 1024
+  },
+  {
+   "file": "n2048.bin",
+   "value": 2048
+  },
+  {
+   "file": "n4096.bin",
+   "value": 4096
+  },
+  {
+   "file": "n8192.bin",
+   "value": 8192
+  }
+ ]
+}

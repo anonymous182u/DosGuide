@@ -1,0 +1,186 @@
+{
+  "ok": true,
+  "launch": [],
+  "build": {
+    "ok": true
+  },
+  "targets": [
+    {
+      "tool": "ValidateArtifact",
+      "target": "V1",
+      "checks": [
+        {
+          "name": "contract",
+          "status": "pass",
+          "detail": "factory, lastSignals() and fuzz test found"
+        },
+        {
+          "name": "runs",
+          "status": "pass",
+          "detail": "97 executions completed"
+        },
+        {
+          "name": "plan_signals",
+          "status": "pass",
+          "detail": "lastSignals() returns every planned signal [maxClauseDepth, parserVisits]"
+        },
+        {
+          "name": "signal_varies",
+          "status": "pass",
+          "detail": "varying: [maxClauseDepth, parserVisits] (on the guidance's own inputs: [maxClauseDepth, parserVisits])"
+        },
+        {
+          "name": "reset",
+          "status": "warn",
+          "detail": "`maxClauseDepth`: re-running the same input gave different values (6519 then 6519, 4680 then 6519, 4514 then 6519), so the value is not determined by the executed input (timing, or computed from something other than the execution); `parserVisits`: re-running the same input gave different values (19555 then 19555, 14038 then 19555, 13540 then 19555), so the value is not determined by the executed input (timing, or computed from something other than the execution)"
+        },
+        {
+          "name": "depends_on_execution",
+          "status": "pass",
+          "detail": "signals stay near zero when the target does not run"
+        },
+        {
+          "name": "instrumentation",
+          "status": "pass",
+          "detail": "rewrote [org.apache.lucene.queryparser.classic.QueryParser, org.opensearch.index.search.QueryStringQueryParser]"
+        },
+        {
+          "name": "input_limit",
+          "status": "pass",
+          "detail": "with jqf.ei.MAX_INPUT_SIZE=16 the 20 generated inputs were at most 16 bytes"
+        },
+        {
+          "name": "input_growth",
+          "status": "pass",
+          "detail": "the guidance generated a 131072-byte input after 845 ms (12 executions); the target needs 2048"
+        }
+      ],
+      "max_input_bytes": 131072,
+      "example_inputs": 6,
+      "executions": {
+        "own": 40,
+        "repeat": 5,
+        "random": 40,
+        "example": 12,
+        "probe": 3
+      },
+      "test_failures_not_used": 27,
+      "signals": {
+        "maxClauseDepth": {
+          "min": 0.0,
+          "max": 6519.0,
+          "distinct": 18
+        },
+        "parserVisits": {
+          "min": 1.0,
+          "max": 19555.0,
+          "distinct": 23
+        }
+      },
+      "signals_by_kind": {
+        "example": {
+          "maxClauseDepth": {
+            "distinct": 2,
+            "max": 2.0,
+            "min": 1.0
+          },
+          "parserVisits": {
+            "distinct": 5,
+            "max": 11.0,
+            "min": 2.0
+          }
+        },
+        "own": {
+          "maxClauseDepth": {
+            "distinct": 12,
+            "max": 6519.0,
+            "min": 0.0
+          },
+          "parserVisits": {
+            "distinct": 14,
+            "max": 19555.0,
+            "min": 1.0
+          }
+        },
+        "random": {
+          "maxClauseDepth": {
+            "distinct": 9,
+            "max": 5868.0,
+            "min": 0.0
+          },
+          "parserVisits": {
+            "distinct": 14,
+            "max": 17602.0,
+            "min": 1.0
+          }
+        },
+        "repeat": {
+          "maxClauseDepth": {
+            "distinct": 1,
+            "max": 6519.0,
+            "min": 6519.0
+          },
+          "parserVisits": {
+            "distinct": 1,
+            "max": 19555.0,
+            "min": 19555.0
+          }
+        }
+      },
+      "transformed_classes": [
+        "org.apache.lucene.queryparser.classic.QueryParser",
+        "org.opensearch.index.search.QueryStringQueryParser"
+      ],
+      "ok": true,
+      "input_limit_probe": {
+        "max_input_bytes": 16,
+        "longest_input": 16,
+        "executions": {
+          "own": 20
+        }
+      },
+      "growth_probe": {
+        "needed_input_bytes": 2048,
+        "longest_input": 131072,
+        "executions": {
+          "own": 12
+        },
+        "growth": [
+          {
+            "ms": 540,
+            "execution": 1,
+            "bytes": 1
+          },
+          {
+            "ms": 546,
+            "execution": 2,
+            "bytes": 4
+          },
+          {
+            "ms": 567,
+            "execution": 3,
+            "bytes": 7
+          },
+          {
+            "ms": 604,
+            "execution": 10,
+            "bytes": 14
+          },
+          {
+            "ms": 845,
+            "execution": 12,
+            "bytes": 131072
+          }
+        ]
+      }
+    }
+  ],
+  "limits": {
+    "jvm_args": [
+      "-Xmx1g",
+      "-Xss1m"
+    ],
+    "timeout_ms": 20000,
+    "max_input_bytes": 131072
+  }
+}

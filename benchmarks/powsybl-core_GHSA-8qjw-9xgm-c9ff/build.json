@@ -1,0 +1,66 @@
+{
+  "clone_url": "https://github.com/powsybl/powsybl-core.git",
+  "commit": "e6c7c4997ae8758b54a2f23ce1a499e25113acdc",
+  "jdk": 17,
+  "tools": "the project's Maven wrapper (./mvnw, Maven 3.9.3, wrapper 3.2.0)",
+  "commands": [
+    "cd src && PATH=\"$(printf %s \"$PATH\" | tr : '\\n' | grep -vxE '/(usr/)?sbin' | paste -sd : -)\" MAVEN_OPTS=-Xmx2g ./mvnw -B -pl iidm/iidm-criteria -am -DskipTests clean package"
+  ],
+  "artifacts": [
+    {
+      "built": "src/iidm/iidm-criteria/target/powsybl-iidm-criteria-6.8.0-SNAPSHOT.jar",
+      "lib": "lib/powsybl-iidm-criteria-6.8.0-SNAPSHOT.jar",
+      "sha256": "ebd36df9734ca2aa23dd88d33cacbca8931360eac0be8cdfd5ffa56dbe020328",
+      "classes_sha256": "c45779cf2f80151b592823988092ead416663e5c06435db106fc94adf09efdfc"
+    },
+    {
+      "built": "src/iidm/iidm-api/target/powsybl-iidm-api-6.8.0-SNAPSHOT.jar",
+      "lib": "lib/powsybl-iidm-api-6.8.0-SNAPSHOT.jar",
+      "sha256": "867a3509f887b86a8bfae42125d9e751d5dd909f722d4447d67e7429c9765b46",
+      "classes_sha256": "6804246c6949654bbdcc95a9f58a8b807e536383608df60020e62eb389c07713"
+    },
+    {
+      "built": "src/commons/target/powsybl-commons-6.8.0-SNAPSHOT.jar",
+      "lib": "lib/powsybl-commons-6.8.0-SNAPSHOT.jar",
+      "sha256": "71c1ef802787b65479ceaf0f492e23064a1814382c379edbf0d0e1885dd71912",
+      "classes_sha256": "44e36fa73777a7e064fea68a5a70d5541aacd8e27ac6a0f898e07a01e1cc1d3c"
+    },
+    {
+      "built": "src/computation/target/powsybl-computation-6.8.0-SNAPSHOT.jar",
+      "lib": "lib/powsybl-computation-6.8.0-SNAPSHOT.jar",
+      "sha256": "f7b53c1146582b903d43afafb6a96460c6b1514f0c9bb9a794eb7a040c6f01d7",
+      "classes_sha256": "74dd4d8ce5f1d6271b361a1ddc14695030b8feaebbed890c4a1a828686374e97"
+    },
+    {
+      "built": "src/computation-local/target/powsybl-computation-local-6.8.0-SNAPSHOT.jar",
+      "lib": "lib/powsybl-computation-local-6.8.0-SNAPSHOT.jar",
+      "sha256": "a344c4e96c317dc3784beafb0b7fa64070ab287edeb1b08f976835f98830e49a",
+      "classes_sha256": "65e463c2db2da6fbb145bd1578bba63d2b4002ad70b5b4b41e60a99dc661bf31"
+    },
+    {
+      "built": "src/math/target/powsybl-math-6.8.0-SNAPSHOT.jar",
+      "lib": "lib/powsybl-math-6.8.0-SNAPSHOT.jar",
+      "sha256": "c55d1c8fd44212c9b4618d36e128de904ff910f8d9dc9194c554479764ab8e87",
+      "classes_sha256": "74d6a53d14e3d1cdcb7184140fae90ea37452aad2294dd190b35d4ea4bede9e2"
+    },
+    {
+      "built": "src/tools/target/powsybl-tools-6.8.0-SNAPSHOT.jar",
+      "lib": "lib/powsybl-tools-6.8.0-SNAPSHOT.jar",
+      "sha256": "99478a319376c024d3b63b9b9aafc1d3a304f8b3b37d2ce9bdedfc552dea4c76",
+      "classes_sha256": "e4e5d511c45fa7c43b9d91480f8530407942cc3cb1501a95f9a373a94392f068",
+      "classes_exclude": [
+        "com/powsybl/tools/PowsyblCoreVersion.class"
+      ]
+    }
+  ],
+  "fixed": {
+    "jars": [
+      {
+        "coords": "com.powsybl:powsybl-iidm-criteria:6.7.2",
+        "sha256": "9c4a8e579a312c47bdb1f3a7048fd2715dfc79e35a27c82a98164a591524fdde"
+      }
+    ],
+    "drop": "^(powsybl\\-iidm\\-criteria)-[0-9]"
+  },
+  "notes": "projectVersion at this commit: 6.8.0-SNAPSHOT. Reactor of -pl iidm/iidm-criteria -am: powsybl (root pom), commons-test, commons, computation, tools, tools-test, computation-local, math, iidm, iidm-api, config-test, iidm-criteria; commons-test, tools-test and config-test are test-scope only and not used. The seven jars are the powsybl-core modules on the runtime class path of powsybl-iidm-criteria. PATH without /sbin and /usr/sbin: mvnw checks its downloaded wrapper jar with `sha256sum -c` reading stdin when sha256sum is on PATH; the /sbin/sha256sum of recent macOS does not accept that, so mvnw would stop ('Failed to validate Maven wrapper SHA-256'); without it mvnw falls back to shasum (on Linux sha256sum is in /usr/bin and is used). PowsyblCoreVersion: powsybl-tools fills the template PowsyblCoreVersion.java with the build time that buildnumber-maven-plugin stores in the property timestamp (current time in ms, no reproducible-build option; it is the only use of the property), so com/powsybl/tools/PowsyblCoreVersion.class differs on every build. It is left out of the comparison (classes_exclude); the other 34 classes of powsybl-tools and all classes of the other six jars are compared as usual. The only com.powsybl artifacts fetched are the parent pom and powsybl-build-tools of the separate powsybl-parent project. Fixed: the evaluation's fixed class path replaces only powsybl-iidm-criteria (by the patched 6.7.2 release, which holds RegexCriterion); the other six modules stay at the vulnerable commit's build."
+}

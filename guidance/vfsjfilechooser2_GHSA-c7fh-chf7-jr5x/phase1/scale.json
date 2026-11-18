@@ -1,0 +1,15 @@
+{
+  "series_request": null,
+  "rounds": [
+    {
+      "round": 1,
+      "revision": {
+        "V1": {
+          "scale": "Measured growth with the alternating a:a@ pattern was near-linear (4.0ms at k=5 to 7.1ms at k=22), dominated by Pattern.compile() overhead (~4ms). The alternating shape produces only O(k²) backtracking because [^:]+? in the hostname group immediately hits a colon after 1 char. The effective attack shape is SEGREGATED: ftp:// + k×'a:' + k×'a@' + '!' (all colons before all @-signs). This creates k² valid (colon,@) pairs in (.+:.+@)*, and for each pair the [^:]+? reluctant quantifier traverses the entire colon-free remainder (average O(k) positions), yielding O(k³) total matching cost. Calibrating from the measured ~3µs per regex step, the 20s timeout is reached at k≈170–310 (input 700–1250 bytes). Densest encoding: 2 bytes per colon unit + 2 bytes per @-unit, so input = 4k+7 bytes.",
+          "input_bytes": 2000
+        }
+      },
+      "field_problems": {}
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "final_ok": true,
+  "collapsed_final": [],
+  "repair_rounds": 0,
+  "rounds": [
+    {
+      "round": 0,
+      "ok": true,
+      "error": null,
+      "failing": [],
+      "collapsed": []
+    }
+  ]
+}

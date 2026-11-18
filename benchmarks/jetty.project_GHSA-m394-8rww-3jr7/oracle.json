@@ -1,0 +1,13 @@
+{
+  "timeout_ms": 20000,
+  "jvm_args": [
+    "-Xmx1g",
+    "-Xss1m"
+  ],
+  "max_input_bytes": 10240,
+  "justification": {},
+  "fixed": {
+    "lib": "fixed/lib/*",
+    "drop": "^(jetty\\-util|jetty\\-io|jetty\\-http|http2\\-hpack|http2\\-common)-[0-9]"
+  }
+}

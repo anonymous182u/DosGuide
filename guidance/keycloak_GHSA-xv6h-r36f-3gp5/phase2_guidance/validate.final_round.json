@@ -1,0 +1,438 @@
+{
+  "ok": true,
+  "launch": [],
+  "build": {
+    "ok": true
+  },
+  "targets": [
+    {
+      "tool": "ValidateArtifact",
+      "target": "V1",
+      "checks": [
+        {
+          "name": "contract",
+          "status": "pass",
+          "detail": "factory, lastSignals() and fuzz test found"
+        },
+        {
+          "name": "runs",
+          "status": "pass",
+          "detail": "85 executions completed"
+        },
+        {
+          "name": "plan_signals",
+          "status": "pass",
+          "detail": "lastSignals() returns every planned signal [decompressedBytes]"
+        },
+        {
+          "name": "signal_varies",
+          "status": "pass",
+          "detail": "varying: [decompressedBytes] (on the guidance's own inputs: [decompressedBytes])"
+        },
+        {
+          "name": "reset",
+          "status": "pass",
+          "detail": "re-running inputs reproduced their values"
+        },
+        {
+          "name": "depends_on_execution",
+          "status": "pass",
+          "detail": "signals stay near zero when the target does not run"
+        },
+        {
+          "name": "instrumentation",
+          "status": "pass",
+          "detail": "rewrote [org.keycloak.saml.processing.api.util.DeflateUtil]"
+        },
+        {
+          "name": "input_limit",
+          "status": "pass",
+          "detail": "with jqf.ei.MAX_INPUT_SIZE=16 the 20 generated inputs were at most 16 bytes"
+        },
+        {
+          "name": "input_growth",
+          "status": "pass",
+          "detail": "the guidance generated a 32639-byte input after 8902 ms (28 executions); the target needs 25600"
+        },
+        {
+          "name": "progress",
+          "status": "pass",
+          "ratio": 2.245196407844768,
+          "detail": "`decompressedBytes` reached 225% of the series at 65261 bytes"
+        }
+      ],
+      "max_input_bytes": 65536,
+      "executions": {
+        "own": 40,
+        "repeat": 5,
+        "random": 40,
+        "example": 0,
+        "probe": 3
+      },
+      "test_failures_not_used": 0,
+      "signals": {
+        "decompressedBytes": {
+          "min": 0.0,
+          "max": 32.0,
+          "distinct": 18
+        }
+      },
+      "signals_by_kind": {
+        "own": {
+          "decompressedBytes": {
+            "distinct": 10,
+            "min": 15.0,
+            "max": 32.0
+          }
+        },
+        "random": {
+          "decompressedBytes": {
+            "distinct": 14,
+            "min": 0.0,
+            "max": 32.0
+          }
+        },
+        "repeat": {
+          "decompressedBytes": {
+            "distinct": 5,
+            "min": 23.0,
+            "max": 32.0
+          }
+        }
+      },
+      "transformed_classes": [
+        "org.keycloak.saml.processing.api.util.DeflateUtil"
+      ],
+      "ok": true,
+      "input_limit_probe": {
+        "max_input_bytes": 16,
+        "longest_input": 16,
+        "executions": {
+          "own": 20
+        }
+      },
+      "growth_probe": {
+        "needed_input_bytes": 25600,
+        "longest_input": 32639,
+        "executions": {
+          "own": 28
+        },
+        "growth": [
+          {
+            "ms": 678,
+            "execution": 1,
+            "bytes": 12
+          },
+          {
+            "ms": 684,
+            "execution": 4,
+            "bytes": 13
+          },
+          {
+            "ms": 687,
+            "execution": 6,
+            "bytes": 16
+          },
+          {
+            "ms": 697,
+            "execution": 10,
+            "bytes": 18
+          },
+          {
+            "ms": 703,
+            "execution": 11,
+            "bytes": 24
+          },
+          {
+            "ms": 710,
+            "execution": 12,
+            "bytes": 31
+          },
+          {
+            "ms": 719,
+            "execution": 13,
+            "bytes": 35
+          },
+          {
+            "ms": 732,
+            "execution": 14,
+            "bytes": 43
+          },
+          {
+            "ms": 739,
+            "execution": 15,
+            "bytes": 57
+          },
+          {
+            "ms": 749,
+            "execution": 16,
+            "bytes": 90
+          },
+          {
+            "ms": 768,
+            "execution": 17,
+            "bytes": 154
+          },
+          {
+            "ms": 812,
+            "execution": 18,
+            "bytes": 281
+          },
+          {
+            "ms": 874,
+            "execution": 20,
+            "bytes": 536
+          },
+          {
+            "ms": 953,
+            "execution": 21,
+            "bytes": 1043
+          },
+          {
+            "ms": 1079,
+            "execution": 22,
+            "bytes": 2060
+          },
+          {
+            "ms": 1290,
+            "execution": 23,
+            "bytes": 4091
+          },
+          {
+            "ms": 1683,
+            "execution": 24,
+            "bytes": 8174
+          },
+          {
+            "ms": 3940,
+            "execution": 25,
+            "bytes": 16329
+          },
+          {
+            "ms": 8902,
+            "execution": 28,
+            "bytes": 32639
+          }
+        ]
+      },
+      "hard_ok": true,
+      "progress_probe": {
+        "own_ms": 121457,
+        "executions": 62,
+        "longest_input": 65261,
+        "phase": "series",
+        "series_inputs": 6,
+        "comparison": {
+          "decompressedBytes": {
+            "exponent": 1.05,
+            "series_longest": [
+              1268,
+              1280007.0
+            ],
+            "best": [
+              65261,
+              67108871.0,
+              14146
+            ],
+            "compared_at": 25600,
+            "series_at_best": 29889977.894815817,
+            "ratio": 2.245196407844768
+          }
+        },
+        "measurements": {
+          "budget_ms": 120000,
+          "own_ms": 121457,
+          "executions": 62,
+          "longest_input": 65261,
+          "phase": "series",
+          "own_best": {
+            "decompressedBytes": [
+              [
+                12,
+                39.0,
+                703
+              ],
+              [
+                13,
+                263.0,
+                711
+              ],
+              [
+                15,
+                519.0,
+                714
+              ],
+              [
+                17,
+                342.0,
+                75646
+              ],
+              [
+                18,
+                1031.0,
+                719
+              ],
+              [
+                21,
+                569.0,
+                737
+              ],
+              [
+                24,
+                2055.0,
+                725
+              ],
+              [
+                26,
+                4.0,
+                102794
+              ],
+              [
+                29,
+                2056.0,
+                752
+              ],
+              [
+                31,
+                4103.0,
+                736
+              ],
+              [
+                35,
+                8199.0,
+                742
+              ],
+              [
+                40,
+                8203.0,
+                33432
+              ],
+              [
+                43,
+                16391.0,
+                748
+              ],
+              [
+                46,
+                16416.0,
+                84492
+              ],
+              [
+                57,
+                32775.0,
+                765
+              ],
+              [
+                90,
+                65543.0,
+                785
+              ],
+              [
+                98,
+                65547.0,
+                1077
+              ],
+              [
+                154,
+                131079.0,
+                821
+              ],
+              [
+                281,
+                262151.0,
+                862
+              ],
+              [
+                536,
+                524295.0,
+                903
+              ],
+              [
+                1043,
+                1048583.0,
+                969
+              ],
+              [
+                2060,
+                2097159.0,
+                1074
+              ],
+              [
+                4091,
+                4194311.0,
+                1310
+              ],
+              [
+                8174,
+                8388615.0,
+                2396
+              ],
+              [
+                16329,
+                16777223.0,
+                4110
+              ],
+              [
+                32639,
+                33554439.0,
+                8893
+              ],
+              [
+                65261,
+                67108871.0,
+                14146
+              ]
+            ]
+          },
+          "series": [
+            {
+              "bytes": 66,
+              "signals": {
+                "decompressedBytes": 40007.0
+              }
+            },
+            {
+              "bytes": 105,
+              "signals": {
+                "decompressedBytes": 80007.0
+              }
+            },
+            {
+              "bytes": 183,
+              "signals": {
+                "decompressedBytes": 160007.0
+              }
+            },
+            {
+              "bytes": 338,
+              "signals": {
+                "decompressedBytes": 320007.0
+              }
+            },
+            {
+              "bytes": 648,
+              "signals": {
+                "decompressedBytes": 640007.0
+              }
+            },
+            {
+              "bytes": 1268,
+              "signals": {
+                "decompressedBytes": 1280007.0
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "limits": {
+    "jvm_args": [
+      "-Xmx1g",
+      "-Xss1m"
+    ],
+    "timeout_ms": 20000,
+    "max_input_bytes": 65536
+  },
+  "hard_ok": true
+}

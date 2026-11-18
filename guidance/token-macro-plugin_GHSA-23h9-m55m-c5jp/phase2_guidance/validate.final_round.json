@@ -1,0 +1,974 @@
+{
+  "ok": true,
+  "launch": [],
+  "build": {
+    "ok": true
+  },
+  "targets": [
+    {
+      "tool": "ValidateArtifact",
+      "target": "V1",
+      "checks": [
+        {
+          "name": "contract",
+          "status": "pass",
+          "detail": "factory, lastSignals() and fuzz test found"
+        },
+        {
+          "name": "runs",
+          "status": "pass",
+          "detail": "97 executions completed"
+        },
+        {
+          "name": "plan_signals",
+          "status": "pass",
+          "detail": "lastSignals() returns every planned signal [processTokenCount]"
+        },
+        {
+          "name": "signal_varies",
+          "status": "pass",
+          "detail": "varying: [processTokenCount] (on the guidance's own inputs: [processTokenCount])"
+        },
+        {
+          "name": "reset",
+          "status": "warn",
+          "detail": "`processTokenCount`: re-running the same input gave different values (564 then 345, 360 then 345, 348 then 345), so the value is not determined by the executed input (timing, or computed from something other than the execution)"
+        },
+        {
+          "name": "depends_on_execution",
+          "status": "pass",
+          "detail": "signals stay near zero when the target does not run"
+        },
+        {
+          "name": "instrumentation",
+          "status": "pass",
+          "detail": "rewrote [org.jenkinsci.plugins.tokenmacro.Parser, org.jenkinsci.plugins.tokenmacro.transform.BeginningOrEndMatchTransorm]"
+        },
+        {
+          "name": "input_limit",
+          "status": "pass",
+          "detail": "with jqf.ei.MAX_INPUT_SIZE=16 the 20 generated inputs were at most 16 bytes"
+        },
+        {
+          "name": "input_growth",
+          "status": "pass",
+          "detail": "the guidance generated a 46-byte input after 2023 ms (28 executions); the target needs 46"
+        },
+        {
+          "name": "progress",
+          "status": "skip",
+          "detail": "not compared: an execution of the guidance's own inputs ran as long as the time limit"
+        }
+      ],
+      "max_input_bytes": 10240,
+      "example_inputs": 6,
+      "executions": {
+        "own": 40,
+        "repeat": 5,
+        "random": 40,
+        "example": 12,
+        "probe": 3
+      },
+      "test_failures_not_used": 0,
+      "signals": {
+        "processTokenCount": {
+          "min": 1.0,
+          "max": 564.0,
+          "distinct": 6
+        }
+      },
+      "signals_by_kind": {
+        "example": {
+          "processTokenCount": {
+            "max": 1.0,
+            "min": 1.0,
+            "distinct": 1
+          }
+        },
+        "own": {
+          "processTokenCount": {
+            "max": 564.0,
+            "min": 1.0,
+            "distinct": 5
+          }
+        },
+        "random": {
+          "processTokenCount": {
+            "max": 2.0,
+            "min": 1.0,
+            "distinct": 2
+          }
+        },
+        "repeat": {
+          "processTokenCount": {
+            "max": 345.0,
+            "min": 1.0,
+            "distinct": 3
+          }
+        }
+      },
+      "transformed_classes": [
+        "org.jenkinsci.plugins.tokenmacro.Parser",
+        "org.jenkinsci.plugins.tokenmacro.transform.BeginningOrEndMatchTransorm"
+      ],
+      "ok": true,
+      "input_limit_probe": {
+        "max_input_bytes": 16,
+        "longest_input": 16,
+        "executions": {
+          "own": 20
+        }
+      },
+      "growth_probe": {
+        "needed_input_bytes": 46,
+        "longest_input": 46,
+        "executions": {
+          "own": 28
+        },
+        "growth": [
+          {
+            "ms": 1475,
+            "execution": 1,
+            "bytes": 11
+          },
+          {
+            "ms": 1487,
+            "execution": 2,
+            "bytes": 18
+          },
+          {
+            "ms": 1491,
+            "execution": 3,
+            "bytes": 34
+          },
+          {
+            "ms": 1512,
+            "execution": 8,
+            "bytes": 35
+          },
+          {
+            "ms": 1995,
+            "execution": 14,
+            "bytes": 36
+          },
+          {
+            "ms": 1997,
+            "execution": 15,
+            "bytes": 38
+          },
+          {
+            "ms": 2017,
+            "execution": 21,
+            "bytes": 39
+          },
+          {
+            "ms": 2023,
+            "execution": 28,
+            "bytes": 46
+          }
+        ]
+      },
+      "hard_ok": true,
+      "progress_probe": {
+        "own_ms": 74616,
+        "executions": 2853,
+        "longest_input": 2560,
+        "phase": "own",
+        "series_inputs": 6,
+        "comparison": {},
+        "measurements": {
+          "budget_ms": 120000,
+          "own_ms": 74616,
+          "executions": 2853,
+          "longest_input": 2560,
+          "phase": "own",
+          "own_best": {
+            "processTokenCount": [
+              [
+                4,
+                1.0,
+                2709
+              ],
+              [
+                7,
+                1.0,
+                25362
+              ],
+              [
+                9,
+                1.0,
+                15845
+              ],
+              [
+                10,
+                1.0,
+                15239
+              ],
+              [
+                11,
+                2.0,
+                43880
+              ],
+              [
+                12,
+                2.0,
+                4145
+              ],
+              [
+                13,
+                2.0,
+                16556
+              ],
+              [
+                14,
+                2.0,
+                9971
+              ],
+              [
+                15,
+                2.0,
+                11002
+              ],
+              [
+                16,
+                2.0,
+                9967
+              ],
+              [
+                18,
+                2.0,
+                1695
+              ],
+              [
+                20,
+                2.0,
+                23442
+              ],
+              [
+                22,
+                2.0,
+                31327
+              ],
+              [
+                24,
+                2.0,
+                4146
+              ],
+              [
+                25,
+                2.0,
+                4060
+              ],
+              [
+                29,
+                2.0,
+                4541
+              ],
+              [
+                30,
+                2.0,
+                5495
+              ],
+              [
+                32,
+                576.0,
+                24975
+              ],
+              [
+                38,
+                576.0,
+                43780
+              ],
+              [
+                39,
+                576.0,
+                16141
+              ],
+              [
+                42,
+                576.0,
+                28153
+              ],
+              [
+                47,
+                576.0,
+                15995
+              ],
+              [
+                52,
+                576.0,
+                26533
+              ],
+              [
+                57,
+                576.0,
+                24028
+              ],
+              [
+                59,
+                576.0,
+                29911
+              ],
+              [
+                69,
+                576.0,
+                16898
+              ],
+              [
+                72,
+                576.0,
+                14940
+              ],
+              [
+                79,
+                576.0,
+                16664
+              ],
+              [
+                85,
+                576.0,
+                16328
+              ],
+              [
+                94,
+                576.0,
+                15844
+              ],
+              [
+                105,
+                576.0,
+                15432
+              ],
+              [
+                108,
+                576.0,
+                16556
+              ],
+              [
+                123,
+                576.0,
+                17533
+              ],
+              [
+                133,
+                576.0,
+                15376
+              ],
+              [
+                140,
+                576.0,
+                16609
+              ],
+              [
+                160,
+                576.0,
+                17414
+              ],
+              [
+                174,
+                578.0,
+                15545
+              ],
+              [
+                189,
+                578.0,
+                38552
+              ],
+              [
+                199,
+                577.0,
+                41326
+              ],
+              [
+                230,
+                576.0,
+                20963
+              ],
+              [
+                247,
+                580.0,
+                44967
+              ],
+              [
+                266,
+                578.0,
+                34954
+              ],
+              [
+                303,
+                576.0,
+                15721
+              ],
+              [
+                312,
+                576.0,
+                18305
+              ],
+              [
+                342,
+                576.0,
+                23716
+              ],
+              [
+                391,
+                577.0,
+                47367
+              ],
+              [
+                416,
+                576.0,
+                15142
+              ],
+              [
+                456,
+                576.0,
+                17297
+              ],
+              [
+                486,
+                576.0,
+                15060
+              ],
+              [
+                513,
+                576.0,
+                38813
+              ],
+              [
+                561,
+                576.0,
+                21803
+              ],
+              [
+                636,
+                2.0,
+                38924
+              ],
+              [
+                672,
+                576.0,
+                33002
+              ],
+              [
+                738,
+                576.0,
+                48278
+              ],
+              [
+                819,
+                576.0,
+                18360
+              ],
+              [
+                913,
+                576.0,
+                16952
+              ],
+              [
+                947,
+                576.0,
+                36431
+              ],
+              [
+                1277,
+                2.0,
+                43409
+              ],
+              [
+                1329,
+                576.0,
+                28435
+              ],
+              [
+                2560,
+                576.0,
+                42268
+              ]
+            ]
+          },
+          "series": []
+        }
+      }
+    },
+    {
+      "tool": "ValidateArtifact",
+      "target": "V2",
+      "checks": [
+        {
+          "name": "contract",
+          "status": "pass",
+          "detail": "factory, lastSignals() and fuzz test found"
+        },
+        {
+          "name": "runs",
+          "status": "pass",
+          "detail": "97 executions completed"
+        },
+        {
+          "name": "plan_signals",
+          "status": "pass",
+          "detail": "lastSignals() returns every planned signal [findNanos]"
+        },
+        {
+          "name": "signal_varies",
+          "status": "pass",
+          "detail": "varying: [findNanos] (on the guidance's own inputs: [findNanos])"
+        },
+        {
+          "name": "reset",
+          "status": "pass",
+          "detail": "re-running inputs reproduced their values"
+        },
+        {
+          "name": "depends_on_execution",
+          "status": "pass",
+          "detail": "signals stay near zero when the target does not run"
+        },
+        {
+          "name": "instrumentation",
+          "status": "pass",
+          "detail": "rewrote [org.jenkinsci.plugins.tokenmacro.transform.BeginningOrEndMatchTransorm]"
+        },
+        {
+          "name": "input_limit",
+          "status": "pass",
+          "detail": "with jqf.ei.MAX_INPUT_SIZE=16 the 20 generated inputs were at most 16 bytes"
+        },
+        {
+          "name": "input_growth",
+          "status": "pass",
+          "detail": "the guidance generated a 462-byte input after 564 ms (4 executions); the target needs 60"
+        },
+        {
+          "name": "progress",
+          "status": "skip",
+          "detail": "not compared: an execution of the guidance's own inputs ran as long as the time limit"
+        }
+      ],
+      "max_input_bytes": 10240,
+      "example_inputs": 6,
+      "executions": {
+        "own": 40,
+        "repeat": 5,
+        "random": 40,
+        "example": 12,
+        "probe": 3
+      },
+      "test_failures_not_used": 0,
+      "signals": {
+        "findNanos": {
+          "min": 0.0,
+          "max": 4364.0,
+          "distinct": 21
+        }
+      },
+      "signals_by_kind": {
+        "example": {
+          "findNanos": {
+            "min": 1.0,
+            "max": 26.0,
+            "distinct": 3
+          }
+        },
+        "own": {
+          "findNanos": {
+            "min": 0.0,
+            "max": 4364.0,
+            "distinct": 12
+          }
+        },
+        "random": {
+          "findNanos": {
+            "min": 0.0,
+            "max": 2610.0,
+            "distinct": 13
+          }
+        },
+        "repeat": {
+          "findNanos": {
+            "min": 212.0,
+            "max": 4364.0,
+            "distinct": 5
+          }
+        }
+      },
+      "transformed_classes": [
+        "org.jenkinsci.plugins.tokenmacro.transform.BeginningOrEndMatchTransorm"
+      ],
+      "ok": true,
+      "input_limit_probe": {
+        "max_input_bytes": 16,
+        "longest_input": 16,
+        "executions": {
+          "own": 20
+        }
+      },
+      "growth_probe": {
+        "needed_input_bytes": 60,
+        "longest_input": 462,
+        "executions": {
+          "own": 4
+        },
+        "growth": [
+          {
+            "ms": 556,
+            "execution": 1,
+            "bytes": 5
+          },
+          {
+            "ms": 560,
+            "execution": 2,
+            "bytes": 10
+          },
+          {
+            "ms": 564,
+            "execution": 4,
+            "bytes": 462
+          }
+        ]
+      },
+      "hard_ok": true,
+      "progress_probe": {
+        "own_ms": 21823,
+        "executions": 1832,
+        "longest_input": 10240,
+        "phase": "own",
+        "series_inputs": 6,
+        "comparison": {},
+        "measurements": {
+          "budget_ms": 120000,
+          "own_ms": 21823,
+          "executions": 1832,
+          "longest_input": 10240,
+          "phase": "own",
+          "own_best": {
+            "findNanos": [
+              [
+                5,
+                5.0,
+                615
+              ],
+              [
+                6,
+                4.0,
+                571
+              ],
+              [
+                7,
+                8.0,
+                656
+              ],
+              [
+                8,
+                8.0,
+                708
+              ],
+              [
+                9,
+                2.0,
+                1010
+              ],
+              [
+                10,
+                8.0,
+                557
+              ],
+              [
+                11,
+                8.0,
+                573
+              ],
+              [
+                12,
+                0.0,
+                563
+              ],
+              [
+                13,
+                8.0,
+                564
+              ],
+              [
+                14,
+                8.0,
+                576
+              ],
+              [
+                15,
+                0.0,
+                590
+              ],
+              [
+                16,
+                8.0,
+                634
+              ],
+              [
+                19,
+                15.0,
+                778
+              ],
+              [
+                20,
+                7.0,
+                718
+              ],
+              [
+                21,
+                8.0,
+                713
+              ],
+              [
+                23,
+                0.0,
+                1035
+              ],
+              [
+                25,
+                0.0,
+                1147
+              ],
+              [
+                28,
+                0.0,
+                1177
+              ],
+              [
+                40,
+                0.0,
+                588
+              ],
+              [
+                186,
+                0.0,
+                917
+              ],
+              [
+                211,
+                410.0,
+                662
+              ],
+              [
+                217,
+                410.0,
+                713
+              ],
+              [
+                363,
+                2.0,
+                1011
+              ],
+              [
+                416,
+                820.0,
+                641
+              ],
+              [
+                458,
+                898.0,
+                1424
+              ],
+              [
+                474,
+                936.0,
+                778
+              ],
+              [
+                543,
+                1078.0,
+                1442
+              ],
+              [
+                615,
+                1218.0,
+                825
+              ],
+              [
+                702,
+                1383.0,
+                1408
+              ],
+              [
+                773,
+                0.0,
+                743
+              ],
+              [
+                816,
+                0.0,
+                626
+              ],
+              [
+                893,
+                0.0,
+                574
+              ],
+              [
+                967,
+                1922.0,
+                637
+              ],
+              [
+                1104,
+                2202.0,
+                617
+              ],
+              [
+                1197,
+                2367.0,
+                832
+              ],
+              [
+                1304,
+                7774.0,
+                1189
+              ],
+              [
+                1419,
+                5620.0,
+                1167
+              ],
+              [
+                1525,
+                3034.0,
+                1084
+              ],
+              [
+                1680,
+                3354.0,
+                1402
+              ],
+              [
+                1860,
+                3708.0,
+                599
+              ],
+              [
+                2041,
+                4070.0,
+                1078
+              ],
+              [
+                2214,
+                4400.0,
+                1116
+              ],
+              [
+                2419,
+                4826.0,
+                633
+              ],
+              [
+                2513,
+                7525.0,
+                1039
+              ],
+              [
+                2896,
+                5768.0,
+                1183
+              ],
+              [
+                3085,
+                6162.0,
+                668
+              ],
+              [
+                3336,
+                6666.0,
+                632
+              ],
+              [
+                3756,
+                7506.0,
+                593
+              ],
+              [
+                4058,
+                8104.0,
+                1140
+              ],
+              [
+                4453,
+                8898.0,
+                849
+              ],
+              [
+                4811,
+                9604.0,
+                731
+              ],
+              [
+                5272,
+                10538.0,
+                1010
+              ],
+              [
+                5781,
+                11556.0,
+                804
+              ],
+              [
+                6273,
+                25472834.0,
+                1374
+              ],
+              [
+                6737,
+                27840616.0,
+                1672
+              ],
+              [
+                7459,
+                14907.0,
+                789
+              ],
+              [
+                8177,
+                16348.0,
+                908
+              ],
+              [
+                8907,
+                17794.0,
+                1008
+              ],
+              [
+                9664,
+                19316.0,
+                1673
+              ],
+              [
+                10240,
+                20474.0,
+                834
+              ]
+            ]
+          },
+          "series": []
+        }
+      }
+    }
+  ],
+  "limits": {
+    "jvm_args": [
+      "-Xmx1g",
+      "-Xss1m",
+      "--add-opens",
+      "java.base/java.lang=ALL-UNNAMED",
+      "--add-opens",
+      "java.base/java.util=ALL-UNNAMED",
+      "--add-opens",
+      "java.base/java.lang.reflect=ALL-UNNAMED",
+      "--add-opens",
+      "java.base/java.text=ALL-UNNAMED",
+      "--add-opens",
+      "java.base/java.io=ALL-UNNAMED",
+      "--add-opens",
+      "java.desktop/java.awt.font=ALL-UNNAMED"
+    ],
+    "timeout_ms": 20000,
+    "max_input_bytes": 10240
+  },
+  "hard_ok": true
+}

@@ -1,0 +1,44 @@
+{
+  "clone_url": "https://github.com/ptrd/kwik.git",
+  "commit": "da84ebe4918df599052de9a4dca8584ff23166d6",
+  "jdk": 17,
+  "commands": [
+    "rm -rf build && mkdir -p build/deps build/classes",
+    "curl -fsSL --retry 3 -o build/deps/agent15-3.0.jar https://repo1.maven.org/maven2/tech/kwik/agent15/3.0/agent15-3.0.jar",
+    "curl -fsSL --retry 3 -o build/deps/hkdf-2.0.0.jar https://repo1.maven.org/maven2/at/favre/lib/hkdf/2.0.0/hkdf-2.0.0.jar",
+    "find src/core/src/main/java -name '*.java' ! -name module-info.java | sort > build/sources.txt",
+    "javac -nowarn -encoding UTF-8 --release 11 -cp 'build/deps/*' -d build/classes @build/sources.txt",
+    "jar cf build/kwik-0.10.jar -C build/classes ."
+  ],
+  "artifacts": [
+    {
+      "built": "build/kwik-0.10.jar",
+      "lib": "lib/kwik-0.10.jar",
+      "sha256": "34d4911a2d853147b049c1cc87b94cc7ad7bdafe80ebb4c325ffd30864231774",
+      "classes_sha256": "ba8b607ff1a71efa2dbd5ed9612136c2e5759451c85124a1ce779be69d580b5c"
+    }
+  ],
+  "fixed": {
+    "jars": [
+      {
+        "coords": "tech.kwik:agent15:3.0",
+        "sha256": "8e13c964925f77cfe5b3e36e7e972e4aff49d3807845275a64d5c2151f3a63d7"
+      },
+      {
+        "coords": "at.favre.lib:hkdf:2.0.0",
+        "sha256": "65aa13f71a1a8b9cac439504af213d761fef9b002b6d06f06c16e50f86ec422b"
+      },
+      {
+        "coords": "tech.kwik:kwik:0.10.1",
+        "sha256": "f980c13be66be45384b56bd87aa7c2f6eac0c8b0d1f82104292aa3d44c21cd9a"
+      },
+      {
+        "coords": "io.whitfin:siphash:2.0.0",
+        "sha256": "3ab040bd3dc1e43028e64ed964d2f5524f3f35a6c2fb141d1e69b212c800b79e"
+      }
+    ],
+    "drop": "^(agent15|hkdf|kwik|siphash)-[0-9]"
+  },
+  "tools": "git, curl, JDK 17 (javac, jar)",
+  "notes": "As the evaluation's jar was made: javac --release 11 of every .java file of kwik core (core/src/main/java) except module-info.java, against kwik's run-time dependencies agent15 3.0 and hkdf 2.0.0 (Maven Central), packed with jar cf; the project's Gradle build is not used. The tree's core sources equal the tech.kwik:kwik:0.10 sources jar, hence the jar name. Fixed version: kwik 0.10.1 (first patched release) with agent15 3.0, hkdf 2.0.0 and siphash 2.0.0 (0.10.1's pom names siphash 2.0.0-auto-module, which is not on Maven Central; 2.0.0 holds the same classes)."
+}

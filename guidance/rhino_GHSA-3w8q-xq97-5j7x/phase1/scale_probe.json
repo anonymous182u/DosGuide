@@ -1,0 +1,265 @@
+{
+  "caps": {
+    "input_bytes": 2560,
+    "heap_bytes": 268435456,
+    "stack_bytes": 262144,
+    "time_ms": 2000
+  },
+  "targets": {
+    "V1": {
+      "problems": [],
+      "parameter": "toFixed precision (BigInteger iterations = precision + k + 1, k≈20)",
+      "inputs": [
+        {
+          "file": "p10.bin",
+          "value": 10,
+          "input_bytes": 9,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 68.045336,
+          "wall_ms": 128.308415,
+          "allocated_bytes": 5765976,
+          "peak_heap_bytes": 6291456
+        },
+        {
+          "file": "p20.bin",
+          "value": 20,
+          "input_bytes": 9,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 71.62814,
+          "wall_ms": 108.068033,
+          "allocated_bytes": 5767760,
+          "peak_heap_bytes": 6291456
+        },
+        {
+          "file": "p40.bin",
+          "value": 40,
+          "input_bytes": 9,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 66.770867,
+          "wall_ms": 96.725702,
+          "allocated_bytes": 5771136,
+          "peak_heap_bytes": 6291456
+        },
+        {
+          "file": "p60.bin",
+          "value": 60,
+          "input_bytes": 9,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 65.143224,
+          "wall_ms": 77.591345,
+          "allocated_bytes": 5774680,
+          "peak_heap_bytes": 7340032
+        },
+        {
+          "file": "p80.bin",
+          "value": 80,
+          "input_bytes": 9,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 63.505343,
+          "wall_ms": 76.259121,
+          "allocated_bytes": 5778056,
+          "peak_heap_bytes": 7340032
+        },
+        {
+          "file": "p100.bin",
+          "value": 100,
+          "input_bytes": 9,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 64.776875,
+          "wall_ms": 93.732979,
+          "allocated_bytes": 5781440,
+          "peak_heap_bytes": 6291456
+        }
+      ]
+    },
+    "V2": {
+      "problems": [],
+      "parameter": "approximate fractional digit iterations (1074/log2(radix))",
+      "inputs": [
+        {
+          "file": "r36.bin",
+          "value": 207,
+          "input_bytes": 9,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 64.14854,
+          "wall_ms": 105.659462,
+          "allocated_bytes": 5767280,
+          "peak_heap_bytes": 6291456
+        },
+        {
+          "file": "r18.bin",
+          "value": 257,
+          "input_bytes": 9,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 57.078887,
+          "wall_ms": 68.313229,
+          "allocated_bytes": 5768376,
+          "peak_heap_bytes": 6291456
+        },
+        {
+          "file": "r9.bin",
+          "value": 338,
+          "input_bytes": 9,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 66.794827,
+          "wall_ms": 101.656984,
+          "allocated_bytes": 5769536,
+          "peak_heap_bytes": 7340032
+        },
+        {
+          "file": "r5.bin",
+          "value": 462,
+          "input_bytes": 9,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 64.055575,
+          "wall_ms": 116.022999,
+          "allocated_bytes": 5774928,
+          "peak_heap_bytes": 6291456
+        },
+        {
+          "file": "r3.bin",
+          "value": 677,
+          "input_bytes": 9,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 65.287775,
+          "wall_ms": 116.545781,
+          "allocated_bytes": 5778600,
+          "peak_heap_bytes": 6291456
+        },
+        {
+          "file": "r2.bin",
+          "value": 1074,
+          "input_bytes": 9,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 65.810726,
+          "wall_ms": 80.599749,
+          "allocated_bytes": 5785232,
+          "peak_heap_bytes": 7340032
+        }
+      ]
+    },
+    "V3": {
+      "problems": [],
+      "parameter": "decimal exponent k (controls BigInteger size: 5^k bits ≈ k*2.32)",
+      "inputs": [
+        {
+          "file": "d1e10.bin",
+          "value": 10,
+          "input_bytes": 10,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 61.724291,
+          "wall_ms": 93.773522,
+          "allocated_bytes": 5760592,
+          "peak_heap_bytes": 6291456
+        },
+        {
+          "file": "d1e20.bin",
+          "value": 20,
+          "input_bytes": 10,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 70.860492,
+          "wall_ms": 112.069755,
+          "allocated_bytes": 5778128,
+          "peak_heap_bytes": 7340032
+        },
+        {
+          "file": "d1e50.bin",
+          "value": 50,
+          "input_bytes": 10,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 71.097041,
+          "wall_ms": 112.520489,
+          "allocated_bytes": 5792808,
+          "peak_heap_bytes": 6291456
+        },
+        {
+          "file": "d1e100.bin",
+          "value": 100,
+          "input_bytes": 10,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 69.754324,
+          "wall_ms": 111.637736,
+          "allocated_bytes": 5814096,
+          "peak_heap_bytes": 6291456
+        },
+        {
+          "file": "d1e200.bin",
+          "value": 200,
+          "input_bytes": 10,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 65.78538,
+          "wall_ms": 84.913729,
+          "allocated_bytes": 5833864,
+          "peak_heap_bytes": 6291456
+        },
+        {
+          "file": "d1.7e308.bin",
+          "value": 308,
+          "input_bytes": 10,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 63.637276,
+          "wall_ms": 95.734251,
+          "allocated_bytes": 5849336,
+          "peak_heap_bytes": 6291456
+        }
+      ]
+    }
+  },
+  "build": {
+    "ok": true
+  }
+}

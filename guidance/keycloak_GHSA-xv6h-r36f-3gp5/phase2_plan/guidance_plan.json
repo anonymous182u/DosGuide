@@ -1,0 +1,32 @@
+{
+  "plans": [
+    {
+      "target": "V1",
+      "signals": [
+        {
+          "name": "decompressedBytes",
+          "quantity": "total bytes read from the InflaterInputStream during one fuzz execution, measuring the decompression amplification that drives DOM heap exhaustion",
+          "aggregation": "sum",
+          "locations": [
+            "org.keycloak.saml.processing.api.util.DeflateUtil#decode where the InflaterInputStream is created with no output size limit and wrapped in V1CountingStream by the agent"
+          ],
+          "technique": "bytecode",
+          "storage": "ThreadLocal<long[]> in V1Counters, index 0 = cumulative decompressedBytes for current execution",
+          "reset": "V1Guidance.getInput() calls V1Counters.reset() before each execution",
+          "read": "V1Guidance.handleResult() calls V1Counters.getDecompressedBytes() after each execution"
+        }
+      ],
+      "retention": "Primary: keep input and update bestInner if decompressedBytes exceeds best-so-far (maximize amplification). Only primary retention updates bestInner — this guarantees bestInner always contains repetitive self-closing XML elements with ~1000:1 DEFLATE compression ratio matching the scale series. Secondary: add to corpus (but NOT bestInner) if compressed size exceeds previous best compressed size, for diversity only. Tertiary: random keep with 1% probability for diversity. bestInner tracked outside the corpus as a dedicated field, never subject to eviction or pollution by diversity mutations, ensuring exponential doubling chains maintain the high compression ratio structure.",
+      "retention_signals": [
+        "decompressedBytes"
+      ],
+      "mutation": [
+        "repetition [R45a]: double the bestInner content via concatenation, chaining exponentially from 4-byte seed to ~32 MB plaintext = ~30 KB compressed in 23 doublings (70% probability)",
+        "dictionary [R45b]: insert XML tokens (<a/>, <b/>, <r>, </r>, whitespace) at random position in a corpus entry for structural diversity (15% probability)",
+        "byte-level: flip 1-4 random bytes in a corpus entry for diversity (10% probability)",
+        "cross-splice: take chunk from one corpus entry and splice into another at random position (5% probability)",
+        "encoder [R45c]: post-step applied to ALL outputs — compress mutated plaintext with java.util.zip.Deflater(Deflater.DEFLATED, true) matching target's Inflater(true) in DeflateUtil.decode(); shrink plaintext if compressed exceeds MAX_INPUT_SIZE; ensures 100% valid DEFLATE output (100% post-step)"
+      ]
+    }
+  ]
+}

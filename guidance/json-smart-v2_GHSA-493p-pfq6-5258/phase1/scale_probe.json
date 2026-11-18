@@ -1,0 +1,147 @@
+{
+  "caps": {
+    "input_bytes": 2560,
+    "heap_bytes": 268435456,
+    "stack_bytes": 262144,
+    "time_ms": 2000
+  },
+  "targets": {
+    "V1": {
+      "problems": [],
+      "parameter": "nesting levels (array depth)",
+      "inputs": [
+        {
+          "file": "n64.bin",
+          "value": 64,
+          "input_bytes": 128,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 11.334024,
+          "wall_ms": 11.436234,
+          "allocated_bytes": 987976,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "file": "n128.bin",
+          "value": 128,
+          "input_bytes": 256,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 8.020036,
+          "wall_ms": 8.096533,
+          "allocated_bytes": 993384,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "file": "n256.bin",
+          "value": 256,
+          "input_bytes": 512,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 11.78188,
+          "wall_ms": 12.011738,
+          "allocated_bytes": 1004136,
+          "peak_heap_bytes": 2097152
+        },
+        {
+          "file": "n512.bin",
+          "value": 512,
+          "input_bytes": 1024,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 9.130267,
+          "wall_ms": 9.394022,
+          "allocated_bytes": 1094856,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "file": "n1024.bin",
+          "value": 1024,
+          "input_bytes": 2048,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "stack_cap"
+        }
+      ]
+    },
+    "V2": {
+      "problems": [],
+      "parameter": "nesting levels (array depth)",
+      "inputs": [
+        {
+          "file": "n64.bin",
+          "value": 64,
+          "input_bytes": 128,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 12.649395,
+          "wall_ms": 24.726802,
+          "allocated_bytes": 987952,
+          "peak_heap_bytes": 2097152
+        },
+        {
+          "file": "n128.bin",
+          "value": 128,
+          "input_bytes": 256,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 13.352414,
+          "wall_ms": 20.53663,
+          "allocated_bytes": 1062560,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "file": "n256.bin",
+          "value": 256,
+          "input_bytes": 512,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 11.790504,
+          "wall_ms": 21.131723,
+          "allocated_bytes": 1004112,
+          "peak_heap_bytes": 2097152
+        },
+        {
+          "file": "n512.bin",
+          "value": 512,
+          "input_bytes": 1024,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 12.799166,
+          "wall_ms": 13.059669,
+          "allocated_bytes": 1094832,
+          "peak_heap_bytes": 2097152
+        },
+        {
+          "file": "n1024.bin",
+          "value": 1024,
+          "input_bytes": 2048,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "stack_cap"
+        }
+      ]
+    }
+  },
+  "build": {
+    "ok": true
+  }
+}

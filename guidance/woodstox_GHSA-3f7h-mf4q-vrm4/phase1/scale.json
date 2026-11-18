@@ -1,0 +1,15 @@
+{
+  "series_request": null,
+  "rounds": [
+    {
+      "round": 1,
+      "revision": {
+        "V1": {
+          "scale": "Measured: stack overflows between 512 and 1024 nesting levels at 256 KB stack cap; CPU time and allocation are flat (not depth-dependent). Estimated per-frame cost ~277 bytes (with ~60 KB base stack for JVM/framework/reader chain). Extrapolating to 1 MB evaluation stack: ~3500 nesting levels cause StackOverflowError. Encoding: 2 bytes per nesting level (one open + one close paren) plus 54 bytes boilerplate. For 3500 levels: 7056 bytes.",
+          "input_bytes": 7056
+        }
+      },
+      "field_problems": {}
+    }
+  ]
+}

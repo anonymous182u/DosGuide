@@ -1,0 +1,1944 @@
+{
+  "ok": true,
+  "launch": [],
+  "build": {
+    "ok": true
+  },
+  "targets": [
+    {
+      "tool": "ValidateArtifact",
+      "target": "V1",
+      "checks": [
+        {
+          "name": "contract",
+          "status": "pass",
+          "detail": "factory, lastSignals() and fuzz test found"
+        },
+        {
+          "name": "runs",
+          "status": "pass",
+          "detail": "85 executions completed"
+        },
+        {
+          "name": "plan_signals",
+          "status": "pass",
+          "detail": "lastSignals() returns every planned signal [v1TreeVisits, v1MaxPerLookup, v1KeyEquals, channelsAdded]"
+        },
+        {
+          "name": "signal_varies",
+          "status": "pass",
+          "detail": "varying: [channelsAdded, v1KeyEquals, v1MaxPerLookup, v1TreeVisits] (on the guidance's own inputs: [channelsAdded, v1KeyEquals, v1MaxPerLookup, v1TreeVisits])"
+        },
+        {
+          "name": "reset",
+          "status": "warn",
+          "detail": "`v1KeyEquals`: re-running the same input gave different values (7072 then 7044, 7055 then 6885, 6779 then 6931), so the value is not determined by the executed input (timing, or computed from something other than the execution); `v1TreeVisits`: re-running the same input gave different values (6318 then 6288, 6327 then 6141, 6034 then 6183), so the value is not determined by the executed input (timing, or computed from something other than the execution)"
+        },
+        {
+          "name": "depends_on_execution",
+          "status": "pass",
+          "detail": "signals stay near zero when the target does not run"
+        },
+        {
+          "name": "instrumentation",
+          "status": "warn",
+          "detail": "the javaagent rewrote [io.netty.incubator.codec.quic.QuicheQuicCodec] but not the planned [java.util.HashMap$TreeNode, java.nio.ByteBuffer]"
+        },
+        {
+          "name": "input_limit",
+          "status": "pass",
+          "detail": "with jqf.ei.MAX_INPUT_SIZE=16 the 20 generated inputs were at most 16 bytes"
+        },
+        {
+          "name": "input_growth",
+          "status": "pass",
+          "detail": "the guidance generated a 413000-byte input after 4197 ms (30 executions); the target needs 413000"
+        },
+        {
+          "name": "progress",
+          "status": "skip",
+          "detail": "not compared: an execution of the guidance's own inputs ran as long as the time limit"
+        }
+      ],
+      "max_input_bytes": 1048576,
+      "executions": {
+        "own": 40,
+        "repeat": 5,
+        "random": 40,
+        "example": 0,
+        "probe": 3
+      },
+      "test_failures_not_used": 0,
+      "signals": {
+        "channelsAdded": {
+          "min": 0.0,
+          "max": 1225.0,
+          "distinct": 30
+        },
+        "v1KeyEquals": {
+          "min": 0.0,
+          "max": 18807.0,
+          "distinct": 41
+        },
+        "v1MaxPerLookup": {
+          "min": 0.0,
+          "max": 110.0,
+          "distinct": 11
+        },
+        "v1TreeVisits": {
+          "min": 0.0,
+          "max": 16833.0,
+          "distinct": 25
+        }
+      },
+      "signals_by_kind": {
+        "own": {
+          "channelsAdded": {
+            "max": 1225.0,
+            "min": 2.0,
+            "distinct": 17
+          },
+          "v1KeyEquals": {
+            "max": 7072.0,
+            "min": 0.0,
+            "distinct": 22
+          },
+          "v1MaxPerLookup": {
+            "max": 110.0,
+            "min": 0.0,
+            "distinct": 8
+          },
+          "v1TreeVisits": {
+            "max": 6327.0,
+            "min": 0.0,
+            "distinct": 13
+          }
+        },
+        "random": {
+          "channelsAdded": {
+            "max": 1219.0,
+            "min": 0.0,
+            "distinct": 22
+          },
+          "v1KeyEquals": {
+            "max": 18807.0,
+            "min": 0.0,
+            "distinct": 18
+          },
+          "v1MaxPerLookup": {
+            "max": 109.0,
+            "min": 0.0,
+            "distinct": 5
+          },
+          "v1TreeVisits": {
+            "max": 16833.0,
+            "min": 0.0,
+            "distinct": 8
+          }
+        },
+        "repeat": {
+          "channelsAdded": {
+            "max": 1225.0,
+            "min": 509.0,
+            "distinct": 4
+          },
+          "v1KeyEquals": {
+            "max": 7044.0,
+            "min": 6662.0,
+            "distinct": 5
+          },
+          "v1MaxPerLookup": {
+            "max": 110.0,
+            "min": 108.0,
+            "distinct": 2
+          },
+          "v1TreeVisits": {
+            "max": 6288.0,
+            "min": 5915.0,
+            "distinct": 5
+          }
+        }
+      },
+      "transformed_classes": [
+        "io.netty.incubator.codec.quic.QuicheQuicCodec"
+      ],
+      "ok": true,
+      "input_limit_probe": {
+        "max_input_bytes": 16,
+        "longest_input": 16,
+        "executions": {
+          "own": 20
+        }
+      },
+      "growth_probe": {
+        "needed_input_bytes": 413000,
+        "longest_input": 413000,
+        "executions": {
+          "own": 30
+        },
+        "growth": [
+          {
+            "ms": 880,
+            "execution": 1,
+            "bytes": 59
+          },
+          {
+            "ms": 908,
+            "execution": 3,
+            "bytes": 61
+          },
+          {
+            "ms": 922,
+            "execution": 4,
+            "bytes": 145
+          },
+          {
+            "ms": 945,
+            "execution": 5,
+            "bytes": 302
+          },
+          {
+            "ms": 964,
+            "execution": 6,
+            "bytes": 344
+          },
+          {
+            "ms": 979,
+            "execution": 7,
+            "bytes": 690
+          },
+          {
+            "ms": 1038,
+            "execution": 11,
+            "bytes": 1386
+          },
+          {
+            "ms": 1076,
+            "execution": 12,
+            "bytes": 2772
+          },
+          {
+            "ms": 1196,
+            "execution": 16,
+            "bytes": 5563
+          },
+          {
+            "ms": 1335,
+            "execution": 19,
+            "bytes": 11133
+          },
+          {
+            "ms": 1432,
+            "execution": 21,
+            "bytes": 22275
+          },
+          {
+            "ms": 1574,
+            "execution": 23,
+            "bytes": 44552
+          },
+          {
+            "ms": 1831,
+            "execution": 24,
+            "bytes": 89114
+          },
+          {
+            "ms": 2289,
+            "execution": 25,
+            "bytes": 178230
+          },
+          {
+            "ms": 3224,
+            "execution": 29,
+            "bytes": 356460
+          },
+          {
+            "ms": 4197,
+            "execution": 30,
+            "bytes": 413000
+          }
+        ]
+      },
+      "hard_ok": true,
+      "progress_probe": {
+        "own_ms": 77268,
+        "executions": 56,
+        "longest_input": 776810,
+        "phase": "own",
+        "series_inputs": 5,
+        "comparison": {},
+        "measurements": {
+          "budget_ms": 120000,
+          "own_ms": 77268,
+          "executions": 56,
+          "longest_input": 776810,
+          "phase": "own",
+          "own_best": {
+            "channelsAdded": [
+              [
+                63,
+                3.0,
+                878
+              ],
+              [
+                75,
+                4.0,
+                888
+              ],
+              [
+                84,
+                4.0,
+                899
+              ],
+              [
+                126,
+                6.0,
+                1013
+              ],
+              [
+                150,
+                4.0,
+                1125
+              ],
+              [
+                681,
+                1.0,
+                913
+              ],
+              [
+                1041,
+                1.0,
+                1005
+              ],
+              [
+                1161,
+                1.0,
+                1118
+              ],
+              [
+                1338,
+                39.0,
+                2305
+              ],
+              [
+                2763,
+                111.0,
+                1090
+              ],
+              [
+                2994,
+                122.0,
+                1795
+              ],
+              [
+                4170,
+                178.0,
+                1220
+              ],
+              [
+                5534,
+                261.0,
+                1173
+              ],
+              [
+                5904,
+                120.0,
+                1376
+              ],
+              [
+                8602,
+                363.0,
+                3232
+              ],
+              [
+                11094,
+                567.0,
+                17091
+              ],
+              [
+                17202,
+                733.0,
+                4251
+              ],
+              [
+                22162,
+                1166.0,
+                1359
+              ],
+              [
+                34612,
+                1483.0,
+                4415
+              ],
+              [
+                44336,
+                2353.0,
+                1517
+              ],
+              [
+                69222,
+                2973.0,
+                4598
+              ],
+              [
+                88688,
+                4741.0,
+                1783
+              ],
+              [
+                142096,
+                6127.0,
+                27430
+              ],
+              [
+                177376,
+                9526.0,
+                2272
+              ],
+              [
+                191534,
+                5827.0,
+                42077
+              ],
+              [
+                276882,
+                11913.0,
+                7039
+              ],
+              [
+                354756,
+                19104.0,
+                3175
+              ],
+              [
+                413000,
+                22245.0,
+                4213
+              ],
+              [
+                554518,
+                23879.0,
+                32498
+              ],
+              [
+                621949,
+                27090.0,
+                41546
+              ],
+              [
+                776810,
+                33879.0,
+                57261
+              ]
+            ],
+            "v1KeyEquals": [
+              [
+                63,
+                0.0,
+                878
+              ],
+              [
+                75,
+                0.0,
+                888
+              ],
+              [
+                84,
+                0.0,
+                899
+              ],
+              [
+                126,
+                3.0,
+                1013
+              ],
+              [
+                150,
+                4.0,
+                1125
+              ],
+              [
+                681,
+                0.0,
+                913
+              ],
+              [
+                1041,
+                0.0,
+                1005
+              ],
+              [
+                1161,
+                0.0,
+                1118
+              ],
+              [
+                1377,
+                0.0,
+                954
+              ],
+              [
+                2763,
+                0.0,
+                1090
+              ],
+              [
+                2952,
+                48.0,
+                1194
+              ],
+              [
+                4302,
+                2347.0,
+                1808
+              ],
+              [
+                5534,
+                0.0,
+                1173
+              ],
+              [
+                5904,
+                222.0,
+                1376
+              ],
+              [
+                8602,
+                9454.0,
+                3232
+              ],
+              [
+                11073,
+                0.0,
+                1280
+              ],
+              [
+                17202,
+                38027.0,
+                4251
+              ],
+              [
+                22162,
+                0.0,
+                1359
+              ],
+              [
+                34612,
+                152700.0,
+                4415
+              ],
+              [
+                44336,
+                1.0,
+                1517
+              ],
+              [
+                69222,
+                612411.0,
+                4598
+              ],
+              [
+                88688,
+                6.0,
+                1783
+              ],
+              [
+                142096,
+                2844559.0,
+                27430
+              ],
+              [
+                177376,
+                10.0,
+                2272
+              ],
+              [
+                191534,
+                2468971.0,
+                42077
+              ],
+              [
+                276882,
+                9802233.0,
+                7039
+              ],
+              [
+                354756,
+                38.0,
+                3175
+              ],
+              [
+                413000,
+                50.0,
+                4213
+              ],
+              [
+                554518,
+                41235375.0,
+                32498
+              ],
+              [
+                621949,
+                75092177.0,
+                41546
+              ],
+              [
+                776810,
+                117507927.0,
+                57261
+              ]
+            ],
+            "v1MaxPerLookup": [
+              [
+                63,
+                0.0,
+                878
+              ],
+              [
+                75,
+                0.0,
+                888
+              ],
+              [
+                84,
+                0.0,
+                899
+              ],
+              [
+                126,
+                0.0,
+                1013
+              ],
+              [
+                150,
+                0.0,
+                1125
+              ],
+              [
+                681,
+                0.0,
+                913
+              ],
+              [
+                1041,
+                0.0,
+                1005
+              ],
+              [
+                1161,
+                0.0,
+                1118
+              ],
+              [
+                1377,
+                0.0,
+                954
+              ],
+              [
+                2763,
+                0.0,
+                1090
+              ],
+              [
+                2952,
+                11.0,
+                1194
+              ],
+              [
+                4170,
+                67.0,
+                1220
+              ],
+              [
+                5534,
+                0.0,
+                1173
+              ],
+              [
+                5904,
+                11.0,
+                1376
+              ],
+              [
+                8602,
+                135.0,
+                3232
+              ],
+              [
+                11073,
+                0.0,
+                1280
+              ],
+              [
+                17202,
+                271.0,
+                4251
+              ],
+              [
+                22162,
+                0.0,
+                1359
+              ],
+              [
+                34402,
+                544.0,
+                4325
+              ],
+              [
+                44336,
+                0.0,
+                1517
+              ],
+              [
+                69222,
+                1088.0,
+                4598
+              ],
+              [
+                88688,
+                0.0,
+                1783
+              ],
+              [
+                142096,
+                2349.0,
+                27430
+              ],
+              [
+                177376,
+                0.0,
+                2272
+              ],
+              [
+                191534,
+                2160.0,
+                42077
+              ],
+              [
+                276882,
+                4352.0,
+                7039
+              ],
+              [
+                354756,
+                0.0,
+                3175
+              ],
+              [
+                413000,
+                0.0,
+                4213
+              ],
+              [
+                553762,
+                8937.0,
+                17013
+              ],
+              [
+                621949,
+                12148.0,
+                41546
+              ],
+              [
+                776810,
+                15196.0,
+                57261
+              ]
+            ],
+            "v1TreeVisits": [
+              [
+                63,
+                0.0,
+                878
+              ],
+              [
+                75,
+                0.0,
+                888
+              ],
+              [
+                84,
+                0.0,
+                899
+              ],
+              [
+                126,
+                0.0,
+                1013
+              ],
+              [
+                150,
+                0.0,
+                1125
+              ],
+              [
+                681,
+                0.0,
+                913
+              ],
+              [
+                1041,
+                0.0,
+                1005
+              ],
+              [
+                1161,
+                0.0,
+                1118
+              ],
+              [
+                1377,
+                0.0,
+                954
+              ],
+              [
+                2763,
+                0.0,
+                1090
+              ],
+              [
+                2952,
+                30.0,
+                1194
+              ],
+              [
+                4302,
+                2295.0,
+                1808
+              ],
+              [
+                5534,
+                0.0,
+                1173
+              ],
+              [
+                5904,
+                84.0,
+                1376
+              ],
+              [
+                8602,
+                9196.0,
+                3232
+              ],
+              [
+                11073,
+                0.0,
+                1280
+              ],
+              [
+                17202,
+                37074.0,
+                4251
+              ],
+              [
+                22162,
+                0.0,
+                1359
+              ],
+              [
+                34612,
+                149511.0,
+                4415
+              ],
+              [
+                44336,
+                0.0,
+                1517
+              ],
+              [
+                69222,
+                608232.0,
+                4598
+              ],
+              [
+                88688,
+                0.0,
+                1783
+              ],
+              [
+                142096,
+                2838679.0,
+                27430
+              ],
+              [
+                177376,
+                0.0,
+                2272
+              ],
+              [
+                191534,
+                2460830.0,
+                42077
+              ],
+              [
+                276882,
+                9793995.0,
+                7039
+              ],
+              [
+                354756,
+                0.0,
+                3175
+              ],
+              [
+                413000,
+                0.0,
+                4213
+              ],
+              [
+                554518,
+                41219139.0,
+                32498
+              ],
+              [
+                621949,
+                75074482.0,
+                41546
+              ],
+              [
+                776810,
+                117484427.0,
+                57261
+              ]
+            ]
+          },
+          "series": []
+        }
+      }
+    },
+    {
+      "tool": "ValidateArtifact",
+      "target": "PkgRisk1",
+      "checks": [
+        {
+          "name": "contract",
+          "status": "pass",
+          "detail": "factory, lastSignals() and fuzz test found"
+        },
+        {
+          "name": "runs",
+          "status": "pass",
+          "detail": "85 executions completed"
+        },
+        {
+          "name": "plan_signals",
+          "status": "pass",
+          "detail": "lastSignals() returns every planned signal [p1TreeVisits, p1VisitsPerKB, p1Treeify, p1KeyEquals, channelsAdded]"
+        },
+        {
+          "name": "signal_varies",
+          "status": "pass",
+          "detail": "varying: [channelsAdded, p1KeyEquals, p1TreeVisits, p1Treeify, p1VisitsPerKB] (on the guidance's own inputs: [channelsAdded, p1KeyEquals, p1TreeVisits, p1Treeify, p1VisitsPerKB])"
+        },
+        {
+          "name": "reset",
+          "status": "pass",
+          "detail": "re-running inputs reproduced their values"
+        },
+        {
+          "name": "depends_on_execution",
+          "status": "pass",
+          "detail": "signals stay near zero when the target does not run"
+        },
+        {
+          "name": "instrumentation",
+          "status": "warn",
+          "detail": "the javaagent rewrote [io.netty.incubator.codec.quic.QuicheQuicCodec] but not the planned [java.util.HashMap$TreeNode, java.nio.ByteBuffer]"
+        },
+        {
+          "name": "input_limit",
+          "status": "pass",
+          "detail": "with jqf.ei.MAX_INPUT_SIZE=16 the 20 generated inputs were at most 16 bytes"
+        },
+        {
+          "name": "input_growth",
+          "status": "pass",
+          "detail": "the guidance generated a 176000-byte input after 4650 ms (40 executions); the target needs 176000"
+        },
+        {
+          "name": "progress",
+          "status": "skip",
+          "detail": "not compared: an execution of the guidance's own inputs ran as long as the time limit"
+        }
+      ],
+      "max_input_bytes": 1048576,
+      "executions": {
+        "own": 40,
+        "repeat": 5,
+        "random": 40,
+        "example": 0,
+        "probe": 3
+      },
+      "test_failures_not_used": 0,
+      "signals": {
+        "channelsAdded": {
+          "min": 0.0,
+          "max": 19542.0,
+          "distinct": 42
+        },
+        "p1KeyEquals": {
+          "min": 0.0,
+          "max": 512711.0,
+          "distinct": 41
+        },
+        "p1TreeVisits": {
+          "min": 0.0,
+          "max": 417505.0,
+          "distinct": 25
+        },
+        "p1Treeify": {
+          "min": 0.0,
+          "max": 891.0,
+          "distinct": 12
+        },
+        "p1VisitsPerKB": {
+          "min": 0.0,
+          "max": 18.155783179602167,
+          "distinct": 36
+        }
+      },
+      "signals_by_kind": {
+        "own": {
+          "channelsAdded": {
+            "max": 19542.0,
+            "distinct": 27,
+            "min": 2.0
+          },
+          "p1KeyEquals": {
+            "max": 512682.0,
+            "distinct": 22,
+            "min": 0.0
+          },
+          "p1TreeVisits": {
+            "max": 417471.0,
+            "distinct": 13,
+            "min": 0.0
+          },
+          "p1Treeify": {
+            "max": 891.0,
+            "distinct": 9,
+            "min": 0.0
+          },
+          "p1VisitsPerKB": {
+            "max": 18.154304642511338,
+            "distinct": 20,
+            "min": 0.0
+          }
+        },
+        "random": {
+          "channelsAdded": {
+            "max": 19542.0,
+            "distinct": 25,
+            "min": 0.0
+          },
+          "p1KeyEquals": {
+            "max": 512396.0,
+            "distinct": 18,
+            "min": 0.0
+          },
+          "p1TreeVisits": {
+            "max": 417215.0,
+            "distinct": 10,
+            "min": 0.0
+          },
+          "p1Treeify": {
+            "max": 891.0,
+            "distinct": 9,
+            "min": 0.0
+          },
+          "p1VisitsPerKB": {
+            "max": 18.1431721279451,
+            "distinct": 16,
+            "min": 0.0
+          }
+        },
+        "repeat": {
+          "channelsAdded": {
+            "max": 19542.0,
+            "distinct": 5,
+            "min": 9765.0
+          },
+          "p1KeyEquals": {
+            "max": 512711.0,
+            "distinct": 5,
+            "min": 127808.0
+          },
+          "p1TreeVisits": {
+            "max": 417505.0,
+            "distinct": 5,
+            "min": 86963.0
+          },
+          "p1Treeify": {
+            "max": 891.0,
+            "distinct": 2,
+            "min": 749.0
+          },
+          "p1VisitsPerKB": {
+            "max": 18.155783179602167,
+            "distinct": 5,
+            "min": 7.561486312071191
+          }
+        }
+      },
+      "transformed_classes": [
+        "io.netty.incubator.codec.quic.QuicheQuicCodec"
+      ],
+      "ok": true,
+      "input_limit_probe": {
+        "max_input_bytes": 16,
+        "longest_input": 16,
+        "executions": {
+          "own": 20
+        }
+      },
+      "growth_probe": {
+        "needed_input_bytes": 176000,
+        "longest_input": 176000,
+        "executions": {
+          "own": 40
+        },
+        "growth": [
+          {
+            "ms": 741,
+            "execution": 1,
+            "bytes": 31
+          },
+          {
+            "ms": 759,
+            "execution": 2,
+            "bytes": 37
+          },
+          {
+            "ms": 772,
+            "execution": 3,
+            "bytes": 42
+          },
+          {
+            "ms": 791,
+            "execution": 4,
+            "bytes": 114
+          },
+          {
+            "ms": 817,
+            "execution": 5,
+            "bytes": 239
+          },
+          {
+            "ms": 869,
+            "execution": 7,
+            "bytes": 426
+          },
+          {
+            "ms": 900,
+            "execution": 8,
+            "bytes": 546
+          },
+          {
+            "ms": 942,
+            "execution": 9,
+            "bytes": 966
+          },
+          {
+            "ms": 968,
+            "execution": 10,
+            "bytes": 1747
+          },
+          {
+            "ms": 1034,
+            "execution": 11,
+            "bytes": 3498
+          },
+          {
+            "ms": 1304,
+            "execution": 23,
+            "bytes": 3932
+          },
+          {
+            "ms": 1372,
+            "execution": 25,
+            "bytes": 3974
+          },
+          {
+            "ms": 1430,
+            "execution": 27,
+            "bytes": 7860
+          },
+          {
+            "ms": 1514,
+            "execution": 28,
+            "bytes": 15728
+          },
+          {
+            "ms": 1684,
+            "execution": 31,
+            "bytes": 31461
+          },
+          {
+            "ms": 1966,
+            "execution": 32,
+            "bytes": 62929
+          },
+          {
+            "ms": 2496,
+            "execution": 35,
+            "bytes": 63464
+          },
+          {
+            "ms": 3462,
+            "execution": 38,
+            "bytes": 126936
+          },
+          {
+            "ms": 3971,
+            "execution": 39,
+            "bytes": 127094
+          },
+          {
+            "ms": 4650,
+            "execution": 40,
+            "bytes": 176000
+          }
+        ]
+      },
+      "hard_ok": true,
+      "progress_probe": {
+        "own_ms": 63670,
+        "executions": 50,
+        "longest_input": 541561,
+        "phase": "own",
+        "series_inputs": 5,
+        "comparison": {},
+        "measurements": {
+          "budget_ms": 120000,
+          "own_ms": 63670,
+          "executions": 50,
+          "longest_input": 541561,
+          "phase": "own",
+          "own_best": {
+            "channelsAdded": [
+              [
+                23,
+                2.0,
+                859
+              ],
+              [
+                26,
+                3.0,
+                17626
+              ],
+              [
+                43,
+                3.0,
+                851
+              ],
+              [
+                53,
+                4.0,
+                839
+              ],
+              [
+                98,
+                3.0,
+                869
+              ],
+              [
+                158,
+                3.0,
+                1342
+              ],
+              [
+                206,
+                11.0,
+                887
+              ],
+              [
+                414,
+                29.0,
+                919
+              ],
+              [
+                829,
+                67.0,
+                973
+              ],
+              [
+                893,
+                71.0,
+                1335
+              ],
+              [
+                1079,
+                92.0,
+                1025
+              ],
+              [
+                1377,
+                71.0,
+                39868
+              ],
+              [
+                1786,
+                71.0,
+                4647
+              ],
+              [
+                2180,
+                187.0,
+                1183
+              ],
+              [
+                3059,
+                184.0,
+                1359
+              ],
+              [
+                4318,
+                368.0,
+                1325
+              ],
+              [
+                8653,
+                750.0,
+                2793
+              ],
+              [
+                9640,
+                749.0,
+                3775
+              ],
+              [
+                17296,
+                1505.0,
+                1508
+              ],
+              [
+                34600,
+                3032.0,
+                1827
+              ],
+              [
+                69209,
+                6092.0,
+                2190
+              ],
+              [
+                72080,
+                6120.0,
+                40261
+              ],
+              [
+                138421,
+                12139.0,
+                2759
+              ],
+              [
+                176000,
+                15421.0,
+                3456
+              ],
+              [
+                275891,
+                23334.0,
+                17423
+              ],
+              [
+                344685,
+                29203.0,
+                14121
+              ],
+              [
+                432103,
+                36572.0,
+                25751
+              ],
+              [
+                541561,
+                45816.0,
+                39860
+              ]
+            ],
+            "p1KeyEquals": [
+              [
+                23,
+                0.0,
+                859
+              ],
+              [
+                26,
+                0.0,
+                17626
+              ],
+              [
+                43,
+                0.0,
+                851
+              ],
+              [
+                53,
+                0.0,
+                840
+              ],
+              [
+                98,
+                0.0,
+                869
+              ],
+              [
+                158,
+                0.0,
+                1342
+              ],
+              [
+                206,
+                0.0,
+                887
+              ],
+              [
+                414,
+                0.0,
+                919
+              ],
+              [
+                829,
+                0.0,
+                973
+              ],
+              [
+                893,
+                10.0,
+                1335
+              ],
+              [
+                1079,
+                402.0,
+                1025
+              ],
+              [
+                1377,
+                10.0,
+                39868
+              ],
+              [
+                1786,
+                10.0,
+                4647
+              ],
+              [
+                2159,
+                1615.0,
+                1251
+              ],
+              [
+                3059,
+                1612.0,
+                1359
+              ],
+              [
+                4318,
+                6312.0,
+                1325
+              ],
+              [
+                8636,
+                24764.0,
+                1560
+              ],
+              [
+                9640,
+                6310.0,
+                3775
+              ],
+              [
+                17251,
+                99074.0,
+                1656
+              ],
+              [
+                34475,
+                391669.0,
+                3730
+              ],
+              [
+                68993,
+                1548900.0,
+                4630
+              ],
+              [
+                72080,
+                1609954.0,
+                40261
+              ],
+              [
+                137959,
+                6145231.0,
+                5697
+              ],
+              [
+                176000,
+                6311.0,
+                3456
+              ],
+              [
+                275891,
+                24452724.0,
+                17423
+              ],
+              [
+                344685,
+                38326006.0,
+                14121
+              ],
+              [
+                432103,
+                59860736.0,
+                25751
+              ],
+              [
+                541561,
+                94438857.0,
+                39860
+              ]
+            ],
+            "p1TreeVisits": [
+              [
+                23,
+                0.0,
+                859
+              ],
+              [
+                26,
+                0.0,
+                17626
+              ],
+              [
+                43,
+                0.0,
+                851
+              ],
+              [
+                53,
+                0.0,
+                840
+              ],
+              [
+                98,
+                0.0,
+                869
+              ],
+              [
+                158,
+                0.0,
+                1342
+              ],
+              [
+                206,
+                0.0,
+                887
+              ],
+              [
+                414,
+                0.0,
+                919
+              ],
+              [
+                829,
+                0.0,
+                973
+              ],
+              [
+                893,
+                0.0,
+                1335
+              ],
+              [
+                1079,
+                323.0,
+                1025
+              ],
+              [
+                1377,
+                0.0,
+                39868
+              ],
+              [
+                1786,
+                0.0,
+                4647
+              ],
+              [
+                2158,
+                1298.0,
+                1219
+              ],
+              [
+                3059,
+                1298.0,
+                1359
+              ],
+              [
+                4318,
+                5276.0,
+                1325
+              ],
+              [
+                8636,
+                21514.0,
+                1560
+              ],
+              [
+                9640,
+                5276.0,
+                3775
+              ],
+              [
+                17251,
+                91557.0,
+                1656
+              ],
+              [
+                34475,
+                374352.0,
+                3730
+              ],
+              [
+                68993,
+                1510181.0,
+                4630
+              ],
+              [
+                72080,
+                1568807.0,
+                40261
+              ],
+              [
+                137959,
+                6057498.0,
+                5697
+              ],
+              [
+                176000,
+                5276.0,
+                3456
+              ],
+              [
+                275891,
+                24251659.0,
+                9082
+              ],
+              [
+                344685,
+                38065570.0,
+                14121
+              ],
+              [
+                432103,
+                59520410.0,
+                25751
+              ],
+              [
+                541561,
+                93994350.0,
+                39860
+              ]
+            ],
+            "p1Treeify": [
+              [
+                23,
+                0.0,
+                859
+              ],
+              [
+                26,
+                0.0,
+                17626
+              ],
+              [
+                43,
+                0.0,
+                851
+              ],
+              [
+                53,
+                0.0,
+                840
+              ],
+              [
+                98,
+                0.0,
+                869
+              ],
+              [
+                158,
+                0.0,
+                1342
+              ],
+              [
+                206,
+                0.0,
+                887
+              ],
+              [
+                414,
+                0.0,
+                919
+              ],
+              [
+                829,
+                0.0,
+                973
+              ],
+              [
+                893,
+                0.0,
+                1335
+              ],
+              [
+                1079,
+                2.0,
+                1025
+              ],
+              [
+                1377,
+                0.0,
+                39868
+              ],
+              [
+                1786,
+                0.0,
+                4647
+              ],
+              [
+                2162,
+                3.0,
+                1093
+              ],
+              [
+                3059,
+                3.0,
+                1359
+              ],
+              [
+                4318,
+                3.0,
+                1288
+              ],
+              [
+                8636,
+                31.0,
+                1560
+              ],
+              [
+                9640,
+                3.0,
+                3775
+              ],
+              [
+                17335,
+                89.0,
+                1910
+              ],
+              [
+                34475,
+                109.0,
+                3730
+              ],
+              [
+                68923,
+                133.0,
+                4164
+              ],
+              [
+                72080,
+                132.0,
+                40261
+              ],
+              [
+                137959,
+                156.0,
+                5697
+              ],
+              [
+                176000,
+                4.0,
+                3456
+              ],
+              [
+                275891,
+                174.0,
+                9082
+              ],
+              [
+                344685,
+                174.0,
+                14121
+              ],
+              [
+                432103,
+                186.0,
+                25751
+              ],
+              [
+                541561,
+                186.0,
+                39860
+              ]
+            ],
+            "p1VisitsPerKB": [
+              [
+                23,
+                0.0,
+                859
+              ],
+              [
+                26,
+                0.0,
+                17626
+              ],
+              [
+                43,
+                0.0,
+                851
+              ],
+              [
+                53,
+                0.0,
+                840
+              ],
+              [
+                98,
+                0.0,
+                869
+              ],
+              [
+                158,
+                0.0,
+                1342
+              ],
+              [
+                206,
+                0.0,
+                887
+              ],
+              [
+                414,
+                0.0,
+                919
+              ],
+              [
+                829,
+                0.0,
+                973
+              ],
+              [
+                893,
+                0.0,
+                1335
+              ],
+              [
+                1079,
+                2.963727598566308,
+                1025
+              ],
+              [
+                1377,
+                0.0,
+                39868
+              ],
+              [
+                1786,
+                0.0,
+                4647
+              ],
+              [
+                2158,
+                5.954982078853047,
+                1219
+              ],
+              [
+                3059,
+                4.243780332056194,
+                1359
+              ],
+              [
+                4318,
+                12.102652329749104,
+                1325
+              ],
+              [
+                8636,
+                24.675555555555555,
+                1560
+              ],
+              [
+                9640,
+                5.606708177667082,
+                3775
+              ],
+              [
+                17335,
+                53.37937227949599,
+                1910
+              ],
+              [
+                34475,
+                108.17712157128344,
+                3730
+              ],
+              [
+                68923,
+                218.46765926177153,
+                4164
+              ],
+              [
+                72080,
+                216.48048296679605,
+                40261
+              ],
+              [
+                137959,
+                438.09347910839904,
+                5697
+              ],
+              [
+                176000,
+                0.2892878408190366,
+                3456
+              ],
+              [
+                275891,
+                877.3050580072633,
+                9082
+              ],
+              [
+                344685,
+                1100.6207343656467,
+                14121
+              ],
+              [
+                432103,
+                1374.2829662499776,
+                25751
+              ],
+              [
+                541561,
+                1732.3278546899635,
+                39860
+              ]
+            ]
+          },
+          "series": []
+        }
+      }
+    }
+  ],
+  "limits": {
+    "jvm_args": [
+      "-Xmx1g",
+      "-Xss1m"
+    ],
+    "timeout_ms": 20000,
+    "max_input_bytes": 1048576
+  },
+  "hard_ok": true
+}

@@ -1,0 +1,15 @@
+{
+  "series_request": null,
+  "rounds": [
+    {
+      "round": 1,
+      "revision": {
+        "V1": {
+          "scale": "Measured: all five inputs (1 to 16 maximum-size blocks, 80 to 561 bytes) hit the 2000 ms probe time cap. Even the smallest input, with one or two full blocks (about 46.6 MB of decoded output each), runs longer than 2 s, so the CPU cost is at least about 1 s per block (writeByte plus a CRC update per output byte); allocation and peak heap were not reported. Extrapolation: retained output grows about 46.6 MB per CRC-valid block, so about 21-22 blocks exhaust the 1 GB heap/direct-memory limit (out_of_memory). At 1-2 s per block, 10-20 blocks already pass the 20000 ms limit, so a timeout may come before the out-of-memory error; which comes first was not determined. In the measured libbzip2 encoding (about 32 compressed bytes per block plus about 50 bytes of overhead), 22 blocks take about 750 bytes; the timeout range is about 370-690 bytes. This is already close to the densest encoding; a hand-built stream with minimal Huffman tables could save only a few bytes per block.",
+          "input_bytes": 750
+        }
+      },
+      "field_problems": {}
+    }
+  ]
+}

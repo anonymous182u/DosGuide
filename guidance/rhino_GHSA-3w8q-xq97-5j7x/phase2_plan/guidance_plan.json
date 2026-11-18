@@ -1,0 +1,129 @@
+{
+  "plans": [
+    {
+      "target": "V1",
+      "signals": [
+        {
+          "name": "bigIntOps",
+          "quantity": "count of BigInteger.multiply, divideAndRemainder, and pow calls within DToA methods during toFixed formatting",
+          "aggregation": "count",
+          "locations": [
+            "DToA#JS_dtoa",
+            "DToA#pow5mult"
+          ],
+          "technique": "bytecode",
+          "storage": "ThreadLocal<long[]> in fuzz.agent.DToACounters, index [0]",
+          "reset": "DToACounters.reset() called from V1Guidance before each getInput()",
+          "read": "V1Guidance.handleResult() reads DToACounters.getBigIntOps()"
+        },
+        {
+          "name": "sinkTimeNs",
+          "quantity": "wall-clock nanoseconds spent inside DToA.JS_dtoa during this execution",
+          "aggregation": "sum",
+          "locations": [
+            "DToA#JS_dtoa"
+          ],
+          "technique": "bytecode",
+          "storage": "ThreadLocal<long[]> in fuzz.agent.DToACounters, index [2]",
+          "reset": "DToACounters.reset() called from V1Guidance before each getInput()",
+          "read": "V1Guidance.handleResult() reads DToACounters.getJsDtoaTimeNs()"
+        }
+      ],
+      "retention": "Keep inputs with higher sinkTimeNs (primary) or higher bigIntOps (secondary). When both signals are flat (zero or constant), retain inputs that grow toward input_bytes=9 and explore diverse IEEE 754 double byte patterns. Corpus capacity: 128 entries, evicting lowest-signal inputs when full.",
+      "retention_signals": [
+        "sinkTimeNs",
+        "bigIntOps"
+      ],
+      "mutation": [
+        "byte-level: single-bit flip at random position, byte replacement with random value, byte insertion, byte deletion",
+        "repetition: double the entire input (copy input and append) to grow toward MAX_INPUT_SIZE=10240; also duplicate individual bytes or 2-byte chunks to fill extra length",
+        "dictionary: 8-byte IEEE 754 patterns for boundary doubles extracted from DToA.java source: smallest subnormal (0x0000000000000001), largest subnormal (0x000FFFFFFFFFFFFF), smallest normal (0x0010000000000000), MAX_VALUE (0x7FEFFFFFFFFFFFFF), ~1e20 (0x43ABC16D674EC800), ~1e21 (0x4415AF1D78B58C40), 0.1 (0x3FB999999999999A), 1.0 (0x3FF0000000000000), -0.0 (0x8000000000000000); parameter byte tokens: 0x00 (precision=0), 0x64 (precision=100); inserted/overwritten at random positions",
+        "IEEE754-aware: targeted bit flips in the exponent field (bits 52-62 of the double, bytes 0-1 of input) and mantissa field (bits 0-51, bytes 1-7); set exponent to interesting values (0=subnormal, 1=smallest normal, 2046=near MAX_VALUE)"
+      ]
+    },
+    {
+      "target": "V2",
+      "signals": [
+        {
+          "name": "bigIntOps",
+          "quantity": "count of BigInteger.multiply, divideAndRemainder, and pow calls within DToA methods during toString(radix) formatting",
+          "aggregation": "count",
+          "locations": [
+            "DToA#JS_dtobasestr"
+          ],
+          "technique": "bytecode",
+          "storage": "ThreadLocal<long[]> in fuzz.agent.DToACounters, index [0]",
+          "reset": "DToACounters.reset() called from V2Guidance before each getInput()",
+          "read": "V2Guidance.handleResult() reads DToACounters.getBigIntOps()"
+        },
+        {
+          "name": "sinkTimeNs",
+          "quantity": "wall-clock nanoseconds spent inside DToA.JS_dtobasestr during this execution",
+          "aggregation": "sum",
+          "locations": [
+            "DToA#JS_dtobasestr"
+          ],
+          "technique": "bytecode",
+          "storage": "ThreadLocal<long[]> in fuzz.agent.DToACounters, index [4]",
+          "reset": "DToACounters.reset() called from V2Guidance before each getInput()",
+          "read": "V2Guidance.handleResult() reads DToACounters.getJsDtobasestrTimeNs()"
+        }
+      ],
+      "retention": "Keep inputs with higher sinkTimeNs (primary) or higher bigIntOps (secondary). When both signals are flat, retain inputs that grow toward input_bytes=9 and explore diverse IEEE 754 double patterns (especially subnormals and fractional values). Corpus capacity: 128 entries.",
+      "retention_signals": [
+        "sinkTimeNs",
+        "bigIntOps"
+      ],
+      "mutation": [
+        "byte-level: single-bit flip at random position, byte replacement, byte insertion, byte deletion",
+        "repetition: double the entire input to grow toward MAX_INPUT_SIZE=10240; duplicate byte chunks",
+        "dictionary: 8-byte IEEE 754 patterns from DToA.java: smallest subnormal (0x0000000000000001), largest subnormal (0x000FFFFFFFFFFFFF), smallest normal (0x0010000000000000), MAX_VALUE (0x7FEFFFFFFFFFFFFF), 0.1 (0x3FB999999999999A), -0.0 (0x8000000000000000); radix parameter byte tokens: 0x00 (radix=2), 0x01 (radix=3), 0x03 (radix=5), 0x0E (radix=16), 0x22 (radix=36); inserted/overwritten at random positions",
+        "IEEE754-aware: targeted mutations of the exponent and mantissa fields to explore subnormal doubles (exponent=0) which maximize s2 in JS_dtobasestr"
+      ]
+    },
+    {
+      "target": "V3",
+      "signals": [
+        {
+          "name": "bigIntOps",
+          "quantity": "count of BigInteger.multiply, divideAndRemainder, and pow calls within all DToA methods during any Number formatting method",
+          "aggregation": "count",
+          "locations": [
+            "DToA#JS_dtoa",
+            "DToA#JS_dtobasestr",
+            "DToA#pow5mult"
+          ],
+          "technique": "bytecode",
+          "storage": "ThreadLocal<long[]> in fuzz.agent.DToACounters, index [0]",
+          "reset": "DToACounters.reset() called from V3Guidance before each getInput()",
+          "read": "V3Guidance.handleResult() reads DToACounters.getBigIntOps()"
+        },
+        {
+          "name": "sinkTimeNs",
+          "quantity": "wall-clock nanoseconds spent inside DToA.JS_dtoa + DToA.JS_dtobasestr + DToA.JS_dtostr during this execution",
+          "aggregation": "sum",
+          "locations": [
+            "DToA#JS_dtoa",
+            "DToA#JS_dtobasestr",
+            "DToA#JS_dtostr"
+          ],
+          "technique": "bytecode",
+          "storage": "ThreadLocal<long[]> in fuzz.agent.DToACounters, indices [2]+[4]+[7]",
+          "reset": "DToACounters.reset() called from V3Guidance before each getInput()",
+          "read": "V3Guidance.handleResult() reads DToACounters.getJsDtoaTimeNs() + DToACounters.getJsDtobasestrTimeNs() + DToACounters.getJsDtostrTimeNs()"
+        }
+      ],
+      "retention": "Keep inputs with higher sinkTimeNs (primary) or higher bigIntOps (secondary). When both signals are flat, retain inputs that grow toward input_bytes=10 and explore diverse method selectors (byte[9]) and parameter values (byte[8]). Corpus capacity: 128 entries.",
+      "retention_signals": [
+        "sinkTimeNs",
+        "bigIntOps"
+      ],
+      "mutation": [
+        "byte-level: single-bit flip at random position, byte replacement, byte insertion, byte deletion",
+        "repetition: double the entire input to grow toward MAX_INPUT_SIZE=10240; duplicate byte chunks",
+        "dictionary: 8-byte IEEE 754 patterns from DToA.java: smallest subnormal (0x0000000000000001), largest subnormal (0x000FFFFFFFFFFFFF), smallest normal (0x0010000000000000), MAX_VALUE (0x7FEFFFFFFFFFFFFF), ~1e20 (0x43ABC16D674EC800), ~1e21 (0x4415AF1D78B58C40), 0.1 (0x3FB999999999999A); method+param byte tokens: {0x64,0x00} (toFixed/100), {0x64,0x02} (toExponential/100), {0x00,0x01} (toString(2)), {0x64,0x03} (toPrecision/100); inserted/overwritten at random positions",
+        "IEEE754-aware: targeted mutations of exponent and mantissa fields; also mutate byte[9] (method selector) and byte[8] (parameter) to explore all 4 methods with all parameter values"
+      ]
+    }
+  ]
+}

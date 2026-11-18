@@ -1,0 +1,634 @@
+{
+  "ok": true,
+  "launch": [],
+  "build": {
+    "ok": true
+  },
+  "targets": [
+    {
+      "tool": "ValidateArtifact",
+      "target": "V1",
+      "checks": [
+        {
+          "name": "contract",
+          "status": "pass",
+          "detail": "factory, lastSignals() and fuzz test found"
+        },
+        {
+          "name": "runs",
+          "status": "pass",
+          "detail": "105 executions completed"
+        },
+        {
+          "name": "plan_signals",
+          "status": "pass",
+          "detail": "lastSignals() returns every planned signal [regexSteps]"
+        },
+        {
+          "name": "signal_varies",
+          "status": "pass",
+          "detail": "varying: [regexSteps] (on the guidance's own inputs: [regexSteps])"
+        },
+        {
+          "name": "reset",
+          "status": "pass",
+          "detail": "re-running inputs reproduced their values"
+        },
+        {
+          "name": "depends_on_execution",
+          "status": "pass",
+          "detail": "signals stay near zero when the target does not run"
+        },
+        {
+          "name": "instrumentation",
+          "status": "pass",
+          "detail": "rewrote [java.util.regex.Pattern$Begin, java.util.regex.Pattern$BitClass, java.util.regex.Pattern$BmpCharPredicate, java.util.regex.Pattern$BmpCharProperty, java.util.regex.Pattern$BmpCharPropertyGreedy] and 22 more"
+        },
+        {
+          "name": "input_limit",
+          "status": "pass",
+          "detail": "with jqf.ei.MAX_INPUT_SIZE=16 the 20 generated inputs were at most 16 bytes"
+        },
+        {
+          "name": "input_growth",
+          "status": "pass",
+          "detail": "the guidance generated a 10240-byte input after 445 ms (2 executions); the target needs 10240"
+        },
+        {
+          "name": "progress",
+          "status": "pass",
+          "ratio": 0.5755776346152739,
+          "detail": "`regexSteps` reached 58% of the series at 10240 bytes"
+        }
+      ],
+      "max_input_bytes": 10240,
+      "example_inputs": 10,
+      "executions": {
+        "own": 40,
+        "repeat": 5,
+        "random": 40,
+        "example": 20,
+        "probe": 3
+      },
+      "test_failures_not_used": 0,
+      "signals": {
+        "regexSteps": {
+          "min": 3.0,
+          "max": 39.0,
+          "distinct": 8
+        }
+      },
+      "signals_by_kind": {
+        "example": {
+          "regexSteps": {
+            "distinct": 19,
+            "max": 432.0,
+            "min": 27.0
+          }
+        },
+        "own": {
+          "regexSteps": {
+            "distinct": 7,
+            "max": 39.0,
+            "min": 3.0
+          }
+        },
+        "random": {
+          "regexSteps": {
+            "distinct": 7,
+            "max": 39.0,
+            "min": 3.0
+          }
+        },
+        "repeat": {
+          "regexSteps": {
+            "distinct": 5,
+            "max": 39.0,
+            "min": 13.0
+          }
+        }
+      },
+      "transformed_classes": [
+        "java.util.regex.Pattern$Begin",
+        "java.util.regex.Pattern$BitClass",
+        "java.util.regex.Pattern$BmpCharPredicate",
+        "java.util.regex.Pattern$BmpCharProperty",
+        "java.util.regex.Pattern$BmpCharPropertyGreedy",
+        "java.util.regex.Pattern$Branch",
+        "java.util.regex.Pattern$BranchConn",
+        "java.util.regex.Pattern$CharPredicate",
+        "java.util.regex.Pattern$CharProperty",
+        "java.util.regex.Pattern$CharPropertyGreedy",
+        "java.util.regex.Pattern$Curly",
+        "java.util.regex.Pattern$Dollar",
+        "java.util.regex.Pattern$First",
+        "java.util.regex.Pattern$GroupCurly",
+        "java.util.regex.Pattern$GroupHead",
+        "java.util.regex.Pattern$GroupTail",
+        "java.util.regex.Pattern$LastNode",
+        "java.util.regex.Pattern$Loop",
+        "java.util.regex.Pattern$Node",
+        "java.util.regex.Pattern$Prolog",
+        "java.util.regex.Pattern$Qtype",
+        "java.util.regex.Pattern$Ques",
+        "java.util.regex.Pattern$Slice",
+        "java.util.regex.Pattern$SliceNode",
+        "java.util.regex.Pattern$Start",
+        "java.util.regex.Pattern$StartS",
+        "java.util.regex.Pattern$TreeInfo"
+      ],
+      "ok": true,
+      "input_limit_probe": {
+        "max_input_bytes": 16,
+        "longest_input": 16,
+        "executions": {
+          "own": 20
+        }
+      },
+      "growth_probe": {
+        "needed_input_bytes": 10240,
+        "longest_input": 10240,
+        "executions": {
+          "own": 2
+        },
+        "growth": [
+          {
+            "ms": 435,
+            "execution": 1,
+            "bytes": 6
+          },
+          {
+            "ms": 445,
+            "execution": 2,
+            "bytes": 10240
+          }
+        ]
+      },
+      "hard_ok": true,
+      "progress_probe": {
+        "own_ms": 120001,
+        "executions": 90469,
+        "longest_input": 10240,
+        "phase": "series",
+        "series_inputs": 6,
+        "comparison": {
+          "regexSteps": {
+            "exponent": 1.13,
+            "series_longest": [
+              65,
+              1296.0
+            ],
+            "best": [
+              10240,
+              224944.0,
+              19668
+            ],
+            "compared_at": 10240,
+            "series_at_best": 390814.3514825007,
+            "ratio": 0.5755776346152739
+          }
+        },
+        "measurements": {
+          "budget_ms": 120000,
+          "own_ms": 120001,
+          "executions": 90469,
+          "longest_input": 10240,
+          "phase": "series",
+          "own_best": {
+            "regexSteps": [
+              [
+                5,
+                13.0,
+                540
+              ],
+              [
+                6,
+                39.0,
+                466
+              ],
+              [
+                7,
+                38.0,
+                473
+              ],
+              [
+                8,
+                25.0,
+                522
+              ],
+              [
+                10,
+                9.0,
+                528
+              ],
+              [
+                11,
+                6.0,
+                481
+              ],
+              [
+                12,
+                51.0,
+                468
+              ],
+              [
+                13,
+                6.0,
+                470
+              ],
+              [
+                14,
+                38.0,
+                529
+              ],
+              [
+                15,
+                38.0,
+                539
+              ],
+              [
+                16,
+                10.0,
+                529
+              ],
+              [
+                20,
+                9.0,
+                528
+              ],
+              [
+                24,
+                51.0,
+                516
+              ],
+              [
+                25,
+                51.0,
+                539
+              ],
+              [
+                27,
+                6.0,
+                471
+              ],
+              [
+                30,
+                6.0,
+                506
+              ],
+              [
+                32,
+                3.0,
+                510
+              ],
+              [
+                49,
+                51.0,
+                541
+              ],
+              [
+                54,
+                6.0,
+                499
+              ],
+              [
+                10240,
+                224944.0,
+                19668
+              ]
+            ]
+          },
+          "series": [
+            {
+              "bytes": 15,
+              "signals": {
+                "regexSteps": 196.0
+              }
+            },
+            {
+              "bytes": 25,
+              "signals": {
+                "regexSteps": 416.0
+              }
+            },
+            {
+              "bytes": 35,
+              "signals": {
+                "regexSteps": 636.0
+              }
+            },
+            {
+              "bytes": 45,
+              "signals": {
+                "regexSteps": 856.0
+              }
+            },
+            {
+              "bytes": 55,
+              "signals": {
+                "regexSteps": 1076.0
+              }
+            },
+            {
+              "bytes": 65,
+              "signals": {
+                "regexSteps": 1296.0
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "tool": "ValidateArtifact",
+      "target": "V2",
+      "checks": [
+        {
+          "name": "contract",
+          "status": "pass",
+          "detail": "factory, lastSignals() and fuzz test found"
+        },
+        {
+          "name": "runs",
+          "status": "pass",
+          "detail": "105 executions completed"
+        },
+        {
+          "name": "plan_signals",
+          "status": "pass",
+          "detail": "lastSignals() returns every planned signal [regexSteps]"
+        },
+        {
+          "name": "signal_varies",
+          "status": "pass",
+          "detail": "varying: [regexSteps] (on the guidance's own inputs: [regexSteps])"
+        },
+        {
+          "name": "reset",
+          "status": "pass",
+          "detail": "re-running inputs reproduced their values"
+        },
+        {
+          "name": "depends_on_execution",
+          "status": "pass",
+          "detail": "signals stay near zero when the target does not run"
+        },
+        {
+          "name": "instrumentation",
+          "status": "pass",
+          "detail": "rewrote [java.util.regex.Pattern$Begin, java.util.regex.Pattern$BitClass, java.util.regex.Pattern$BmpCharPredicate, java.util.regex.Pattern$BmpCharProperty, java.util.regex.Pattern$BmpCharPropertyGreedy] and 20 more"
+        },
+        {
+          "name": "input_limit",
+          "status": "pass",
+          "detail": "with jqf.ei.MAX_INPUT_SIZE=16 the 20 generated inputs were at most 16 bytes"
+        },
+        {
+          "name": "input_growth",
+          "status": "pass",
+          "detail": "the guidance generated a 10240-byte input after 568 ms (14 executions); the target needs 10240"
+        },
+        {
+          "name": "progress",
+          "status": "pass",
+          "ratio": 1.4996210114426594,
+          "detail": "`regexSteps` reached 150% of the series at 10240 bytes"
+        }
+      ],
+      "max_input_bytes": 10240,
+      "example_inputs": 10,
+      "executions": {
+        "own": 40,
+        "repeat": 5,
+        "random": 40,
+        "example": 20,
+        "probe": 3
+      },
+      "test_failures_not_used": 0,
+      "signals": {
+        "regexSteps": {
+          "min": 3.0,
+          "max": 14.0,
+          "distinct": 5
+        }
+      },
+      "signals_by_kind": {
+        "example": {
+          "regexSteps": {
+            "distinct": 17,
+            "max": 77.0,
+            "min": 14.0
+          }
+        },
+        "own": {
+          "regexSteps": {
+            "distinct": 5,
+            "max": 14.0,
+            "min": 3.0
+          }
+        },
+        "random": {
+          "regexSteps": {
+            "distinct": 3,
+            "max": 8.0,
+            "min": 3.0
+          }
+        },
+        "repeat": {
+          "regexSteps": {
+            "distinct": 5,
+            "max": 14.0,
+            "min": 3.0
+          }
+        }
+      },
+      "transformed_classes": [
+        "java.util.regex.Pattern$Begin",
+        "java.util.regex.Pattern$BitClass",
+        "java.util.regex.Pattern$BmpCharPredicate",
+        "java.util.regex.Pattern$BmpCharProperty",
+        "java.util.regex.Pattern$BmpCharPropertyGreedy",
+        "java.util.regex.Pattern$Branch",
+        "java.util.regex.Pattern$BranchConn",
+        "java.util.regex.Pattern$CharPredicate",
+        "java.util.regex.Pattern$CharProperty",
+        "java.util.regex.Pattern$CharPropertyGreedy",
+        "java.util.regex.Pattern$Curly",
+        "java.util.regex.Pattern$Dollar",
+        "java.util.regex.Pattern$First",
+        "java.util.regex.Pattern$GroupCurly",
+        "java.util.regex.Pattern$GroupHead",
+        "java.util.regex.Pattern$GroupTail",
+        "java.util.regex.Pattern$LastNode",
+        "java.util.regex.Pattern$Node",
+        "java.util.regex.Pattern$Qtype",
+        "java.util.regex.Pattern$Ques",
+        "java.util.regex.Pattern$Slice",
+        "java.util.regex.Pattern$SliceNode",
+        "java.util.regex.Pattern$Start",
+        "java.util.regex.Pattern$StartS",
+        "java.util.regex.Pattern$TreeInfo"
+      ],
+      "ok": true,
+      "input_limit_probe": {
+        "max_input_bytes": 16,
+        "longest_input": 16,
+        "executions": {
+          "own": 20
+        }
+      },
+      "growth_probe": {
+        "needed_input_bytes": 10240,
+        "longest_input": 10240,
+        "executions": {
+          "own": 14
+        },
+        "growth": [
+          {
+            "ms": 529,
+            "execution": 1,
+            "bytes": 6
+          },
+          {
+            "ms": 545,
+            "execution": 4,
+            "bytes": 10239
+          },
+          {
+            "ms": 568,
+            "execution": 14,
+            "bytes": 10240
+          }
+        ]
+      },
+      "hard_ok": true,
+      "progress_probe": {
+        "own_ms": 120000,
+        "executions": 235391,
+        "longest_input": 10240,
+        "phase": "series",
+        "series_inputs": 6,
+        "comparison": {
+          "regexSteps": {
+            "exponent": 1.0,
+            "series_longest": [
+              2405,
+              4809.0
+            ],
+            "best": [
+              10240,
+              30723.0,
+              25616
+            ],
+            "compared_at": 10240,
+            "series_at_best": 20487.176270252432,
+            "ratio": 1.4996210114426594
+          }
+        },
+        "measurements": {
+          "budget_ms": 120000,
+          "own_ms": 120000,
+          "executions": 235391,
+          "longest_input": 10240,
+          "phase": "series",
+          "own_best": {
+            "regexSteps": [
+              [
+                6,
+                14.0,
+                512
+              ],
+              [
+                7,
+                10.0,
+                514
+              ],
+              [
+                14,
+                10.0,
+                534
+              ],
+              [
+                15,
+                8.0,
+                546
+              ],
+              [
+                24,
+                15.0,
+                552
+              ],
+              [
+                25,
+                15.0,
+                553
+              ],
+              [
+                28,
+                10.0,
+                534
+              ],
+              [
+                48,
+                15.0,
+                574
+              ],
+              [
+                10240,
+                30723.0,
+                25616
+              ]
+            ]
+          },
+          "series": [
+            {
+              "bytes": 105,
+              "signals": {
+                "regexSteps": 209.0
+              }
+            },
+            {
+              "bytes": 205,
+              "signals": {
+                "regexSteps": 409.0
+              }
+            },
+            {
+              "bytes": 405,
+              "signals": {
+                "regexSteps": 809.0
+              }
+            },
+            {
+              "bytes": 805,
+              "signals": {
+                "regexSteps": 1609.0
+              }
+            },
+            {
+              "bytes": 1605,
+              "signals": {
+                "regexSteps": 3209.0
+              }
+            },
+            {
+              "bytes": 2405,
+              "signals": {
+                "regexSteps": 4809.0
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "limits": {
+    "jvm_args": [
+      "-Xmx1g",
+      "-Xss1m"
+    ],
+    "timeout_ms": 20000,
+    "max_input_bytes": 10240
+  },
+  "hard_ok": true
+}

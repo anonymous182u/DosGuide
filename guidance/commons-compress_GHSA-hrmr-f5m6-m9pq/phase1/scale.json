@@ -1,0 +1,19 @@
+{
+  "series_request": null,
+  "rounds": [
+    {
+      "round": 1,
+      "revision": {
+        "V1": {
+          "scale": "Measured: CPU time is linear in the declared STORED size; the marginal cost is about 128 ns per re-serve cycle (512Ki->1Mi: 121->188 ms). Extrapolating, 20 s ≈ 1.6e8 cycles, so a declared size of at least about 2e8 is needed; the 32-bit maximum (about 4.29e9) gives about 550 s. Input length does not change with the parameter. Allocation is short-lived (peak heap levels off at about 29 MB), so the failure is a timeout, not out of memory. Densest encoding: 30-byte LFH + 1-byte name + 1 stale data byte ending in an incomplete UTF-8 sequence; ZIP64 is not needed.",
+          "input_bytes": 32
+        },
+        "PkgRisk1": {
+          "scale": "Measured: CPU time is linear in decompressed bytes at about 205 MB/s, about 4.9 ns per output byte (32->64 MiB: +163 ms per 32 MiB). Each 900k bzip2 block of a repeated byte expands to about 45 MB and costs about 31 compressed bytes (1 block 79 B, 2 blocks 110 B). Extrapolating, 20 s ≈ 4.1 GB ≈ 91 blocks ≈ 50 B of headers + 2.85 KB, so about 2.9 KB, rounded up to about 3.1 KB for margin. Densest encoding: one method-12 entry holding a single multi-block bzip2 stream (more entries add 30+ header bytes each; only one stream per entry is decoded). The 10 KB limit holds about 320 blocks, about 14 GB, roughly 70 s. Heap stays at 3-7 MB, so CPU time only.",
+          "input_bytes": 3100
+        }
+      },
+      "field_problems": {}
+    }
+  ]
+}

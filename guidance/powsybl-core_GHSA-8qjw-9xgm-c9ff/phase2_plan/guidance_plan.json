@@ -1,0 +1,84 @@
+{
+  "plans": [
+    {
+      "target": "V1",
+      "signals": [
+        {
+          "name": "nfaSteps",
+          "quantity": "total invocations of Pattern$Node.match() and all subclass overrides during one regex match execution",
+          "aggregation": "sum",
+          "locations": [
+            "Pattern$Node#match",
+            "Pattern$GroupHead#match",
+            "Pattern$GroupTail#match",
+            "Pattern$Loop#match",
+            "Pattern$Curly#match",
+            "Pattern$Curly#match0",
+            "Pattern$Curly#match1",
+            "Pattern$Curly#match2",
+            "Pattern$BmpCharProperty#match",
+            "Pattern$CharProperty#match",
+            "Pattern$Dollar#match",
+            "Pattern$BnM#match"
+          ],
+          "technique": "bytecode",
+          "storage": "static ThreadLocal<long[]> in com.powsybl.fuzzing.counter.RegexStepCounter, loaded on bootstrap classpath via agent jar Boot-Class-Path",
+          "reset": "RegexStepCounter.reset() called in V1Guidance.getInput() immediately before returning the InputStream",
+          "read": "RegexStepCounter.get() called in V1Guidance.handleResult() to obtain the step count for the just-completed execution"
+        }
+      ],
+      "retention": "Primary: retain input if nfaSteps exceeds the current maximum (hill-climb). Secondary (while nfaSteps is flat at zero): retain inputs that are longer (growing toward input_bytes=64, up to MAX_INPUT_SIZE=10240) and that completed without PatternSyntaxException (regex compiled successfully, reaching the Matcher.find() sink). Among equal step counts, prefer shorter inputs (minimization). Corpus entries sorted by nfaSteps descending; mutations weighted toward highest-step parents.",
+      "retention_signals": [
+        "nfaSteps"
+      ],
+      "mutation": [
+        "FLIP_BYTE: flip a random byte at a random position",
+        "INSERT_BYTE: insert a random byte at a random position",
+        "DELETE_BYTE: remove a byte at a random position",
+        "OVERWRITE_BLOCK: copy a random block from one position to another within the input",
+        "REPEAT_CHUNK: select a random contiguous chunk, repeat it k times in place (k from 2 up to what fills MAX_INPUT_SIZE=10240), enabling input growth from 4-byte seeds to 64+ bytes in 4 doublings (<1 second)",
+        "DICTIONARY_INSERT: insert or overwrite a token from the regex metacharacter dictionary at a random position; tokens: ( ) + * ? . [ ] { } | ^ $ \\ a b !"
+      ]
+    },
+    {
+      "target": "PkgRisk1",
+      "signals": [
+        {
+          "name": "nfaSteps",
+          "quantity": "total invocations of Pattern$Node.match() and all subclass overrides during one regex match execution",
+          "aggregation": "sum",
+          "locations": [
+            "Pattern$Node#match",
+            "Pattern$GroupHead#match",
+            "Pattern$GroupTail#match",
+            "Pattern$Loop#match",
+            "Pattern$Curly#match",
+            "Pattern$Curly#match0",
+            "Pattern$Curly#match1",
+            "Pattern$Curly#match2",
+            "Pattern$BmpCharProperty#match",
+            "Pattern$CharProperty#match",
+            "Pattern$Dollar#match",
+            "Pattern$BnM#match"
+          ],
+          "technique": "bytecode",
+          "storage": "static ThreadLocal<long[]> in com.powsybl.fuzzing.counter.RegexStepCounter, loaded on bootstrap classpath via agent jar Boot-Class-Path",
+          "reset": "RegexStepCounter.reset() called in PkgRisk1Guidance.getInput() immediately before returning the InputStream",
+          "read": "RegexStepCounter.get() called in PkgRisk1Guidance.handleResult() to obtain the step count for the just-completed execution"
+        }
+      ],
+      "retention": "Primary: retain input if nfaSteps exceeds the current maximum (hill-climb). Secondary (while nfaSteps is flat at zero): retain inputs that are longer (growing toward input_bytes=64, up to MAX_INPUT_SIZE=10240) and that completed without PatternSyntaxException (regex compiled successfully, reaching Pattern$Node.match() sink). Among equal step counts, prefer shorter inputs (minimization). Corpus entries sorted by nfaSteps descending; mutations weighted toward highest-step parents.",
+      "retention_signals": [
+        "nfaSteps"
+      ],
+      "mutation": [
+        "FLIP_BYTE: flip a random byte at a random position",
+        "INSERT_BYTE: insert a random byte at a random position",
+        "DELETE_BYTE: remove a byte at a random position",
+        "OVERWRITE_BLOCK: copy a random block from one position to another within the input",
+        "REPEAT_CHUNK: select a random contiguous chunk, repeat it k times in place (k from 2 up to what fills MAX_INPUT_SIZE=10240), enabling input growth from 4-byte seeds to 64+ bytes in 4 doublings (<1 second)",
+        "DICTIONARY_INSERT: insert or overwrite a token from the regex metacharacter dictionary at a random position; tokens: ( ) + * ? . [ ] { } | ^ $ \\ a b !"
+      ]
+    }
+  ]
+}

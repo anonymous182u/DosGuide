@@ -1,0 +1,25 @@
+{
+  "parameter": "declared payload bytes",
+  "inputs": [
+    {
+      "file": "n16M.bin",
+      "value": 16777216
+    },
+    {
+      "file": "n32M.bin",
+      "value": 33554432
+    },
+    {
+      "file": "n64M.bin",
+      "value": 67108864
+    },
+    {
+      "file": "n128M.bin",
+      "value": 134217728
+    },
+    {
+      "file": "n256M.bin",
+      "value": 268435456
+    }
+  ]
+}

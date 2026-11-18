@@ -1,0 +1,15 @@
+{
+  "series_request": null,
+  "rounds": [
+    {
+      "round": 1,
+      "revision": {
+        "V1": {
+          "scale": "Measured: allocation is flat at 204 KB for inputs ≤1024 bytes (below spill threshold). At 2048 bytes, allocation jumps to 436 KB (fixed overhead ~200 KB for temp file/streams + ~4 bytes per content byte for StringBuilder/String duplication in toString()). Extrapolating to 10240-byte max input: ~500 KB total allocation, ~4 MB peak heap — far below the 1 GB heap limit, so actual OutOfMemoryError is unreachable. The concrete failure is the harness's AssertionError (undeclared throwable): any input > 1024 bytes triggers file spill, and the cleaner's log message (85 + content_length chars) always exceeds the 1024-char assertion threshold. Minimum triggering input: 1025 raw bytes.",
+          "input_bytes": 1025
+        }
+      },
+      "field_problems": {}
+    }
+  ]
+}

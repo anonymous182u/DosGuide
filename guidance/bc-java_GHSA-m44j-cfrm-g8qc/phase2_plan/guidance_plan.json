@@ -1,0 +1,32 @@
+{
+  "plans": [
+    {
+      "target": "V1",
+      "signals": [
+        {
+          "name": "loopIterations",
+          "quantity": "number of iterations of the while loop in Scalar25519.reduceBasisVar, counted as calls to ScalarUtil.addShifted_NP plus ScalarUtil.subShifted_NP (exactly one per iteration)",
+          "aggregation": "sum",
+          "locations": [
+            "ScalarUtil#addShifted_NP",
+            "ScalarUtil#subShifted_NP"
+          ],
+          "technique": "bytecode",
+          "storage": "ThreadLocal<long[]> in V1Counters.ITERATIONS, index 0 holds the count",
+          "reset": "V1Guidance.getInput() sets V1Counters.ITERATIONS.get()[0] = 0 before each execution",
+          "read": "V1Guidance.handleResult() reads V1Counters.ITERATIONS.get()[0] and uses it for retention and prioritization"
+        }
+      ],
+      "retention": "Primary: retain inputs with loopIterations exceeding any previously seen value (hill-climb). Secondary (flat signal): retain inputs that reach reduceBasisVar (iterations > 0) with diverse iteration counts, and growing inputs that approach 10240 bytes to explore more hash space. Keep a corpus of top-64 inputs by iteration count.",
+      "retention_signals": [
+        "loopIterations"
+      ],
+      "mutation": [
+        "byte-level: random byte flip (1-4 bits), random byte replacement (1-8 bytes), random byte insertion (1-16 bytes), random byte deletion (1-8 bytes)",
+        "repetition [R45(a)]: copy a random 4-64 byte chunk and repeat it k times (k up to input_size_limit / chunk_size), also whole-input doubling; grows from 97 to 10240 bytes within first minute",
+        "dictionary [R45(b)]: single-byte tokens from Ed25519 verification code path: 0x58 (base point y[0]), 0x66 (base point y repeated byte), 0xED (low byte of prime p LE), 0xFF (max byte, near-p values), 0x7F (high-bit mask in checkPointVar), 0x80 (sign bit in point encoding), 0x00 (zero, valid scalar high bytes), 0x10 (boundary for S[31] near group order), 0x01 (identity/one values); inserted or overwritten at random positions",
+        "no encoder needed [R45(c)]: Ed25519.verify accepts raw bytes with no compression/checksum/length-prefix format; inputs are split mechanically by fixed offsets"
+      ]
+    }
+  ]
+}

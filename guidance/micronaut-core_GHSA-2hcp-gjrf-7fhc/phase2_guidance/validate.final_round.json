@@ -1,0 +1,489 @@
+{
+  "ok": true,
+  "launch": [],
+  "build": {
+    "ok": true
+  },
+  "targets": [
+    {
+      "tool": "ValidateArtifact",
+      "target": "V1",
+      "checks": [
+        {
+          "name": "contract",
+          "status": "pass",
+          "detail": "factory, lastSignals() and fuzz test found"
+        },
+        {
+          "name": "runs",
+          "status": "pass",
+          "detail": "89 executions completed"
+        },
+        {
+          "name": "plan_signals",
+          "status": "pass",
+          "detail": "lastSignals() returns every planned signal [totalAllocatedChars, htmlCallCount]"
+        },
+        {
+          "name": "signal_varies",
+          "status": "pass",
+          "detail": "varying: [htmlCallCount, totalAllocatedChars] (on the guidance's own inputs: [htmlCallCount, totalAllocatedChars])"
+        },
+        {
+          "name": "reset",
+          "status": "pass",
+          "detail": "re-running inputs reproduced their values"
+        },
+        {
+          "name": "depends_on_execution",
+          "status": "pass",
+          "detail": "signals stay near zero when the target does not run"
+        },
+        {
+          "name": "instrumentation",
+          "status": "pass",
+          "detail": "rewrote [io.micronaut.http.server.exceptions.response.DefaultHtmlErrorResponseBodyProvider]"
+        },
+        {
+          "name": "input_limit",
+          "status": "pass",
+          "detail": "with jqf.ei.MAX_INPUT_SIZE=16 the 20 generated inputs were at most 16 bytes"
+        },
+        {
+          "name": "input_growth",
+          "status": "pass",
+          "detail": "the guidance generated a 1048576-byte input after 5876 ms (7 executions); the target needs 800000"
+        },
+        {
+          "name": "progress",
+          "status": "pass",
+          "ratio": 0.7630538074811485,
+          "detail": "`totalAllocatedChars` reached 76% of the series at 127015 bytes"
+        }
+      ],
+      "max_input_bytes": 1048576,
+      "example_inputs": 2,
+      "executions": {
+        "own": 40,
+        "repeat": 5,
+        "random": 40,
+        "example": 4,
+        "probe": 3
+      },
+      "test_failures_not_used": 0,
+      "signals": {
+        "htmlCallCount": {
+          "min": 1.0,
+          "max": 122310.0,
+          "distinct": 46
+        },
+        "totalAllocatedChars": {
+          "min": 3047.0,
+          "max": 372831382.0,
+          "distinct": 58
+        }
+      },
+      "signals_by_kind": {
+        "example": {
+          "htmlCallCount": {
+            "min": 11.0,
+            "max": 201.0,
+            "distinct": 2
+          },
+          "totalAllocatedChars": {
+            "min": 33498.0,
+            "max": 612238.0,
+            "distinct": 2
+          }
+        },
+        "own": {
+          "htmlCallCount": {
+            "min": 2.0,
+            "max": 122310.0,
+            "distinct": 27
+          },
+          "totalAllocatedChars": {
+            "min": 6084.0,
+            "max": 372831380.0,
+            "distinct": 29
+          }
+        },
+        "random": {
+          "htmlCallCount": {
+            "min": 1.0,
+            "max": 122310.0,
+            "distinct": 25
+          },
+          "totalAllocatedChars": {
+            "min": 3047.0,
+            "max": 372831382.0,
+            "distinct": 32
+          }
+        },
+        "repeat": {
+          "htmlCallCount": {
+            "min": 122074.0,
+            "max": 122310.0,
+            "distinct": 5
+          },
+          "totalAllocatedChars": {
+            "min": 372111899.0,
+            "max": 372831380.0,
+            "distinct": 5
+          }
+        }
+      },
+      "transformed_classes": [
+        "io.micronaut.http.server.exceptions.response.DefaultHtmlErrorResponseBodyProvider"
+      ],
+      "ok": true,
+      "input_limit_probe": {
+        "max_input_bytes": 16,
+        "longest_input": 16,
+        "executions": {
+          "own": 20
+        }
+      },
+      "growth_probe": {
+        "needed_input_bytes": 800000,
+        "longest_input": 1048576,
+        "executions": {
+          "own": 7
+        },
+        "growth": [
+          {
+            "ms": 463,
+            "execution": 1,
+            "bytes": 4
+          },
+          {
+            "ms": 466,
+            "execution": 2,
+            "bytes": 15
+          },
+          {
+            "ms": 488,
+            "execution": 3,
+            "bytes": 400
+          },
+          {
+            "ms": 1814,
+            "execution": 4,
+            "bytes": 524386
+          },
+          {
+            "ms": 3112,
+            "execution": 5,
+            "bytes": 699118
+          },
+          {
+            "ms": 4398,
+            "execution": 6,
+            "bytes": 786482
+          },
+          {
+            "ms": 5876,
+            "execution": 7,
+            "bytes": 1048576
+          }
+        ]
+      },
+      "hard_ok": true,
+      "progress_probe": {
+        "own_ms": 120632,
+        "executions": 123,
+        "longest_input": 1048576,
+        "phase": "series",
+        "series_inputs": 6,
+        "comparison": {
+          "htmlCallCount": {
+            "exponent": 1.0,
+            "series_longest": [
+              8192,
+              2049.0
+            ],
+            "best": [
+              127015,
+              24156.0,
+              1551
+            ],
+            "compared_at": 127015,
+            "series_at_best": 31677.48123144977,
+            "ratio": 0.7625606285899286
+          },
+          "totalAllocatedChars": {
+            "exponent": 1.0,
+            "series_longest": [
+              8192,
+              6241246.0
+            ],
+            "best": [
+              127015,
+              73627227.0,
+              1551
+            ],
+            "compared_at": 127015,
+            "series_at_best": 96490216.3885985,
+            "ratio": 0.7630538074811485
+          }
+        },
+        "measurements": {
+          "budget_ms": 120000,
+          "own_ms": 120632,
+          "executions": 123,
+          "longest_input": 1048576,
+          "phase": "series",
+          "own_best": {
+            "htmlCallCount": [
+              [
+                4,
+                2.0,
+                510
+              ],
+              [
+                15,
+                6.0,
+                513
+              ],
+              [
+                400,
+                101.0,
+                535
+              ],
+              [
+                800,
+                101.0,
+                557
+              ],
+              [
+                127015,
+                24156.0,
+                1551
+              ],
+              [
+                218117,
+                40372.0,
+                2967
+              ],
+              [
+                271607,
+                49630.0,
+                86568
+              ],
+              [
+                289491,
+                52644.0,
+                41817
+              ],
+              [
+                344705,
+                55726.0,
+                47102
+              ],
+              [
+                425217,
+                68359.0,
+                79711
+              ],
+              [
+                538270,
+                91250.0,
+                87468
+              ],
+              [
+                583765,
+                89513.0,
+                83369
+              ],
+              [
+                653615,
+                72276.0,
+                77964
+              ],
+              [
+                692133,
+                65177.0,
+                104395
+              ],
+              [
+                757921,
+                80836.0,
+                57455
+              ],
+              [
+                841498,
+                94422.0,
+                77162
+              ],
+              [
+                905874,
+                99396.0,
+                59624
+              ],
+              [
+                1048575,
+                122422.0,
+                99641
+              ],
+              [
+                1048576,
+                122422.0,
+                101123
+              ]
+            ],
+            "totalAllocatedChars": [
+              [
+                4,
+                6084.0,
+                510
+              ],
+              [
+                15,
+                18263.0,
+                513
+              ],
+              [
+                400,
+                307638.0,
+                535
+              ],
+              [
+                800,
+                307638.0,
+                557
+              ],
+              [
+                127015,
+                73627227.0,
+                1551
+              ],
+              [
+                218117,
+                123056450.0,
+                2967
+              ],
+              [
+                271607,
+                151276848.0,
+                86568
+              ],
+              [
+                289491,
+                160464521.0,
+                41817
+              ],
+              [
+                344705,
+                169859180.0,
+                47102
+              ],
+              [
+                425217,
+                208368370.0,
+                79711
+              ],
+              [
+                538270,
+                278148097.0,
+                87468
+              ],
+              [
+                583765,
+                272853617.0,
+                83369
+              ],
+              [
+                653615,
+                220308502.0,
+                77964
+              ],
+              [
+                692133,
+                198667692.0,
+                104395
+              ],
+              [
+                757921,
+                246401765.0,
+                57455
+              ],
+              [
+                841498,
+                287817669.0,
+                77162
+              ],
+              [
+                905874,
+                302980027.0,
+                59624
+              ],
+              [
+                1048575,
+                373172948.0,
+                99641
+              ],
+              [
+                1048576,
+                373172949.0,
+                101123
+              ]
+            ]
+          },
+          "series": [
+            {
+              "bytes": 256,
+              "signals": {
+                "htmlCallCount": 65.0,
+                "totalAllocatedChars": 197982.0
+              }
+            },
+            {
+              "bytes": 512,
+              "signals": {
+                "htmlCallCount": 129.0,
+                "totalAllocatedChars": 392926.0
+              }
+            },
+            {
+              "bytes": 1024,
+              "signals": {
+                "htmlCallCount": 257.0,
+                "totalAllocatedChars": 782814.0
+              }
+            },
+            {
+              "bytes": 2048,
+              "signals": {
+                "htmlCallCount": 513.0,
+                "totalAllocatedChars": 1562590.0
+              }
+            },
+            {
+              "bytes": 4096,
+              "signals": {
+                "htmlCallCount": 1025.0,
+                "totalAllocatedChars": 3122142.0
+              }
+            },
+            {
+              "bytes": 8192,
+              "signals": {
+                "htmlCallCount": 2049.0,
+                "totalAllocatedChars": 6241246.0
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "limits": {
+    "jvm_args": [
+      "-Xmx1g",
+      "-Xss1m"
+    ],
+    "timeout_ms": 20000,
+    "max_input_bytes": 1048576
+  },
+  "hard_ok": true
+}

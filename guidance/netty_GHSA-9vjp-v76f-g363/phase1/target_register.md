@@ -1,0 +1,150 @@
+{
+  "ordered_targets": [
+    {
+      "slot": 1,
+      "id": "V1",
+      "name": "Snappy COMPRESSED_DATA preamble-driven heap exhaustion via unchecked ensureWritable",
+      "entrypoint": "SnappyFuzzTest.fuzzSnappyFrameDecoderDecode(InputStream) → EmbeddedChannel.writeInbound(Object...) → DefaultChannelPipeline.fireChannelRead(Object) → ByteToMessageDecoder.channelRead(ChannelHandlerContext, Object) → ByteToMessageDecoder.callDecode(ChannelHandlerContext, ByteBuf, List) → SnappyFrameDecoder.decode(ChannelHandlerContext, ByteBuf, List) → Snappy.decode(ByteBuf, ByteBuf)",
+      "source_path": "codec/src/main/java/io/netty/handler/codec/compression/Snappy.java",
+      "sink": "Snappy#decode",
+      "mechanism": "Snappy.decode() reads a varint preamble from compressed data declaring the claimed uncompressed size (up to 268,435,455 bytes from 4 varint bytes) and calls out.ensureWritable(uncompressedLength) with no upper bound check. SnappyFrameDecoder processes multiple COMPRESSED_DATA chunks from a single input; each allocates a buffer proportional to the preamble claim. All buffers accumulate in the EmbeddedChannel inbound queue before release, so N chunks × ~256 MB live simultaneously.",
+      "resource": "heap memory: total live bytes = number_of_chunks × claimed_uncompressed_size, each up to 268,435,455 bytes (~256 MB) per chunk",
+      "failure_mode": "out_of_memory",
+      "scale": "Heap measurements show constant ~7.3 MB because ctx.alloc().buffer() in SnappyFrameDecoder uses the channel's default PooledByteBufAllocator, which creates direct (off-heap) ByteBufs. ensureWritable(claimed_size) allocates direct memory invisible to the heap probe. For claimed sizes up to 16 MB (the pool's chunk size, 8192 << 11), allocations come from pre-allocated arena chunks, explaining the flat measurements across the 64 KB–2 MB series. For the attack (claimed_size = 268,435,455, ~256 MB), each chunk's ensureWritable triggers a 'huge' direct allocation of ~256 MB outside the pool. Cost per chunk: ~268 MB of direct memory. The callDecode loop fires each buffer to the inbound queue before processing the next, so all are live simultaneously. Direct memory budget: MaxDirectMemorySize defaults to -Xmx (~1073 MB). After 3 chunks: ~16 MB (arena) + 3 × 268 MB = ~820 MB. The 4th chunk's ~268 MB allocation pushes total to ~1088 MB, exceeding the limit → OutOfMemoryError. Input: 10 bytes (stream identifier) + 4 × 12 bytes (compressed chunks) = 58 bytes. No denser encoding exists: 12 bytes per chunk is the minimum (1 type + 3 length + 4 checksum + 4 preamble varint).",
+      "input_bytes": 58,
+      "cwe": "CWE-770",
+      "checkpath_status": "PASS",
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "method": "com.fuzzer.harness.SnappyFuzzTest#fuzzSnappyFrameDecoderDecode(InputStream)",
+          "location": "harness/src/test/java/com/fuzzer/harness/SnappyFuzzTest.java:34"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "harness/src/test/java/com/fuzzer/harness/SnappyFuzzTest.java:39"
+        },
+        {
+          "kind": "hop",
+          "method": "io.netty.channel.embedded.EmbeddedChannel#writeInbound(Object...)",
+          "location": "transport/src/main/java/io/netty/channel/embedded/EmbeddedChannel.java:335"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "transport/src/main/java/io/netty/channel/embedded/EmbeddedChannel.java:343"
+        },
+        {
+          "kind": "hop",
+          "method": "io.netty.channel.DefaultChannelPipeline#fireChannelRead(Object)",
+          "location": "transport/src/main/java/io/netty/channel/DefaultChannelPipeline.java:918"
+        },
+        {
+          "kind": "connection",
+          "type": "INDIRECT",
+          "evidence": "2 omitted call(s)"
+        },
+        {
+          "kind": "hop",
+          "provenance": "checkpath (omitted call)",
+          "method": "io.netty.channel.AbstractChannelHandlerContext#invokeChannelRead(AbstractChannelHandlerContext,Object)",
+          "location": "transport/src/main/java/io/netty/channel/AbstractChannelHandlerContext.java:361"
+        },
+        {
+          "kind": "hop",
+          "provenance": "checkpath (omitted call)",
+          "method": "io.netty.channel.AbstractChannelHandlerContext#invokeChannelRead(Object)",
+          "location": "transport/src/main/java/io/netty/channel/AbstractChannelHandlerContext.java:376"
+        },
+        {
+          "kind": "hop",
+          "method": "io.netty.handler.codec.ByteToMessageDecoder#channelRead(ChannelHandlerContext,Object)",
+          "location": "codec/src/main/java/io/netty/handler/codec/ByteToMessageDecoder.java:269"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "codec/src/main/java/io/netty/handler/codec/ByteToMessageDecoder.java:276"
+        },
+        {
+          "kind": "hop",
+          "method": "io.netty.handler.codec.ByteToMessageDecoder#callDecode(ChannelHandlerContext,ByteBuf,List)",
+          "location": "codec/src/main/java/io/netty/handler/codec/ByteToMessageDecoder.java:426"
+        },
+        {
+          "kind": "connection",
+          "type": "DATAFLOW",
+          "evidence": "ByteToMessageDecoder#callDecode(ChannelHandlerContext,ByteBuf,List) (codec/src/main/java/io/netty/handler/codec/ByteToMessageDecoder.java:426) writes field `corrupted`, which SnappyFrameDecoder#decode(ChannelHandlerContext,ByteBuf,List) (codec/src/main/java/io/netty/handler/codec/compression/SnappyFrameDecoder.java:79) reads (through helper calls)",
+          "site": "codec/src/main/java/io/netty/handler/codec/ByteToMessageDecoder.java:426"
+        },
+        {
+          "kind": "hop",
+          "method": "io.netty.handler.codec.compression.SnappyFrameDecoder#decode(ChannelHandlerContext,ByteBuf,List)",
+          "location": "codec/src/main/java/io/netty/handler/codec/compression/SnappyFrameDecoder.java:79"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "codec/src/main/java/io/netty/handler/codec/compression/SnappyFrameDecoder.java:177"
+        },
+        {
+          "kind": "hop",
+          "method": "io.netty.handler.codec.compression.Snappy#decode(ByteBuf,ByteBuf)",
+          "location": "codec/src/main/java/io/netty/handler/codec/compression/Snappy.java:270"
+        }
+      ],
+      "harness_entry": "com.fuzzer.harness.SnappyFuzzTest#fuzzSnappyFrameDecoderDecode",
+      "scale_measurement": [
+        {
+          "value": 65536,
+          "input_bytes": 21,
+          "outcome": "completed",
+          "cpu_ms": 82.86817,
+          "allocated_bytes": 7684776,
+          "peak_heap_bytes": 8388608
+        },
+        {
+          "value": 131072,
+          "input_bytes": 21,
+          "outcome": "completed",
+          "cpu_ms": 87.696942,
+          "allocated_bytes": 7684776,
+          "peak_heap_bytes": 9437184
+        },
+        {
+          "value": 262144,
+          "input_bytes": 21,
+          "outcome": "completed",
+          "cpu_ms": 86.022285,
+          "allocated_bytes": 7684776,
+          "peak_heap_bytes": 8388608
+        },
+        {
+          "value": 524288,
+          "input_bytes": 21,
+          "outcome": "completed",
+          "cpu_ms": 83.3744,
+          "allocated_bytes": 7684776,
+          "peak_heap_bytes": 5242880
+        },
+        {
+          "value": 1048576,
+          "input_bytes": 21,
+          "outcome": "completed",
+          "cpu_ms": 91.592965,
+          "allocated_bytes": 7684776,
+          "peak_heap_bytes": 8388608
+        },
+        {
+          "value": 2097152,
+          "input_bytes": 22,
+          "outcome": "completed",
+          "cpu_ms": 77.502515,
+          "allocated_bytes": 7684776,
+          "peak_heap_bytes": 8388608
+        }
+      ]
+    }
+  ]
+}

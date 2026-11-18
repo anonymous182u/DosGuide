@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Premain-Class: fuzzing.agent.V1MeasureAgent
+Agent-Class: fuzzing.agent.V1MeasureAgent
+Can-Retransform-Classes: false
+Class-Path: dependency/asm-9.8.jar

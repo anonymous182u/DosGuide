@@ -1,0 +1,200 @@
+{
+  "ok": true,
+  "launch": [],
+  "build": {
+    "ok": true
+  },
+  "targets": [
+    {
+      "tool": "ValidateArtifact",
+      "target": "V1",
+      "checks": [
+        {
+          "name": "contract",
+          "status": "pass",
+          "detail": "factory, lastSignals() and fuzz test found"
+        },
+        {
+          "name": "runs",
+          "status": "pass",
+          "detail": "91 executions completed"
+        },
+        {
+          "name": "plan_signals",
+          "status": "pass",
+          "detail": "lastSignals() returns every planned signal [retainedBytes, decodedBytes, bwtBytes]"
+        },
+        {
+          "name": "signal_varies",
+          "status": "pass",
+          "detail": "varying: [bwtBytes, decodedBytes, retainedBytes] (on the guidance's own inputs: [bwtBytes, decodedBytes, retainedBytes])"
+        },
+        {
+          "name": "reset",
+          "status": "pass",
+          "detail": "re-running inputs reproduced their values"
+        },
+        {
+          "name": "depends_on_execution",
+          "status": "pass",
+          "detail": "signals stay near zero when the target does not run"
+        },
+        {
+          "name": "instrumentation",
+          "status": "pass",
+          "detail": "rewrote [io.netty.handler.codec.compression.Bzip2BlockDecompressor]"
+        },
+        {
+          "name": "input_limit",
+          "status": "pass",
+          "detail": "with jqf.ei.MAX_INPUT_SIZE=16 the 20 generated inputs were at most 16 bytes"
+        },
+        {
+          "name": "input_growth",
+          "status": "pass",
+          "detail": "the guidance generated a 5600-byte input after 810 ms (7 executions); the target needs 750"
+        }
+      ],
+      "max_input_bytes": 10240,
+      "example_inputs": 3,
+      "executions": {
+        "own": 40,
+        "repeat": 5,
+        "random": 40,
+        "example": 6,
+        "probe": 3
+      },
+      "test_failures_not_used": 0,
+      "signals": {
+        "bwtBytes": {
+          "min": 0.0,
+          "max": 3215.0,
+          "distinct": 23
+        },
+        "decodedBytes": {
+          "min": 0.0,
+          "max": 162384.0,
+          "distinct": 22
+        },
+        "retainedBytes": {
+          "min": 0.0,
+          "max": 162384.0,
+          "distinct": 21
+        }
+      },
+      "signals_by_kind": {
+        "example": {
+          "bwtBytes": {
+            "distinct": 3,
+            "max": 900.0,
+            "min": 18.0
+          },
+          "decodedBytes": {
+            "distinct": 3,
+            "max": 900.0,
+            "min": 18.0
+          },
+          "retainedBytes": {
+            "distinct": 3,
+            "max": 900.0,
+            "min": 18.0
+          }
+        },
+        "own": {
+          "bwtBytes": {
+            "distinct": 22,
+            "max": 3215.0,
+            "min": 0.0
+          },
+          "decodedBytes": {
+            "distinct": 21,
+            "max": 162384.0,
+            "min": 0.0
+          },
+          "retainedBytes": {
+            "distinct": 21,
+            "max": 162384.0,
+            "min": 0.0
+          }
+        },
+        "random": {
+          "bwtBytes": {
+            "distinct": 8,
+            "max": 399.0,
+            "min": 0.0
+          },
+          "decodedBytes": {
+            "distinct": 6,
+            "max": 904.0,
+            "min": 0.0
+          },
+          "retainedBytes": {
+            "distinct": 5,
+            "max": 904.0,
+            "min": 0.0
+          }
+        },
+        "repeat": {
+          "bwtBytes": {
+            "distinct": 4,
+            "max": 3215.0,
+            "min": 208.0
+          },
+          "decodedBytes": {
+            "distinct": 5,
+            "max": 162384.0,
+            "min": 904.0
+          },
+          "retainedBytes": {
+            "distinct": 5,
+            "max": 162384.0,
+            "min": 904.0
+          }
+        }
+      },
+      "transformed_classes": [
+        "io.netty.handler.codec.compression.Bzip2BlockDecompressor"
+      ],
+      "ok": true,
+      "input_limit_probe": {
+        "max_input_bytes": 16,
+        "longest_input": 16,
+        "executions": {
+          "own": 20
+        }
+      },
+      "growth_probe": {
+        "needed_input_bytes": 750,
+        "longest_input": 5600,
+        "executions": {
+          "own": 7
+        },
+        "growth": [
+          {
+            "ms": 768,
+            "execution": 1,
+            "bytes": 41
+          },
+          {
+            "ms": 785,
+            "execution": 3,
+            "bytes": 71
+          },
+          {
+            "ms": 810,
+            "execution": 7,
+            "bytes": 5600
+          }
+        ]
+      }
+    }
+  ],
+  "limits": {
+    "jvm_args": [
+      "-Xmx1g",
+      "-Xss1m"
+    ],
+    "timeout_ms": 20000,
+    "max_input_bytes": 10240
+  }
+}

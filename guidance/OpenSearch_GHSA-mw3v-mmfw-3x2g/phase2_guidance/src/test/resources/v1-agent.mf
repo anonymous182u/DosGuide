@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Premain-Class: org.opensearch.fuzz.agent.V1MeasureAgent
+Agent-Class: org.opensearch.fuzz.agent.V1MeasureAgent
+Boot-Class-Path: v1-counters.jar
+Can-Retransform-Classes: true
+Can-Redefine-Classes: false
+

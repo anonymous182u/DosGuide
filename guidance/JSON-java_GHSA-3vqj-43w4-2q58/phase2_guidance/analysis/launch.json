@@ -1,0 +1,25 @@
+{
+  "build": [
+    "mvn package -DskipTests -q",
+    "mvn dependency:copy-dependencies -DoutputDirectory=target/deps -DincludeScope=test -q",
+    "mkdir -p target/agent-staging/fuzzing/agent",
+    "cp target/test-classes/fuzzing/agent/V1DepthCounters.class target/agent-staging/fuzzing/agent/",
+    "cp target/test-classes/fuzzing/agent/V1DepthTransformer.class target/agent-staging/fuzzing/agent/",
+    "cp target/test-classes/fuzzing/agent/V1MeasureAgent.class target/agent-staging/fuzzing/agent/",
+    "printf 'Premain-Class: fuzzing.agent.V1MeasureAgent\\n' > target/agent-staging/MANIFEST.MF",
+    "jar cfm target/v1-agent.jar target/agent-staging/MANIFEST.MF -C target/agent-staging fuzzing/"
+  ],
+  "classpath_command": "echo -n target/test-classes; for j in target/deps/*.jar lib/*.jar; do [ -f \"$j\" ] && echo -n \":$j\"; done",
+  "javaagent": {
+    "jar": "target/v1-agent.jar",
+    "args": ""
+  },
+  "jvm_args": [],
+  "guidance_factory": "fuzzing.runner.FuzzRunner#createGuidance",
+  "targets": {
+    "V1": {
+      "test_class": "fuzzing.harness.XmlFuzzTest",
+      "method": "fuzzJSONMLToJSONArray"
+    }
+  }
+}

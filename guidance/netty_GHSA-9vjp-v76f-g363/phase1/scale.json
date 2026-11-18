@@ -1,0 +1,15 @@
+{
+  "series_request": null,
+  "rounds": [
+    {
+      "round": 1,
+      "revision": {
+        "V1": {
+          "scale": "Heap measurements show constant ~7.3 MB because ctx.alloc().buffer() in SnappyFrameDecoder uses the channel's default PooledByteBufAllocator, which creates direct (off-heap) ByteBufs. ensureWritable(claimed_size) allocates direct memory invisible to the heap probe. For claimed sizes up to 16 MB (the pool's chunk size, 8192 << 11), allocations come from pre-allocated arena chunks, explaining the flat measurements across the 64 KB–2 MB series. For the attack (claimed_size = 268,435,455, ~256 MB), each chunk's ensureWritable triggers a 'huge' direct allocation of ~256 MB outside the pool. Cost per chunk: ~268 MB of direct memory. The callDecode loop fires each buffer to the inbound queue before processing the next, so all are live simultaneously. Direct memory budget: MaxDirectMemorySize defaults to -Xmx (~1073 MB). After 3 chunks: ~16 MB (arena) + 3 × 268 MB = ~820 MB. The 4th chunk's ~268 MB allocation pushes total to ~1088 MB, exceeding the limit → OutOfMemoryError. Input: 10 bytes (stream identifier) + 4 × 12 bytes (compressed chunks) = 58 bytes. No denser encoding exists: 12 bytes per chunk is the minimum (1 type + 3 length + 4 checksum + 4 preamble varint).",
+          "input_bytes": 58
+        }
+      },
+      "field_problems": {}
+    }
+  ]
+}

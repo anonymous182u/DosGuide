@@ -1,0 +1,19 @@
+{
+  "series_request": null,
+  "rounds": [
+    {
+      "round": 1,
+      "revision": {
+        "V1": {
+          "scale": "Measured: 512 levels (1024 bytes) completes within the 256 KB stack probe cap; 1024 levels (2048 bytes) exceeds it. Per-level stack cost approximately 250 bytes (two frames: readArray + readMain). Extrapolating linearly to the evaluation 1 MB stack with approximately 50 KB base overhead: about 4000 nesting levels to cause StackOverflowError. Densest encoding is one byte per opening bracket (overflow occurs during descent before closing brackets are reached), so approximately 4000 bytes.",
+          "input_bytes": 4000
+        },
+        "V2": {
+          "scale": "Measured: 512 levels (1024 bytes) completes within the 256 KB stack probe cap; 1024 levels (2048 bytes) exceeds it. Per-level stack cost approximately 250 bytes (two frames: readArray + readMain). Extrapolating linearly to the evaluation 1 MB stack with approximately 50 KB base overhead: about 4000 nesting levels to cause StackOverflowError. Densest encoding is one byte per opening bracket (overflow occurs during descent before closing brackets are reached), so approximately 4000 bytes.",
+          "input_bytes": 4000
+        }
+      },
+      "field_problems": {}
+    }
+  ]
+}

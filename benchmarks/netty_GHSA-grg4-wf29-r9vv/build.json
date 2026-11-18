@@ -1,0 +1,67 @@
+{
+  "clone_url": "https://github.com/netty/netty.git",
+  "commit": "deb048985bd74a825131e51849446d1e905b5e93",
+  "jdk": 8,
+  "tools": "Apache Maven 3.9.x (verified with 3.9.12)",
+  "commands": [
+    "cd src && MAVEN_OPTS=-Xmx2g mvn -B -pl codec -am -DskipTests -Dcheckstyle.skip=true package"
+  ],
+  "artifacts": [
+    {
+      "built": "src/codec/target/netty-codec-4.1.68.Final-SNAPSHOT.jar",
+      "lib": "lib/netty-codec-4.1.68.Final-SNAPSHOT.jar",
+      "sha256": "a864987472209e06804694362a621eecadd1819d7cd21799a34c62be29dbba67",
+      "classes_sha256": "949aff8e0b611abbc55574bc0eabfbcfac8a715ee3bf09df5531514cb928b2ad"
+    },
+    {
+      "built": "src/common/target/netty-common-4.1.68.Final-SNAPSHOT.jar",
+      "lib": "lib/netty-common-4.1.68.Final-SNAPSHOT.jar",
+      "sha256": "a3f07504cd707db36f40ac9c5e568b2f7b84722b1f6fd8e8ddd3f179e7017ff3",
+      "classes_sha256": "03108a8681b86d14815b826ce17d28a32567cbd996c6efaf2e2f16f3d4392ecd"
+    },
+    {
+      "built": "src/buffer/target/netty-buffer-4.1.68.Final-SNAPSHOT.jar",
+      "lib": "lib/netty-buffer-4.1.68.Final-SNAPSHOT.jar",
+      "sha256": "7796acf30dd3e43d8b0df806f867fca497f26a5e40416fdca328e2fa011daa2e",
+      "classes_sha256": "4e0c1a375c7bd266df80a93008f37999778c94ede622599b67641bf8c6666f99"
+    },
+    {
+      "built": "src/transport/target/netty-transport-4.1.68.Final-SNAPSHOT.jar",
+      "lib": "lib/netty-transport-4.1.68.Final-SNAPSHOT.jar",
+      "sha256": "ff5cd71ac2ea92af4ce385ec12d6c77f3b85b70649822c7bd3cc2dac7e72a083",
+      "classes_sha256": "4ebcf8e971d422ad073210bcd603f274417282ad35fa720b3045417f1904fd81"
+    },
+    {
+      "built": "src/resolver/target/netty-resolver-4.1.68.Final-SNAPSHOT.jar",
+      "lib": "lib/netty-resolver-4.1.68.Final-SNAPSHOT.jar",
+      "sha256": "b13360ec77103074e2b1eecc677335208e7d953e7f9e359fe2b2ed0300d90b47",
+      "classes_sha256": "5f7bdc621fcc2819751e7d7c4adf27c93876971ea2978b79b236ade723451c70"
+    }
+  ],
+  "fixed": {
+    "jars": [
+      {
+        "coords": "io.netty:netty-codec:4.1.68.Final",
+        "sha256": "453d0a62abc2a673177c1ec71aa2384058d3afcce8e2f45a837686dace9d3781"
+      },
+      {
+        "coords": "io.netty:netty-common:4.1.68.Final",
+        "sha256": "d592bc7e6d300a2c7a119e7b420abb76651fa0a5f7be641d1bfc1175dc40fd92"
+      },
+      {
+        "coords": "io.netty:netty-buffer:4.1.68.Final",
+        "sha256": "fcbc1baad297a1ebf4ae961f9b8cd606485edce61f8fa2374750d463698ace9c"
+      },
+      {
+        "coords": "io.netty:netty-transport:4.1.68.Final",
+        "sha256": "3d9a011581a6a69b3f7c8aa58d6d9cd98f40207d226991d1b5ad1d96653dbebd"
+      },
+      {
+        "coords": "io.netty:netty-resolver:4.1.68.Final",
+        "sha256": "7ca8e70e6d142bc2d6ae6600aad09b5142187039af729f34e919f34f0cbce68b"
+      }
+    ],
+    "drop": "^(netty\\-codec|netty\\-common|netty\\-buffer|netty\\-transport|netty\\-resolver)-[0-9]"
+  },
+  "notes": "Reactor: dev-tools, netty-parent, common, buffer, resolver, transport, codec (project version 4.1.68.Final-SNAPSHOT; animal-sniffer checks run; no native module). netty-common is the shaded jar the build produces (jctools relocated to io.netty.util.internal.shaded.org.jctools; the unshaded original-*.jar is not used). JDK 8 as the 4.1.68.Final release (JDK 1.8.0_252): common, buffer, resolver and transport have byte-identical class files to the Central 4.1.68.Final jars; codec differs only in Bzip2BlockDecompressor, Bzip2Constants, Bzip2Decoder, Snappy, Snappy$1, Snappy$State, SnappyFrameDecoder, SnappyFrameDecoder$1, the classes the fix release changed. -Dcheckstyle.skip=true skips the checkstyle check. Fixed: the five modules at 4.1.68.Final."
+}

@@ -1,0 +1,154 @@
+{
+  "tool": "checkpath",
+  "version": "1.0.0",
+  "source_root": "projects/JSON-java_GHSA-3vqj-43w4-2q58",
+  "index": {
+    "files_parsed": 23,
+    "files_failed": 0,
+    "methods": 347,
+    "harness_fuzz_methods": [
+      "XmlFuzzTest.fuzzJSONMLToJSONArray(InputStream)",
+      "XmlFuzzTest.fuzzXMLToJSONObjectWithConfiguration(InputStream)",
+      "XmlFuzzTest.fuzzXMLToJSONObject(InputStream)"
+    ],
+    "index_seconds": 0.6,
+    "max_gap": 2,
+    "sink_depth": 6,
+    "symbol_resolution": true
+  },
+  "ok": true,
+  "targets": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "entrypoint": "XmlFuzzTest.fuzzJSONMLToJSONArray(InputStream) → JSONML.toJSONArray(String) → JSONML.parse(XMLTokener, boolean, JSONArray, boolean)",
+      "source_path": "src/main/java/org/json/JSONML.java",
+      "start_ok": true,
+      "harness_entry": "fuzzing.harness.XmlFuzzTest#fuzzJSONMLToJSONArray",
+      "end_ok": true,
+      "end": {
+        "sink_file": "src/main/java/org/json/JSONML.java",
+        "ok": true,
+        "evidence": "hop 3 JSONML#parse(XMLTokener,boolean,JSONArray,boolean) is declared in src/main/java/org/json/JSONML.java:26",
+        "level": "method",
+        "sink_method": "JSONML#parse",
+        "sink_evidence": "hop 3 is JSONML#parse(XMLTokener,boolean,JSONArray,boolean)"
+      },
+      "hops": [
+        {
+          "index": 1,
+          "raw": "XmlFuzzTest.fuzzJSONMLToJSONArray(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "fuzzing.harness.XmlFuzzTest#fuzzJSONMLToJSONArray(InputStream)",
+              "location": "harness/src/test/java/fuzzing/harness/XmlFuzzTest.java:35"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "raw": "JSONML.toJSONArray(String)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.json.JSONML#toJSONArray(String)",
+              "location": "src/main/java/org/json/JSONML.java:226"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "raw": "JSONML.parse(XMLTokener, boolean, JSONArray, boolean)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.json.JSONML#parse(XMLTokener,boolean,JSONArray,boolean)",
+              "location": "src/main/java/org/json/JSONML.java:26"
+            }
+          ]
+        }
+      ],
+      "path_signature": [
+        "fuzzing.harness.XmlFuzzTest#fuzzJSONMLToJSONArray(InputStream)",
+        "org.json.JSONML#toJSONArray(String)",
+        "org.json.JSONML#parse(XMLTokener,boolean,JSONArray,boolean)"
+      ],
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "written": "XmlFuzzTest.fuzzJSONMLToJSONArray(InputStream)",
+          "provenance": "agent",
+          "method": "fuzzing.harness.XmlFuzzTest#fuzzJSONMLToJSONArray(InputStream)",
+          "location": "harness/src/test/java/fuzzing/harness/XmlFuzzTest.java:35"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "XmlFuzzTest#fuzzJSONMLToJSONArray(InputStream) calls JSONML#toJSONArray(String) at harness/src/test/java/fuzzing/harness/XmlFuzzTest.java:37 (resolved)",
+          "site": "harness/src/test/java/fuzzing/harness/XmlFuzzTest.java:37"
+        },
+        {
+          "kind": "hop",
+          "written": "JSONML.toJSONArray(String)",
+          "provenance": "agent",
+          "method": "org.json.JSONML#toJSONArray(String)",
+          "location": "src/main/java/org/json/JSONML.java:226"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "JSONML#toJSONArray(String) calls JSONML#parse(XMLTokener,boolean,JSONArray,boolean) at src/main/java/org/json/JSONML.java:227 (resolved)",
+          "site": "src/main/java/org/json/JSONML.java:227"
+        },
+        {
+          "kind": "hop",
+          "written": "JSONML.parse(XMLTokener, boolean, JSONArray, boolean)",
+          "provenance": "agent",
+          "method": "org.json.JSONML#parse(XMLTokener,boolean,JSONArray,boolean)",
+          "location": "src/main/java/org/json/JSONML.java:26"
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "status": "CALL",
+          "evidence": "XmlFuzzTest#fuzzJSONMLToJSONArray(InputStream) calls JSONML#toJSONArray(String) at harness/src/test/java/fuzzing/harness/XmlFuzzTest.java:37 (resolved)"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "status": "CALL",
+          "evidence": "JSONML#toJSONArray(String) calls JSONML#parse(XMLTokener,boolean,JSONArray,boolean) at src/main/java/org/json/JSONML.java:227 (resolved)"
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    }
+  ],
+  "plan_ok": true,
+  "plans": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "signals": [
+        {
+          "name": "maxDepth",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "JSONML#parse",
+              "status": "RESOLVED",
+              "method": "org.json.JSONML#parse",
+              "declared_at": "src/main/java/org/json/JSONML.java:26",
+              "relation": "on_path"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    }
+  ]
+}

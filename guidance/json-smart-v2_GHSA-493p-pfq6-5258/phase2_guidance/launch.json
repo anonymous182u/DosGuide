@@ -1,0 +1,21 @@
+{
+  "build": [
+    "mvn package -DskipTests -q",
+    "echo 'Premain-Class: fuzzing.agent.DepthMeasureAgent\nCan-Retransform-Classes: true' > target/agent-manifest.txt",
+    "jar cfm target/depth-agent.jar target/agent-manifest.txt -C target/test-classes fuzzing/agent/"
+  ],
+  "classpath": "target/test-classes:target/deps/*:lib/*",
+  "javaagent": {"jar": "target/depth-agent.jar", "args": ""},
+  "jvm_args": [],
+  "guidance_factory": "fuzzing.runner.FuzzRunner#createGuidance",
+  "targets": {
+    "V1": {
+      "test_class": "edu.berkeley.cs.jqf.examples.json.JsonSmartFuzzTest",
+      "method": "fuzzJSONParserParsePermissive"
+    },
+    "V2": {
+      "test_class": "edu.berkeley.cs.jqf.examples.json.JsonSmartFuzzTest",
+      "method": "fuzzJSONParserParseRFC4627"
+    }
+  }
+}

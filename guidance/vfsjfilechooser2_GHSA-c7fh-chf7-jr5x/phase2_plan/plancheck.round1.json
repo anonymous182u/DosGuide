@@ -1,0 +1,164 @@
+{
+  "tool": "checkpath",
+  "version": "1.0.0",
+  "source_root": "projects/vfsjfilechooser2_GHSA-c7fh-chf7-jr5x",
+  "index": {
+    "files_parsed": 39,
+    "files_failed": 0,
+    "methods": 713,
+    "harness_fuzz_methods": [
+      "VFSURIValidatorFuzzTest.fuzzVFSURIValidatorIsValid(InputStream)",
+      "VFSURIValidatorFuzzTest.fuzzVFSURIValidatorIsValid2(InputStream)",
+      "VFSURIValidatorFuzzTest.fuzzVFSURIValidatorIsValid3(InputStream)"
+    ],
+    "index_seconds": 0.7,
+    "max_gap": 2,
+    "sink_depth": 6,
+    "symbol_resolution": true
+  },
+  "ok": true,
+  "targets": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "entrypoint": "VFSURIValidatorFuzzTest.fuzzVFSURIValidatorIsValid(InputStream) → VFSURIValidator.isValid(String) → Matcher.matches()",
+      "source_path": "src/main/java/com/googlecode/vfsjfilechooser2/utils/VFSURIValidator.java",
+      "start_ok": true,
+      "harness_entry": "com.googlecode.vfsjfilechooser2.fuzz.harness.VFSURIValidatorFuzzTest#fuzzVFSURIValidatorIsValid",
+      "end_ok": true,
+      "end": {
+        "sink_file": "src/main/java/com/googlecode/vfsjfilechooser2/utils/VFSURIValidator.java",
+        "ok": true,
+        "evidence": "hop 2 VFSURIValidator#isValid(String) is declared in src/main/java/com/googlecode/vfsjfilechooser2/utils/VFSURIValidator.java:122",
+        "level": "method",
+        "sink_method": "java.util.regex.Matcher#matches",
+        "sink_evidence": "hop 3 names java.util.regex.Matcher#matches (outside the source tree)"
+      },
+      "hops": [
+        {
+          "index": 1,
+          "raw": "VFSURIValidatorFuzzTest.fuzzVFSURIValidatorIsValid(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "com.googlecode.vfsjfilechooser2.fuzz.harness.VFSURIValidatorFuzzTest#fuzzVFSURIValidatorIsValid(InputStream)",
+              "location": "harness/src/test/java/com/googlecode/vfsjfilechooser2/fuzz/harness/VFSURIValidatorFuzzTest.java:28"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "raw": "VFSURIValidator.isValid(String)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "com.googlecode.vfsjfilechooser2.utils.VFSURIValidator#isValid(String)",
+              "location": "src/main/java/com/googlecode/vfsjfilechooser2/utils/VFSURIValidator.java:122"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "raw": "Matcher.matches()",
+          "status": "EXTERNAL",
+          "candidates": [],
+          "external": [
+            "Matcher.matches()"
+          ]
+        }
+      ],
+      "path_signature": [
+        "com.googlecode.vfsjfilechooser2.fuzz.harness.VFSURIValidatorFuzzTest#fuzzVFSURIValidatorIsValid(InputStream)",
+        "com.googlecode.vfsjfilechooser2.utils.VFSURIValidator#isValid(String)",
+        "external:matches"
+      ],
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "written": "VFSURIValidatorFuzzTest.fuzzVFSURIValidatorIsValid(InputStream)",
+          "provenance": "agent",
+          "method": "com.googlecode.vfsjfilechooser2.fuzz.harness.VFSURIValidatorFuzzTest#fuzzVFSURIValidatorIsValid(InputStream)",
+          "location": "harness/src/test/java/com/googlecode/vfsjfilechooser2/fuzz/harness/VFSURIValidatorFuzzTest.java:28"
+        },
+        {
+          "kind": "connection",
+          "type": "INDIRECT",
+          "evidence": "1 omitted call(s)"
+        },
+        {
+          "kind": "hop",
+          "written": null,
+          "provenance": "checkpath (omitted call)",
+          "method": "com.googlecode.vfsjfilechooser2.fuzz.harness.VFSURIValidatorFuzzTest#validate(InputStream)",
+          "location": "harness/src/test/java/com/googlecode/vfsjfilechooser2/fuzz/harness/VFSURIValidatorFuzzTest.java:44"
+        },
+        {
+          "kind": "hop",
+          "written": "VFSURIValidator.isValid(String)",
+          "provenance": "agent",
+          "method": "com.googlecode.vfsjfilechooser2.utils.VFSURIValidator#isValid(String)",
+          "location": "src/main/java/com/googlecode/vfsjfilechooser2/utils/VFSURIValidator.java:122"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "VFSURIValidator#isValid(String) calls Matcher.matches() at src/main/java/com/googlecode/vfsjfilechooser2/utils/VFSURIValidator.java:154",
+          "site": "src/main/java/com/googlecode/vfsjfilechooser2/utils/VFSURIValidator.java:154"
+        },
+        {
+          "kind": "hop",
+          "written": "Matcher.matches()",
+          "provenance": "agent",
+          "method": "Matcher.matches()",
+          "location": "outside the source tree"
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "status": "INDIRECT",
+          "evidence": "1 omitted call(s)",
+          "chain": [
+            "VFSURIValidatorFuzzTest#fuzzVFSURIValidatorIsValid(InputStream)",
+            "VFSURIValidatorFuzzTest#validate(InputStream)",
+            "VFSURIValidator#isValid(String)"
+          ]
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "status": "CALL",
+          "evidence": "VFSURIValidator#isValid(String) calls Matcher.matches() at src/main/java/com/googlecode/vfsjfilechooser2/utils/VFSURIValidator.java:154"
+        }
+      ],
+      "diagnostics": [],
+      "warnings": [
+        "Hop 3: `Matcher.matches()` belongs to JDK class java.util.regex.Matcher; its body is not analyzed",
+        "Edge 1→2 is indirect: VFSURIValidatorFuzzTest#fuzzVFSURIValidatorIsValid(InputStream) → VFSURIValidatorFuzzTest#validate(InputStream) → VFSURIValidator#isValid(String)"
+      ]
+    }
+  ],
+  "plan_ok": true,
+  "plans": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "signals": [
+        {
+          "name": "regexSteps",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "java.util.regex.Pattern$Node#match (base class and all inner-class overrides such as Pattern$Curly#match, Pattern$GroupHead#match, Pattern$Loop#match, etc.) — cost is incurred every time the NFA tries or retries a node during Matcher.matches() called at VFSURIValidator line 243",
+              "status": "EXTERNAL",
+              "relation": "library"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    }
+  ]
+}

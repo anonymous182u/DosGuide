@@ -1,0 +1,87 @@
+{
+  "ordered_targets": [
+    {
+      "slot": 1,
+      "id": "V1",
+      "name": "readHeaders() allows oversized header sections (up to 10240 bytes instead of ≤512)",
+      "entrypoint": "MultipartFuzzTest.fuzzMultipartStreamReadHeaders(InputStream) → MultipartStream.readHeaders()",
+      "source_path": "src/main/java/org/apache/commons/fileupload/MultipartStream.java",
+      "sink": "MultipartStream#readHeaders",
+      "mechanism": "readHeaders() accumulates bytes in a ByteArrayOutputStream until it finds the \\r\\n\\r\\n header terminator or reaches HEADER_PART_SIZE_MAX (10240). The library's hardcoded limit (10240) is 20× the application-expected limit (512). Additionally, the linear state machine for \\r\\n\\r\\n detection resets to state 0 on mismatch without partial-match rollback, causing valid terminators to be missed when preceded by partial matches (\\r\\n\\r + non-\\n byte), extending headers past where they should end.",
+      "resource": "CPU time and heap memory: ByteArrayOutputStream in readHeaders() accumulates up to 10240 bytes per header section instead of stopping at the expected ≤512 bytes; each byte is processed individually by readByte() and accumulated into a String",
+      "failure_mode": "timeout",
+      "scale": "Measured CPU growth: ~2.8 µs per header byte (linear). At maximum header size within input limit (~10226 bytes in a 10240-byte input), extrapolated CPU ≈ 38 ms, far below the 20s timeout. Allocation grows at ~60 bytes per header byte; at max ≈ 1.3 MB, far below 1 GB heap. Neither timeout nor OOM is reachable. The failure is the harness oracle: readHeaders() returns a header of > 512 bytes (up to HEADER_PART_SIZE_MAX = 10240), the fuzz test throws AssertionError (undeclared throwable). Any input producing > 512 header bytes triggers it; minimum is 513 header bytes in a 527-byte input (1 byte boundary line + 5 byte delimiter + 509 bytes content + 4 byte CRLFCRLF + 7 byte close delimiter). Encoding is 1:1 — each input byte beyond the 14-byte framing becomes one header byte.",
+      "input_bytes": 527,
+      "cwe": "CWE-400",
+      "checkpath_status": "PASS",
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "method": "com.fuzzing.harness.MultipartFuzzTest#fuzzMultipartStreamReadHeaders(InputStream)",
+          "location": "harness/src/test/java/com/fuzzing/harness/MultipartFuzzTest.java:100"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "harness/src/test/java/com/fuzzing/harness/MultipartFuzzTest.java:124"
+        },
+        {
+          "kind": "hop",
+          "method": "org.apache.commons.fileupload.MultipartStream#readHeaders()",
+          "location": "src/main/java/org/apache/commons/fileupload/MultipartStream.java:901"
+        }
+      ],
+      "harness_entry": "com.fuzzing.harness.MultipartFuzzTest#fuzzMultipartStreamReadHeaders",
+      "scale_measurement": [
+        {
+          "value": 64,
+          "input_bytes": 78,
+          "outcome": "completed",
+          "cpu_ms": 9.280675,
+          "allocated_bytes": 682336,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "value": 128,
+          "input_bytes": 142,
+          "outcome": "completed",
+          "cpu_ms": 9.455623,
+          "allocated_bytes": 682768,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "value": 256,
+          "input_bytes": 270,
+          "outcome": "completed",
+          "cpu_ms": 10.090932,
+          "allocated_bytes": 694328,
+          "peak_heap_bytes": 2097152
+        },
+        {
+          "value": 512,
+          "input_bytes": 526,
+          "outcome": "completed",
+          "cpu_ms": 9.779464,
+          "allocated_bytes": 685104,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "value": 1024,
+          "input_bytes": 1038,
+          "outcome": "completed",
+          "cpu_ms": 13.579605,
+          "allocated_bytes": 798696,
+          "peak_heap_bytes": 2097152
+        },
+        {
+          "value": 2048,
+          "input_bytes": 2062,
+          "outcome": "completed",
+          "cpu_ms": 14.759064,
+          "allocated_bytes": 804752,
+          "peak_heap_bytes": 2097152
+        }
+      ]
+    }
+  ]
+}

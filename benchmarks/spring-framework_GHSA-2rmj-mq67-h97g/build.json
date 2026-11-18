@@ -1,0 +1,55 @@
+{
+  "clone_url": "https://github.com/spring-projects/spring-framework.git",
+  "commit": "406b33d380925740d6221f357c85c8dd92d52f16",
+  "jdk": 17,
+  "commands": [
+    "rm -rf build && mkdir -p build/deps build/classes build/mod",
+    "curl -fsSL --retry 3 -o build/deps/jsr305-3.0.2.jar https://repo1.maven.org/maven2/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar",
+    "curl -fsSL --retry 3 -o build/deps/log4j-api-2.21.0.jar https://repo1.maven.org/maven2/org/apache/logging/log4j/log4j-api/2.21.0/log4j-api-2.21.0.jar",
+    "curl -fsSL --retry 3 -o build/deps/slf4j-api-1.7.36.jar https://repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.36/slf4j-api-1.7.36.jar",
+    "find src/spring-jcl/src/main/java -name '*.java' | sort > build/jcl-sources.txt",
+    "javac --release 17 -proc:none -nowarn -encoding UTF-8 -sourcepath src/spring-web/src/main/java:src/spring-core/src/main/java:src/spring-jcl/src/main/java -cp build/deps/jsr305-3.0.2.jar:build/deps/log4j-api-2.21.0.jar:build/deps/slf4j-api-1.7.36.jar -d build/classes src/spring-web/src/main/java/org/springframework/http/HttpHeaders.java @build/jcl-sources.txt",
+    "(cd build/classes && find . -name '*.class' | sed 's|^\\./||' | sort) | while read -r rel; do outer=\"${rel%%\\$*}\"; outer=\"${outer%.class}\"; for m in spring-web spring-core spring-jcl; do if [[ -f \"src/$m/src/main/java/$outer.java\" ]]; then mkdir -p \"build/mod/$m/$(dirname \"$rel\")\"; cp \"build/classes/$rel\" \"build/mod/$m/$rel\"; break; fi; done; done",
+    "mkdir -p build/mod/spring-jcl/META-INF/services && cp src/spring-jcl/src/main/resources/META-INF/services/org.apache.commons.logging.LogFactory build/mod/spring-jcl/META-INF/services/",
+    "for m in spring-web spring-core spring-jcl; do (cd build/mod/$m && find . -type f | sed 's|^\\./||' | sort > ../../$m.files && jar --create --file ../../$m-5.3.38-SNAPSHOT.jar --no-manifest @../../$m.files); done"
+  ],
+  "artifacts": [
+    {
+      "built": "build/spring-core-5.3.38-SNAPSHOT.jar",
+      "lib": "lib/spring-core-5.3.38-SNAPSHOT.jar",
+      "sha256": "14b77897c0a3577d9f297c6e9d37a24873e892afebe3635ea71db27d270348f3",
+      "classes_sha256": "67cedc8f8ea7cdd8fb788f226e9d6b9f1725bf95734c10cce3a777ff33570d7b"
+    },
+    {
+      "built": "build/spring-jcl-5.3.38-SNAPSHOT.jar",
+      "lib": "lib/spring-jcl-5.3.38-SNAPSHOT.jar",
+      "sha256": "95f8673db4b9097a289e183f83fe88b850fb50007506075a3509b6c736cadd1e",
+      "classes_sha256": "2b8190ae66fea259205617129d28ddc69abda09a2505d6a8999edac8c0cd8fb1"
+    },
+    {
+      "built": "build/spring-web-5.3.38-SNAPSHOT.jar",
+      "lib": "lib/spring-web-5.3.38-SNAPSHOT.jar",
+      "sha256": "8e1e8331dafcfd35dd05b75d9bd89fa5d1476d13c7d38a8b7c4331ab80cba147",
+      "classes_sha256": "de258262ce38ddb7d2ea97c7c382afa2a06c7c3994c1e6168abc900c765acd77"
+    }
+  ],
+  "fixed": {
+    "jars": [
+      {
+        "coords": "org.springframework:spring-core:5.3.38",
+        "sha256": "14a5103ec790bad24cfb52731909135be9a514a755f8b57fc0b973077519a3c6"
+      },
+      {
+        "coords": "org.springframework:spring-jcl:5.3.38",
+        "sha256": "ed0c778b68f5715ccdca153b4d2963c93c0962942e9aa50a3e7c863091ae65c4"
+      },
+      {
+        "coords": "org.springframework:spring-web:5.3.38",
+        "sha256": "a3a7a29f024d8dcb7b31d8db1b0516b0c14456999ed003f04c39747432ff1751"
+      }
+    ],
+    "drop": "^(spring\\-core|spring\\-jcl|spring\\-web)-[0-9]"
+  },
+  "tools": "git, curl, JDK 17 (javac, jar)",
+  "notes": "As the evaluation's jars were made: javac --release 17 -proc:none of spring-web's org/springframework/http/HttpHeaders.java (the class under test) plus all of spring-jcl, with -sourcepath over the spring-web, spring-core and spring-jcl main sources, so javac compiles exactly the classes HttpHeaders reaches; compile-only class path jsr305 3.0.2, log4j-api 2.21.0 and slf4j-api 1.7.36 (Maven Central; JSR-305 meta-annotations and the optional logging APIs spring-jcl's LogAdapter checks for; not on the run-time class path). The class files are split into one jar per source module (jar --create --no-manifest); spring-jcl also gets its META-INF/services/org.apache.commons.logging.LogFactory. The project's Gradle build is not used. Version 5.3.38-SNAPSHOT is the commit's gradle.properties version (the parent of the fix). Fixed version: spring-core, spring-jcl and spring-web 5.3.38, the first patched release."
+}

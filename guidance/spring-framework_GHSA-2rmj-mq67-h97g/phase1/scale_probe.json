@@ -1,0 +1,102 @@
+{
+  "caps": {
+    "input_bytes": 32768,
+    "heap_bytes": 268435456,
+    "stack_bytes": 262144,
+    "time_ms": 2000
+  },
+  "targets": {
+    "V1": {
+      "problems": [],
+      "parameter": "whitespace input length (bytes) driving quadratic regex backtracking in ETAG_HEADER_VALUE_PATTERN via Matcher.find()",
+      "inputs": [
+        {
+          "file": "n512.bin",
+          "value": 512,
+          "input_bytes": 512,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 13.652351,
+          "wall_ms": 14.903697,
+          "allocated_bytes": 485256,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "file": "n1024.bin",
+          "value": 1024,
+          "input_bytes": 1024,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 24.193908,
+          "wall_ms": 24.366718,
+          "allocated_bytes": 486808,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "file": "n2048.bin",
+          "value": 2048,
+          "input_bytes": 2048,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 49.848959,
+          "wall_ms": 50.096648,
+          "allocated_bytes": 489776,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "file": "n4096.bin",
+          "value": 4096,
+          "input_bytes": 4096,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 138.337121,
+          "wall_ms": 138.682338,
+          "allocated_bytes": 495920,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "file": "n8192.bin",
+          "value": 8192,
+          "input_bytes": 8192,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 451.522441,
+          "wall_ms": 451.648923,
+          "allocated_bytes": 503256,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "file": "n16384.bin",
+          "value": 16384,
+          "input_bytes": 16384,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "time_cap"
+        },
+        {
+          "file": "n32768.bin",
+          "value": 32768,
+          "input_bytes": 32768,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "time_cap"
+        }
+      ]
+    }
+  },
+  "build": {
+    "ok": true
+  }
+}

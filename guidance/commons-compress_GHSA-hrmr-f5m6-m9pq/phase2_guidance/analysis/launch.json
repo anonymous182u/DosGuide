@@ -1,0 +1,20 @@
+{
+  "build": [
+    "mvn package -DskipTests -q",
+    "bash build-agents.sh"
+  ],
+  "classpath_command": "echo -n target/test-classes:lib/commons-compress-1.17.jar: && mvn compile -Dmdep.outputFile=/dev/stdout dependency:build-classpath -q 2>/dev/null | tail -1",
+  "javaagent": {"jar": "dos-agent.jar", "args": ""},
+  "jvm_args": [],
+  "guidance_factory": "fuzzing.runner.FuzzRunner#createGuidance",
+  "targets": {
+    "V1": {
+      "test_class": "fuzzing.tests.ZipArchiveInputStreamFuzzTest",
+      "method": "fuzzZipArchiveInputStreamReadText"
+    },
+    "PkgRisk1": {
+      "test_class": "fuzzing.tests.ZipArchiveInputStreamFuzzTest",
+      "method": "fuzzZipArchiveInputStreamReadBytes"
+    }
+  }
+}

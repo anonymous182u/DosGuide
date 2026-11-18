@@ -1,0 +1,5 @@
+Premain-Class: com.fuzzing.agent.V1MeasureAgent
+Can-Retransform-Classes: true
+Can-Redefine-Classes: true
+Boot-Class-Path: v1-agent.jar
+

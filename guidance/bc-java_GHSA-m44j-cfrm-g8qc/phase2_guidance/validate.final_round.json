@@ -1,0 +1,472 @@
+{
+  "ok": true,
+  "launch": [],
+  "build": {
+    "ok": true
+  },
+  "targets": [
+    {
+      "tool": "ValidateArtifact",
+      "target": "V1",
+      "checks": [
+        {
+          "name": "contract",
+          "status": "pass",
+          "detail": "factory, lastSignals() and fuzz test found"
+        },
+        {
+          "name": "runs",
+          "status": "pass",
+          "detail": "85 executions completed"
+        },
+        {
+          "name": "plan_signals",
+          "status": "pass",
+          "detail": "lastSignals() returns every planned signal [loopIterations]"
+        },
+        {
+          "name": "signal_varies",
+          "status": "pass",
+          "detail": "varying: [loopIterations] (on the guidance's own inputs: [loopIterations])"
+        },
+        {
+          "name": "reset",
+          "status": "pass",
+          "detail": "re-running inputs reproduced their values"
+        },
+        {
+          "name": "depends_on_execution",
+          "status": "pass",
+          "detail": "signals stay near zero when the target does not run"
+        },
+        {
+          "name": "instrumentation",
+          "status": "pass",
+          "detail": "rewrote [org.bouncycastle.math.ec.rfc8032.ScalarUtil]"
+        },
+        {
+          "name": "input_limit",
+          "status": "pass",
+          "detail": "with jqf.ei.MAX_INPUT_SIZE=16 the 20 generated inputs were at most 16 bytes"
+        },
+        {
+          "name": "input_growth",
+          "status": "pass",
+          "detail": "the guidance generated a 98-byte input after 491 ms (1 executions); the target needs 97"
+        },
+        {
+          "name": "progress",
+          "status": "skip",
+          "detail": "not compared: no signal grows along the series"
+        }
+      ],
+      "max_input_bytes": 10240,
+      "example_inputs": 0,
+      "executions": {
+        "own": 40,
+        "repeat": 5,
+        "random": 40,
+        "example": 0,
+        "probe": 3
+      },
+      "test_failures_not_used": 0,
+      "signals": {
+        "loopIterations": {
+          "min": 0.0,
+          "max": 104.0,
+          "distinct": 16
+        }
+      },
+      "signals_by_kind": {
+        "own": {
+          "loopIterations": {
+            "distinct": 9,
+            "max": 99.0,
+            "min": 0.0
+          }
+        },
+        "random": {
+          "loopIterations": {
+            "distinct": 12,
+            "max": 104.0,
+            "min": 0.0
+          }
+        },
+        "repeat": {
+          "loopIterations": {
+            "distinct": 5,
+            "max": 99.0,
+            "min": 92.0
+          }
+        }
+      },
+      "transformed_classes": [
+        "org.bouncycastle.math.ec.rfc8032.ScalarUtil"
+      ],
+      "ok": true,
+      "input_limit_probe": {
+        "max_input_bytes": 16,
+        "longest_input": 16,
+        "executions": {
+          "own": 20
+        }
+      },
+      "growth_probe": {
+        "needed_input_bytes": 97,
+        "longest_input": 98,
+        "executions": {
+          "own": 1
+        },
+        "growth": [
+          {
+            "ms": 491,
+            "execution": 1,
+            "bytes": 98
+          }
+        ]
+      },
+      "hard_ok": true,
+      "progress_probe": {
+        "own_ms": 120000,
+        "executions": 417842,
+        "longest_input": 10240,
+        "phase": "series",
+        "series_inputs": 6,
+        "comparison": {},
+        "measurements": {
+          "budget_ms": 120000,
+          "own_ms": 120000,
+          "executions": 417842,
+          "longest_input": 10240,
+          "phase": "series",
+          "own_best": {
+            "loopIterations": [
+              [
+                98,
+                119.0,
+                40309
+              ],
+              [
+                99,
+                117.0,
+                33655
+              ],
+              [
+                110,
+                114.0,
+                77719
+              ],
+              [
+                125,
+                102.0,
+                44920
+              ],
+              [
+                129,
+                103.0,
+                62477
+              ],
+              [
+                148,
+                108.0,
+                13749
+              ],
+              [
+                160,
+                108.0,
+                64921
+              ],
+              [
+                167,
+                105.0,
+                92341
+              ],
+              [
+                194,
+                115.0,
+                76270
+              ],
+              [
+                200,
+                109.0,
+                83665
+              ],
+              [
+                216,
+                106.0,
+                13296
+              ],
+              [
+                245,
+                110.0,
+                36352
+              ],
+              [
+                263,
+                105.0,
+                15505
+              ],
+              [
+                284,
+                108.0,
+                33184
+              ],
+              [
+                318,
+                109.0,
+                79750
+              ],
+              [
+                338,
+                105.0,
+                58358
+              ],
+              [
+                381,
+                118.0,
+                60449
+              ],
+              [
+                403,
+                114.0,
+                40078
+              ],
+              [
+                449,
+                113.0,
+                47705
+              ],
+              [
+                511,
+                111.0,
+                24223
+              ],
+              [
+                521,
+                113.0,
+                82298
+              ],
+              [
+                581,
+                111.0,
+                79169
+              ],
+              [
+                614,
+                111.0,
+                62527
+              ],
+              [
+                713,
+                119.0,
+                75715
+              ],
+              [
+                774,
+                115.0,
+                59669
+              ],
+              [
+                849,
+                123.0,
+                27040
+              ],
+              [
+                862,
+                113.0,
+                50560
+              ],
+              [
+                1018,
+                112.0,
+                4990
+              ],
+              [
+                1026,
+                114.0,
+                104733
+              ],
+              [
+                1191,
+                114.0,
+                42256
+              ],
+              [
+                1249,
+                113.0,
+                79303
+              ],
+              [
+                1416,
+                113.0,
+                42604
+              ],
+              [
+                1563,
+                120.0,
+                50171
+              ],
+              [
+                1585,
+                119.0,
+                4427
+              ],
+              [
+                1750,
+                112.0,
+                57452
+              ],
+              [
+                1974,
+                114.0,
+                46732
+              ],
+              [
+                2191,
+                118.0,
+                16628
+              ],
+              [
+                2309,
+                119.0,
+                46127
+              ],
+              [
+                2507,
+                115.0,
+                101231
+              ],
+              [
+                2877,
+                116.0,
+                26521
+              ],
+              [
+                2962,
+                120.0,
+                110197
+              ],
+              [
+                3296,
+                116.0,
+                17938
+              ],
+              [
+                3695,
+                117.0,
+                42747
+              ],
+              [
+                3975,
+                114.0,
+                62130
+              ],
+              [
+                4432,
+                115.0,
+                71000
+              ],
+              [
+                4545,
+                115.0,
+                94828
+              ],
+              [
+                5013,
+                115.0,
+                30182
+              ],
+              [
+                5434,
+                119.0,
+                7941
+              ],
+              [
+                6131,
+                121.0,
+                94565
+              ],
+              [
+                6487,
+                122.0,
+                40465
+              ],
+              [
+                6948,
+                115.0,
+                113534
+              ],
+              [
+                7584,
+                123.0,
+                106854
+              ],
+              [
+                8412,
+                120.0,
+                75824
+              ],
+              [
+                9662,
+                119.0,
+                13576
+              ],
+              [
+                10204,
+                119.0,
+                28870
+              ]
+            ]
+          },
+          "series": [
+            {
+              "bytes": 97,
+              "signals": {
+                "loopIterations": 107.0
+              }
+            },
+            {
+              "bytes": 98,
+              "signals": {
+                "loopIterations": 92.0
+              }
+            },
+            {
+              "bytes": 100,
+              "signals": {
+                "loopIterations": 99.0
+              }
+            },
+            {
+              "bytes": 104,
+              "signals": {
+                "loopIterations": 104.0
+              }
+            },
+            {
+              "bytes": 112,
+              "signals": {
+                "loopIterations": 88.0
+              }
+            },
+            {
+              "bytes": 128,
+              "signals": {
+                "loopIterations": 101.0
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "limits": {
+    "jvm_args": [
+      "-Xmx1g",
+      "-Xss1m"
+    ],
+    "timeout_ms": 20000,
+    "max_input_bytes": 10240
+  },
+  "hard_ok": true
+}

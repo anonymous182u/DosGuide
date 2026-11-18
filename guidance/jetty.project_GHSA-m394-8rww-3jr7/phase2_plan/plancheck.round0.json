@@ -1,0 +1,222 @@
+{
+  "tool": "checkpath",
+  "version": "1.0.0",
+  "source_root": "projects/jetty.project_GHSA-m394-8rww-3jr7",
+  "index": {
+    "files_parsed": 1528,
+    "files_failed": 0,
+    "methods": 17878,
+    "harness_fuzz_methods": [
+      "JettyFuzzTest.fuzzHttpFieldsGetQualityCSV(InputStream)",
+      "JettyFuzzTest.fuzzHttp2ParserParseFullListener(InputStream)",
+      "JettyFuzzTest.fuzzHttp2ParserParseHeadersListener(InputStream)"
+    ],
+    "index_seconds": 5.4,
+    "max_gap": 2,
+    "sink_depth": 6,
+    "symbol_resolution": true
+  },
+  "ok": true,
+  "targets": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "entrypoint": "JettyFuzzTest.fuzzHttpFieldsGetQualityCSV(InputStream) → HttpFields.getQualityCSV(HttpHeader, ToIntFunction) → QuotedQualityCSV.addValue(String) → QuotedQualityCSV.getValues() → QuotedQualityCSV.sort()",
+      "source_path": "jetty-http/src/main/java/org/eclipse/jetty/http/QuotedQualityCSV.java",
+      "start_ok": true,
+      "harness_entry": "com.fuzzer.harness.JettyFuzzTest#fuzzHttpFieldsGetQualityCSV",
+      "end_ok": true,
+      "end": {
+        "sink_file": "jetty-http/src/main/java/org/eclipse/jetty/http/QuotedQualityCSV.java",
+        "ok": true,
+        "evidence": "hop 5 QuotedQualityCSV#sort() is declared in jetty-http/src/main/java/org/eclipse/jetty/http/QuotedQualityCSV.java:159",
+        "level": "method",
+        "sink_method": "QuotedQualityCSV#sort()",
+        "sink_evidence": "hop 5 is QuotedQualityCSV#sort()"
+      },
+      "hops": [
+        {
+          "index": 1,
+          "raw": "JettyFuzzTest.fuzzHttpFieldsGetQualityCSV(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "com.fuzzer.harness.JettyFuzzTest#fuzzHttpFieldsGetQualityCSV(InputStream)",
+              "location": "harness/src/test/java/com/fuzzer/harness/JettyFuzzTest.java:117"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "raw": "HttpFields.getQualityCSV(HttpHeader, ToIntFunction)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.eclipse.jetty.http.HttpFields#getQualityCSV(HttpHeader,ToIntFunction)",
+              "location": "jetty-http/src/main/java/org/eclipse/jetty/http/HttpFields.java:647"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "raw": "QuotedQualityCSV.addValue(String)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.eclipse.jetty.http.QuotedCSVParser#addValue(String)",
+              "location": "jetty-http/src/main/java/org/eclipse/jetty/http/QuotedCSVParser.java:96"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "raw": "QuotedQualityCSV.getValues()",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.eclipse.jetty.http.QuotedQualityCSV#getValues()",
+              "location": "jetty-http/src/main/java/org/eclipse/jetty/http/QuotedQualityCSV.java:144"
+            },
+            {
+              "method": "org.eclipse.jetty.http.QuotedCSV#getValues()",
+              "location": "jetty-http/src/main/java/org/eclipse/jetty/http/QuotedCSV.java:67"
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "raw": "QuotedQualityCSV.sort()",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.eclipse.jetty.http.QuotedQualityCSV#sort()",
+              "location": "jetty-http/src/main/java/org/eclipse/jetty/http/QuotedQualityCSV.java:159"
+            }
+          ]
+        }
+      ],
+      "path_signature": [
+        "com.fuzzer.harness.JettyFuzzTest#fuzzHttpFieldsGetQualityCSV(InputStream)",
+        "org.eclipse.jetty.http.HttpFields#getQualityCSV(HttpHeader,ToIntFunction)",
+        "org.eclipse.jetty.http.QuotedCSVParser#addValue(String)",
+        "org.eclipse.jetty.http.QuotedQualityCSV#getValues()",
+        "org.eclipse.jetty.http.QuotedQualityCSV#sort()"
+      ],
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "written": "JettyFuzzTest.fuzzHttpFieldsGetQualityCSV(InputStream)",
+          "provenance": "agent",
+          "method": "com.fuzzer.harness.JettyFuzzTest#fuzzHttpFieldsGetQualityCSV(InputStream)",
+          "location": "harness/src/test/java/com/fuzzer/harness/JettyFuzzTest.java:117"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "JettyFuzzTest#fuzzHttpFieldsGetQualityCSV(InputStream) calls HttpFields#getQualityCSV(HttpHeader,ToIntFunction) at harness/src/test/java/com/fuzzer/harness/JettyFuzzTest.java:122 (resolved)",
+          "site": "harness/src/test/java/com/fuzzer/harness/JettyFuzzTest.java:122"
+        },
+        {
+          "kind": "hop",
+          "written": "HttpFields.getQualityCSV(HttpHeader, ToIntFunction)",
+          "provenance": "agent",
+          "method": "org.eclipse.jetty.http.HttpFields#getQualityCSV(HttpHeader,ToIntFunction)",
+          "location": "jetty-http/src/main/java/org/eclipse/jetty/http/HttpFields.java:647"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "HttpFields#getQualityCSV(HttpHeader,ToIntFunction) calls QuotedCSVParser#addValue(String) at jetty-http/src/main/java/org/eclipse/jetty/http/HttpFields.java:656 (resolved)",
+          "site": "jetty-http/src/main/java/org/eclipse/jetty/http/HttpFields.java:656"
+        },
+        {
+          "kind": "hop",
+          "written": "QuotedQualityCSV.addValue(String)",
+          "provenance": "agent",
+          "method": "org.eclipse.jetty.http.QuotedCSVParser#addValue(String)",
+          "location": "jetty-http/src/main/java/org/eclipse/jetty/http/QuotedCSVParser.java:96"
+        },
+        {
+          "kind": "connection",
+          "type": "SEQUENCE",
+          "evidence": "HttpFields#getQualityCSV(HttpHeader,ToIntFunction) (jetty-http/src/main/java/org/eclipse/jetty/http/HttpFields.java:647) calls QuotedCSVParser#addValue(String) at line 656 and getValues at line 660",
+          "site": "jetty-http/src/main/java/org/eclipse/jetty/http/HttpFields.java:647"
+        },
+        {
+          "kind": "hop",
+          "written": "QuotedQualityCSV.getValues()",
+          "provenance": "agent",
+          "method": "org.eclipse.jetty.http.QuotedQualityCSV#getValues()",
+          "location": "jetty-http/src/main/java/org/eclipse/jetty/http/QuotedQualityCSV.java:144"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "QuotedQualityCSV#getValues() calls QuotedQualityCSV#sort() at jetty-http/src/main/java/org/eclipse/jetty/http/QuotedQualityCSV.java:147 (resolved)",
+          "site": "jetty-http/src/main/java/org/eclipse/jetty/http/QuotedQualityCSV.java:147"
+        },
+        {
+          "kind": "hop",
+          "written": "QuotedQualityCSV.sort()",
+          "provenance": "agent",
+          "method": "org.eclipse.jetty.http.QuotedQualityCSV#sort()",
+          "location": "jetty-http/src/main/java/org/eclipse/jetty/http/QuotedQualityCSV.java:159"
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "status": "CALL",
+          "evidence": "JettyFuzzTest#fuzzHttpFieldsGetQualityCSV(InputStream) calls HttpFields#getQualityCSV(HttpHeader,ToIntFunction) at harness/src/test/java/com/fuzzer/harness/JettyFuzzTest.java:122 (resolved)"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "status": "CALL",
+          "evidence": "HttpFields#getQualityCSV(HttpHeader,ToIntFunction) calls QuotedCSVParser#addValue(String) at jetty-http/src/main/java/org/eclipse/jetty/http/HttpFields.java:656 (resolved)"
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "status": "SEQUENCE",
+          "evidence": "HttpFields#getQualityCSV(HttpHeader,ToIntFunction) (jetty-http/src/main/java/org/eclipse/jetty/http/HttpFields.java:647) calls QuotedCSVParser#addValue(String) at line 656 and getValues at line 660"
+        },
+        {
+          "from": 4,
+          "to": 5,
+          "status": "CALL",
+          "evidence": "QuotedQualityCSV#getValues() calls QuotedQualityCSV#sort() at jetty-http/src/main/java/org/eclipse/jetty/http/QuotedQualityCSV.java:147 (resolved)"
+        }
+      ],
+      "diagnostics": [],
+      "warnings": [
+        "Edge 3→4 is a call sequence, not a call chain: HttpFields#getQualityCSV(HttpHeader,ToIntFunction) (jetty-http/src/main/java/org/eclipse/jetty/http/HttpFields.java:647) calls QuotedCSVParser#addValue(String) at line 656 and getValues at line 660"
+      ]
+    }
+  ],
+  "plan_ok": true,
+  "plans": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "signals": [
+        {
+          "name": "sortComparisons",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "QuotedQualityCSV#sort()",
+              "status": "RESOLVED",
+              "method": "org.eclipse.jetty.http.QuotedQualityCSV#sort",
+              "declared_at": "jetty-http/src/main/java/org/eclipse/jetty/http/QuotedQualityCSV.java:159",
+              "relation": "on_path"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    }
+  ]
+}

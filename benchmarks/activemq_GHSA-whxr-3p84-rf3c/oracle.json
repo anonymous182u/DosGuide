@@ -1,0 +1,13 @@
+{
+  "timeout_ms": 20000,
+  "jvm_args": [
+    "-Xmx1g",
+    "-Xss1m"
+  ],
+  "max_input_bytes": 10240,
+  "justification": {},
+  "fixed": {
+    "lib": "fixed/lib/*",
+    "drop": "^(activemq\\-client|hawtbuf|jakarta\\.jms\\-api|slf4j\\-api|slf4j\\-simple)-[0-9]"
+  }
+}

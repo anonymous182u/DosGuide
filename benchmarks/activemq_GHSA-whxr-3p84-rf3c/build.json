@@ -1,0 +1,43 @@
+{
+  "clone_url": "https://github.com/apache/activemq.git",
+  "commit": "78ee3434256b59138b948b43db9e232f9c4ddcf5",
+  "jdk": 17,
+  "tools": "Apache Maven 3.9.x (the repository has no Maven wrapper; verified with 3.9.12)",
+  "commands": [
+    "cd src && MAVEN_OPTS=-Xmx2g mvn -B -Dmaven.test.skip=true -DskipTests -pl activemq-client -am package"
+  ],
+  "artifacts": [
+    {
+      "built": "src/activemq-client/target/activemq-client-6.2.0-SNAPSHOT.jar",
+      "lib": "lib/activemq-client-6.2.0-SNAPSHOT.jar",
+      "sha256": "9772db602be6de4b43b9c81d42fc15fbbb9cffafe43a7e6fed9475c02269f999",
+      "classes_sha256": "97bd31de578526751f2292f85acc9d01331fbf9c316652c3a1a126324700a944"
+    }
+  ],
+  "fixed": {
+    "jars": [
+      {
+        "coords": "org.apache.activemq:activemq-client:6.1.6",
+        "sha256": "4a1f08727a681fd5bb8b33f7a62c24f253c84a07c9149ccff3034a57837d1c3e"
+      },
+      {
+        "coords": "org.fusesource.hawtbuf:hawtbuf:1.11",
+        "sha256": "c6b45db967f3b2b3e28fd2f0724b1730a89d3f5aa9eef3664de29caba219593e"
+      },
+      {
+        "coords": "jakarta.jms:jakarta.jms-api:3.1.0",
+        "sha256": "6605e08075ab389c359451c7854808cf4b1575e1ea6317e534e9d4df088096df"
+      },
+      {
+        "coords": "org.slf4j:slf4j-api:2.0.16",
+        "sha256": "a12578dde1ba00bd9b816d388a0b879928d00bab3c83c240f7013bf4196c579a"
+      },
+      {
+        "coords": "org.slf4j:slf4j-simple:2.0.16",
+        "sha256": "effc32018658bea09d1e08c7d1060ccad46c086960f583d07dd7ffe9c1172a47"
+      }
+    ],
+    "drop": "^(activemq\\-client|hawtbuf|jakarta\\.jms\\-api|slf4j\\-api|slf4j\\-simple)-[0-9]"
+  },
+  "notes": "Builds activemq-client (project version 6.2.0-SNAPSHOT) with the reactor of the root pom (activemq-parent) and activemq-client; the build generates the selector parser from the commit's own grammar (activemq-client/src/main/grammar/SelectorParser.jj, javacc-maven-plugin). -Dmaven.test.skip=true -DskipTests: tests are neither compiled nor run. The runtime dependencies of activemq-client at this commit (slf4j-api 2.0.16, jakarta.jms-api 3.1.0, hawtbuf 1.11) are declared in the fixture pom. Fixed: activemq-client 6.1.6 (first patched 6.x release); the evaluation's fixed class path also carries the Central jars of hawtbuf, jakarta.jms-api, slf4j-api and slf4j-simple, so drop covers them too."
+}

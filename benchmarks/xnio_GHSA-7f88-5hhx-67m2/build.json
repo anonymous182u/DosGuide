@@ -1,0 +1,43 @@
+{
+  "clone_url": "https://github.com/xnio/xnio.git",
+  "commit": "de55d0acfbcf922f56daf135a45ff74a763bf267",
+  "jdk": 8,
+  "tools": "Apache Maven 3.9.x (the repository has no Maven wrapper; verified with 3.9.12)",
+  "commands": [
+    "cd src && MAVEN_OPTS=-Xmx2g mvn -B -DskipTests -pl api -am clean package"
+  ],
+  "artifacts": [
+    {
+      "built": "src/api/target/xnio-api-3.8.14.Final-SNAPSHOT.jar",
+      "lib": "lib/xnio-api-3.8.14.Final-SNAPSHOT.jar",
+      "sha256": "97a3e19183a34bafec432eb4358e23f292f59c965e1a77c7787a09fa3a4fb42d",
+      "classes_sha256": "582de04b8363c0d9768898496c6df7a4a01d1f5b93c53b20b2c824d28a019453"
+    }
+  ],
+  "fixed": {
+    "jars": [
+      {
+        "coords": "org.jboss.xnio:xnio-api:3.8.14.Final",
+        "sha256": "8ad119e9491f57841fda8cd746bd75f9358caea9930cf2515cfb2a6e97204877"
+      },
+      {
+        "coords": "org.wildfly.common:wildfly-common:1.5.4.Final",
+        "sha256": "9fda3caf8bd528dec56ebc70daf78f5a9ff5d0bfcea8b3e41ab7ae838747e46a"
+      },
+      {
+        "coords": "org.wildfly.client:wildfly-client-config:1.0.1.Final",
+        "sha256": "80a4e963ce94ebb043ecb0f2c0e77d327f23dc87d81350b863752eedfa2c3bb3"
+      },
+      {
+        "coords": "org.jboss.threads:jboss-threads:2.3.6.Final",
+        "sha256": "357e6be0f3e4ca28fa96b780c0ad1735176319215261da176ca6fa438aaaa206"
+      },
+      {
+        "coords": "org.jboss.logging:jboss-logging:3.4.3.Final",
+        "sha256": "0b324cca4d550060e51e70cc0045a6cce62f264278ec1f5082aafeb670fcac49"
+      }
+    ],
+    "drop": "^(xnio\\-api|wildfly\\-common|wildfly\\-client\\-config|jboss\\-threads|jboss\\-logging)-[0-9]"
+  },
+  "notes": "Commit on the 3.8 branch (git describe 3.8.13.Final-11-gde55d0ac); project version 3.8.14.Final-SNAPSHOT. JDK 8 as the CI's compile job at this commit and the 3.8.13.Final release. -am adds only the xnio-all parent pom. Fixed: xnio-api 3.8.14.Final; the evaluation's fixed class path also carries the Central jars of its runtime dependencies wildfly-common 1.5.4.Final, wildfly-client-config 1.0.1.Final, jboss-threads 2.3.6.Final and jboss-logging 3.4.3.Final (the versions the fixture already declares), so drop covers them too."
+}

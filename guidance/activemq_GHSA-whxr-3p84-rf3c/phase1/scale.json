@@ -1,0 +1,23 @@
+{
+  "series_request": null,
+  "rounds": [
+    {
+      "round": 1,
+      "revision": {
+        "V1": {
+          "scale": "Measured: allocated bytes = allocation_size + 1.5 MB (linear, 1:1). A 256 MB allocation exceeded the 256 MB probe heap cap, confirming the mechanism. Extrapolating to -Xmx1g: JVM baseline uses ~50-100 MB, leaving ~925-975 MB for the array. An int value of 0x3C000000 (960 MB) in the 4-byte size field causes new byte[1006632960] which exceeds available heap. The entire input is 14 bytes: 4-byte frame prefix + 1-byte type(60) + 4-byte commandId + 1-byte boolean(true) + 4-byte allocation size.",
+          "input_bytes": 14
+        },
+        "V2": {
+          "scale": "Measured: CPU grows linearly at ~0.025 ms per recursion level (extrapolated ~62 ms at max 2045 levels, well under 20000 ms timeout). Stack: 500 levels completed within the 256 KB probe cap; with base stack >= 10 KB, per-frame cost <= 492 bytes, but overflow at 2045 levels requires per-frame > 509 bytes — mathematically impossible given the measurement. Allocated grows ~O(N^1.5): ~56 MB at 2045 levels, under 1 GB. Failure (stack_overflow or timeout) is not achievable within the 10240-byte input limit and evaluation JVM options: the 5 bytes/level encoding yields at most 2045 levels, which is insufficient to overflow the 1 MB stack or exhaust the 20-second timeout.",
+          "input_bytes": 10240
+        },
+        "V3": {
+          "scale": "Measured: CPU grows linearly at ~0.018 ms per nesting level (extrapolated ~27 ms at max 929 levels, well under timeout). Stack: 200 levels (600 frames) completed within 256 KB; estimated per-frame cost ~130-170 bytes from code analysis, giving ~484 KB at 929 levels (2787 frames), well under 1 MB. Allocated stays flat at ~1.5 MB. Failure (stack_overflow) is not achievable: the 11 bytes/level encoding yields at most 929 levels, which produces ~2787 frames consuming approximately 400-500 KB of stack, well under the 1 MB limit.",
+          "input_bytes": 10240
+        }
+      },
+      "field_problems": {}
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "series_request": null,
+  "rounds": [
+    {
+      "round": 1,
+      "revision": {
+        "V1": {
+          "scale": "Measured 4 bytes of heap allocation per unit of estimatedSize (linear, matches elementSize=4). Circuit breaker correctly trips at estimatedSize ~153 million (~614 MB). At estimatedSize = 536870912 (2^29), int product 536870912*4 overflows 32-bit int to -2147483648, breaker registers negative delta and does not trip, new int[536870912] requests 2 GB exceeding 1 GB heap → OutOfMemoryError. 8 bytes of input suffice.",
+          "input_bytes": 8
+        },
+        "V2": {
+          "scale": "Measured 8 bytes of heap allocation per unit of estimatedSize (linear, matches elementSize=8). Circuit breaker correctly trips at estimatedSize ~76 million (~614 MB). At estimatedSize = 268435456 (2^28), int product 268435456*8 overflows 32-bit int to -2147483648, breaker registers negative delta and does not trip, new long[268435456] requests 2 GB exceeding 1 GB heap → OutOfMemoryError. 8 bytes of input suffice.",
+          "input_bytes": 8
+        }
+      },
+      "field_problems": {}
+    }
+  ]
+}

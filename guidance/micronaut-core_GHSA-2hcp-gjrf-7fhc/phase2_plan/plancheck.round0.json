@@ -1,0 +1,201 @@
+{
+  "tool": "checkpath",
+  "version": "1.0.0",
+  "source_root": "projects/micronaut-core_GHSA-2hcp-gjrf-7fhc",
+  "index": {
+    "files_parsed": 2161,
+    "files_failed": 0,
+    "methods": 18840,
+    "harness_fuzz_methods": [
+      "SanitizerFuzzTest.fuzzHtmlEntityEncodingHtmlSanitizerSanitize(InputStream)",
+      "SanitizerFuzzTest.fuzzHtmlErrorResponseBodyProviderBody(InputStream)"
+    ],
+    "index_seconds": 7.6,
+    "max_gap": 2,
+    "sink_depth": 6,
+    "symbol_resolution": true
+  },
+  "ok": true,
+  "targets": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "entrypoint": "SanitizerFuzzTest.fuzzHtmlErrorResponseBodyProviderBody(InputStream) → DefaultHtmlErrorResponseBodyProvider.body(ErrorContext, HttpResponse) → ConcurrentHashMap.computeIfAbsent(HtmlErrorPage, Function) → DefaultHtmlErrorResponseBodyProvider.html(HtmlErrorPage)",
+      "source_path": "http-server/src/main/java/io/micronaut/http/server/exceptions/response/DefaultHtmlErrorResponseBodyProvider.java",
+      "start_ok": true,
+      "harness_entry": "com.fuzzing.harness.SanitizerFuzzTest#fuzzHtmlErrorResponseBodyProviderBody",
+      "end_ok": true,
+      "end": {
+        "sink_file": "http-server/src/main/java/io/micronaut/http/server/exceptions/response/DefaultHtmlErrorResponseBodyProvider.java",
+        "ok": true,
+        "evidence": "hop 4 DefaultHtmlErrorResponseBodyProvider#html(HtmlErrorPage) is declared in http-server/src/main/java/io/micronaut/http/server/exceptions/response/DefaultHtmlErrorResponseBodyProvider.java:150",
+        "level": "method",
+        "sink_method": "ConcurrentHashMap#computeIfAbsent",
+        "sink_evidence": "hop 3 names ConcurrentHashMap#computeIfAbsent (outside the source tree)"
+      },
+      "hops": [
+        {
+          "index": 1,
+          "raw": "SanitizerFuzzTest.fuzzHtmlErrorResponseBodyProviderBody(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "com.fuzzing.harness.SanitizerFuzzTest#fuzzHtmlErrorResponseBodyProviderBody(InputStream)",
+              "location": "harness/src/test/java/com/fuzzing/harness/SanitizerFuzzTest.java:53"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "raw": "DefaultHtmlErrorResponseBodyProvider.body(ErrorContext, HttpResponse)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "io.micronaut.http.server.exceptions.response.DefaultHtmlErrorResponseBodyProvider#body(ErrorContext,HttpResponse)",
+              "location": "http-server/src/main/java/io/micronaut/http/server/exceptions/response/DefaultHtmlErrorResponseBodyProvider.java:145"
+            },
+            {
+              "method": "io.micronaut.http.server.exceptions.response.ErrorResponseBodyProvider#body(ErrorContext,HttpResponse)",
+              "location": "http-server/src/main/java/io/micronaut/http/server/exceptions/response/ErrorResponseBodyProvider.java:35"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "raw": "ConcurrentHashMap.computeIfAbsent(HtmlErrorPage, Function)",
+          "status": "EXTERNAL",
+          "candidates": [],
+          "external": [
+            "ConcurrentHashMap.computeIfAbsent(HtmlErrorPage, Function)"
+          ]
+        },
+        {
+          "index": 4,
+          "raw": "DefaultHtmlErrorResponseBodyProvider.html(HtmlErrorPage)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "io.micronaut.http.server.exceptions.response.DefaultHtmlErrorResponseBodyProvider#html(HtmlErrorPage)",
+              "location": "http-server/src/main/java/io/micronaut/http/server/exceptions/response/DefaultHtmlErrorResponseBodyProvider.java:150"
+            }
+          ]
+        }
+      ],
+      "path_signature": [
+        "com.fuzzing.harness.SanitizerFuzzTest#fuzzHtmlErrorResponseBodyProviderBody(InputStream)",
+        "io.micronaut.http.server.exceptions.response.DefaultHtmlErrorResponseBodyProvider#body(ErrorContext,HttpResponse)",
+        "external:computeIfAbsent",
+        "io.micronaut.http.server.exceptions.response.DefaultHtmlErrorResponseBodyProvider#html(HtmlErrorPage)"
+      ],
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "written": "SanitizerFuzzTest.fuzzHtmlErrorResponseBodyProviderBody(InputStream)",
+          "provenance": "agent",
+          "method": "com.fuzzing.harness.SanitizerFuzzTest#fuzzHtmlErrorResponseBodyProviderBody(InputStream)",
+          "location": "harness/src/test/java/com/fuzzing/harness/SanitizerFuzzTest.java:53"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "SanitizerFuzzTest#fuzzHtmlErrorResponseBodyProviderBody(InputStream) calls DefaultHtmlErrorResponseBodyProvider#body(ErrorContext,HttpResponse) at harness/src/test/java/com/fuzzing/harness/SanitizerFuzzTest.java:67 (resolved)",
+          "site": "harness/src/test/java/com/fuzzing/harness/SanitizerFuzzTest.java:67"
+        },
+        {
+          "kind": "hop",
+          "written": "DefaultHtmlErrorResponseBodyProvider.body(ErrorContext, HttpResponse)",
+          "provenance": "agent",
+          "method": "io.micronaut.http.server.exceptions.response.DefaultHtmlErrorResponseBodyProvider#body(ErrorContext,HttpResponse)",
+          "location": "http-server/src/main/java/io/micronaut/http/server/exceptions/response/DefaultHtmlErrorResponseBodyProvider.java:145"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "DefaultHtmlErrorResponseBodyProvider#body(ErrorContext,HttpResponse) calls ConcurrentHashMap.computeIfAbsent(HtmlErrorPage, Function) at http-server/src/main/java/io/micronaut/http/server/exceptions/response/DefaultHtmlErrorResponseBodyProvider.java:147",
+          "site": "http-server/src/main/java/io/micronaut/http/server/exceptions/response/DefaultHtmlErrorResponseBodyProvider.java:147"
+        },
+        {
+          "kind": "hop",
+          "written": "ConcurrentHashMap.computeIfAbsent(HtmlErrorPage, Function)",
+          "provenance": "agent",
+          "method": "ConcurrentHashMap.computeIfAbsent(HtmlErrorPage, Function)",
+          "location": "outside the source tree"
+        },
+        {
+          "kind": "connection",
+          "type": "UNCHECKED",
+          "evidence": "hop 3 is outside the source tree, so calls made inside it cannot be inspected"
+        },
+        {
+          "kind": "hop",
+          "written": "DefaultHtmlErrorResponseBodyProvider.html(HtmlErrorPage)",
+          "provenance": "agent",
+          "method": "io.micronaut.http.server.exceptions.response.DefaultHtmlErrorResponseBodyProvider#html(HtmlErrorPage)",
+          "location": "http-server/src/main/java/io/micronaut/http/server/exceptions/response/DefaultHtmlErrorResponseBodyProvider.java:150"
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "status": "CALL",
+          "evidence": "SanitizerFuzzTest#fuzzHtmlErrorResponseBodyProviderBody(InputStream) calls DefaultHtmlErrorResponseBodyProvider#body(ErrorContext,HttpResponse) at harness/src/test/java/com/fuzzing/harness/SanitizerFuzzTest.java:67 (resolved)"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "status": "CALL",
+          "evidence": "DefaultHtmlErrorResponseBodyProvider#body(ErrorContext,HttpResponse) calls ConcurrentHashMap.computeIfAbsent(HtmlErrorPage, Function) at http-server/src/main/java/io/micronaut/http/server/exceptions/response/DefaultHtmlErrorResponseBodyProvider.java:147"
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "status": "UNCHECKED",
+          "evidence": "hop 3 is outside the source tree, so calls made inside it cannot be inspected"
+        }
+      ],
+      "diagnostics": [],
+      "warnings": [
+        "Hop 3: `ConcurrentHashMap.computeIfAbsent(HtmlErrorPage, Function)` belongs to JDK class java.util.concurrent.ConcurrentHashMap; its body is not analyzed",
+        "Edge 3→4 not checked: hop 3 is outside the source tree, so calls made inside it cannot be inspected"
+      ]
+    }
+  ],
+  "plan_ok": true,
+  "plans": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "signals": [
+        {
+          "name": "totalAllocatedChars",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "DefaultHtmlErrorResponseBodyProvider#html",
+              "status": "RESOLVED",
+              "method": "io.micronaut.http.server.exceptions.response.DefaultHtmlErrorResponseBodyProvider#html",
+              "declared_at": "http-server/src/main/java/io/micronaut/http/server/exceptions/response/DefaultHtmlErrorResponseBodyProvider.java:150",
+              "relation": "on_path"
+            }
+          ]
+        },
+        {
+          "name": "htmlCallCount",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "DefaultHtmlErrorResponseBodyProvider#html",
+              "status": "RESOLVED",
+              "method": "io.micronaut.http.server.exceptions.response.DefaultHtmlErrorResponseBodyProvider#html",
+              "declared_at": "http-server/src/main/java/io/micronaut/http/server/exceptions/response/DefaultHtmlErrorResponseBodyProvider.java:150",
+              "relation": "on_path"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "build": [
+    "mvn package -DskipTests -q",
+    "bash build-agent.sh"
+  ],
+  "classpath": "target/test-classes:lib/jackson-dataformat-cbor-2.11.4-SNAPSHOT.jar:target/dependency/*",
+  "javaagent": {
+    "jar": "target/pkgrisk1-agent.jar",
+    "args": ""
+  },
+  "jvm_args": ["-Xmx1g", "-Xss1m"],
+  "guidance_factory": "com.fasterxml.jackson.fuzz.runner.FuzzRunner#createGuidance",
+  "targets": {
+    "V1": {
+      "test_class": "com.fasterxml.jackson.fuzz.harness.CBORFuzzTest",
+      "method": "fuzzCBORParserNextTokenScalarValues"
+    },
+    "PkgRisk1": {
+      "test_class": "com.fasterxml.jackson.fuzz.harness.CBORFuzzTest",
+      "method": "fuzzObjectMapperReadTree"
+    }
+  }
+}

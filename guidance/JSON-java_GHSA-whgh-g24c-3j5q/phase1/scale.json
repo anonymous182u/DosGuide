@@ -1,0 +1,19 @@
+{
+  "series_request": null,
+  "rounds": [
+    {
+      "round": 1,
+      "revision": {
+        "V1": {
+          "scale": "Measured: 512 nesting levels complete within the 256 KB stack probe cap; 1024 levels exceed it. Estimated stack cost: ~310 bytes per nesting level (two frames: JSONArray(JSONTokener) + JSONTokener.nextValue()). With ~30 KB JVM/harness overhead, extrapolating to the 1 MB evaluation stack: (1,048,576 − 30,000) / 310 ≈ 3,286 nesting levels cause StackOverflowError. Encoding: 1 byte per '[' → approximately 3,300 bytes of input.",
+          "input_bytes": 3300
+        },
+        "V2": {
+          "scale": "Measured: 512 nesting levels complete within the 256 KB stack probe cap; 853 levels exceed it. Estimated stack cost: ~341 bytes per nesting level (one XML.parse() frame with 8+ local variables). With ~30 KB JVM/harness overhead, extrapolating to the 1 MB evaluation stack: (1,048,576 − 30,000) / 341 ≈ 2,987 nesting levels cause StackOverflowError. Encoding: 3 bytes per '<a>' → approximately 8,960 bytes of input.",
+          "input_bytes": 8960
+        }
+      },
+      "field_problems": {}
+    }
+  ]
+}

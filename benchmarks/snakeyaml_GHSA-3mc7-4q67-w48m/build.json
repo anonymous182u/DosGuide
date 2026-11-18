@@ -1,0 +1,30 @@
+{
+  "clone_url": "https://bitbucket.org/snakeyaml/snakeyaml.git",
+  "commit": "4b8d1af4bd422a015fbb07d235f282412c863220",
+  "jdk": 17,
+  "commands": [
+    "rm -rf build && mkdir -p build/classes",
+    "find src/src/main/java -name '*.java' | sort > build/sources.txt",
+    "javac -nowarn -encoding UTF-8 -source 8 -target 8 -d build/classes @build/sources.txt",
+    "jar cf build/snakeyaml-1.31-SNAPSHOT.jar -C build/classes ."
+  ],
+  "artifacts": [
+    {
+      "built": "build/snakeyaml-1.31-SNAPSHOT.jar",
+      "lib": "lib/snakeyaml-1.31-SNAPSHOT.jar",
+      "sha256": "2c47fe66b9ed83d1188025709a59a95a2f037845c896d2f5cb8a09b8ebb344ca",
+      "classes_sha256": "f47e9880768c2cc081ed57068bdb16760ee44304383cb937b430999b4056984e"
+    }
+  ],
+  "fixed": {
+    "jars": [
+      {
+        "coords": "org.yaml:snakeyaml:1.31",
+        "sha256": "64ff54977e93243b5431b9335bb6a90c05ec7c9f189298a36575c58de72e1c07"
+      }
+    ],
+    "drop": "^(snakeyaml)-[0-9]"
+  },
+  "tools": "git, JDK 17 (javac, jar)",
+  "notes": "As the evaluation's jar was made: javac -source 8 -target 8 (JDK 17) of every .java file under src/main/java (SnakeYAML has no run-time dependencies), packed with jar cf; the project's Maven build is not used. The commit's pom version is 1.31-SNAPSHOT (the parent of the fix). Fixed version: snakeyaml 1.31, the first patched release."
+}

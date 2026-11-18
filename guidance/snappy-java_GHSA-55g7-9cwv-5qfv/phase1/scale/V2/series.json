@@ -1,0 +1,37 @@
+{
+  "parameter": "claimed uncompressed length via varint in chunk",
+  "inputs": [
+    {
+      "file": "n65536.bin",
+      "value": 65536
+    },
+    {
+      "file": "n131072.bin",
+      "value": 131072
+    },
+    {
+      "file": "n262144.bin",
+      "value": 262144
+    },
+    {
+      "file": "n524288.bin",
+      "value": 524288
+    },
+    {
+      "file": "n1048576.bin",
+      "value": 1048576
+    },
+    {
+      "file": "n2097152.bin",
+      "value": 2097152
+    },
+    {
+      "file": "n4194304.bin",
+      "value": 4194304
+    },
+    {
+      "file": "n8388608.bin",
+      "value": 8388608
+    }
+  ]
+}

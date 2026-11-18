@@ -1,0 +1,198 @@
+{
+  "tool": "checkpath",
+  "version": "1.0.0",
+  "source_root": "projects/bc-java_GHSA-m44j-cfrm-g8qc",
+  "index": {
+    "files_parsed": 5063,
+    "files_failed": 0,
+    "methods": 46117,
+    "harness_fuzz_methods": [
+      "Ed25519FuzzTest.fuzzEd25519Verify(InputStream)"
+    ],
+    "index_seconds": 12.5,
+    "max_gap": 2,
+    "sink_depth": 6,
+    "symbol_resolution": true
+  },
+  "ok": true,
+  "targets": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "entrypoint": "Ed25519FuzzTest.fuzzEd25519Verify(InputStream) → Ed25519.verify(byte[], int, byte[], int, byte[], int, int) → Ed25519.implVerify(byte[], int, byte[], int, byte[], byte, byte[], int, int) → Scalar25519.reduceBasisVar(int[], int[], int[])",
+      "source_path": "core/src/main/java/org/bouncycastle/math/ec/rfc8032/Scalar25519.java",
+      "start_ok": true,
+      "harness_entry": "com.fuzzer.Ed25519FuzzTest#fuzzEd25519Verify",
+      "end_ok": true,
+      "end": {
+        "sink_file": "core/src/main/java/org/bouncycastle/math/ec/rfc8032/Scalar25519.java",
+        "ok": true,
+        "evidence": "hop 4 Scalar25519#reduceBasisVar(int[],int[],int[]) is declared in core/src/main/java/org/bouncycastle/math/ec/rfc8032/Scalar25519.java:298",
+        "level": "method",
+        "sink_method": "Scalar25519#reduceBasisVar",
+        "sink_evidence": "hop 4 is Scalar25519#reduceBasisVar(int[],int[],int[])"
+      },
+      "hops": [
+        {
+          "index": 1,
+          "raw": "Ed25519FuzzTest.fuzzEd25519Verify(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "com.fuzzer.Ed25519FuzzTest#fuzzEd25519Verify(InputStream)",
+              "location": "harness/src/test/java/com/fuzzer/harness/Ed25519FuzzTest.java:32"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "raw": "Ed25519.verify(byte[], int, byte[], int, byte[], int, int)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.bouncycastle.math.ec.rfc8032.Ed25519#verify(byte[],int,byte[],int,byte[],int,int)",
+              "location": "core/src/main/java/org/bouncycastle/math/ec/rfc8032/Ed25519.java:1551"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "raw": "Ed25519.implVerify(byte[], int, byte[], int, byte[], byte, byte[], int, int)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.bouncycastle.math.ec.rfc8032.Ed25519#implVerify(byte[],int,byte[],int,byte[],byte,byte[],int,int)",
+              "location": "core/src/main/java/org/bouncycastle/math/ec/rfc8032/Ed25519.java:512"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "raw": "Scalar25519.reduceBasisVar(int[], int[], int[])",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.bouncycastle.math.ec.rfc8032.Scalar25519#reduceBasisVar(int[],int[],int[])",
+              "location": "core/src/main/java/org/bouncycastle/math/ec/rfc8032/Scalar25519.java:298"
+            }
+          ]
+        }
+      ],
+      "path_signature": [
+        "com.fuzzer.Ed25519FuzzTest#fuzzEd25519Verify(InputStream)",
+        "org.bouncycastle.math.ec.rfc8032.Ed25519#verify(byte[],int,byte[],int,byte[],int,int)",
+        "org.bouncycastle.math.ec.rfc8032.Ed25519#implVerify(byte[],int,byte[],int,byte[],byte,byte[],int,int)",
+        "org.bouncycastle.math.ec.rfc8032.Scalar25519#reduceBasisVar(int[],int[],int[])"
+      ],
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "written": "Ed25519FuzzTest.fuzzEd25519Verify(InputStream)",
+          "provenance": "agent",
+          "method": "com.fuzzer.Ed25519FuzzTest#fuzzEd25519Verify(InputStream)",
+          "location": "harness/src/test/java/com/fuzzer/harness/Ed25519FuzzTest.java:32"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "Ed25519FuzzTest#fuzzEd25519Verify(InputStream) calls Ed25519#verify(byte[],int,byte[],int,byte[],int,int) at harness/src/test/java/com/fuzzer/harness/Ed25519FuzzTest.java:42 (resolved)",
+          "site": "harness/src/test/java/com/fuzzer/harness/Ed25519FuzzTest.java:42"
+        },
+        {
+          "kind": "hop",
+          "written": "Ed25519.verify(byte[], int, byte[], int, byte[], int, int)",
+          "provenance": "agent",
+          "method": "org.bouncycastle.math.ec.rfc8032.Ed25519#verify(byte[],int,byte[],int,byte[],int,int)",
+          "location": "core/src/main/java/org/bouncycastle/math/ec/rfc8032/Ed25519.java:1551"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "Ed25519#verify(byte[],int,byte[],int,byte[],int,int) calls Ed25519#implVerify(byte[],int,byte[],int,byte[],byte,byte[],int,int) at core/src/main/java/org/bouncycastle/math/ec/rfc8032/Ed25519.java:1556 (resolved)",
+          "site": "core/src/main/java/org/bouncycastle/math/ec/rfc8032/Ed25519.java:1556"
+        },
+        {
+          "kind": "hop",
+          "written": "Ed25519.implVerify(byte[], int, byte[], int, byte[], byte, byte[], int, int)",
+          "provenance": "agent",
+          "method": "org.bouncycastle.math.ec.rfc8032.Ed25519#implVerify(byte[],int,byte[],int,byte[],byte,byte[],int,int)",
+          "location": "core/src/main/java/org/bouncycastle/math/ec/rfc8032/Ed25519.java:512"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "Ed25519#implVerify(byte[],int,byte[],int,byte[],byte,byte[],int,int) calls Scalar25519#reduceBasisVar(int[],int[],int[]) at core/src/main/java/org/bouncycastle/math/ec/rfc8032/Ed25519.java:569 (resolved)",
+          "site": "core/src/main/java/org/bouncycastle/math/ec/rfc8032/Ed25519.java:569"
+        },
+        {
+          "kind": "hop",
+          "written": "Scalar25519.reduceBasisVar(int[], int[], int[])",
+          "provenance": "agent",
+          "method": "org.bouncycastle.math.ec.rfc8032.Scalar25519#reduceBasisVar(int[],int[],int[])",
+          "location": "core/src/main/java/org/bouncycastle/math/ec/rfc8032/Scalar25519.java:298"
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "status": "CALL",
+          "evidence": "Ed25519FuzzTest#fuzzEd25519Verify(InputStream) calls Ed25519#verify(byte[],int,byte[],int,byte[],int,int) at harness/src/test/java/com/fuzzer/harness/Ed25519FuzzTest.java:42 (resolved)"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "status": "CALL",
+          "evidence": "Ed25519#verify(byte[],int,byte[],int,byte[],int,int) calls Ed25519#implVerify(byte[],int,byte[],int,byte[],byte,byte[],int,int) at core/src/main/java/org/bouncycastle/math/ec/rfc8032/Ed25519.java:1556 (resolved)"
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "status": "CALL",
+          "evidence": "Ed25519#implVerify(byte[],int,byte[],int,byte[],byte,byte[],int,int) calls Scalar25519#reduceBasisVar(int[],int[],int[]) at core/src/main/java/org/bouncycastle/math/ec/rfc8032/Ed25519.java:569 (resolved)"
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    }
+  ],
+  "plan_ok": true,
+  "plans": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "signals": [
+        {
+          "name": "loopIterations",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "ScalarUtil#addShifted_NP",
+              "status": "RESOLVED",
+              "method": "org.bouncycastle.math.ec.rfc8032.ScalarUtil#addShifted_NP",
+              "declared_at": "core/src/main/java/org/bouncycastle/math/ec/rfc8032/ScalarUtil.java:9",
+              "relation": "called_from_path",
+              "chain": [
+                "Scalar25519#reduceBasisVar(int[],int[],int[])",
+                "ScalarUtil#addShifted_NP(int,int,int[],int[],int[])"
+              ]
+            },
+            {
+              "written": "ScalarUtil#subShifted_NP",
+              "status": "RESOLVED",
+              "method": "org.bouncycastle.math.ec.rfc8032.ScalarUtil#subShifted_NP",
+              "declared_at": "core/src/main/java/org/bouncycastle/math/ec/rfc8032/ScalarUtil.java:144",
+              "relation": "called_from_path",
+              "chain": [
+                "Scalar25519#reduceBasisVar(int[],int[],int[])",
+                "ScalarUtil#subShifted_NP(int,int,int[],int[],int[])"
+              ]
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    }
+  ]
+}

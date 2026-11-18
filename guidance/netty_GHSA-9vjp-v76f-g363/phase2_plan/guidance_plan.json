@@ -1,0 +1,31 @@
+{
+  "plans": [
+    {
+      "target": "V1",
+      "signals": [
+        {
+          "name": "capacityGrowth",
+          "quantity": "total capacity growth of the out ByteBuf parameter across all Snappy.decode() invocations during one fuzz execution: sum of (out.capacity() after decode - out.capacity() before decode) for each call",
+          "aggregation": "sum",
+          "locations": [
+            "Snappy#decode"
+          ],
+          "technique": "bytecode",
+          "storage": "ThreadLocal<long[]> in V1Signal (index 0 = accumulated capacity growth for current execution)",
+          "reset": "V1Guidance.getInput() calls V1Signal.reset() which zeroes the accumulator before each execution",
+          "read": "V1Guidance.handleResult() calls V1Signal.getCapacityGrowth() to retrieve the accumulated value; returned by V1Guidance.lastSignals() as {\"capacityGrowth\": <double>}"
+        }
+      ],
+      "retention": "Retain inputs that maximize capacityGrowth (primary). When capacityGrowth is 0 for all inputs (signal is flat because no valid Snappy frame reached decode), retain inputs by length growth toward input_bytes=58 as secondary criterion, enabling the search to cross the valid-frame threshold. Parent selection weighted by capacityGrowth (or length if all signals are 0).",
+      "retention_signals": [
+        "capacityGrowth"
+      ],
+      "mutation": [
+        "Byte-level: single-byte random flip, single-byte overwrite, single-byte insert, single-byte delete at random positions",
+        "Repetition: identify 12-byte chunk boundaries after the 10-byte stream identifier; duplicate a randomly selected chunk region k times (k from 1 to (maxInputSize - currentLength) / 12); also whole-input doubling. Grows single-chunk (22 bytes) to multi-chunk (58 bytes = 4 chunks) in 2-3 mutation steps.",
+        "Dictionary tokens from source: 0xFF (stream identifier type, SnappyFrameDecoder:219), 0x00 (compressed data type, SnappyFrameDecoder:215), {0x06,0x00,0x00} (stream id length LE), {0x73,0x4E,0x61,0x50,0x70,0x59} (magic 'sNaPpY', SnappyFrameDecoder:112-117), {0x00,0x00,0x00,0x00} (zero checksum), {0x08,0x00,0x00} (chunk length 8 LE), 0x80 (reserved skippable type), varint fragments {0x80}, {0xFF}, {0xFE,0xFF,0xFF,0x7F} (Snappy.readPreamble lines 363-379). Each inserted/overwritten at random positions.",
+        "Snappy frame encoder: mutate a decoded representation (list of chunks with type and payload bytes), then re-encode with correct chunk-type byte + 3-byte LE length + payload. Always prefix with stream identifier frame. Checksum set to 0 (validateChecksums=false default). Mutations on decoded form: change preamble varint value, add/remove a chunk, swap chunk order. Ensures inputs pass format checks and reach Snappy.decode() at SnappyFrameDecoder:183."
+      ]
+    }
+  ]
+}

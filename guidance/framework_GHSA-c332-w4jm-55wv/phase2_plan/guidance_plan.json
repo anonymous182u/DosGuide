@@ -1,0 +1,58 @@
+{
+  "plans": [
+    {
+      "target": "V1",
+      "signals": [
+        {
+          "name": "regexSteps",
+          "quantity": "count of Pattern$Node.match() invocations during regex matching — each call is one NFA state transition or backtracking step in the regex engine",
+          "aggregation": "count",
+          "locations": [
+            "java.util.regex.Pattern$Node#match"
+          ],
+          "technique": "bytecode",
+          "storage": "ThreadLocal<long[]> in RegexStepCounter.counter; counter.get()[0] holds the running count per thread",
+          "reset": "RegexStepCounter.reset() called at the start of V1Guidance.getInput() before providing the next input",
+          "read": "RegexStepCounter.get() called in V1Guidance.handleResult() to retrieve the step count"
+        }
+      ],
+      "retention": "Primary: retain inputs with the highest regexSteps value in a corpus of up to 20 entries sorted by step count. When a new execution yields a step count exceeding the current corpus minimum, it replaces the minimum-scoring entry. Secondary (when regexSteps is flat across all corpus entries): retain inputs that are longer (trending toward 10240 bytes) or that contain more dictionary tokens (@, ., -, etc.) to reach code on the attack path. This ensures the search makes progress toward the target input_bytes even when the step-count signal is constant.",
+      "retention_signals": [
+        "regexSteps"
+      ],
+      "mutation": [
+        "Byte-level: random byte flip, byte insertion, byte deletion, byte overwrite at random positions",
+        "Repetition (R45a): select a random chunk (1 byte to half the input length) and repeat it k times in place, with k chosen to fill up to 10240 bytes; includes whole-input doubling. Grows from 16-byte seed to 10240 bytes in ~10 doublings (<1 second).",
+        "Dictionary (R45b): tokens from the v7 regex source on the attack path: '@' (0x40, email separator), '.' (0x2E, domain label separator), '-' (0x2D, valid in domain/local), '+' (0x2B, valid in local), '_' (0x5F, valid in local), '\\n' (0x0A, affects $ anchor). Inserted or overwritten at random positions.",
+        "No encoder needed (R45c): input is plain UTF-8 text, no format constraints."
+      ]
+    },
+    {
+      "target": "V2",
+      "signals": [
+        {
+          "name": "regexSteps",
+          "quantity": "count of Pattern$Node.match() invocations during regex matching — each call is one NFA state transition or backtracking step in the regex engine",
+          "aggregation": "count",
+          "locations": [
+            "java.util.regex.Pattern$Node#match"
+          ],
+          "technique": "bytecode",
+          "storage": "ThreadLocal<long[]> in RegexStepCounter.counter; counter.get()[0] holds the running count per thread",
+          "reset": "RegexStepCounter.reset() called at the start of V2Guidance.getInput() before providing the next input",
+          "read": "RegexStepCounter.get() called in V2Guidance.handleResult() to retrieve the step count"
+        }
+      ],
+      "retention": "Primary: retain inputs with the highest regexSteps value in a corpus of up to 20 entries sorted by step count. When a new execution yields a step count exceeding the current corpus minimum, it replaces the minimum-scoring entry. Secondary (when regexSteps is flat across all corpus entries): retain inputs that are longer (trending toward 10240 bytes) or that contain more dictionary tokens (@, ., -, etc.) to reach code on the attack path. This ensures the search makes progress toward the target input_bytes even when the step-count signal is constant.",
+      "retention_signals": [
+        "regexSteps"
+      ],
+      "mutation": [
+        "Byte-level: random byte flip, byte insertion, byte deletion, byte overwrite at random positions",
+        "Repetition (R45a): select a random chunk (1 byte to half the input length) and repeat it k times in place, with k chosen to fill up to 10240 bytes; includes whole-input doubling. Grows from 16-byte seed to 10240 bytes in ~10 doublings (<1 second).",
+        "Dictionary (R45b): tokens from the v8 regex source on the attack path: '@' (0x40, email separator), '.' (0x2E, domain/TLD separator), '-' (0x2D, valid in domain/TLD), '+' (0x2B, valid in local), '_' (0x5F, valid in local), '\\n' (0x0A, affects $ anchor). Inserted or overwritten at random positions.",
+        "No encoder needed (R45c): input is plain UTF-8 text, no format constraints."
+      ]
+    }
+  ]
+}

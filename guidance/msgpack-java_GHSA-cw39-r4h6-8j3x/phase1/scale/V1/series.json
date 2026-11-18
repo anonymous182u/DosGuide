@@ -1,0 +1,25 @@
+{
+  "parameter": "nesting levels",
+  "inputs": [
+    {
+      "file": "n100.bin",
+      "value": 100
+    },
+    {
+      "file": "n200.bin",
+      "value": 200
+    },
+    {
+      "file": "n400.bin",
+      "value": 400
+    },
+    {
+      "file": "n800.bin",
+      "value": 800
+    },
+    {
+      "file": "n1600.bin",
+      "value": 1600
+    }
+  ]
+}

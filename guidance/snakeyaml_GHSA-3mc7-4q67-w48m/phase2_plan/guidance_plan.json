@@ -1,0 +1,43 @@
+{
+  "plans": [
+    {
+      "target": "V1",
+      "signals": [
+        {
+          "name": "maxDepth",
+          "quantity": "maximum recursion depth of Composer.composeNode during one execution",
+          "aggregation": "max",
+          "locations": [
+            "Composer#composeNode"
+          ],
+          "technique": "bytecode",
+          "storage": "ThreadLocal<long[]> in v1.DepthCounters, index [1] = max depth",
+          "reset": "DepthCounters.reset() called by V1Guidance.getInput() before each execution",
+          "read": "V1Guidance.handleResult() calls DepthCounters.getMaxDepth()"
+        },
+        {
+          "name": "nodeCount",
+          "quantity": "total number of calls to Composer.composeNode during one execution",
+          "aggregation": "count",
+          "locations": [
+            "Composer#composeNode"
+          ],
+          "technique": "bytecode",
+          "storage": "ThreadLocal<long[]> in v1.DepthCounters, index [2] = node count",
+          "reset": "DepthCounters.reset() called by V1Guidance.getInput() before each execution",
+          "read": "V1Guidance.handleResult() calls DepthCounters.getNodeCount()"
+        }
+      ],
+      "retention": "Primary: keep input if maxDepth exceeds the current corpus best. Secondary (when maxDepth is flat or zero): keep inputs that are longer than previously retained inputs (growth toward input_bytes=4001) or that produce a non-zero nodeCount for the first time. Prioritization: weight corpus entries by maxDepth+1 for parent selection during mutation.",
+      "retention_signals": [
+        "maxDepth"
+      ],
+      "mutation": [
+        "Byte-level: random bit flip at random position; random byte insertion; random byte deletion; random byte replacement",
+        "Repetition [R45a]: select a random contiguous region [start, start+len), copy it k times in place (k random, bounded by MAX_INPUT_SIZE), growing nesting-dense regions exponentially; includes whole-input doubling",
+        "Dictionary [R45b]: tokens from the Scanner source on the attack path — single chars: '[', ']', '{', '}', ',', ':', '-', '*', '&', '!', '\\n'; multi-char: '---', '...'. Insert or overwrite at random positions",
+        "No encoder needed [R45c]: YAML is plain text with no checksums or length fields"
+      ]
+    }
+  ]
+}

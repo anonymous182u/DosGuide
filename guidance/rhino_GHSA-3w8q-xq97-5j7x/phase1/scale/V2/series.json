@@ -1,0 +1,29 @@
+{
+  "parameter": "approximate fractional digit iterations (1074/log2(radix))",
+  "inputs": [
+    {
+      "file": "r36.bin",
+      "value": 207
+    },
+    {
+      "file": "r18.bin",
+      "value": 257
+    },
+    {
+      "file": "r9.bin",
+      "value": 338
+    },
+    {
+      "file": "r5.bin",
+      "value": 462
+    },
+    {
+      "file": "r3.bin",
+      "value": 677
+    },
+    {
+      "file": "r2.bin",
+      "value": 1074
+    }
+  ]
+}

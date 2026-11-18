@@ -1,0 +1,15 @@
+{
+  "final_ok": true,
+  "repair_rounds": 0,
+  "fuzz_tests_fixed_at_round": 0,
+  "rounds": [
+    {
+      "round": 0,
+      "ok": true,
+      "error": null,
+      "launch": [],
+      "build_ok": true,
+      "failing": []
+    }
+  ]
+}

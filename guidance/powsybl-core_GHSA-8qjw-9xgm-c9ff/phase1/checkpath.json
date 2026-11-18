@@ -1,0 +1,32 @@
+{
+  "final_ok": true,
+  "collapsed_final": [],
+  "repair_rounds": 2,
+  "rounds": [
+    {
+      "round": 0,
+      "ok": false,
+      "error": null,
+      "failing": [
+        "PkgRisk1"
+      ],
+      "collapsed": []
+    },
+    {
+      "round": 1,
+      "ok": true,
+      "error": null,
+      "failing": [],
+      "collapsed": [
+        "PkgRisk1"
+      ]
+    },
+    {
+      "round": 2,
+      "ok": true,
+      "error": null,
+      "failing": [],
+      "collapsed": []
+    }
+  ]
+}

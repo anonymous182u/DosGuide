@@ -1,0 +1,250 @@
+{
+  "tool": "checkpath",
+  "version": "1.0.0",
+  "source_root": "projects/keycloak_GHSA-xv6h-r36f-3gp5",
+  "index": {
+    "files_parsed": 5860,
+    "files_failed": 0,
+    "methods": 50020,
+    "harness_fuzz_methods": [
+      "SAMLRequestParserFuzzTest.fuzzSAMLRequestParserParseRequestRedirectBinding(InputStream)"
+    ],
+    "index_seconds": 10.5,
+    "max_gap": 2,
+    "sink_depth": 6,
+    "symbol_resolution": true
+  },
+  "ok": true,
+  "targets": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "entrypoint": "SAMLRequestParserFuzzTest.fuzzSAMLRequestParserParseRequestRedirectBinding(InputStream) → SAMLRequestParser.parseRequestRedirectBinding(String) → RedirectBindingUtil.base64DeflateDecode(String) → SAML2Request.getSAML2ObjectFromStream(InputStream) → DocumentUtil.getDocument(InputStream) → DocumentBuilder.parse(InputStream)",
+      "source_path": "saml-core/src/main/java/org/keycloak/saml/SAMLRequestParser.java",
+      "start_ok": true,
+      "harness_entry": "com.fuzzer.saml.SAMLRequestParserFuzzTest#fuzzSAMLRequestParserParseRequestRedirectBinding",
+      "end_ok": true,
+      "end": {
+        "sink_file": "saml-core/src/main/java/org/keycloak/saml/SAMLRequestParser.java",
+        "ok": true,
+        "evidence": "hop 2 SAMLRequestParser#parseRequestRedirectBinding(String) is declared in saml-core/src/main/java/org/keycloak/saml/SAMLRequestParser.java:44",
+        "level": "method",
+        "sink_method": "DocumentBuilder#parse",
+        "sink_evidence": "hop 6 names DocumentBuilder#parse (outside the source tree)"
+      },
+      "hops": [
+        {
+          "index": 1,
+          "raw": "SAMLRequestParserFuzzTest.fuzzSAMLRequestParserParseRequestRedirectBinding(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "com.fuzzer.saml.SAMLRequestParserFuzzTest#fuzzSAMLRequestParserParseRequestRedirectBinding(InputStream)",
+              "location": "harness/src/test/java/com/fuzzer/saml/SAMLRequestParserFuzzTest.java:31"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "raw": "SAMLRequestParser.parseRequestRedirectBinding(String)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.keycloak.saml.SAMLRequestParser#parseRequestRedirectBinding(String)",
+              "location": "saml-core/src/main/java/org/keycloak/saml/SAMLRequestParser.java:44"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "raw": "RedirectBindingUtil.base64DeflateDecode(String)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.keycloak.saml.processing.web.util.RedirectBindingUtil#base64DeflateDecode(String)",
+              "location": "saml-core/src/main/java/org/keycloak/saml/processing/web/util/RedirectBindingUtil.java:168"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "raw": "SAML2Request.getSAML2ObjectFromStream(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.keycloak.saml.processing.api.saml.v2.request.SAML2Request#getSAML2ObjectFromStream(InputStream)",
+              "location": "saml-core/src/main/java/org/keycloak/saml/processing/api/saml/v2/request/SAML2Request.java:175"
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "raw": "DocumentUtil.getDocument(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.keycloak.saml.common.util.DocumentUtil#getDocument(InputStream)",
+              "location": "saml-core/src/main/java/org/keycloak/saml/common/util/DocumentUtil.java:184"
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "raw": "DocumentBuilder.parse(InputStream)",
+          "status": "EXTERNAL",
+          "candidates": [],
+          "external": [
+            "DocumentBuilder.parse(InputStream)"
+          ]
+        }
+      ],
+      "path_signature": [
+        "com.fuzzer.saml.SAMLRequestParserFuzzTest#fuzzSAMLRequestParserParseRequestRedirectBinding(InputStream)",
+        "org.keycloak.saml.SAMLRequestParser#parseRequestRedirectBinding(String)",
+        "org.keycloak.saml.processing.web.util.RedirectBindingUtil#base64DeflateDecode(String)",
+        "org.keycloak.saml.processing.api.saml.v2.request.SAML2Request#getSAML2ObjectFromStream(InputStream)",
+        "org.keycloak.saml.common.util.DocumentUtil#getDocument(InputStream)",
+        "external:parse"
+      ],
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "written": "SAMLRequestParserFuzzTest.fuzzSAMLRequestParserParseRequestRedirectBinding(InputStream)",
+          "provenance": "agent",
+          "method": "com.fuzzer.saml.SAMLRequestParserFuzzTest#fuzzSAMLRequestParserParseRequestRedirectBinding(InputStream)",
+          "location": "harness/src/test/java/com/fuzzer/saml/SAMLRequestParserFuzzTest.java:31"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "SAMLRequestParserFuzzTest#fuzzSAMLRequestParserParseRequestRedirectBinding(InputStream) calls SAMLRequestParser#parseRequestRedirectBinding(String) at harness/src/test/java/com/fuzzer/saml/SAMLRequestParserFuzzTest.java:34 (resolved)",
+          "site": "harness/src/test/java/com/fuzzer/saml/SAMLRequestParserFuzzTest.java:34"
+        },
+        {
+          "kind": "hop",
+          "written": "SAMLRequestParser.parseRequestRedirectBinding(String)",
+          "provenance": "agent",
+          "method": "org.keycloak.saml.SAMLRequestParser#parseRequestRedirectBinding(String)",
+          "location": "saml-core/src/main/java/org/keycloak/saml/SAMLRequestParser.java:44"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "SAMLRequestParser#parseRequestRedirectBinding(String) calls RedirectBindingUtil#base64DeflateDecode(String) at saml-core/src/main/java/org/keycloak/saml/SAMLRequestParser.java:47 (resolved)",
+          "site": "saml-core/src/main/java/org/keycloak/saml/SAMLRequestParser.java:47"
+        },
+        {
+          "kind": "hop",
+          "written": "RedirectBindingUtil.base64DeflateDecode(String)",
+          "provenance": "agent",
+          "method": "org.keycloak.saml.processing.web.util.RedirectBindingUtil#base64DeflateDecode(String)",
+          "location": "saml-core/src/main/java/org/keycloak/saml/processing/web/util/RedirectBindingUtil.java:168"
+        },
+        {
+          "kind": "connection",
+          "type": "SEQUENCE",
+          "evidence": "SAMLRequestParser#parseRequestRedirectBinding(String) (saml-core/src/main/java/org/keycloak/saml/SAMLRequestParser.java:44) calls RedirectBindingUtil#base64DeflateDecode(String) at line 47 and getSAML2ObjectFromStream at line 65",
+          "site": "saml-core/src/main/java/org/keycloak/saml/SAMLRequestParser.java:44"
+        },
+        {
+          "kind": "hop",
+          "written": "SAML2Request.getSAML2ObjectFromStream(InputStream)",
+          "provenance": "agent",
+          "method": "org.keycloak.saml.processing.api.saml.v2.request.SAML2Request#getSAML2ObjectFromStream(InputStream)",
+          "location": "saml-core/src/main/java/org/keycloak/saml/processing/api/saml/v2/request/SAML2Request.java:175"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "SAML2Request#getSAML2ObjectFromStream(InputStream) calls DocumentUtil#getDocument(InputStream) at saml-core/src/main/java/org/keycloak/saml/processing/api/saml/v2/request/SAML2Request.java:180 (name match)",
+          "site": "saml-core/src/main/java/org/keycloak/saml/processing/api/saml/v2/request/SAML2Request.java:180"
+        },
+        {
+          "kind": "hop",
+          "written": "DocumentUtil.getDocument(InputStream)",
+          "provenance": "agent",
+          "method": "org.keycloak.saml.common.util.DocumentUtil#getDocument(InputStream)",
+          "location": "saml-core/src/main/java/org/keycloak/saml/common/util/DocumentUtil.java:184"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "DocumentUtil#getDocument(InputStream) calls DocumentBuilder.parse(InputStream) at saml-core/src/main/java/org/keycloak/saml/common/util/DocumentUtil.java:187",
+          "site": "saml-core/src/main/java/org/keycloak/saml/common/util/DocumentUtil.java:187"
+        },
+        {
+          "kind": "hop",
+          "written": "DocumentBuilder.parse(InputStream)",
+          "provenance": "agent",
+          "method": "DocumentBuilder.parse(InputStream)",
+          "location": "outside the source tree"
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "status": "CALL",
+          "evidence": "SAMLRequestParserFuzzTest#fuzzSAMLRequestParserParseRequestRedirectBinding(InputStream) calls SAMLRequestParser#parseRequestRedirectBinding(String) at harness/src/test/java/com/fuzzer/saml/SAMLRequestParserFuzzTest.java:34 (resolved)"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "status": "CALL",
+          "evidence": "SAMLRequestParser#parseRequestRedirectBinding(String) calls RedirectBindingUtil#base64DeflateDecode(String) at saml-core/src/main/java/org/keycloak/saml/SAMLRequestParser.java:47 (resolved)"
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "status": "SEQUENCE",
+          "evidence": "SAMLRequestParser#parseRequestRedirectBinding(String) (saml-core/src/main/java/org/keycloak/saml/SAMLRequestParser.java:44) calls RedirectBindingUtil#base64DeflateDecode(String) at line 47 and getSAML2ObjectFromStream at line 65"
+        },
+        {
+          "from": 4,
+          "to": 5,
+          "status": "CALL",
+          "evidence": "SAML2Request#getSAML2ObjectFromStream(InputStream) calls DocumentUtil#getDocument(InputStream) at saml-core/src/main/java/org/keycloak/saml/processing/api/saml/v2/request/SAML2Request.java:180 (name match)"
+        },
+        {
+          "from": 5,
+          "to": 6,
+          "status": "CALL",
+          "evidence": "DocumentUtil#getDocument(InputStream) calls DocumentBuilder.parse(InputStream) at saml-core/src/main/java/org/keycloak/saml/common/util/DocumentUtil.java:187"
+        }
+      ],
+      "diagnostics": [],
+      "warnings": [
+        "Hop 6: `DocumentBuilder.parse(InputStream)` belongs to JDK class javax.xml.parsers.DocumentBuilder; its body is not analyzed",
+        "Edge 3→4 is a call sequence, not a call chain: SAMLRequestParser#parseRequestRedirectBinding(String) (saml-core/src/main/java/org/keycloak/saml/SAMLRequestParser.java:44) calls RedirectBindingUtil#base64DeflateDecode(String) at line 47 and getSAML2ObjectFromStream at line 65"
+      ]
+    }
+  ],
+  "plan_ok": true,
+  "plans": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "signals": [
+        {
+          "name": "decompressedBytes",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "org.keycloak.saml.processing.api.util.DeflateUtil#decode where the InflaterInputStream is created with no output size limit and wrapped in V1CountingStream by the agent",
+              "status": "RESOLVED",
+              "method": "org.keycloak.saml.processing.api.util.DeflateUtil#decode",
+              "declared_at": "saml-core/src/main/java/org/keycloak/saml/processing/api/util/DeflateUtil.java:77",
+              "relation": "called_from_path",
+              "chain": [
+                "RedirectBindingUtil#base64DeflateDecode(String)",
+                "DeflateUtil#decode(byte[])"
+              ]
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    }
+  ]
+}

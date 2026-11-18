@@ -1,0 +1,15 @@
+{
+  "series_request": null,
+  "rounds": [
+    {
+      "round": 1,
+      "revision": {
+        "V1": {
+          "scale": "Measured quadratic growth: ~6.2 ns per N² (quadratic coefficient from fitting N=4096 at 138 ms and N=8192 at 452 ms, with ~34 ms constant overhead). Growth ratios approach 4× per doubling (3.26× from 4096→8192), confirming O(N²). Extrapolating time = 6.2e-6·N² + 34 ms to the 20,000 ms timeout: N ≈ 57,000 whitespace bytes. Encoding is 1 byte per whitespace character (ISO-8859-1), which is the densest possible.",
+          "input_bytes": 57000
+        }
+      },
+      "field_problems": {}
+    }
+  ]
+}

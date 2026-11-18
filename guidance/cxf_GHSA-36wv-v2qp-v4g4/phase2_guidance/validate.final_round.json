@@ -1,0 +1,639 @@
+{
+  "ok": true,
+  "launch": [],
+  "build": {
+    "ok": true
+  },
+  "targets": [
+    {
+      "tool": "ValidateArtifact",
+      "target": "V1",
+      "checks": [
+        {
+          "name": "contract",
+          "status": "pass",
+          "detail": "factory, lastSignals() and fuzz test found"
+        },
+        {
+          "name": "runs",
+          "status": "pass",
+          "detail": "95 executions completed"
+        },
+        {
+          "name": "plan_signals",
+          "status": "pass",
+          "detail": "lastSignals() returns every planned signal [charsAppended]"
+        },
+        {
+          "name": "signal_varies",
+          "status": "pass",
+          "detail": "varying: [charsAppended] (on the guidance's own inputs: [charsAppended])"
+        },
+        {
+          "name": "reset",
+          "status": "pass",
+          "detail": "re-running inputs reproduced their values"
+        },
+        {
+          "name": "depends_on_execution",
+          "status": "pass",
+          "detail": "signals stay near zero when the target does not run"
+        },
+        {
+          "name": "instrumentation",
+          "status": "pass",
+          "detail": "rewrote [org.apache.cxf.io.CachedOutputStream]"
+        },
+        {
+          "name": "input_limit",
+          "status": "pass",
+          "detail": "with jqf.ei.MAX_INPUT_SIZE=16 the 20 generated inputs were at most 16 bytes"
+        },
+        {
+          "name": "input_growth",
+          "status": "pass",
+          "detail": "the guidance generated a 8710-byte input after 828 ms (8 executions); the target needs 1025"
+        },
+        {
+          "name": "progress",
+          "status": "skip",
+          "detail": "not compared: no signal grows along the series"
+        }
+      ],
+      "max_input_bytes": 10240,
+      "example_inputs": 5,
+      "executions": {
+        "own": 40,
+        "repeat": 5,
+        "random": 40,
+        "example": 10,
+        "probe": 3
+      },
+      "test_failures_not_used": 61,
+      "signals": {
+        "charsAppended": {
+          "min": 0.0,
+          "max": 10239.0,
+          "distinct": 34
+        }
+      },
+      "signals_by_kind": {
+        "example": {
+          "charsAppended": {
+            "min": 0.0,
+            "distinct": 3,
+            "max": 2048.0
+          }
+        },
+        "own": {
+          "charsAppended": {
+            "min": 0.0,
+            "distinct": 18,
+            "max": 10239.0
+          }
+        },
+        "random": {
+          "charsAppended": {
+            "min": 0.0,
+            "distinct": 22,
+            "max": 10238.0
+          }
+        },
+        "repeat": {
+          "charsAppended": {
+            "min": 9196.0,
+            "distinct": 5,
+            "max": 10239.0
+          }
+        }
+      },
+      "transformed_classes": [
+        "org.apache.cxf.io.CachedOutputStream"
+      ],
+      "ok": true,
+      "input_limit_probe": {
+        "max_input_bytes": 16,
+        "longest_input": 16,
+        "executions": {
+          "own": 20
+        }
+      },
+      "growth_probe": {
+        "needed_input_bytes": 1025,
+        "longest_input": 8710,
+        "executions": {
+          "own": 8
+        },
+        "growth": [
+          {
+            "ms": 781,
+            "execution": 1,
+            "bytes": 14
+          },
+          {
+            "ms": 783,
+            "execution": 2,
+            "bytes": 16
+          },
+          {
+            "ms": 786,
+            "execution": 5,
+            "bytes": 18
+          },
+          {
+            "ms": 793,
+            "execution": 7,
+            "bytes": 19
+          },
+          {
+            "ms": 828,
+            "execution": 8,
+            "bytes": 8710
+          }
+        ]
+      },
+      "hard_ok": true,
+      "progress_probe": {
+        "own_ms": 120000,
+        "executions": 247736,
+        "longest_input": 10240,
+        "phase": "series",
+        "series_inputs": 6,
+        "comparison": {},
+        "measurements": {
+          "budget_ms": 120000,
+          "own_ms": 120000,
+          "executions": 247736,
+          "longest_input": 10240,
+          "phase": "series",
+          "own_best": {
+            "charsAppended": [
+              [
+                8,
+                0.0,
+                2272
+              ],
+              [
+                9,
+                0.0,
+                1518
+              ],
+              [
+                10,
+                0.0,
+                987
+              ],
+              [
+                11,
+                0.0,
+                1175
+              ],
+              [
+                12,
+                0.0,
+                1152
+              ],
+              [
+                13,
+                0.0,
+                1759
+              ],
+              [
+                14,
+                0.0,
+                859
+              ],
+              [
+                15,
+                0.0,
+                1549
+              ],
+              [
+                16,
+                0.0,
+                856
+              ],
+              [
+                18,
+                0.0,
+                857
+              ],
+              [
+                20,
+                0.0,
+                982
+              ],
+              [
+                21,
+                0.0,
+                1062
+              ],
+              [
+                23,
+                0.0,
+                860
+              ],
+              [
+                26,
+                0.0,
+                948
+              ],
+              [
+                29,
+                0.0,
+                931
+              ],
+              [
+                30,
+                0.0,
+                1148
+              ],
+              [
+                32,
+                0.0,
+                1465
+              ],
+              [
+                35,
+                0.0,
+                25353
+              ],
+              [
+                39,
+                0.0,
+                23990
+              ],
+              [
+                42,
+                0.0,
+                11775
+              ],
+              [
+                46,
+                0.0,
+                4669
+              ],
+              [
+                52,
+                0.0,
+                18594
+              ],
+              [
+                54,
+                0.0,
+                12253
+              ],
+              [
+                61,
+                0.0,
+                6215
+              ],
+              [
+                69,
+                0.0,
+                3616
+              ],
+              [
+                76,
+                0.0,
+                30616
+              ],
+              [
+                82,
+                0.0,
+                17361
+              ],
+              [
+                89,
+                0.0,
+                5299
+              ],
+              [
+                98,
+                0.0,
+                1630
+              ],
+              [
+                106,
+                0.0,
+                10850
+              ],
+              [
+                113,
+                0.0,
+                1250
+              ],
+              [
+                121,
+                0.0,
+                17734
+              ],
+              [
+                130,
+                0.0,
+                2875
+              ],
+              [
+                151,
+                0.0,
+                2923
+              ],
+              [
+                161,
+                0.0,
+                6592
+              ],
+              [
+                168,
+                0.0,
+                3516
+              ],
+              [
+                189,
+                0.0,
+                6056
+              ],
+              [
+                209,
+                0.0,
+                9307
+              ],
+              [
+                216,
+                0.0,
+                2217
+              ],
+              [
+                239,
+                0.0,
+                8772
+              ],
+              [
+                266,
+                0.0,
+                3798
+              ],
+              [
+                288,
+                0.0,
+                2144
+              ],
+              [
+                322,
+                0.0,
+                9374
+              ],
+              [
+                342,
+                0.0,
+                903
+              ],
+              [
+                378,
+                0.0,
+                2839
+              ],
+              [
+                403,
+                0.0,
+                2428
+              ],
+              [
+                444,
+                0.0,
+                1871
+              ],
+              [
+                486,
+                0.0,
+                3173
+              ],
+              [
+                513,
+                0.0,
+                1669
+              ],
+              [
+                583,
+                0.0,
+                3504
+              ],
+              [
+                617,
+                0.0,
+                4111
+              ],
+              [
+                711,
+                0.0,
+                1417
+              ],
+              [
+                780,
+                0.0,
+                2303
+              ],
+              [
+                851,
+                0.0,
+                2523
+              ],
+              [
+                927,
+                0.0,
+                1956
+              ],
+              [
+                1008,
+                0.0,
+                1124
+              ],
+              [
+                1116,
+                1115.0,
+                105575
+              ],
+              [
+                1215,
+                1214.0,
+                56419
+              ],
+              [
+                1327,
+                1326.0,
+                64806
+              ],
+              [
+                1448,
+                1447.0,
+                78324
+              ],
+              [
+                1579,
+                1578.0,
+                55237
+              ],
+              [
+                1722,
+                1721.0,
+                102145
+              ],
+              [
+                1878,
+                1877.0,
+                52747
+              ],
+              [
+                2046,
+                2045.0,
+                8735
+              ],
+              [
+                2233,
+                2232.0,
+                66868
+              ],
+              [
+                2435,
+                2434.0,
+                32301
+              ],
+              [
+                2653,
+                2652.0,
+                110122
+              ],
+              [
+                2896,
+                2895.0,
+                21025
+              ],
+              [
+                3158,
+                3157.0,
+                7660
+              ],
+              [
+                3443,
+                3442.0,
+                39737
+              ],
+              [
+                3756,
+                3755.0,
+                2061
+              ],
+              [
+                4093,
+                4092.0,
+                101086
+              ],
+              [
+                4466,
+                4465.0,
+                51664
+              ],
+              [
+                4870,
+                4869.0,
+                42385
+              ],
+              [
+                5308,
+                5307.0,
+                57522
+              ],
+              [
+                5792,
+                5791.0,
+                61871
+              ],
+              [
+                6316,
+                6315.0,
+                53125
+              ],
+              [
+                6888,
+                6887.0,
+                56654
+              ],
+              [
+                7509,
+                7508.0,
+                24462
+              ],
+              [
+                8191,
+                8190.0,
+                92901
+              ],
+              [
+                8932,
+                8931.0,
+                32340
+              ],
+              [
+                9741,
+                9740.0,
+                60421
+              ],
+              [
+                10240,
+                10240.0,
+                81771
+              ]
+            ]
+          },
+          "series": [
+            {
+              "bytes": 64,
+              "signals": {
+                "charsAppended": 0.0
+              }
+            },
+            {
+              "bytes": 128,
+              "signals": {
+                "charsAppended": 0.0
+              }
+            },
+            {
+              "bytes": 256,
+              "signals": {
+                "charsAppended": 0.0
+              }
+            },
+            {
+              "bytes": 512,
+              "signals": {
+                "charsAppended": 0.0
+              }
+            },
+            {
+              "bytes": 1024,
+              "signals": {
+                "charsAppended": 0.0
+              }
+            },
+            {
+              "bytes": 2048,
+              "signals": {
+                "charsAppended": 2048.0
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "limits": {
+    "jvm_args": [
+      "-Xmx1g",
+      "-Xss1m"
+    ],
+    "timeout_ms": 20000,
+    "max_input_bytes": 10240
+  },
+  "hard_ok": true
+}

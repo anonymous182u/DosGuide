@@ -1,0 +1,29 @@
+{
+  "parameter": "number of a:a@ repetitions (regex backtracking doubles per repetition)",
+  "inputs": [
+    {
+      "file": "n5.bin",
+      "value": 5
+    },
+    {
+      "file": "n10.bin",
+      "value": 10
+    },
+    {
+      "file": "n15.bin",
+      "value": 15
+    },
+    {
+      "file": "n18.bin",
+      "value": 18
+    },
+    {
+      "file": "n20.bin",
+      "value": 20
+    },
+    {
+      "file": "n22.bin",
+      "value": 22
+    }
+  ]
+}

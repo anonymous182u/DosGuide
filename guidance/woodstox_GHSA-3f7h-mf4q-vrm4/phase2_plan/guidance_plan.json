@@ -1,0 +1,35 @@
+{
+  "plans": [
+    {
+      "target": "V1",
+      "signals": [
+        {
+          "name": "maxDepth",
+          "quantity": "maximum recursion depth of readContentSpec during one execution",
+          "aggregation": "max",
+          "locations": [
+            "FullDTDReader#readContentSpec"
+          ],
+          "technique": "bytecode",
+          "storage": "ThreadLocal<long[]> in fuzzing.agent.V1Counters; index 0 = current depth, index 1 = max depth this execution",
+          "reset": "V1Guidance.getInput() sets both counters to 0 before returning the InputStream",
+          "read": "V1Guidance.handleResult() reads index 1 (max depth) from V1Counters.get()"
+        }
+      ],
+      "retention": "Primary: retain input if maxDepth > best maxDepth in corpus (always) or maxDepth == best (50% probability for diversity). Secondary (flat-signal progress per R46): while maxDepth is 0 or constant, retain inputs with length > max length in corpus (growing toward 7056 target bytes) or that complete without error. Corpus is a priority queue by maxDepth (descending), max 100 entries, evicting lowest-depth entry when full.",
+      "retention_signals": [
+        "maxDepth"
+      ],
+      "mutation": [
+        "byte-flip: flip a random byte at a random position (30% of byte-level mutations)",
+        "byte-insert: insert a random byte at a random position",
+        "byte-delete: delete a byte at a random position",
+        "byte-range-copy: copy a random contiguous range to another position",
+        "repetition-paren-doubling: locate a run of '(' bytes in the input, double its length, and mirror with matching ')' run — directly doubles nesting depth. Can grow from seed (~100 bytes) to 7056 bytes in ~7 doublings.",
+        "repetition-region-doubling: select a contiguous region and repeat it in place, up to input size limit (10240). Generalizes growth for non-parenthesis structures.",
+        "dictionary-insert: insert or overwrite at a random position using tokens from the DTD parsing source code: '<?xml', 'version', '\"1.0\"', '?>', '<!DOCTYPE', '<!ELEMENT', '(', ')', '|', ',', '?', '*', '+', '#PCDATA', '>', ']', '<', '/>', ' ' (space). Each is a single syntactic unit from FullDTDReader source.",
+        "structure-aware-encode: maintain an internal nesting-depth representation, mutate the depth (increment, double, halve, random), then encode as well-formed DTD: prefix + '(' * depth + element_name + ')' * depth + suffix. Ensures valid XML/DTD structure that reaches readContentSpec."
+      ]
+    }
+  ]
+}

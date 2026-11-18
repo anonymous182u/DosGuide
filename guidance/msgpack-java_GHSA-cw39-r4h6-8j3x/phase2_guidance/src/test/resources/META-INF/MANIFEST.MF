@@ -1,0 +1,3 @@
+Manifest-Version: 1.0
+Premain-Class: agent.V1MeasureAgent
+Can-Retransform-Classes: true

@@ -1,0 +1,15 @@
+{
+  "timeout_ms": 20000,
+  "jvm_args": [
+    "-Xmx1g",
+    "-Xss1m"
+  ],
+  "max_input_bytes": 1048576,
+  "justification": {
+    "max_input_bytes": "The advisory's CPU exhaustion grows with the number of connections opened in one execution, and each connection takes one input record (about 21 bytes); 10,240 bytes give about 500 connections and milliseconds of extra work, so one execution needs tens of thousands of connections to approach the 20 s timeout."
+  },
+  "fixed": {
+    "lib": "fixed/lib/*",
+    "drop": "^(netty\\-incubator\\-codec\\-classes\\-quic|netty\\-incubator\\-codec\\-native\\-quic)-[0-9]"
+  }
+}

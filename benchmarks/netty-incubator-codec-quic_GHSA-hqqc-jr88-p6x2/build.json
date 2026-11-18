@@ -1,0 +1,54 @@
+{
+  "clone_url": "https://github.com/netty/netty-incubator-codec-quic.git",
+  "commit": "dca355aa8a1f63dfaf6aa2fe88734e4bd5314c14",
+  "jdk": 8,
+  "linux_only": true,
+  "system_packages": [
+    "gcc",
+    "gcc-c++",
+    "make",
+    "cmake",
+    "ninja-build",
+    "golang",
+    "perl",
+    "rust",
+    "cargo",
+    "autoconf",
+    "automake",
+    "libtool",
+    "libstdc++-static",
+    "git"
+  ],
+  "tools": "the project's Maven wrapper (./mvnw, Maven 3.9.6); Linux x86_64 with gcc/g++, cmake, ninja, go, perl, rustc/cargo, autoconf/automake/libtool (reference build: gcc 11.5.0, cmake 3.22.2, ninja 1.10.2, go 1.26.8, rustc/cargo 1.99.1, Amazon Linux 2023; the crates cargo resolves at build time may need a current stable Rust, e.g. from rustup, if the distribution's is older)",
+  "commands": [
+    "cd src && MAVEN_OPTS=-Xmx2g ./mvnw -B -ntp -DskipTests -DboringsslBranch=main -pl codec-classes-quic,codec-native-quic -am clean package"
+  ],
+  "artifacts": [
+    {
+      "built": "src/codec-classes-quic/target/netty-incubator-codec-classes-quic-0.0.71.Final-SNAPSHOT.jar",
+      "lib": "lib/netty-incubator-codec-classes-quic-0.0.71.Final-SNAPSHOT.jar",
+      "sha256": "03e87fc59bc3d11e58d00007f27505987dacf3f07b9f2ad8bacd267cb3e9a4d7",
+      "classes_sha256": "1d4a57b8150ffa7c10ebb9279cc5aade5b5c33ddb937a52d8fa2b48e1c1f14c0"
+    },
+    {
+      "built": "src/codec-native-quic/target/netty-incubator-codec-native-quic-0.0.71.Final-SNAPSHOT-linux-x86_64.jar",
+      "lib": "lib/netty-incubator-codec-native-quic-0.0.71.Final-SNAPSHOT-linux-x86_64.jar",
+      "sha256": "81db13a6bd00bb45e2a467a2990c65cef042ab34e508fa32fd4c8f6407b0ad3e",
+      "classes_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "fixed": {
+    "jars": [
+      {
+        "coords": "io.netty.incubator:netty-incubator-codec-classes-quic:0.0.71.Final",
+        "sha256": "a6dec5b516c1f6d7e1d87512065bb016e210ed1acd036f3ff213100c7f65d97b"
+      },
+      {
+        "coords": "io.netty.incubator:netty-incubator-codec-native-quic:0.0.71.Final:linux-x86_64",
+        "sha256": "db77f251dfe0b4af8dbe42e956b1f8ad48635027428b3fd9bf2d31b38d23eaf6"
+      }
+    ],
+    "drop": "^(netty\\-incubator\\-codec\\-classes\\-quic|netty\\-incubator\\-codec\\-native\\-quic)-[0-9]"
+  },
+  "notes": "Reactor: netty-incubator-codec-parent-quic, codec-classes-quic, codec-native-quic (project version 0.0.71.Final-SNAPSHOT). Same goal as the project's Linux CI/release build (./mvnw -B -ntp clean package on JDK 8), tests skipped. The native module clones BoringSSL and quiche and builds them: the pom pins boringsslCommitSha b8c97f5b4bc5d4758612a0430e5c2792d0f9ca7f and quicheCommitSha 4ff56ec2566622980bbb0e0d7b9217254d97c4ba, and hawtjni-maven-plugin builds the JNI library with autotools; the linux profile links -static-libstdc++ (libstdc++-static). -DboringsslBranch=main: the pom clones BoringSSL with --branch master, which BoringSSL has renamed to main; the pinned commit is checked out either way (only the native jar's MANIFEST header BoringSSL-Branch changes). quiche has no Cargo.lock at that commit, so cargo resolves its crates from crates.io at build time and a later rebuild may resolve newer semver-compatible crates (the reference build's lock had sha256 859b06e2c5b6a74ba951b6d462c715526a72bd0662fa71150f3ba6f9b2be635d). The native jar (classifier linux-x86_64, so the build must run on x86_64) has no classes, so its classes_sha256 does not cover META-INF/native/libnetty_quiche_linux_x86_64.so (reference sha256 123c4171cc242d3744f56ffd45656b6e4af524d142f780b4adf4cb1dacd43721). Fixed: the classes jar and the linux-x86_64 native jar of 0.0.71.Final (coordinates with classifier)."
+}

@@ -1,0 +1,325 @@
+{
+  "ok": true,
+  "launch": [],
+  "build": {
+    "ok": true
+  },
+  "targets": [
+    {
+      "tool": "ValidateArtifact",
+      "target": "V1",
+      "checks": [
+        {
+          "name": "contract",
+          "status": "pass",
+          "detail": "factory, lastSignals() and fuzz test found"
+        },
+        {
+          "name": "runs",
+          "status": "pass",
+          "detail": "101 executions completed"
+        },
+        {
+          "name": "plan_signals",
+          "status": "pass",
+          "detail": "lastSignals() returns every planned signal [maxDepth]"
+        },
+        {
+          "name": "signal_varies",
+          "status": "pass",
+          "detail": "varying: [maxDepth] (on the guidance's own inputs: [maxDepth])"
+        },
+        {
+          "name": "reset",
+          "status": "pass",
+          "detail": "re-running inputs reproduced their values"
+        },
+        {
+          "name": "depends_on_execution",
+          "status": "pass",
+          "detail": "signals stay near zero when the target does not run"
+        },
+        {
+          "name": "instrumentation",
+          "status": "pass",
+          "detail": "rewrote [com.ctc.wstx.dtd.FullDTDReader]"
+        },
+        {
+          "name": "input_limit",
+          "status": "pass",
+          "detail": "with jqf.ei.MAX_INPUT_SIZE=16 the 2 generated inputs were at most 16 bytes"
+        },
+        {
+          "name": "input_growth",
+          "status": "pass",
+          "detail": "the guidance generated a 8000-byte input after 13929 ms (17105 executions); the target needs 7056"
+        },
+        {
+          "name": "progress",
+          "status": "pass",
+          "ratio": 1.956480699860149,
+          "detail": "`maxDepth` reached 196% of the series at 4000 bytes"
+        }
+      ],
+      "max_input_bytes": 10240,
+      "example_inputs": 8,
+      "executions": {
+        "own": 40,
+        "repeat": 5,
+        "random": 40,
+        "example": 16,
+        "probe": 3
+      },
+      "test_failures_not_used": 4,
+      "signals": {
+        "maxDepth": {
+          "min": 0.0,
+          "max": 3090.0,
+          "distinct": 20
+        }
+      },
+      "signals_by_kind": {
+        "example": {
+          "maxDepth": {
+            "max": 10.0,
+            "distinct": 5,
+            "min": 0.0
+          }
+        },
+        "own": {
+          "maxDepth": {
+            "max": 3090.0,
+            "distinct": 18,
+            "min": 0.0
+          }
+        },
+        "random": {
+          "maxDepth": {
+            "max": 2994.0,
+            "distinct": 9,
+            "min": 0.0
+          }
+        },
+        "repeat": {
+          "maxDepth": {
+            "max": 3090.0,
+            "distinct": 5,
+            "min": 158.0
+          }
+        }
+      },
+      "transformed_classes": [
+        "com.ctc.wstx.dtd.FullDTDReader"
+      ],
+      "ok": true,
+      "input_limit_probe": {
+        "max_input_bytes": 16,
+        "longest_input": 16,
+        "executions": {
+          "own": 2
+        }
+      },
+      "growth_probe": {
+        "needed_input_bytes": 7056,
+        "longest_input": 8000,
+        "executions": {
+          "own": 17105
+        },
+        "growth": [
+          {
+            "ms": 441,
+            "execution": 1,
+            "bytes": 56
+          },
+          {
+            "ms": 446,
+            "execution": 2,
+            "bytes": 58
+          },
+          {
+            "ms": 450,
+            "execution": 3,
+            "bytes": 88
+          },
+          {
+            "ms": 451,
+            "execution": 5,
+            "bytes": 94
+          },
+          {
+            "ms": 452,
+            "execution": 6,
+            "bytes": 134
+          },
+          {
+            "ms": 454,
+            "execution": 8,
+            "bytes": 213
+          },
+          {
+            "ms": 455,
+            "execution": 10,
+            "bytes": 293
+          },
+          {
+            "ms": 457,
+            "execution": 13,
+            "bytes": 783
+          },
+          {
+            "ms": 466,
+            "execution": 27,
+            "bytes": 1333
+          },
+          {
+            "ms": 468,
+            "execution": 30,
+            "bytes": 3548
+          },
+          {
+            "ms": 470,
+            "execution": 32,
+            "bytes": 5172
+          },
+          {
+            "ms": 478,
+            "execution": 37,
+            "bytes": 5508
+          },
+          {
+            "ms": 13929,
+            "execution": 17105,
+            "bytes": 8000
+          }
+        ]
+      },
+      "hard_ok": true,
+      "progress_probe": {
+        "own_ms": 120000,
+        "executions": 216629,
+        "longest_input": 10240,
+        "phase": "series",
+        "series_inputs": 5,
+        "comparison": {
+          "maxDepth": {
+            "exponent": 1.06,
+            "series_longest": [
+              2104,
+              1025.0
+            ],
+            "best": [
+              4000,
+              3953.0,
+              3544
+            ],
+            "compared_at": 4000,
+            "series_at_best": 2020.4646027341666,
+            "ratio": 1.956480699860149
+          }
+        },
+        "measurements": {
+          "budget_ms": 120000,
+          "own_ms": 120000,
+          "executions": 216629,
+          "longest_input": 10240,
+          "phase": "series",
+          "own_best": {
+            "maxDepth": [
+              [
+                58,
+                2.0,
+                548
+              ],
+              [
+                62,
+                4.0,
+                555
+              ],
+              [
+                70,
+                8.0,
+                557
+              ],
+              [
+                86,
+                16.0,
+                558
+              ],
+              [
+                118,
+                32.0,
+                559
+              ],
+              [
+                182,
+                64.0,
+                562
+              ],
+              [
+                382,
+                0.0,
+                561
+              ],
+              [
+                4000,
+                3953.0,
+                3544
+              ],
+              [
+                8000,
+                5126.0,
+                117961
+              ],
+              [
+                10240,
+                5093.0,
+                617
+              ]
+            ]
+          },
+          "series": [
+            {
+              "bytes": 184,
+              "signals": {
+                "maxDepth": 65.0
+              }
+            },
+            {
+              "bytes": 312,
+              "signals": {
+                "maxDepth": 129.0
+              }
+            },
+            {
+              "bytes": 568,
+              "signals": {
+                "maxDepth": 257.0
+              }
+            },
+            {
+              "bytes": 1080,
+              "signals": {
+                "maxDepth": 513.0
+              }
+            },
+            {
+              "bytes": 2104,
+              "signals": {
+                "maxDepth": 1025.0
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "limits": {
+    "jvm_args": [
+      "-Xmx1g",
+      "-Xss1m"
+    ],
+    "timeout_ms": 20000,
+    "max_input_bytes": 10240
+  },
+  "hard_ok": true
+}

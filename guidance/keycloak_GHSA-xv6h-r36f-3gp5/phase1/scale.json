@@ -1,0 +1,15 @@
+{
+  "series_request": null,
+  "rounds": [
+    {
+      "round": 1,
+      "revision": {
+        "V1": {
+          "scale": "Measured ~133 bytes allocated per XML element (consistent across 10K–320K elements) with ~4.3 MB baseline. Extrapolating: with 1 GB heap and ~200 MB JVM/JQF overhead, ~6.2 million elements exhaust the remaining ~820 MB. That is ~25 MB of decompressed XML (6.2M × 4 bytes per <a/>). With measured deflate ratio ~1000:1 at large sizes, this needs ~25 KB of compressed input, well within the 65 KB limit.",
+          "input_bytes": 25600
+        }
+      },
+      "field_problems": {}
+    }
+  ]
+}

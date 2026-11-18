@@ -1,0 +1,43 @@
+{
+  "clone_url": "https://github.com/jenkinsci/token-macro-plugin.git",
+  "commit": "f74697a6e54087f9334eef153948ba85f33fe596",
+  "jdk": 17,
+  "commands": [
+    "rm -rf build src/target && mkdir -p build/msgs build/classes",
+    "cd src && JAVA_HOME=\"$JDK8\" PATH=\"$JDK8/bin:$PATH\" mvn -B -q -Denforcer.skip=true generate-sources dependency:copy-dependencies -DincludeScope=compile -DoutputDirectory=../build/deps",
+    "\"$JDK8/bin/javac\" -g -nowarn -source 1.7 -target 1.7 -encoding UTF-8 -cp 'build/deps/*' -d build/msgs src/target/generated-sources/localizer/org/jenkinsci/plugins/tokenmacro/Messages.java",
+    "find src/src/main/java -name '*.java' | sort > build/sources.txt",
+    "javac -nowarn -proc:none --release 8 -encoding UTF-8 -cp 'build/msgs:build/deps/*' -d build/classes @build/sources.txt",
+    "cp -R build/msgs/org build/classes/",
+    "(cd src/src/main/resources && find org/jenkinsci/plugins/tokenmacro \\( -name '*.properties' -o -name '*.jelly' \\) | sort | tar -cf - -T -) | tar -xf - -C build/classes",
+    "jar cf build/token-macro-2.6-SNAPSHOT.jar -C build/classes ."
+  ],
+  "artifacts": [
+    {
+      "built": "build/token-macro-2.6-SNAPSHOT.jar",
+      "lib": "lib/token-macro-2.6-SNAPSHOT.jar",
+      "sha256": "073025bf2e7fcaa94c343245fd72c838564ad87fd502bf6b1aa7832852f91dd2",
+      "classes_sha256": "d17fb4eed1ff7ad515d46615e0dc399cd214cd08a7097bcaa1da1f07237f4736"
+    }
+  ],
+  "fixed": {
+    "jars": [
+      {
+        "coords": "org.jenkins-ci.plugins:token-macro:2.6",
+        "repo": "https://repo.jenkins-ci.org/releases",
+        "sha256": "06b4ac7621aa339f20a252dcef624cb15a1aa90ec1253a0427faffa53a0305bf"
+      },
+      {
+        "coords": "org.parboiled:parboiled-java:1.1.8",
+        "sha256": "9bc207b721045338f45fb66804090b0ab7168cc914ac03451a549be862239013"
+      },
+      {
+        "coords": "org.parboiled:parboiled-core:1.1.8",
+        "sha256": "ead7a241b69168908d0e11bfba6cb4ae96ae1beec833cdcc32ab24d06178f595"
+      }
+    ],
+    "drop": "^(token\\-macro|parboiled\\-java|parboiled\\-core)-[0-9]"
+  },
+  "tools": "git, Maven 3.9 run on JDK 8 (--jdk8; the project's pom, its parent org.jenkins-ci.plugins:plugin:3.2 and jenkins-core 1.642.3 come from https://repo.jenkins-ci.org/public/, declared in the pom), JDK 8 javac, JDK 17 (javac, jar), tar",
+  "notes": "As the evaluation's jar was made: javac --release 8 -proc:none (JDK 17) of every .java file under src/main/java, then Messages.properties and the *.jelly files under org/jenkinsci/plugins/tokenmacro from src/main/resources. The localizer-generated Messages class (the tree has only Messages.properties) is made by the project's own Maven build (generate-sources, localizer 1.24, enforcer skipped) and compiled with JDK 8 javac -g -source 1.7 -target 1.7 (the pom's java.level 7); this gives the same bytes as the Messages.class of the released token-macro-2.5.jar, which is what the evaluation's jar contains (the commit is the one right after the 2.5 release; its sources equal 2.5's). The compile class path is the pom's compile and provided dependencies (Maven dependency:copy-dependencies -DincludeScope=compile; jenkins-core 1.642.3 and its tree). Fixed version: token-macro 2.6 (first patched release, published only on repo.jenkins-ci.org, not on Maven Central) with parboiled-java/parboiled-core 1.1.8, which 2.6 needs (it does not work with the 1.1.7 the vulnerable side uses)."
+}

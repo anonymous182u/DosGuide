@@ -1,0 +1,16 @@
+# DoS-relevant queries from codeql/java-queries (paths relative to the pack root).
+# Lines starting with # are ignored.
+Security/CWE/CWE-730/ReDoS.ql
+Security/CWE/CWE-730/PolynomialReDoS.ql
+Security/CWE/CWE-730/RegexInjection.ql
+Security/CWE/CWE-611/XXE.ql
+experimental/Security/CWE/CWE-522-DecompressionBombs/DecompressionBomb.ql
+experimental/Security/CWE/CWE-400/ThreadResourceAbuse.ql
+# Custom DoS queries (paths relative to this file's directory; pack: custom/qlpack.yml,
+# resolved via --additional-packs).
+custom/RegexRecursionSOE.ql
+custom/RegexRecursionSOE_shape.ql
+custom/UnboundedArrayAllocationFromInput.ql
+custom/BigNumberAbuseFromApiInput.ql
+custom/UncontrolledRecursion.ql
+custom/InfiniteLoop.ql

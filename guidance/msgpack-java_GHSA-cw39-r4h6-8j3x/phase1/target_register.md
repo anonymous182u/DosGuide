@@ -1,0 +1,272 @@
+{
+  "ordered_targets": [
+    {
+      "slot": 1,
+      "id": "V1",
+      "name": "Uncontrolled recursion in MessageUnpacker.unpackValue() via nested containers",
+      "entrypoint": "MsgpackFuzzTest.fuzzMessageUnpackerUnpackValue(InputStream) → MessageUnpacker.unpackValue() → MessageUnpacker.unpackArrayHeader() → MessageUnpacker.unpackValue()",
+      "source_path": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java",
+      "sink": "MessageUnpacker#unpackValue",
+      "mechanism": "Each nested fixarray(1) byte (0x91) causes one recursive call to unpackValue(); no depth limit exists, so N nested containers create N stack frames",
+      "resource": "stack depth: one unpackValue() frame (~200-300 bytes) per nesting level",
+      "failure_mode": "stack_overflow",
+      "scale": "Measured ~150 bytes of stack per nesting level (256 KB probe cap exceeded between 800 and 1600 levels, transition at ~1200 levels). With the evaluation's 1 MB stack and ~80 KB framework overhead, ~944 KB is available for recursion: 944 KB / 150 bytes ≈ 6300 nesting levels to overflow. Densest encoding is fixarray-of-1 (0x91) at 1 byte per level plus 1 terminal byte (0xC0), so about 6300 bytes of input.",
+      "input_bytes": 6301,
+      "cwe": "CWE-674",
+      "checkpath_status": "PASS",
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "method": "fuzzing.MsgpackFuzzTest#fuzzMessageUnpackerUnpackValue(InputStream)",
+          "location": "harness/src/test/java/fuzzing/MsgpackFuzzTest.java:29"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "harness/src/test/java/fuzzing/MsgpackFuzzTest.java:33"
+        },
+        {
+          "kind": "hop",
+          "method": "org.msgpack.core.MessageUnpacker#unpackValue()",
+          "location": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:606"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:637"
+        },
+        {
+          "kind": "hop",
+          "method": "org.msgpack.core.MessageUnpacker#unpackArrayHeader()",
+          "location": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:1336"
+        },
+        {
+          "kind": "connection",
+          "type": "DATAFLOW",
+          "evidence": "MessageUnpacker#unpackArrayHeader() (msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:1336) writes field `buffer`, which MessageUnpacker#unpackValue() (msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:606) reads (through helper calls)",
+          "site": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:1336"
+        },
+        {
+          "kind": "hop",
+          "method": "org.msgpack.core.MessageUnpacker#unpackValue()",
+          "location": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:606"
+        }
+      ],
+      "harness_entry": "fuzzing.MsgpackFuzzTest#fuzzMessageUnpackerUnpackValue",
+      "scale_measurement": [
+        {
+          "value": 100,
+          "input_bytes": 101,
+          "outcome": "completed",
+          "cpu_ms": 9.860211,
+          "allocated_bytes": 700232,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "value": 200,
+          "input_bytes": 201,
+          "outcome": "completed",
+          "cpu_ms": 11.496039,
+          "allocated_bytes": 704368,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "value": 400,
+          "input_bytes": 401,
+          "outcome": "completed",
+          "cpu_ms": 12.366373,
+          "allocated_bytes": 712464,
+          "peak_heap_bytes": 2097152
+        },
+        {
+          "value": 800,
+          "input_bytes": 801,
+          "outcome": "completed",
+          "cpu_ms": 13.42961,
+          "allocated_bytes": 728968,
+          "peak_heap_bytes": 2097152
+        },
+        {
+          "value": 1600,
+          "input_bytes": 1601,
+          "outcome": "stack_cap"
+        }
+      ]
+    },
+    {
+      "slot": 2,
+      "id": "V2",
+      "name": "Uncontrolled array allocation from ARRAY32 header in MessageUnpacker.unpackValue()",
+      "entrypoint": "MsgpackFuzzTest.fuzzMessageUnpackerUnpackValue(InputStream) → MessageUnpacker.unpackValue() → MessageUnpacker.unpackArrayHeader()",
+      "source_path": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java",
+      "sink": "MessageUnpacker#unpackValue",
+      "mechanism": "ARRAY32 header (0xDD + 4-byte size) declares up to 2^31-1 elements; unpackValue() allocates new Value[size] immediately before reading any elements, so 5 input bytes drive a multi-GB allocation",
+      "resource": "heap memory: size * 4 bytes for the Value reference array (compressed oops)",
+      "failure_mode": "out_of_memory",
+      "scale": "Measured 4 bytes of heap per declared array element (Value reference, compressed oops). 256 MB probe cap exceeded at 64M elements. Extrapolating to the evaluation's 1 GB heap with ~150-200 MB JVM overhead: ~200M elements × 4 bytes = 800 MB, exhausting available heap. Input is a 5-byte ARRAY32 header (0xDD + 4-byte big-endian size).",
+      "input_bytes": 5,
+      "cwe": "CWE-770",
+      "checkpath_status": "PASS",
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "method": "fuzzing.MsgpackFuzzTest#fuzzMessageUnpackerUnpackValue(InputStream)",
+          "location": "harness/src/test/java/fuzzing/MsgpackFuzzTest.java:29"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "harness/src/test/java/fuzzing/MsgpackFuzzTest.java:33"
+        },
+        {
+          "kind": "hop",
+          "method": "org.msgpack.core.MessageUnpacker#unpackValue()",
+          "location": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:606"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:637"
+        },
+        {
+          "kind": "hop",
+          "method": "org.msgpack.core.MessageUnpacker#unpackArrayHeader()",
+          "location": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:1336"
+        }
+      ],
+      "harness_entry": "fuzzing.MsgpackFuzzTest#fuzzMessageUnpackerUnpackValue",
+      "scale_measurement": [
+        {
+          "value": 4194304,
+          "input_bytes": 5,
+          "outcome": "completed",
+          "cpu_ms": 10.473189,
+          "allocated_bytes": 17252064,
+          "peak_heap_bytes": 18874368
+        },
+        {
+          "value": 8388608,
+          "input_bytes": 5,
+          "outcome": "completed",
+          "cpu_ms": 19.262022,
+          "allocated_bytes": 34029280,
+          "peak_heap_bytes": 35651584
+        },
+        {
+          "value": 16777216,
+          "input_bytes": 5,
+          "outcome": "completed",
+          "cpu_ms": 25.564132,
+          "allocated_bytes": 67583712,
+          "peak_heap_bytes": 12323080
+        },
+        {
+          "value": 33554432,
+          "input_bytes": 5,
+          "outcome": "completed",
+          "cpu_ms": 32.390699,
+          "allocated_bytes": 134692576,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "value": 67108864,
+          "input_bytes": 5,
+          "outcome": "heap_cap"
+        }
+      ]
+    },
+    {
+      "slot": 3,
+      "id": "V3",
+      "name": "Uncontrolled byte array allocation from BIN32 header in MessageUnpacker.unpackValue()",
+      "entrypoint": "MsgpackFuzzTest.fuzzMessageUnpackerUnpackValue(InputStream) → MessageUnpacker.unpackValue() → MessageUnpacker.unpackBinaryHeader() → MessageUnpacker.readPayload(int)",
+      "source_path": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java",
+      "sink": "MessageUnpacker#readPayload",
+      "mechanism": "BIN32 header (0xC6 + 4-byte length) declares up to 2^31-1 bytes of payload; readPayload(int) allocates new byte[length] before reading data, so 5 input bytes drive a multi-GB allocation with no size limit check for binary",
+      "resource": "heap memory: length bytes for the byte array allocation",
+      "failure_mode": "out_of_memory",
+      "scale": "Measured 1 byte of heap per declared payload byte (direct byte array allocation). 256 MB probe cap exceeded at 256M declared bytes. Extrapolating to the evaluation's 1 GB heap with ~150-200 MB JVM overhead: ~800M declared bytes → 800 MB allocated, exhausting available heap. Input is a 5-byte BIN32 header (0xC6 + 4-byte big-endian length).",
+      "input_bytes": 5,
+      "cwe": "CWE-770",
+      "checkpath_status": "PASS",
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "method": "fuzzing.MsgpackFuzzTest#fuzzMessageUnpackerUnpackValue(InputStream)",
+          "location": "harness/src/test/java/fuzzing/MsgpackFuzzTest.java:29"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "harness/src/test/java/fuzzing/MsgpackFuzzTest.java:33"
+        },
+        {
+          "kind": "hop",
+          "method": "org.msgpack.core.MessageUnpacker#unpackValue()",
+          "location": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:606"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:633"
+        },
+        {
+          "kind": "hop",
+          "method": "org.msgpack.core.MessageUnpacker#unpackBinaryHeader()",
+          "location": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:1510"
+        },
+        {
+          "kind": "connection",
+          "type": "DATAFLOW",
+          "evidence": "MessageUnpacker#unpackBinaryHeader() (msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:1510) writes field `buffer`, which MessageUnpacker#readPayload(int) (msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:1646) reads (through helper calls)",
+          "site": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:1510"
+        },
+        {
+          "kind": "hop",
+          "method": "org.msgpack.core.MessageUnpacker#readPayload(int)",
+          "location": "msgpack-core/src/main/java/org/msgpack/core/MessageUnpacker.java:1646"
+        }
+      ],
+      "harness_entry": "fuzzing.MsgpackFuzzTest#fuzzMessageUnpackerUnpackValue",
+      "scale_measurement": [
+        {
+          "value": 16777216,
+          "input_bytes": 5,
+          "outcome": "completed",
+          "cpu_ms": 12.571759,
+          "allocated_bytes": 17253312,
+          "peak_heap_bytes": 18874368
+        },
+        {
+          "value": 33554432,
+          "input_bytes": 5,
+          "outcome": "completed",
+          "cpu_ms": 18.517459,
+          "allocated_bytes": 34030528,
+          "peak_heap_bytes": 35651584
+        },
+        {
+          "value": 67108864,
+          "input_bytes": 5,
+          "outcome": "completed",
+          "cpu_ms": 13.281379,
+          "allocated_bytes": 67584960,
+          "peak_heap_bytes": 0
+        },
+        {
+          "value": 134217728,
+          "input_bytes": 5,
+          "outcome": "completed",
+          "cpu_ms": 32.19836,
+          "allocated_bytes": 134693824,
+          "peak_heap_bytes": 127969160
+        },
+        {
+          "value": 268435456,
+          "input_bytes": 5,
+          "outcome": "heap_cap"
+        }
+      ]
+    }
+  ]
+}

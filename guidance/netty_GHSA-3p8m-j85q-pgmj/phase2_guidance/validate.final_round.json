@@ -1,0 +1,477 @@
+{
+  "ok": true,
+  "launch": [],
+  "build": {
+    "ok": true
+  },
+  "targets": [
+    {
+      "tool": "ValidateArtifact",
+      "target": "V1",
+      "checks": [
+        {
+          "name": "contract",
+          "status": "pass",
+          "detail": "factory, lastSignals() and fuzz test found"
+        },
+        {
+          "name": "runs",
+          "status": "pass",
+          "detail": "40 executions completed"
+        },
+        {
+          "name": "plan_signals",
+          "status": "pass",
+          "detail": "lastSignals() returns every planned signal [decompressedBytes]"
+        },
+        {
+          "name": "signal_varies",
+          "status": "pass",
+          "detail": "varying: [decompressedBytes] (on the guidance's own inputs: [decompressedBytes])"
+        },
+        {
+          "name": "reset",
+          "status": "pass",
+          "detail": "re-running inputs reproduced their values"
+        },
+        {
+          "name": "depends_on_execution",
+          "status": "skipped",
+          "detail": "the guidance could not complete a cycle without the target"
+        },
+        {
+          "name": "instrumentation",
+          "status": "pass",
+          "detail": "rewrote [io.netty.handler.codec.compression.BrotliDecoder]"
+        },
+        {
+          "name": "input_limit",
+          "status": "pass",
+          "detail": "with jqf.ei.MAX_INPUT_SIZE=16 the 20 generated inputs were at most 16 bytes"
+        },
+        {
+          "name": "input_growth",
+          "status": "pass",
+          "detail": "the guidance generated a 10240-byte input after 710 ms (4 executions); the target needs 1700"
+        },
+        {
+          "name": "progress",
+          "status": "skip",
+          "detail": "not compared: an execution of the guidance's own inputs ran as long as the time limit"
+        }
+      ],
+      "max_input_bytes": 10240,
+      "stopped_early": "an execution took longer than 20000 ms; the checks use the executions recorded before it",
+      "executions": {
+        "own": 40,
+        "repeat": 0,
+        "random": 0,
+        "example": 0,
+        "probe": 0
+      },
+      "test_failures_not_used": 0,
+      "signals": {
+        "decompressedBytes": {
+          "min": 0.0,
+          "max": 648342396.0,
+          "distinct": 30
+        }
+      },
+      "signals_by_kind": {
+        "own": {
+          "decompressedBytes": {
+            "max": 648342396.0,
+            "min": 0.0,
+            "distinct": 30
+          }
+        }
+      },
+      "transformed_classes": [
+        "io.netty.handler.codec.compression.BrotliDecoder"
+      ],
+      "ok": true,
+      "input_limit_probe": {
+        "max_input_bytes": 16,
+        "longest_input": 16,
+        "executions": {
+          "own": 20
+        }
+      },
+      "growth_probe": {
+        "needed_input_bytes": 1700,
+        "longest_input": 10240,
+        "executions": {
+          "own": 4
+        },
+        "growth": [
+          {
+            "ms": 687,
+            "execution": 1,
+            "bytes": 14
+          },
+          {
+            "ms": 704,
+            "execution": 3,
+            "bytes": 15
+          },
+          {
+            "ms": 710,
+            "execution": 4,
+            "bytes": 10240
+          }
+        ]
+      },
+      "hard_ok": true,
+      "progress_probe": {
+        "own_ms": 75989,
+        "executions": 36,
+        "longest_input": 10240,
+        "phase": "own",
+        "series_inputs": 6,
+        "comparison": {},
+        "measurements": {
+          "budget_ms": 120000,
+          "own_ms": 75989,
+          "executions": 36,
+          "longest_input": 10240,
+          "phase": "own",
+          "own_best": {
+            "decompressedBytes": [
+              [
+                11,
+                1025.0,
+                667
+              ],
+              [
+                13,
+                2050.0,
+                677
+              ],
+              [
+                14,
+                37212.0,
+                687
+              ],
+              [
+                15,
+                247026.0,
+                713
+              ],
+              [
+                16,
+                329368.0,
+                745
+              ],
+              [
+                18,
+                4194304.0,
+                3311
+              ],
+              [
+                27,
+                4194304.0,
+                950
+              ],
+              [
+                40,
+                10018848.0,
+                1167
+              ],
+              [
+                54,
+                20037696.0,
+                1591
+              ],
+              [
+                132,
+                71303168.0,
+                3139
+              ],
+              [
+                250,
+                143048652.0,
+                6429
+              ],
+              [
+                617,
+                378088218.0,
+                14635
+              ],
+              [
+                1009,
+                630147030.0,
+                29301
+              ],
+              [
+                1103,
+                692060160.0,
+                45307
+              ],
+              [
+                10240,
+                0.0,
+                673
+              ]
+            ]
+          },
+          "series": []
+        }
+      }
+    },
+    {
+      "tool": "ValidateArtifact",
+      "target": "V2",
+      "checks": [
+        {
+          "name": "contract",
+          "status": "pass",
+          "detail": "factory, lastSignals() and fuzz test found"
+        },
+        {
+          "name": "runs",
+          "status": "pass",
+          "detail": "85 executions completed"
+        },
+        {
+          "name": "plan_signals",
+          "status": "pass",
+          "detail": "lastSignals() returns every planned signal [decompressedBytes]"
+        },
+        {
+          "name": "signal_varies",
+          "status": "pass",
+          "detail": "varying: [decompressedBytes] (on the guidance's own inputs: [decompressedBytes])"
+        },
+        {
+          "name": "reset",
+          "status": "pass",
+          "detail": "re-running inputs reproduced their values"
+        },
+        {
+          "name": "depends_on_execution",
+          "status": "pass",
+          "detail": "signals stay near zero when the target does not run"
+        },
+        {
+          "name": "instrumentation",
+          "status": "pass",
+          "detail": "rewrote [io.netty.handler.codec.compression.ZstdDecoder]"
+        },
+        {
+          "name": "input_limit",
+          "status": "pass",
+          "detail": "with jqf.ei.MAX_INPUT_SIZE=16 the 20 generated inputs were at most 16 bytes"
+        },
+        {
+          "name": "input_growth",
+          "status": "pass",
+          "detail": "the guidance generated a 10240-byte input after 775 ms (4 executions); the target needs 10240"
+        },
+        {
+          "name": "progress",
+          "status": "skip",
+          "detail": "not compared: an execution of the guidance's own inputs ran as long as the time limit"
+        }
+      ],
+      "max_input_bytes": 10240,
+      "executions": {
+        "own": 40,
+        "repeat": 5,
+        "random": 40,
+        "example": 0,
+        "probe": 3
+      },
+      "test_failures_not_used": 0,
+      "signals": {
+        "decompressedBytes": {
+          "min": 0.0,
+          "max": 111646320.0,
+          "distinct": 40
+        }
+      },
+      "signals_by_kind": {
+        "own": {
+          "decompressedBytes": {
+            "min": 0.0,
+            "distinct": 27,
+            "max": 111646320.0
+          }
+        },
+        "random": {
+          "decompressedBytes": {
+            "min": 0.0,
+            "distinct": 17,
+            "max": 111341228.0
+          }
+        },
+        "repeat": {
+          "decompressedBytes": {
+            "min": 46024896.0,
+            "distinct": 5,
+            "max": 111646320.0
+          }
+        }
+      },
+      "transformed_classes": [
+        "io.netty.handler.codec.compression.ZstdDecoder"
+      ],
+      "ok": true,
+      "input_limit_probe": {
+        "max_input_bytes": 16,
+        "longest_input": 16,
+        "executions": {
+          "own": 20
+        }
+      },
+      "growth_probe": {
+        "needed_input_bytes": 10240,
+        "longest_input": 10240,
+        "executions": {
+          "own": 4
+        },
+        "growth": [
+          {
+            "ms": 755,
+            "execution": 1,
+            "bytes": 19
+          },
+          {
+            "ms": 775,
+            "execution": 4,
+            "bytes": 10240
+          }
+        ]
+      },
+      "hard_ok": true,
+      "progress_probe": {
+        "own_ms": 117280,
+        "executions": 41,
+        "longest_input": 10240,
+        "phase": "own",
+        "series_inputs": 6,
+        "comparison": {},
+        "measurements": {
+          "budget_ms": 120000,
+          "own_ms": 117280,
+          "executions": 41,
+          "longest_input": 10240,
+          "phase": "own",
+          "own_best": {
+            "decompressedBytes": [
+              [
+                19,
+                30260.0,
+                732
+              ],
+              [
+                20,
+                60520.0,
+                744
+              ],
+              [
+                22,
+                121040.0,
+                756
+              ],
+              [
+                34,
+                242080.0,
+                765
+              ],
+              [
+                58,
+                484160.0,
+                788
+              ],
+              [
+                82,
+                723978.0,
+                2424
+              ],
+              [
+                83,
+                726240.0,
+                797
+              ],
+              [
+                94,
+                859780.0,
+                2429
+              ],
+              [
+                154,
+                1452480.0,
+                813
+              ],
+              [
+                287,
+                2904960.0,
+                830
+              ],
+              [
+                552,
+                5809920.0,
+                854
+              ],
+              [
+                1173,
+                12633279.0,
+                10484
+              ],
+              [
+                2769,
+                30126093.0,
+                11441
+              ],
+              [
+                2954,
+                2944.0,
+                10094
+              ],
+              [
+                5529,
+                60252186.0,
+                55751
+              ],
+              [
+                6410,
+                6400.0,
+                767
+              ],
+              [
+                7250,
+                78939532.0,
+                2420
+              ],
+              [
+                7767,
+                84578070.0,
+                1684
+              ],
+              [
+                9283,
+                9273.0,
+                769
+              ],
+              [
+                10239,
+                111669472.0,
+                85092
+              ]
+            ]
+          },
+          "series": []
+        }
+      }
+    }
+  ],
+  "limits": {
+    "jvm_args": [
+      "-Xmx1g",
+      "-Xss1m"
+    ],
+    "timeout_ms": 20000,
+    "max_input_bytes": 10240
+  },
+  "hard_ok": true
+}

@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Premain-Class: fuzzing.agent.CombinedMeasureAgent
+Can-Retransform-Classes: true
+Can-Redefine-Classes: true
+Boot-Class-Path: dos-measure-agent.jar
+Created-By: 17.0.20.1 (Amazon.com Inc.)
+

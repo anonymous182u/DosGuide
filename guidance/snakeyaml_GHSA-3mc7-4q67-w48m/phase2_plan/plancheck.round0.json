@@ -1,0 +1,273 @@
+{
+  "tool": "checkpath",
+  "version": "1.0.0",
+  "source_root": "projects/snakeyaml_GHSA-3mc7-4q67-w48m",
+  "index": {
+    "files_parsed": 121,
+    "files_failed": 0,
+    "methods": 1015,
+    "harness_fuzz_methods": [
+      "SnakeYamlFuzzTest.fuzzYamlLoad(InputStream)",
+      "SnakeYamlFuzzTest.fuzzYamlLoad2(InputStream)",
+      "SnakeYamlFuzzTest.fuzzYamlLoad3(InputStream)"
+    ],
+    "index_seconds": 1.6,
+    "max_gap": 2,
+    "sink_depth": 6,
+    "symbol_resolution": true
+  },
+  "ok": true,
+  "targets": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "entrypoint": "SnakeYamlFuzzTest.fuzzYamlLoad(InputStream) → Yaml.load(String) → BaseConstructor.getSingleData(Class) → Composer.getSingleNode() → Composer.composeNode(Node) → Composer.composeSequenceNode(String)",
+      "source_path": "src/main/java/org/yaml/snakeyaml/composer/Composer.java",
+      "start_ok": true,
+      "harness_entry": "com.fuzz.snakeyaml.SnakeYamlFuzzTest#fuzzYamlLoad",
+      "end_ok": true,
+      "end": {
+        "sink_file": "src/main/java/org/yaml/snakeyaml/composer/Composer.java",
+        "ok": true,
+        "evidence": "hop 6 Composer#composeSequenceNode(String) is declared in src/main/java/org/yaml/snakeyaml/composer/Composer.java:221",
+        "level": "method",
+        "sink_method": "Composer#composeNode",
+        "sink_evidence": "hop 5 is Composer#composeNode(Node)"
+      },
+      "hops": [
+        {
+          "index": 1,
+          "raw": "SnakeYamlFuzzTest.fuzzYamlLoad(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "com.fuzz.snakeyaml.SnakeYamlFuzzTest#fuzzYamlLoad(InputStream)",
+              "location": "harness/src/test/java/com/fuzz/snakeyaml/SnakeYamlFuzzTest.java:29"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "raw": "Yaml.load(String)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.yaml.snakeyaml.Yaml#load(String)",
+              "location": "src/main/java/org/yaml/snakeyaml/Yaml.java:415"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "raw": "BaseConstructor.getSingleData(Class)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.yaml.snakeyaml.constructor.BaseConstructor#getSingleData(Class)",
+              "location": "src/main/java/org/yaml/snakeyaml/constructor/BaseConstructor.java:149"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "raw": "Composer.getSingleNode()",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.yaml.snakeyaml.composer.Composer#getSingleNode()",
+              "location": "src/main/java/org/yaml/snakeyaml/composer/Composer.java:137"
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "raw": "Composer.composeNode(Node)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.yaml.snakeyaml.composer.Composer#composeNode(Node)",
+              "location": "src/main/java/org/yaml/snakeyaml/composer/Composer.java:157"
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "raw": "Composer.composeSequenceNode(String)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "org.yaml.snakeyaml.composer.Composer#composeSequenceNode(String)",
+              "location": "src/main/java/org/yaml/snakeyaml/composer/Composer.java:221"
+            }
+          ]
+        }
+      ],
+      "path_signature": [
+        "com.fuzz.snakeyaml.SnakeYamlFuzzTest#fuzzYamlLoad(InputStream)",
+        "org.yaml.snakeyaml.Yaml#load(String)",
+        "org.yaml.snakeyaml.constructor.BaseConstructor#getSingleData(Class)",
+        "org.yaml.snakeyaml.composer.Composer#getSingleNode()",
+        "org.yaml.snakeyaml.composer.Composer#composeNode(Node)",
+        "org.yaml.snakeyaml.composer.Composer#composeSequenceNode(String)"
+      ],
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "written": "SnakeYamlFuzzTest.fuzzYamlLoad(InputStream)",
+          "provenance": "agent",
+          "method": "com.fuzz.snakeyaml.SnakeYamlFuzzTest#fuzzYamlLoad(InputStream)",
+          "location": "harness/src/test/java/com/fuzz/snakeyaml/SnakeYamlFuzzTest.java:29"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "SnakeYamlFuzzTest#fuzzYamlLoad(InputStream) calls Yaml#load(String) at harness/src/test/java/com/fuzz/snakeyaml/SnakeYamlFuzzTest.java:31 (resolved)",
+          "site": "harness/src/test/java/com/fuzz/snakeyaml/SnakeYamlFuzzTest.java:31"
+        },
+        {
+          "kind": "hop",
+          "written": "Yaml.load(String)",
+          "provenance": "agent",
+          "method": "org.yaml.snakeyaml.Yaml#load(String)",
+          "location": "src/main/java/org/yaml/snakeyaml/Yaml.java:415"
+        },
+        {
+          "kind": "connection",
+          "type": "INDIRECT",
+          "evidence": "1 omitted call(s)"
+        },
+        {
+          "kind": "hop",
+          "written": null,
+          "provenance": "checkpath (omitted call)",
+          "method": "org.yaml.snakeyaml.Yaml#loadFromReader(StreamReader,Class)",
+          "location": "src/main/java/org/yaml/snakeyaml/Yaml.java:487"
+        },
+        {
+          "kind": "hop",
+          "written": "BaseConstructor.getSingleData(Class)",
+          "provenance": "agent",
+          "method": "org.yaml.snakeyaml.constructor.BaseConstructor#getSingleData(Class)",
+          "location": "src/main/java/org/yaml/snakeyaml/constructor/BaseConstructor.java:149"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "BaseConstructor#getSingleData(Class) calls Composer#getSingleNode() at src/main/java/org/yaml/snakeyaml/constructor/BaseConstructor.java:151 (resolved)",
+          "site": "src/main/java/org/yaml/snakeyaml/constructor/BaseConstructor.java:151"
+        },
+        {
+          "kind": "hop",
+          "written": "Composer.getSingleNode()",
+          "provenance": "agent",
+          "method": "org.yaml.snakeyaml.composer.Composer#getSingleNode()",
+          "location": "src/main/java/org/yaml/snakeyaml/composer/Composer.java:137"
+        },
+        {
+          "kind": "connection",
+          "type": "DATAFLOW",
+          "evidence": "Composer#getSingleNode() (src/main/java/org/yaml/snakeyaml/composer/Composer.java:137) writes field `nonScalarAliasesCount`, which Composer#composeNode(Node) (src/main/java/org/yaml/snakeyaml/composer/Composer.java:157) reads (through helper calls)",
+          "site": "src/main/java/org/yaml/snakeyaml/composer/Composer.java:137"
+        },
+        {
+          "kind": "hop",
+          "written": "Composer.composeNode(Node)",
+          "provenance": "agent",
+          "method": "org.yaml.snakeyaml.composer.Composer#composeNode(Node)",
+          "location": "src/main/java/org/yaml/snakeyaml/composer/Composer.java:157"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "Composer#composeNode(Node) calls Composer#composeSequenceNode(String) at src/main/java/org/yaml/snakeyaml/composer/Composer.java:189 (resolved)",
+          "site": "src/main/java/org/yaml/snakeyaml/composer/Composer.java:189"
+        },
+        {
+          "kind": "hop",
+          "written": "Composer.composeSequenceNode(String)",
+          "provenance": "agent",
+          "method": "org.yaml.snakeyaml.composer.Composer#composeSequenceNode(String)",
+          "location": "src/main/java/org/yaml/snakeyaml/composer/Composer.java:221"
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "status": "CALL",
+          "evidence": "SnakeYamlFuzzTest#fuzzYamlLoad(InputStream) calls Yaml#load(String) at harness/src/test/java/com/fuzz/snakeyaml/SnakeYamlFuzzTest.java:31 (resolved)"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "status": "INDIRECT",
+          "evidence": "1 omitted call(s)",
+          "chain": [
+            "Yaml#load(String)",
+            "Yaml#loadFromReader(StreamReader,Class)",
+            "BaseConstructor#getSingleData(Class)"
+          ]
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "status": "CALL",
+          "evidence": "BaseConstructor#getSingleData(Class) calls Composer#getSingleNode() at src/main/java/org/yaml/snakeyaml/constructor/BaseConstructor.java:151 (resolved)"
+        },
+        {
+          "from": 4,
+          "to": 5,
+          "status": "DATAFLOW",
+          "evidence": "Composer#getSingleNode() (src/main/java/org/yaml/snakeyaml/composer/Composer.java:137) writes field `nonScalarAliasesCount`, which Composer#composeNode(Node) (src/main/java/org/yaml/snakeyaml/composer/Composer.java:157) reads (through helper calls)"
+        },
+        {
+          "from": 5,
+          "to": 6,
+          "status": "CALL",
+          "evidence": "Composer#composeNode(Node) calls Composer#composeSequenceNode(String) at src/main/java/org/yaml/snakeyaml/composer/Composer.java:189 (resolved)"
+        }
+      ],
+      "diagnostics": [],
+      "warnings": [
+        "Edge 2→3 is indirect: Yaml#load(String) → Yaml#loadFromReader(StreamReader,Class) → BaseConstructor#getSingleData(Class)"
+      ]
+    }
+  ],
+  "plan_ok": true,
+  "plans": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "signals": [
+        {
+          "name": "maxDepth",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "Composer#composeNode",
+              "status": "RESOLVED",
+              "method": "org.yaml.snakeyaml.composer.Composer#composeNode",
+              "declared_at": "src/main/java/org/yaml/snakeyaml/composer/Composer.java:157",
+              "relation": "on_path"
+            }
+          ]
+        },
+        {
+          "name": "nodeCount",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "Composer#composeNode",
+              "status": "RESOLVED",
+              "method": "org.yaml.snakeyaml.composer.Composer#composeNode",
+              "declared_at": "src/main/java/org/yaml/snakeyaml/composer/Composer.java:157",
+              "relation": "on_path"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    }
+  ]
+}

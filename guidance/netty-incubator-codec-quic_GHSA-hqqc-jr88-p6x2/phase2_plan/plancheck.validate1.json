@@ -1,0 +1,981 @@
+{
+  "tool": "checkpath",
+  "version": "1.0.0",
+  "source_root": "projects/netty-incubator-codec-quic_GHSA-hqqc-jr88-p6x2",
+  "index": {
+    "files_parsed": 104,
+    "files_failed": 0,
+    "methods": 1293,
+    "harness_fuzz_methods": [
+      "QuicCodecFuzzTest.fuzzQuicServerCodecChannelRead(InputStream)",
+      "QuicCodecFuzzTest.fuzzQuicHeaderParserParse(InputStream)",
+      "QuicCodecFuzzTest.fuzzQuicServerCodecChannelRead2(InputStream)"
+    ],
+    "index_seconds": 0.8,
+    "max_gap": 2,
+    "sink_depth": 6,
+    "symbol_resolution": true
+  },
+  "ok": true,
+  "targets": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "entrypoint": "QuicCodecFuzzTest.fuzzQuicServerCodecChannelRead(InputStream) → QuicCodecFuzzTest.serveInitialPackets(byte[]) → EmbeddedChannel.writeInbound(Object...) → QuicheQuicCodec.channelRead(ChannelHandlerContext, Object) → QuicheQuicCodec.handleQuicPacket(InetSocketAddress, InetSocketAddress, ByteBuf) → QuicHeaderParser.parse(InetSocketAddress, InetSocketAddress, ByteBuf, QuicHeaderParser.QuicHeaderProcessor) → QuicheQuicCodec$QuicCodecHeaderProcessor.process(InetSocketAddress, InetSocketAddress, ByteBuf, QuicPacketType, long, ByteBuf, ByteBuf, ByteBuf) → QuicheQuicServerCodec.quicPacketRead(ChannelHandlerContext, InetSocketAddress, InetSocketAddress, QuicPacketType, long, ByteBuf, ByteBuf, ByteBuf, ByteBuf, ByteBuf, Consumer, int, QuicheConfig) → QuicheQuicCodec.getChannel(ByteBuffer) → HashMap.get(Object)",
+      "source_path": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java",
+      "start_ok": true,
+      "harness_entry": "io.netty.incubator.codec.quic.fuzz.QuicCodecFuzzTest#fuzzQuicServerCodecChannelRead",
+      "end_ok": true,
+      "end": {
+        "sink_file": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java",
+        "ok": true,
+        "evidence": "hop 9 QuicheQuicCodec#getChannel(ByteBuffer) is declared in codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:80",
+        "level": "method",
+        "sink_method": "io.netty.incubator.codec.quic.QuicheQuicCodec#getChannel",
+        "sink_evidence": "hop 9 is QuicheQuicCodec#getChannel(ByteBuffer)"
+      },
+      "hops": [
+        {
+          "index": 1,
+          "raw": "QuicCodecFuzzTest.fuzzQuicServerCodecChannelRead(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "io.netty.incubator.codec.quic.fuzz.QuicCodecFuzzTest#fuzzQuicServerCodecChannelRead(InputStream)",
+              "location": "harness/src/test/java/io/netty/incubator/codec/quic/fuzz/QuicCodecFuzzTest.java:62"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "raw": "QuicCodecFuzzTest.serveInitialPackets(byte[])",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "io.netty.incubator.codec.quic.fuzz.QuicCodecFuzzTest#serveInitialPackets(byte[])",
+              "location": "harness/src/test/java/io/netty/incubator/codec/quic/fuzz/QuicCodecFuzzTest.java:97"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "raw": "EmbeddedChannel.writeInbound(Object...)",
+          "status": "EXTERNAL",
+          "candidates": [],
+          "external": [
+            "EmbeddedChannel.writeInbound(Object...)"
+          ]
+        },
+        {
+          "index": 4,
+          "raw": "QuicheQuicCodec.channelRead(ChannelHandlerContext, Object)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "io.netty.incubator.codec.quic.QuicheQuicCodec#channelRead(ChannelHandlerContext,Object)",
+              "location": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:178"
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "raw": "QuicheQuicCodec.handleQuicPacket(InetSocketAddress, InetSocketAddress, ByteBuf)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "io.netty.incubator.codec.quic.QuicheQuicCodec#handleQuicPacket(InetSocketAddress,InetSocketAddress,ByteBuf)",
+              "location": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:200"
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "raw": "QuicHeaderParser.parse(InetSocketAddress, InetSocketAddress, ByteBuf, QuicHeaderParser.QuicHeaderProcessor)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "io.netty.incubator.codec.quic.QuicHeaderParser#parse(InetSocketAddress,InetSocketAddress,ByteBuf,QuicHeaderProcessor)",
+              "location": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicHeaderParser.java:68"
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "raw": "QuicheQuicCodec$QuicCodecHeaderProcessor.process(InetSocketAddress, InetSocketAddress, ByteBuf, QuicPacketType, long, ByteBuf, ByteBuf, ByteBuf)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "io.netty.incubator.codec.quic.QuicheQuicCodec.QuicCodecHeaderProcessor#process(InetSocketAddress,InetSocketAddress,ByteBuf,QuicPacketType,long,ByteBuf,ByteBuf,ByteBuf)",
+              "location": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:362"
+            },
+            {
+              "method": "io.netty.incubator.codec.quic.QuicHeaderParser.QuicHeaderProcessor#process(InetSocketAddress,InetSocketAddress,ByteBuf,QuicPacketType,long,ByteBuf,ByteBuf,ByteBuf)",
+              "location": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicHeaderParser.java:284"
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "raw": "QuicheQuicServerCodec.quicPacketRead(ChannelHandlerContext, InetSocketAddress, InetSocketAddress, QuicPacketType, long, ByteBuf, ByteBuf, ByteBuf, ByteBuf, ByteBuf, Consumer, int, QuicheConfig)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "io.netty.incubator.codec.quic.QuicheQuicServerCodec#quicPacketRead(ChannelHandlerContext,InetSocketAddress,InetSocketAddress,QuicPacketType,long,ByteBuf,ByteBuf,ByteBuf,ByteBuf,ByteBuf,Consumer,int,QuicheConfig)",
+              "location": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicServerCodec.java:107"
+            },
+            {
+              "method": "io.netty.incubator.codec.quic.QuicheQuicCodec#quicPacketRead(ChannelHandlerContext,InetSocketAddress,InetSocketAddress,QuicPacketType,long,ByteBuf,ByteBuf,ByteBuf,ByteBuf,ByteBuf,Consumer,int,QuicheConfig)",
+              "location": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:229"
+            }
+          ]
+        },
+        {
+          "index": 9,
+          "raw": "QuicheQuicCodec.getChannel(ByteBuffer)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "io.netty.incubator.codec.quic.QuicheQuicCodec#getChannel(ByteBuffer)",
+              "location": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:80"
+            }
+          ]
+        },
+        {
+          "index": 10,
+          "raw": "HashMap.get(Object)",
+          "status": "EXTERNAL",
+          "candidates": [],
+          "external": [
+            "HashMap.get(Object)"
+          ]
+        }
+      ],
+      "path_signature": [
+        "io.netty.incubator.codec.quic.fuzz.QuicCodecFuzzTest#fuzzQuicServerCodecChannelRead(InputStream)",
+        "io.netty.incubator.codec.quic.fuzz.QuicCodecFuzzTest#serveInitialPackets(byte[])",
+        "external:writeInbound",
+        "io.netty.incubator.codec.quic.QuicheQuicCodec#channelRead(ChannelHandlerContext,Object)",
+        "io.netty.incubator.codec.quic.QuicheQuicCodec#handleQuicPacket(InetSocketAddress,InetSocketAddress,ByteBuf)",
+        "io.netty.incubator.codec.quic.QuicHeaderParser#parse(InetSocketAddress,InetSocketAddress,ByteBuf,QuicHeaderProcessor)",
+        "io.netty.incubator.codec.quic.QuicheQuicCodec.QuicCodecHeaderProcessor#process(InetSocketAddress,InetSocketAddress,ByteBuf,QuicPacketType,long,ByteBuf,ByteBuf,ByteBuf)",
+        "io.netty.incubator.codec.quic.QuicheQuicServerCodec#quicPacketRead(ChannelHandlerContext,InetSocketAddress,InetSocketAddress,QuicPacketType,long,ByteBuf,ByteBuf,ByteBuf,ByteBuf,ByteBuf,Consumer,int,QuicheConfig)",
+        "io.netty.incubator.codec.quic.QuicheQuicCodec#getChannel(ByteBuffer)",
+        "external:get"
+      ],
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "written": "QuicCodecFuzzTest.fuzzQuicServerCodecChannelRead(InputStream)",
+          "provenance": "agent",
+          "method": "io.netty.incubator.codec.quic.fuzz.QuicCodecFuzzTest#fuzzQuicServerCodecChannelRead(InputStream)",
+          "location": "harness/src/test/java/io/netty/incubator/codec/quic/fuzz/QuicCodecFuzzTest.java:62"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "QuicCodecFuzzTest#fuzzQuicServerCodecChannelRead(InputStream) calls QuicCodecFuzzTest#serveInitialPackets(byte[]) at harness/src/test/java/io/netty/incubator/codec/quic/fuzz/QuicCodecFuzzTest.java:63 (resolved)",
+          "site": "harness/src/test/java/io/netty/incubator/codec/quic/fuzz/QuicCodecFuzzTest.java:63"
+        },
+        {
+          "kind": "hop",
+          "written": "QuicCodecFuzzTest.serveInitialPackets(byte[])",
+          "provenance": "agent",
+          "method": "io.netty.incubator.codec.quic.fuzz.QuicCodecFuzzTest#serveInitialPackets(byte[])",
+          "location": "harness/src/test/java/io/netty/incubator/codec/quic/fuzz/QuicCodecFuzzTest.java:97"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "QuicCodecFuzzTest#serveInitialPackets(byte[]) calls EmbeddedChannel.writeInbound(Object...) at harness/src/test/java/io/netty/incubator/codec/quic/fuzz/QuicCodecFuzzTest.java:109",
+          "site": "harness/src/test/java/io/netty/incubator/codec/quic/fuzz/QuicCodecFuzzTest.java:109"
+        },
+        {
+          "kind": "hop",
+          "written": "EmbeddedChannel.writeInbound(Object...)",
+          "provenance": "agent",
+          "method": "EmbeddedChannel.writeInbound(Object...)",
+          "location": "outside the source tree"
+        },
+        {
+          "kind": "connection",
+          "type": "UNCHECKED",
+          "evidence": "hop 3 is outside the source tree, so calls made inside it cannot be inspected"
+        },
+        {
+          "kind": "hop",
+          "written": "QuicheQuicCodec.channelRead(ChannelHandlerContext, Object)",
+          "provenance": "agent",
+          "method": "io.netty.incubator.codec.quic.QuicheQuicCodec#channelRead(ChannelHandlerContext,Object)",
+          "location": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:178"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "QuicheQuicCodec#channelRead(ChannelHandlerContext,Object) calls QuicheQuicCodec#handleQuicPacket(InetSocketAddress,InetSocketAddress,ByteBuf) at codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:188 (name match)",
+          "site": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:188"
+        },
+        {
+          "kind": "hop",
+          "written": "QuicheQuicCodec.handleQuicPacket(InetSocketAddress, InetSocketAddress, ByteBuf)",
+          "provenance": "agent",
+          "method": "io.netty.incubator.codec.quic.QuicheQuicCodec#handleQuicPacket(InetSocketAddress,InetSocketAddress,ByteBuf)",
+          "location": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:200"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "QuicheQuicCodec#handleQuicPacket(InetSocketAddress,InetSocketAddress,ByteBuf) calls QuicHeaderParser#parse(InetSocketAddress,InetSocketAddress,ByteBuf,QuicHeaderProcessor) at codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:202 (name match)",
+          "site": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:202"
+        },
+        {
+          "kind": "hop",
+          "written": "QuicHeaderParser.parse(InetSocketAddress, InetSocketAddress, ByteBuf, QuicHeaderParser.QuicHeaderProcessor)",
+          "provenance": "agent",
+          "method": "io.netty.incubator.codec.quic.QuicHeaderParser#parse(InetSocketAddress,InetSocketAddress,ByteBuf,QuicHeaderProcessor)",
+          "location": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicHeaderParser.java:68"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "QuicHeaderParser#parse(InetSocketAddress,InetSocketAddress,ByteBuf,QuicHeaderProcessor) calls QuicHeaderProcessor#process(InetSocketAddress,InetSocketAddress,ByteBuf,QuicPacketType,long,ByteBuf,ByteBuf,ByteBuf) at codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicHeaderParser.java:142 (name match)",
+          "site": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicHeaderParser.java:142"
+        },
+        {
+          "kind": "hop",
+          "written": "QuicheQuicCodec$QuicCodecHeaderProcessor.process(InetSocketAddress, InetSocketAddress, ByteBuf, QuicPacketType, long, ByteBuf, ByteBuf, ByteBuf)",
+          "provenance": "agent",
+          "method": "io.netty.incubator.codec.quic.QuicheQuicCodec.QuicCodecHeaderProcessor#process(InetSocketAddress,InetSocketAddress,ByteBuf,QuicPacketType,long,ByteBuf,ByteBuf,ByteBuf)",
+          "location": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:362"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "QuicCodecHeaderProcessor#process(InetSocketAddress,InetSocketAddress,ByteBuf,QuicPacketType,long,ByteBuf,ByteBuf,ByteBuf) calls QuicheQuicCodec#quicPacketRead(ChannelHandlerContext,InetSocketAddress,InetSocketAddress,QuicPacketType,long,ByteBuf,ByteBuf,ByteBuf,ByteBuf,ByteBuf,Consumer,int,QuicheConfig) at codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:364 (name match)",
+          "site": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:364"
+        },
+        {
+          "kind": "hop",
+          "written": "QuicheQuicServerCodec.quicPacketRead(ChannelHandlerContext, InetSocketAddress, InetSocketAddress, QuicPacketType, long, ByteBuf, ByteBuf, ByteBuf, ByteBuf, ByteBuf, Consumer, int, QuicheConfig)",
+          "provenance": "agent",
+          "method": "io.netty.incubator.codec.quic.QuicheQuicServerCodec#quicPacketRead(ChannelHandlerContext,InetSocketAddress,InetSocketAddress,QuicPacketType,long,ByteBuf,ByteBuf,ByteBuf,ByteBuf,ByteBuf,Consumer,int,QuicheConfig)",
+          "location": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicServerCodec.java:107"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "QuicheQuicServerCodec#quicPacketRead(ChannelHandlerContext,InetSocketAddress,InetSocketAddress,QuicPacketType,long,ByteBuf,ByteBuf,ByteBuf,ByteBuf,ByteBuf,Consumer,int,QuicheConfig) calls QuicheQuicCodec#getChannel(ByteBuffer) at codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicServerCodec.java:115 (name match)",
+          "site": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicServerCodec.java:115"
+        },
+        {
+          "kind": "hop",
+          "written": "QuicheQuicCodec.getChannel(ByteBuffer)",
+          "provenance": "agent",
+          "method": "io.netty.incubator.codec.quic.QuicheQuicCodec#getChannel(ByteBuffer)",
+          "location": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:80"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "QuicheQuicCodec#getChannel(ByteBuffer) calls HashMap.get(Object) at codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:81",
+          "site": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:81"
+        },
+        {
+          "kind": "hop",
+          "written": "HashMap.get(Object)",
+          "provenance": "agent",
+          "method": "HashMap.get(Object)",
+          "location": "outside the source tree"
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "status": "CALL",
+          "evidence": "QuicCodecFuzzTest#fuzzQuicServerCodecChannelRead(InputStream) calls QuicCodecFuzzTest#serveInitialPackets(byte[]) at harness/src/test/java/io/netty/incubator/codec/quic/fuzz/QuicCodecFuzzTest.java:63 (resolved)"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "status": "CALL",
+          "evidence": "QuicCodecFuzzTest#serveInitialPackets(byte[]) calls EmbeddedChannel.writeInbound(Object...) at harness/src/test/java/io/netty/incubator/codec/quic/fuzz/QuicCodecFuzzTest.java:109"
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "status": "UNCHECKED",
+          "evidence": "hop 3 is outside the source tree, so calls made inside it cannot be inspected"
+        },
+        {
+          "from": 4,
+          "to": 5,
+          "status": "CALL",
+          "evidence": "QuicheQuicCodec#channelRead(ChannelHandlerContext,Object) calls QuicheQuicCodec#handleQuicPacket(InetSocketAddress,InetSocketAddress,ByteBuf) at codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:188 (name match)"
+        },
+        {
+          "from": 5,
+          "to": 6,
+          "status": "CALL",
+          "evidence": "QuicheQuicCodec#handleQuicPacket(InetSocketAddress,InetSocketAddress,ByteBuf) calls QuicHeaderParser#parse(InetSocketAddress,InetSocketAddress,ByteBuf,QuicHeaderProcessor) at codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:202 (name match)"
+        },
+        {
+          "from": 6,
+          "to": 7,
+          "status": "CALL",
+          "evidence": "QuicHeaderParser#parse(InetSocketAddress,InetSocketAddress,ByteBuf,QuicHeaderProcessor) calls QuicHeaderProcessor#process(InetSocketAddress,InetSocketAddress,ByteBuf,QuicPacketType,long,ByteBuf,ByteBuf,ByteBuf) at codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicHeaderParser.java:142 (name match)"
+        },
+        {
+          "from": 7,
+          "to": 8,
+          "status": "CALL",
+          "evidence": "QuicCodecHeaderProcessor#process(InetSocketAddress,InetSocketAddress,ByteBuf,QuicPacketType,long,ByteBuf,ByteBuf,ByteBuf) calls QuicheQuicCodec#quicPacketRead(ChannelHandlerContext,InetSocketAddress,InetSocketAddress,QuicPacketType,long,ByteBuf,ByteBuf,ByteBuf,ByteBuf,ByteBuf,Consumer,int,QuicheConfig) at codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:364 (name match)"
+        },
+        {
+          "from": 8,
+          "to": 9,
+          "status": "CALL",
+          "evidence": "QuicheQuicServerCodec#quicPacketRead(ChannelHandlerContext,InetSocketAddress,InetSocketAddress,QuicPacketType,long,ByteBuf,ByteBuf,ByteBuf,ByteBuf,ByteBuf,Consumer,int,QuicheConfig) calls QuicheQuicCodec#getChannel(ByteBuffer) at codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicServerCodec.java:115 (name match)"
+        },
+        {
+          "from": 9,
+          "to": 10,
+          "status": "CALL",
+          "evidence": "QuicheQuicCodec#getChannel(ByteBuffer) calls HashMap.get(Object) at codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:81"
+        }
+      ],
+      "diagnostics": [],
+      "warnings": [
+        "Hop 3: `EmbeddedChannel.writeInbound(Object...)` belongs to a class outside the source tree; its body is not analyzed",
+        "Hop 10: `HashMap.get(Object)` belongs to JDK class java.util.HashMap; its body is not analyzed",
+        "Edge 3→4 not checked: hop 3 is outside the source tree, so calls made inside it cannot be inspected"
+      ]
+    },
+    {
+      "target": "PkgRisk1",
+      "status": "PASS",
+      "entrypoint": "QuicCodecFuzzTest.fuzzQuicServerCodecChannelRead2(InputStream) → QuicCodecFuzzTest.serveInitialPackets(byte[]) → EmbeddedChannel.writeInbound(Object...) → QuicheQuicCodec.channelRead(ChannelHandlerContext, Object) → QuicheQuicCodec.handleQuicPacket(InetSocketAddress, InetSocketAddress, ByteBuf) → QuicHeaderParser.parse(InetSocketAddress, InetSocketAddress, ByteBuf, QuicHeaderParser.QuicHeaderProcessor) → QuicheQuicCodec$QuicCodecHeaderProcessor.process(InetSocketAddress, InetSocketAddress, ByteBuf, QuicPacketType, long, ByteBuf, ByteBuf, ByteBuf) → QuicheQuicServerCodec.quicPacketRead(ChannelHandlerContext, InetSocketAddress, InetSocketAddress, QuicPacketType, long, ByteBuf, ByteBuf, ByteBuf, ByteBuf, ByteBuf, Consumer, int, QuicheConfig) → QuicheQuicServerCodec.handleServer(ChannelHandlerContext, InetSocketAddress, InetSocketAddress, QuicPacketType, long, ByteBuf, ByteBuf, ByteBuf, ByteBuf, ByteBuf, Consumer, int, QuicheConfig) → QuicheQuicCodec.addChannel(QuicheQuicChannel) → HashMap.put(Object, Object) → HashMap.putVal(int, Object, Object, boolean, boolean) → HashMap$TreeNode.putTreeVal(HashMap, Node[], int, Object, Object) → HashMap$TreeNode.find(int, Object, Class)",
+      "source_path": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java",
+      "start_ok": true,
+      "harness_entry": "io.netty.incubator.codec.quic.fuzz.QuicCodecFuzzTest#fuzzQuicServerCodecChannelRead2",
+      "end_ok": true,
+      "end": {
+        "sink_file": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java",
+        "ok": true,
+        "evidence": "hop 10 QuicheQuicCodec#addChannel(QuicheQuicChannel) is declared in codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:120",
+        "level": "method",
+        "sink_method": "java.util.HashMap$TreeNode#find",
+        "sink_evidence": "hop 14 names java.util.HashMap$TreeNode#find (outside the source tree)"
+      },
+      "hops": [
+        {
+          "index": 1,
+          "raw": "QuicCodecFuzzTest.fuzzQuicServerCodecChannelRead2(InputStream)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "io.netty.incubator.codec.quic.fuzz.QuicCodecFuzzTest#fuzzQuicServerCodecChannelRead2(InputStream)",
+              "location": "harness/src/test/java/io/netty/incubator/codec/quic/fuzz/QuicCodecFuzzTest.java:91"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "raw": "QuicCodecFuzzTest.serveInitialPackets(byte[])",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "io.netty.incubator.codec.quic.fuzz.QuicCodecFuzzTest#serveInitialPackets(byte[])",
+              "location": "harness/src/test/java/io/netty/incubator/codec/quic/fuzz/QuicCodecFuzzTest.java:97"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "raw": "EmbeddedChannel.writeInbound(Object...)",
+          "status": "EXTERNAL",
+          "candidates": [],
+          "external": [
+            "EmbeddedChannel.writeInbound(Object...)"
+          ]
+        },
+        {
+          "index": 4,
+          "raw": "QuicheQuicCodec.channelRead(ChannelHandlerContext, Object)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "io.netty.incubator.codec.quic.QuicheQuicCodec#channelRead(ChannelHandlerContext,Object)",
+              "location": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:178"
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "raw": "QuicheQuicCodec.handleQuicPacket(InetSocketAddress, InetSocketAddress, ByteBuf)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "io.netty.incubator.codec.quic.QuicheQuicCodec#handleQuicPacket(InetSocketAddress,InetSocketAddress,ByteBuf)",
+              "location": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:200"
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "raw": "QuicHeaderParser.parse(InetSocketAddress, InetSocketAddress, ByteBuf, QuicHeaderParser.QuicHeaderProcessor)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "io.netty.incubator.codec.quic.QuicHeaderParser#parse(InetSocketAddress,InetSocketAddress,ByteBuf,QuicHeaderProcessor)",
+              "location": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicHeaderParser.java:68"
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "raw": "QuicheQuicCodec$QuicCodecHeaderProcessor.process(InetSocketAddress, InetSocketAddress, ByteBuf, QuicPacketType, long, ByteBuf, ByteBuf, ByteBuf)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "io.netty.incubator.codec.quic.QuicheQuicCodec.QuicCodecHeaderProcessor#process(InetSocketAddress,InetSocketAddress,ByteBuf,QuicPacketType,long,ByteBuf,ByteBuf,ByteBuf)",
+              "location": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:362"
+            },
+            {
+              "method": "io.netty.incubator.codec.quic.QuicHeaderParser.QuicHeaderProcessor#process(InetSocketAddress,InetSocketAddress,ByteBuf,QuicPacketType,long,ByteBuf,ByteBuf,ByteBuf)",
+              "location": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicHeaderParser.java:284"
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "raw": "QuicheQuicServerCodec.quicPacketRead(ChannelHandlerContext, InetSocketAddress, InetSocketAddress, QuicPacketType, long, ByteBuf, ByteBuf, ByteBuf, ByteBuf, ByteBuf, Consumer, int, QuicheConfig)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "io.netty.incubator.codec.quic.QuicheQuicServerCodec#quicPacketRead(ChannelHandlerContext,InetSocketAddress,InetSocketAddress,QuicPacketType,long,ByteBuf,ByteBuf,ByteBuf,ByteBuf,ByteBuf,Consumer,int,QuicheConfig)",
+              "location": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicServerCodec.java:107"
+            },
+            {
+              "method": "io.netty.incubator.codec.quic.QuicheQuicCodec#quicPacketRead(ChannelHandlerContext,InetSocketAddress,InetSocketAddress,QuicPacketType,long,ByteBuf,ByteBuf,ByteBuf,ByteBuf,ByteBuf,Consumer,int,QuicheConfig)",
+              "location": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:229"
+            }
+          ]
+        },
+        {
+          "index": 9,
+          "raw": "QuicheQuicServerCodec.handleServer(ChannelHandlerContext, InetSocketAddress, InetSocketAddress, QuicPacketType, long, ByteBuf, ByteBuf, ByteBuf, ByteBuf, ByteBuf, Consumer, int, QuicheConfig)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "io.netty.incubator.codec.quic.QuicheQuicServerCodec#handleServer(ChannelHandlerContext,InetSocketAddress,InetSocketAddress,QuicPacketType,long,ByteBuf,ByteBuf,ByteBuf,ByteBuf,ByteBuf,Consumer,int,QuicheConfig)",
+              "location": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicServerCodec.java:138"
+            }
+          ]
+        },
+        {
+          "index": 10,
+          "raw": "QuicheQuicCodec.addChannel(QuicheQuicChannel)",
+          "status": "RESOLVED",
+          "candidates": [
+            {
+              "method": "io.netty.incubator.codec.quic.QuicheQuicCodec#addChannel(QuicheQuicChannel)",
+              "location": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:120"
+            }
+          ]
+        },
+        {
+          "index": 11,
+          "raw": "HashMap.put(Object, Object)",
+          "status": "EXTERNAL",
+          "candidates": [],
+          "external": [
+            "HashMap.put(Object, Object)"
+          ]
+        },
+        {
+          "index": 12,
+          "raw": "HashMap.putVal(int, Object, Object, boolean, boolean)",
+          "status": "EXTERNAL",
+          "candidates": [],
+          "external": [
+            "HashMap.putVal(int, Object, Object, boolean, boolean)"
+          ]
+        },
+        {
+          "index": 13,
+          "raw": "HashMap$TreeNode.putTreeVal(HashMap, Node[], int, Object, Object)",
+          "status": "EXTERNAL",
+          "candidates": [],
+          "external": [
+            "HashMap$TreeNode.putTreeVal(HashMap, Node[], int, Object, Object)"
+          ]
+        },
+        {
+          "index": 14,
+          "raw": "HashMap$TreeNode.find(int, Object, Class)",
+          "status": "EXTERNAL",
+          "candidates": [],
+          "external": [
+            "HashMap$TreeNode.find(int, Object, Class)"
+          ]
+        }
+      ],
+      "path_signature": [
+        "io.netty.incubator.codec.quic.fuzz.QuicCodecFuzzTest#fuzzQuicServerCodecChannelRead2(InputStream)",
+        "io.netty.incubator.codec.quic.fuzz.QuicCodecFuzzTest#serveInitialPackets(byte[])",
+        "external:writeInbound",
+        "io.netty.incubator.codec.quic.QuicheQuicCodec#channelRead(ChannelHandlerContext,Object)",
+        "io.netty.incubator.codec.quic.QuicheQuicCodec#handleQuicPacket(InetSocketAddress,InetSocketAddress,ByteBuf)",
+        "io.netty.incubator.codec.quic.QuicHeaderParser#parse(InetSocketAddress,InetSocketAddress,ByteBuf,QuicHeaderProcessor)",
+        "io.netty.incubator.codec.quic.QuicheQuicCodec.QuicCodecHeaderProcessor#process(InetSocketAddress,InetSocketAddress,ByteBuf,QuicPacketType,long,ByteBuf,ByteBuf,ByteBuf)",
+        "io.netty.incubator.codec.quic.QuicheQuicServerCodec#quicPacketRead(ChannelHandlerContext,InetSocketAddress,InetSocketAddress,QuicPacketType,long,ByteBuf,ByteBuf,ByteBuf,ByteBuf,ByteBuf,Consumer,int,QuicheConfig)",
+        "io.netty.incubator.codec.quic.QuicheQuicServerCodec#handleServer(ChannelHandlerContext,InetSocketAddress,InetSocketAddress,QuicPacketType,long,ByteBuf,ByteBuf,ByteBuf,ByteBuf,ByteBuf,Consumer,int,QuicheConfig)",
+        "io.netty.incubator.codec.quic.QuicheQuicCodec#addChannel(QuicheQuicChannel)",
+        "external:put",
+        "external:putVal",
+        "external:putTreeVal",
+        "external:find"
+      ],
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "written": "QuicCodecFuzzTest.fuzzQuicServerCodecChannelRead2(InputStream)",
+          "provenance": "agent",
+          "method": "io.netty.incubator.codec.quic.fuzz.QuicCodecFuzzTest#fuzzQuicServerCodecChannelRead2(InputStream)",
+          "location": "harness/src/test/java/io/netty/incubator/codec/quic/fuzz/QuicCodecFuzzTest.java:91"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "QuicCodecFuzzTest#fuzzQuicServerCodecChannelRead2(InputStream) calls QuicCodecFuzzTest#serveInitialPackets(byte[]) at harness/src/test/java/io/netty/incubator/codec/quic/fuzz/QuicCodecFuzzTest.java:92 (resolved)",
+          "site": "harness/src/test/java/io/netty/incubator/codec/quic/fuzz/QuicCodecFuzzTest.java:92"
+        },
+        {
+          "kind": "hop",
+          "written": "QuicCodecFuzzTest.serveInitialPackets(byte[])",
+          "provenance": "agent",
+          "method": "io.netty.incubator.codec.quic.fuzz.QuicCodecFuzzTest#serveInitialPackets(byte[])",
+          "location": "harness/src/test/java/io/netty/incubator/codec/quic/fuzz/QuicCodecFuzzTest.java:97"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "QuicCodecFuzzTest#serveInitialPackets(byte[]) calls EmbeddedChannel.writeInbound(Object...) at harness/src/test/java/io/netty/incubator/codec/quic/fuzz/QuicCodecFuzzTest.java:109",
+          "site": "harness/src/test/java/io/netty/incubator/codec/quic/fuzz/QuicCodecFuzzTest.java:109"
+        },
+        {
+          "kind": "hop",
+          "written": "EmbeddedChannel.writeInbound(Object...)",
+          "provenance": "agent",
+          "method": "EmbeddedChannel.writeInbound(Object...)",
+          "location": "outside the source tree"
+        },
+        {
+          "kind": "connection",
+          "type": "UNCHECKED",
+          "evidence": "hop 3 is outside the source tree, so calls made inside it cannot be inspected"
+        },
+        {
+          "kind": "hop",
+          "written": "QuicheQuicCodec.channelRead(ChannelHandlerContext, Object)",
+          "provenance": "agent",
+          "method": "io.netty.incubator.codec.quic.QuicheQuicCodec#channelRead(ChannelHandlerContext,Object)",
+          "location": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:178"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "QuicheQuicCodec#channelRead(ChannelHandlerContext,Object) calls QuicheQuicCodec#handleQuicPacket(InetSocketAddress,InetSocketAddress,ByteBuf) at codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:188 (name match)",
+          "site": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:188"
+        },
+        {
+          "kind": "hop",
+          "written": "QuicheQuicCodec.handleQuicPacket(InetSocketAddress, InetSocketAddress, ByteBuf)",
+          "provenance": "agent",
+          "method": "io.netty.incubator.codec.quic.QuicheQuicCodec#handleQuicPacket(InetSocketAddress,InetSocketAddress,ByteBuf)",
+          "location": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:200"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "QuicheQuicCodec#handleQuicPacket(InetSocketAddress,InetSocketAddress,ByteBuf) calls QuicHeaderParser#parse(InetSocketAddress,InetSocketAddress,ByteBuf,QuicHeaderProcessor) at codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:202 (name match)",
+          "site": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:202"
+        },
+        {
+          "kind": "hop",
+          "written": "QuicHeaderParser.parse(InetSocketAddress, InetSocketAddress, ByteBuf, QuicHeaderParser.QuicHeaderProcessor)",
+          "provenance": "agent",
+          "method": "io.netty.incubator.codec.quic.QuicHeaderParser#parse(InetSocketAddress,InetSocketAddress,ByteBuf,QuicHeaderProcessor)",
+          "location": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicHeaderParser.java:68"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "QuicHeaderParser#parse(InetSocketAddress,InetSocketAddress,ByteBuf,QuicHeaderProcessor) calls QuicHeaderProcessor#process(InetSocketAddress,InetSocketAddress,ByteBuf,QuicPacketType,long,ByteBuf,ByteBuf,ByteBuf) at codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicHeaderParser.java:142 (name match)",
+          "site": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicHeaderParser.java:142"
+        },
+        {
+          "kind": "hop",
+          "written": "QuicheQuicCodec$QuicCodecHeaderProcessor.process(InetSocketAddress, InetSocketAddress, ByteBuf, QuicPacketType, long, ByteBuf, ByteBuf, ByteBuf)",
+          "provenance": "agent",
+          "method": "io.netty.incubator.codec.quic.QuicheQuicCodec.QuicCodecHeaderProcessor#process(InetSocketAddress,InetSocketAddress,ByteBuf,QuicPacketType,long,ByteBuf,ByteBuf,ByteBuf)",
+          "location": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:362"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "QuicCodecHeaderProcessor#process(InetSocketAddress,InetSocketAddress,ByteBuf,QuicPacketType,long,ByteBuf,ByteBuf,ByteBuf) calls QuicheQuicCodec#quicPacketRead(ChannelHandlerContext,InetSocketAddress,InetSocketAddress,QuicPacketType,long,ByteBuf,ByteBuf,ByteBuf,ByteBuf,ByteBuf,Consumer,int,QuicheConfig) at codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:364 (name match)",
+          "site": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:364"
+        },
+        {
+          "kind": "hop",
+          "written": "QuicheQuicServerCodec.quicPacketRead(ChannelHandlerContext, InetSocketAddress, InetSocketAddress, QuicPacketType, long, ByteBuf, ByteBuf, ByteBuf, ByteBuf, ByteBuf, Consumer, int, QuicheConfig)",
+          "provenance": "agent",
+          "method": "io.netty.incubator.codec.quic.QuicheQuicServerCodec#quicPacketRead(ChannelHandlerContext,InetSocketAddress,InetSocketAddress,QuicPacketType,long,ByteBuf,ByteBuf,ByteBuf,ByteBuf,ByteBuf,Consumer,int,QuicheConfig)",
+          "location": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicServerCodec.java:107"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "QuicheQuicServerCodec#quicPacketRead(ChannelHandlerContext,InetSocketAddress,InetSocketAddress,QuicPacketType,long,ByteBuf,ByteBuf,ByteBuf,ByteBuf,ByteBuf,Consumer,int,QuicheConfig) calls QuicheQuicServerCodec#handleServer(ChannelHandlerContext,InetSocketAddress,InetSocketAddress,QuicPacketType,long,ByteBuf,ByteBuf,ByteBuf,ByteBuf,ByteBuf,Consumer,int,QuicheConfig) at codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicServerCodec.java:119 (name match)",
+          "site": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicServerCodec.java:119"
+        },
+        {
+          "kind": "hop",
+          "written": "QuicheQuicServerCodec.handleServer(ChannelHandlerContext, InetSocketAddress, InetSocketAddress, QuicPacketType, long, ByteBuf, ByteBuf, ByteBuf, ByteBuf, ByteBuf, Consumer, int, QuicheConfig)",
+          "provenance": "agent",
+          "method": "io.netty.incubator.codec.quic.QuicheQuicServerCodec#handleServer(ChannelHandlerContext,InetSocketAddress,InetSocketAddress,QuicPacketType,long,ByteBuf,ByteBuf,ByteBuf,ByteBuf,ByteBuf,Consumer,int,QuicheConfig)",
+          "location": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicServerCodec.java:138"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "QuicheQuicServerCodec#handleServer(ChannelHandlerContext,InetSocketAddress,InetSocketAddress,QuicPacketType,long,ByteBuf,ByteBuf,ByteBuf,ByteBuf,ByteBuf,Consumer,int,QuicheConfig) calls QuicheQuicCodec#addChannel(QuicheQuicChannel) at codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicServerCodec.java:275 (name match)",
+          "site": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicServerCodec.java:275"
+        },
+        {
+          "kind": "hop",
+          "written": "QuicheQuicCodec.addChannel(QuicheQuicChannel)",
+          "provenance": "agent",
+          "method": "io.netty.incubator.codec.quic.QuicheQuicCodec#addChannel(QuicheQuicChannel)",
+          "location": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:120"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "evidence": "QuicheQuicCodec#addChannel(QuicheQuicChannel) calls HashMap.put(Object, Object) at codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:124",
+          "site": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:124"
+        },
+        {
+          "kind": "hop",
+          "written": "HashMap.put(Object, Object)",
+          "provenance": "agent",
+          "method": "HashMap.put(Object, Object)",
+          "location": "outside the source tree"
+        },
+        {
+          "kind": "connection",
+          "type": "UNCHECKED",
+          "evidence": "hop 11 is outside the source tree, so calls made inside it cannot be inspected"
+        },
+        {
+          "kind": "hop",
+          "written": "HashMap.putVal(int, Object, Object, boolean, boolean)",
+          "provenance": "agent",
+          "method": "HashMap.putVal(int, Object, Object, boolean, boolean)",
+          "location": "outside the source tree"
+        },
+        {
+          "kind": "connection",
+          "type": "UNCHECKED",
+          "evidence": "hop 12 is outside the source tree, so calls made inside it cannot be inspected"
+        },
+        {
+          "kind": "hop",
+          "written": "HashMap$TreeNode.putTreeVal(HashMap, Node[], int, Object, Object)",
+          "provenance": "agent",
+          "method": "HashMap$TreeNode.putTreeVal(HashMap, Node[], int, Object, Object)",
+          "location": "outside the source tree"
+        },
+        {
+          "kind": "connection",
+          "type": "UNCHECKED",
+          "evidence": "hop 13 is outside the source tree, so calls made inside it cannot be inspected"
+        },
+        {
+          "kind": "hop",
+          "written": "HashMap$TreeNode.find(int, Object, Class)",
+          "provenance": "agent",
+          "method": "HashMap$TreeNode.find(int, Object, Class)",
+          "location": "outside the source tree"
+        }
+      ],
+      "edges": [
+        {
+          "from": 1,
+          "to": 2,
+          "status": "CALL",
+          "evidence": "QuicCodecFuzzTest#fuzzQuicServerCodecChannelRead2(InputStream) calls QuicCodecFuzzTest#serveInitialPackets(byte[]) at harness/src/test/java/io/netty/incubator/codec/quic/fuzz/QuicCodecFuzzTest.java:92 (resolved)"
+        },
+        {
+          "from": 2,
+          "to": 3,
+          "status": "CALL",
+          "evidence": "QuicCodecFuzzTest#serveInitialPackets(byte[]) calls EmbeddedChannel.writeInbound(Object...) at harness/src/test/java/io/netty/incubator/codec/quic/fuzz/QuicCodecFuzzTest.java:109"
+        },
+        {
+          "from": 3,
+          "to": 4,
+          "status": "UNCHECKED",
+          "evidence": "hop 3 is outside the source tree, so calls made inside it cannot be inspected"
+        },
+        {
+          "from": 4,
+          "to": 5,
+          "status": "CALL",
+          "evidence": "QuicheQuicCodec#channelRead(ChannelHandlerContext,Object) calls QuicheQuicCodec#handleQuicPacket(InetSocketAddress,InetSocketAddress,ByteBuf) at codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:188 (name match)"
+        },
+        {
+          "from": 5,
+          "to": 6,
+          "status": "CALL",
+          "evidence": "QuicheQuicCodec#handleQuicPacket(InetSocketAddress,InetSocketAddress,ByteBuf) calls QuicHeaderParser#parse(InetSocketAddress,InetSocketAddress,ByteBuf,QuicHeaderProcessor) at codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:202 (name match)"
+        },
+        {
+          "from": 6,
+          "to": 7,
+          "status": "CALL",
+          "evidence": "QuicHeaderParser#parse(InetSocketAddress,InetSocketAddress,ByteBuf,QuicHeaderProcessor) calls QuicHeaderProcessor#process(InetSocketAddress,InetSocketAddress,ByteBuf,QuicPacketType,long,ByteBuf,ByteBuf,ByteBuf) at codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicHeaderParser.java:142 (name match)"
+        },
+        {
+          "from": 7,
+          "to": 8,
+          "status": "CALL",
+          "evidence": "QuicCodecHeaderProcessor#process(InetSocketAddress,InetSocketAddress,ByteBuf,QuicPacketType,long,ByteBuf,ByteBuf,ByteBuf) calls QuicheQuicCodec#quicPacketRead(ChannelHandlerContext,InetSocketAddress,InetSocketAddress,QuicPacketType,long,ByteBuf,ByteBuf,ByteBuf,ByteBuf,ByteBuf,Consumer,int,QuicheConfig) at codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:364 (name match)"
+        },
+        {
+          "from": 8,
+          "to": 9,
+          "status": "CALL",
+          "evidence": "QuicheQuicServerCodec#quicPacketRead(ChannelHandlerContext,InetSocketAddress,InetSocketAddress,QuicPacketType,long,ByteBuf,ByteBuf,ByteBuf,ByteBuf,ByteBuf,Consumer,int,QuicheConfig) calls QuicheQuicServerCodec#handleServer(ChannelHandlerContext,InetSocketAddress,InetSocketAddress,QuicPacketType,long,ByteBuf,ByteBuf,ByteBuf,ByteBuf,ByteBuf,Consumer,int,QuicheConfig) at codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicServerCodec.java:119 (name match)"
+        },
+        {
+          "from": 9,
+          "to": 10,
+          "status": "CALL",
+          "evidence": "QuicheQuicServerCodec#handleServer(ChannelHandlerContext,InetSocketAddress,InetSocketAddress,QuicPacketType,long,ByteBuf,ByteBuf,ByteBuf,ByteBuf,ByteBuf,Consumer,int,QuicheConfig) calls QuicheQuicCodec#addChannel(QuicheQuicChannel) at codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicServerCodec.java:275 (name match)"
+        },
+        {
+          "from": 10,
+          "to": 11,
+          "status": "CALL",
+          "evidence": "QuicheQuicCodec#addChannel(QuicheQuicChannel) calls HashMap.put(Object, Object) at codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:124"
+        },
+        {
+          "from": 11,
+          "to": 12,
+          "status": "UNCHECKED",
+          "evidence": "hop 11 is outside the source tree, so calls made inside it cannot be inspected"
+        },
+        {
+          "from": 12,
+          "to": 13,
+          "status": "UNCHECKED",
+          "evidence": "hop 12 is outside the source tree, so calls made inside it cannot be inspected"
+        },
+        {
+          "from": 13,
+          "to": 14,
+          "status": "UNCHECKED",
+          "evidence": "hop 13 is outside the source tree, so calls made inside it cannot be inspected"
+        }
+      ],
+      "diagnostics": [],
+      "warnings": [
+        "Hop 3: `EmbeddedChannel.writeInbound(Object...)` belongs to a class outside the source tree; its body is not analyzed",
+        "Hop 11: `HashMap.put(Object, Object)` belongs to JDK class java.util.HashMap; its body is not analyzed",
+        "Hop 12: `HashMap.putVal(int, Object, Object, boolean, boolean)` belongs to JDK class java.util.HashMap; its body is not analyzed",
+        "Hop 13: `HashMap$TreeNode.putTreeVal(HashMap, Node[], int, Object, Object)` belongs to JDK class java.util.HashMap; its body is not analyzed",
+        "Hop 14: `HashMap$TreeNode.find(int, Object, Class)` belongs to JDK class java.util.HashMap; its body is not analyzed",
+        "Edge 3→4 not checked: hop 3 is outside the source tree, so calls made inside it cannot be inspected",
+        "Edge 11→12 not checked: hop 11 is outside the source tree, so calls made inside it cannot be inspected",
+        "Edge 12→13 not checked: hop 12 is outside the source tree, so calls made inside it cannot be inspected",
+        "Edge 13→14 not checked: hop 13 is outside the source tree, so calls made inside it cannot be inspected"
+      ]
+    }
+  ],
+  "plan_ok": true,
+  "plans": [
+    {
+      "target": "V1",
+      "status": "PASS",
+      "signals": [
+        {
+          "name": "v1TreeVisits",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "java.util.HashMap$TreeNode#find",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "io.netty.incubator.codec.quic.QuicheQuicCodec#getChannel",
+              "status": "RESOLVED",
+              "method": "io.netty.incubator.codec.quic.QuicheQuicCodec#getChannel",
+              "declared_at": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:80",
+              "relation": "on_path"
+            }
+          ]
+        },
+        {
+          "name": "v1MaxPerLookup",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "io.netty.incubator.codec.quic.QuicheQuicCodec#getChannel",
+              "status": "RESOLVED",
+              "method": "io.netty.incubator.codec.quic.QuicheQuicCodec#getChannel",
+              "declared_at": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:80",
+              "relation": "on_path"
+            },
+            {
+              "written": "java.util.HashMap$TreeNode#find",
+              "status": "EXTERNAL",
+              "relation": "library"
+            }
+          ]
+        },
+        {
+          "name": "v1KeyEquals",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "java.nio.ByteBuffer#equals",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "io.netty.incubator.codec.quic.QuicheQuicCodec#getChannel",
+              "status": "RESOLVED",
+              "method": "io.netty.incubator.codec.quic.QuicheQuicCodec#getChannel",
+              "declared_at": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:80",
+              "relation": "on_path"
+            }
+          ]
+        },
+        {
+          "name": "channelsAdded",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "io.netty.incubator.codec.quic.QuicheQuicCodec#addChannel",
+              "status": "RESOLVED",
+              "method": "io.netty.incubator.codec.quic.QuicheQuicCodec#addChannel",
+              "declared_at": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:120",
+              "relation": "called_from_path",
+              "chain": [
+                "QuicheQuicServerCodec#quicPacketRead(ChannelHandlerContext,InetSocketAddress,InetSocketAddress,QuicPacketType,long,ByteBuf,ByteBuf,ByteBuf,ByteBuf,ByteBuf,Consumer,int,QuicheConfig)",
+                "QuicheQuicServerCodec#handleServer(ChannelHandlerContext,InetSocketAddress,InetSocketAddress,QuicPacketType,long,ByteBuf,ByteBuf,ByteBuf,ByteBuf,ByteBuf,Consumer,int,QuicheConfig)",
+                "QuicheQuicCodec#addChannel(QuicheQuicChannel)"
+              ]
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    },
+    {
+      "target": "PkgRisk1",
+      "status": "PASS",
+      "signals": [
+        {
+          "name": "p1TreeVisits",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "java.util.HashMap$TreeNode#find",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "java.util.HashMap$TreeNode#putTreeVal",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "io.netty.incubator.codec.quic.QuicheQuicCodec#addChannel",
+              "status": "RESOLVED",
+              "method": "io.netty.incubator.codec.quic.QuicheQuicCodec#addChannel",
+              "declared_at": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:120",
+              "relation": "on_path"
+            }
+          ]
+        },
+        {
+          "name": "p1VisitsPerKB",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "java.util.HashMap$TreeNode#find",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "io.netty.incubator.codec.quic.QuicheQuicCodec#channelRead",
+              "status": "RESOLVED",
+              "method": "io.netty.incubator.codec.quic.QuicheQuicCodec#channelRead",
+              "declared_at": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:178",
+              "relation": "on_path"
+            }
+          ]
+        },
+        {
+          "name": "p1Treeify",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "java.util.HashMap$TreeNode#treeify",
+              "status": "EXTERNAL",
+              "relation": "library"
+            }
+          ]
+        },
+        {
+          "name": "p1KeyEquals",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "java.nio.ByteBuffer#equals",
+              "status": "EXTERNAL",
+              "relation": "library"
+            },
+            {
+              "written": "io.netty.incubator.codec.quic.QuicheQuicCodec#addChannel",
+              "status": "RESOLVED",
+              "method": "io.netty.incubator.codec.quic.QuicheQuicCodec#addChannel",
+              "declared_at": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:120",
+              "relation": "on_path"
+            }
+          ]
+        },
+        {
+          "name": "channelsAdded",
+          "technique": "bytecode",
+          "locations": [
+            {
+              "written": "io.netty.incubator.codec.quic.QuicheQuicCodec#addChannel",
+              "status": "RESOLVED",
+              "method": "io.netty.incubator.codec.quic.QuicheQuicCodec#addChannel",
+              "declared_at": "codec-classes-quic/src/main/java/io/netty/incubator/codec/quic/QuicheQuicCodec.java:120",
+              "relation": "on_path"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [],
+      "warnings": []
+    }
+  ]
+}

@@ -1,0 +1,149 @@
+{
+  "caps": {
+    "input_bytes": 16384,
+    "heap_bytes": 268435456,
+    "stack_bytes": 262144,
+    "time_ms": 2000
+  },
+  "targets": {
+    "V1": {
+      "problems": [],
+      "parameter": "number of notifiers registered (recursion depth of notifyDone chain)",
+      "inputs": [
+        {
+          "file": "n500.bin",
+          "value": 500,
+          "input_bytes": 500,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 9.177135,
+          "wall_ms": 12.380669,
+          "allocated_bytes": 534080,
+          "peak_heap_bytes": 2097152
+        },
+        {
+          "file": "n1000.bin",
+          "value": 1000,
+          "input_bytes": 1000,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 9.849669,
+          "wall_ms": 10.049446,
+          "allocated_bytes": 558072,
+          "peak_heap_bytes": 2097152
+        },
+        {
+          "file": "n2000.bin",
+          "value": 2000,
+          "input_bytes": 2000,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "stack_cap"
+        },
+        {
+          "file": "n4000.bin",
+          "value": 4000,
+          "input_bytes": 4000,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "stack_cap"
+        },
+        {
+          "file": "n8000.bin",
+          "value": 8000,
+          "input_bytes": 8000,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "stack_cap"
+        },
+        {
+          "file": "n16000.bin",
+          "value": 16000,
+          "input_bytes": 16000,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "stack_cap"
+        }
+      ]
+    },
+    "V2": {
+      "problems": [],
+      "parameter": "number of cancel handlers registered (recursion depth of cancel chain)",
+      "inputs": [
+        {
+          "file": "n500.bin",
+          "value": 500,
+          "input_bytes": 500,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 14.419724,
+          "wall_ms": 22.568564,
+          "allocated_bytes": 510008,
+          "peak_heap_bytes": 2097152
+        },
+        {
+          "file": "n1000.bin",
+          "value": 1000,
+          "input_bytes": 1000,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "completed",
+          "cpu_ms": 11.047518,
+          "wall_ms": 16.314582,
+          "allocated_bytes": 521904,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "file": "n2000.bin",
+          "value": 2000,
+          "input_bytes": 2000,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "stack_cap"
+        },
+        {
+          "file": "n4000.bin",
+          "value": 4000,
+          "input_bytes": 4000,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "stack_cap"
+        },
+        {
+          "file": "n8000.bin",
+          "value": 8000,
+          "input_bytes": 8000,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "stack_cap"
+        },
+        {
+          "file": "n16000.bin",
+          "value": 16000,
+          "input_bytes": 16000,
+          "time_cap_ms": 2000,
+          "stack_cap_bytes": 262144,
+          "heap_cap_bytes": 268435456,
+          "outcome": "stack_cap"
+        }
+      ]
+    }
+  },
+  "build": {
+    "ok": true
+  }
+}

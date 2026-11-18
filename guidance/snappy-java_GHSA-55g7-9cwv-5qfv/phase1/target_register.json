@@ -1,0 +1,375 @@
+{
+  "ordered_targets": [
+    {
+      "slot": 1,
+      "id": "V1",
+      "name": "SnappyInputStream hasNextChunk chunkSize allocation OOM",
+      "entrypoint": "SnappyFuzzTest.fuzzSnappyInputStreamRead(InputStream) → SnappyInputStream.<init>(InputStream) → SnappyInputStream.read(byte[], int, int) → SnappyInputStream.hasNextChunk()",
+      "source_path": "src/main/java/org/xerial/snappy/SnappyInputStream.java",
+      "sink": "SnappyInputStream#hasNextChunk",
+      "mechanism": "Attacker-controlled 4-byte big-endian integer from the chunk frame header is used directly as the allocation size for compressed = new byte[chunkSize] with no upper-bound validation. The allocation size equals the raw integer from the input.",
+      "resource": "heap memory: bytes allocated for the compressed buffer, equal to the 4-byte chunkSize integer from the input (up to Integer.MAX_VALUE ≈ 2.1 GB)",
+      "failure_mode": "out_of_memory",
+      "scale": "Measured: allocation grows at 1.0 byte per unit of chunkSize with ~200 KB constant overhead (e.g. chunkSize=8388608 → 8.2 MB allocated, peak heap 10 MB). CPU is flat at ~5 ms. Extrapolating linearly to -Xmx1g: available heap after JVM overhead ≈ 800 MB, so chunkSize ≈ 800000000 triggers OOM. The 4-byte big-endian integer easily encodes this (0x2FAF0800). Input is 20 bytes (16-byte Snappy stream header + 4-byte chunkSize). Amplification: 20 bytes → ~800 MB allocation.",
+      "input_bytes": 20,
+      "cwe": "CWE-770",
+      "checkpath_status": "PASS",
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "method": "org.xerial.snappy.fuzz.SnappyFuzzTest#fuzzSnappyInputStreamRead(InputStream)",
+          "location": "harness/src/test/java/org/xerial/snappy/fuzz/SnappyFuzzTest.java:62"
+        },
+        {
+          "kind": "connection",
+          "type": "INDIRECT",
+          "evidence": "1 omitted call(s)"
+        },
+        {
+          "kind": "hop",
+          "provenance": "checkpath (omitted call)",
+          "method": "org.xerial.snappy.fuzz.SnappyFuzzTest#readStream(byte[])",
+          "location": "harness/src/test/java/org/xerial/snappy/fuzz/SnappyFuzzTest.java:39"
+        },
+        {
+          "kind": "hop",
+          "method": "org.xerial.snappy.SnappyInputStream#SnappyInputStream(InputStream)",
+          "location": "src/main/java/org/xerial/snappy/SnappyInputStream.java:55"
+        },
+        {
+          "kind": "connection",
+          "type": "DATAFLOW",
+          "evidence": "SnappyInputStream#SnappyInputStream(InputStream) (src/main/java/org/xerial/snappy/SnappyInputStream.java:55) writes field `in`, which SnappyInputStream#read(byte[],int,int) (src/main/java/org/xerial/snappy/SnappyInputStream.java:160) reads (through helper calls)",
+          "site": "src/main/java/org/xerial/snappy/SnappyInputStream.java:55"
+        },
+        {
+          "kind": "hop",
+          "method": "org.xerial.snappy.SnappyInputStream#read(byte[],int,int)",
+          "location": "src/main/java/org/xerial/snappy/SnappyInputStream.java:160"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "src/main/java/org/xerial/snappy/SnappyInputStream.java:167"
+        },
+        {
+          "kind": "hop",
+          "method": "org.xerial.snappy.SnappyInputStream#hasNextChunk()",
+          "location": "src/main/java/org/xerial/snappy/SnappyInputStream.java:388"
+        }
+      ],
+      "harness_entry": "org.xerial.snappy.fuzz.SnappyFuzzTest#fuzzSnappyInputStreamRead",
+      "scale_measurement": [
+        {
+          "value": 65536,
+          "input_bytes": 20,
+          "outcome": "completed",
+          "cpu_ms": 4.596484,
+          "allocated_bytes": 277616,
+          "peak_heap_bytes": 0
+        },
+        {
+          "value": 131072,
+          "input_bytes": 20,
+          "outcome": "completed",
+          "cpu_ms": 5.000256,
+          "allocated_bytes": 343152,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "value": 262144,
+          "input_bytes": 20,
+          "outcome": "completed",
+          "cpu_ms": 4.796507,
+          "allocated_bytes": 474224,
+          "peak_heap_bytes": 0
+        },
+        {
+          "value": 524288,
+          "input_bytes": 20,
+          "outcome": "completed",
+          "cpu_ms": 5.599538,
+          "allocated_bytes": 736368,
+          "peak_heap_bytes": 2097152
+        },
+        {
+          "value": 1048576,
+          "input_bytes": 20,
+          "outcome": "completed",
+          "cpu_ms": 5.56357,
+          "allocated_bytes": 1260656,
+          "peak_heap_bytes": 3145728
+        },
+        {
+          "value": 2097152,
+          "input_bytes": 20,
+          "outcome": "completed",
+          "cpu_ms": 5.614877,
+          "allocated_bytes": 2309232,
+          "peak_heap_bytes": 4194304
+        },
+        {
+          "value": 4194304,
+          "input_bytes": 20,
+          "outcome": "completed",
+          "cpu_ms": 5.186702,
+          "allocated_bytes": 4406384,
+          "peak_heap_bytes": 6291456
+        },
+        {
+          "value": 8388608,
+          "input_bytes": 20,
+          "outcome": "completed",
+          "cpu_ms": 6.770834,
+          "allocated_bytes": 8600688,
+          "peak_heap_bytes": 10485760
+        }
+      ]
+    },
+    {
+      "slot": 2,
+      "id": "V2",
+      "name": "SnappyInputStream hasNextChunk uncompressedLength allocation OOM",
+      "entrypoint": "SnappyFuzzTest.fuzzSnappyInputStreamRead(InputStream) → SnappyInputStream.<init>(InputStream) → SnappyInputStream.read(byte[], int, int) → SnappyInputStream.hasNextChunk() → Snappy.uncompressedLength(byte[], int, int)",
+      "source_path": "src/main/java/org/xerial/snappy/SnappyInputStream.java",
+      "sink": "SnappyInputStream#hasNextChunk",
+      "mechanism": "A snappy-compressed chunk whose leading varint claims a large uncompressed length causes uncompressed = new byte[uncompressedLength] to allocate unbounded memory. Unlike the compressed buffer, this allocation has no try/catch for OutOfMemoryError.",
+      "resource": "heap memory: bytes allocated for the uncompressed buffer, equal to the varint-decoded uncompressedLength from the chunk data (up to ~2.1 GB from 5 varint bytes)",
+      "failure_mode": "out_of_memory",
+      "scale": "Measured: allocation grows at 1.0 byte per unit of claimed uncompressedLength with ~470 KB overhead (e.g. value=8388608 → 8.5 MB allocated, peak heap 10 MB). CPU is flat at ~28 ms. Extrapolating to -Xmx1g: need uncompressedLength ≈ 800000000 for OOM. A 5-byte snappy varint encodes this value. Input is 25 bytes (16-byte header + 4-byte chunkSize=5 + 5 bytes compressed data encoding the varint). Amplification: 25 bytes → ~800 MB allocation.",
+      "input_bytes": 25,
+      "cwe": "CWE-770",
+      "checkpath_status": "PASS",
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "method": "org.xerial.snappy.fuzz.SnappyFuzzTest#fuzzSnappyInputStreamRead(InputStream)",
+          "location": "harness/src/test/java/org/xerial/snappy/fuzz/SnappyFuzzTest.java:62"
+        },
+        {
+          "kind": "connection",
+          "type": "INDIRECT",
+          "evidence": "1 omitted call(s)"
+        },
+        {
+          "kind": "hop",
+          "provenance": "checkpath (omitted call)",
+          "method": "org.xerial.snappy.fuzz.SnappyFuzzTest#readStream(byte[])",
+          "location": "harness/src/test/java/org/xerial/snappy/fuzz/SnappyFuzzTest.java:39"
+        },
+        {
+          "kind": "hop",
+          "method": "org.xerial.snappy.SnappyInputStream#SnappyInputStream(InputStream)",
+          "location": "src/main/java/org/xerial/snappy/SnappyInputStream.java:55"
+        },
+        {
+          "kind": "connection",
+          "type": "DATAFLOW",
+          "evidence": "SnappyInputStream#SnappyInputStream(InputStream) (src/main/java/org/xerial/snappy/SnappyInputStream.java:55) writes field `in`, which SnappyInputStream#read(byte[],int,int) (src/main/java/org/xerial/snappy/SnappyInputStream.java:160) reads (through helper calls)",
+          "site": "src/main/java/org/xerial/snappy/SnappyInputStream.java:55"
+        },
+        {
+          "kind": "hop",
+          "method": "org.xerial.snappy.SnappyInputStream#read(byte[],int,int)",
+          "location": "src/main/java/org/xerial/snappy/SnappyInputStream.java:160"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "src/main/java/org/xerial/snappy/SnappyInputStream.java:167"
+        },
+        {
+          "kind": "hop",
+          "method": "org.xerial.snappy.SnappyInputStream#hasNextChunk()",
+          "location": "src/main/java/org/xerial/snappy/SnappyInputStream.java:388"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "src/main/java/org/xerial/snappy/SnappyInputStream.java:446"
+        },
+        {
+          "kind": "hop",
+          "method": "org.xerial.snappy.Snappy#uncompressedLength(byte[],int,int)",
+          "location": "src/main/java/org/xerial/snappy/Snappy.java:673"
+        }
+      ],
+      "harness_entry": "org.xerial.snappy.fuzz.SnappyFuzzTest#fuzzSnappyInputStreamRead",
+      "scale_measurement": [
+        {
+          "value": 65536,
+          "input_bytes": 25,
+          "outcome": "completed",
+          "cpu_ms": 27.613971,
+          "allocated_bytes": 551304,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "value": 131072,
+          "input_bytes": 25,
+          "outcome": "completed",
+          "cpu_ms": 27.450821,
+          "allocated_bytes": 616840,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "value": 262144,
+          "input_bytes": 25,
+          "outcome": "completed",
+          "cpu_ms": 25.686655,
+          "allocated_bytes": 747912,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "value": 524288,
+          "input_bytes": 25,
+          "outcome": "completed",
+          "cpu_ms": 29.267251,
+          "allocated_bytes": 1010056,
+          "peak_heap_bytes": 3145728
+        },
+        {
+          "value": 1048576,
+          "input_bytes": 25,
+          "outcome": "completed",
+          "cpu_ms": 26.965355,
+          "allocated_bytes": 1534344,
+          "peak_heap_bytes": 2097152
+        },
+        {
+          "value": 2097152,
+          "input_bytes": 25,
+          "outcome": "completed",
+          "cpu_ms": 28.361109,
+          "allocated_bytes": 2582920,
+          "peak_heap_bytes": 4194304
+        },
+        {
+          "value": 4194304,
+          "input_bytes": 25,
+          "outcome": "completed",
+          "cpu_ms": 28.681117,
+          "allocated_bytes": 4680072,
+          "peak_heap_bytes": 6291456
+        },
+        {
+          "value": 8388608,
+          "input_bytes": 25,
+          "outcome": "completed",
+          "cpu_ms": 28.123169,
+          "allocated_bytes": 8874376,
+          "peak_heap_bytes": 10485760
+        }
+      ]
+    },
+    {
+      "slot": 3,
+      "id": "V3",
+      "name": "Snappy.uncompress uncompressedLength allocation OOM",
+      "entrypoint": "SnappyFuzzTest.fuzzSnappyUncompress(InputStream) → Snappy.uncompress(byte[]) → Snappy.uncompressedLength(byte[])",
+      "source_path": "src/main/java/org/xerial/snappy/Snappy.java",
+      "sink": "Snappy#uncompress(byte[])",
+      "mechanism": "Raw snappy data whose leading varint claims a large uncompressed length causes new byte[Snappy.uncompressedLength(input)] to allocate unbounded memory. No size validation or OOM catch exists.",
+      "resource": "heap memory: bytes allocated for the result array, equal to the varint-decoded uncompressedLength from the raw snappy input (up to ~2.1 GB from 5 varint bytes)",
+      "failure_mode": "out_of_memory",
+      "scale": "Measured: allocation grows at 1.0 byte per unit of claimed uncompressedLength with ~400 KB overhead (e.g. value=8388608 → 8.4 MB allocated, peak heap 11 MB). CPU is flat at ~26 ms. Extrapolating to -Xmx1g: need uncompressedLength ≈ 800000000 for OOM. A 5-byte snappy varint encodes this. Input is 5 bytes (varint + padding). Amplification: 5 bytes → ~800 MB allocation.",
+      "input_bytes": 5,
+      "cwe": "CWE-770",
+      "checkpath_status": "PASS",
+      "normalized_path": [
+        {
+          "kind": "hop",
+          "method": "org.xerial.snappy.fuzz.SnappyFuzzTest#fuzzSnappyUncompress(InputStream)",
+          "location": "harness/src/test/java/org/xerial/snappy/fuzz/SnappyFuzzTest.java:80"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "harness/src/test/java/org/xerial/snappy/fuzz/SnappyFuzzTest.java:81"
+        },
+        {
+          "kind": "hop",
+          "method": "org.xerial.snappy.Snappy#uncompress(byte[])",
+          "location": "src/main/java/org/xerial/snappy/Snappy.java:514"
+        },
+        {
+          "kind": "connection",
+          "type": "CALL",
+          "site": "src/main/java/org/xerial/snappy/Snappy.java:517"
+        },
+        {
+          "kind": "hop",
+          "method": "org.xerial.snappy.Snappy#uncompressedLength(byte[])",
+          "location": "src/main/java/org/xerial/snappy/Snappy.java:656"
+        }
+      ],
+      "harness_entry": "org.xerial.snappy.fuzz.SnappyFuzzTest#fuzzSnappyUncompress",
+      "scale_measurement": [
+        {
+          "value": 65536,
+          "input_bytes": 5,
+          "outcome": "completed",
+          "cpu_ms": 25.163322,
+          "allocated_bytes": 485544,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "value": 131072,
+          "input_bytes": 5,
+          "outcome": "completed",
+          "cpu_ms": 26.239429,
+          "allocated_bytes": 551080,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "value": 262144,
+          "input_bytes": 5,
+          "outcome": "completed",
+          "cpu_ms": 25.893525,
+          "allocated_bytes": 682152,
+          "peak_heap_bytes": 0
+        },
+        {
+          "value": 524288,
+          "input_bytes": 5,
+          "outcome": "completed",
+          "cpu_ms": 25.57036,
+          "allocated_bytes": 944296,
+          "peak_heap_bytes": 1048576
+        },
+        {
+          "value": 1048576,
+          "input_bytes": 5,
+          "outcome": "completed",
+          "cpu_ms": 26.979512,
+          "allocated_bytes": 1468584,
+          "peak_heap_bytes": 3145728
+        },
+        {
+          "value": 2097152,
+          "input_bytes": 5,
+          "outcome": "completed",
+          "cpu_ms": 26.193512,
+          "allocated_bytes": 2517160,
+          "peak_heap_bytes": 5242880
+        },
+        {
+          "value": 4194304,
+          "input_bytes": 5,
+          "outcome": "completed",
+          "cpu_ms": 25.106297,
+          "allocated_bytes": 4614312,
+          "peak_heap_bytes": 5242880
+        },
+        {
+          "value": 8388608,
+          "input_bytes": 5,
+          "outcome": "completed",
+          "cpu_ms": 27.314685,
+          "allocated_bytes": 8808616,
+          "peak_heap_bytes": 11534336
+        }
+      ]
+    }
+  ]
+}

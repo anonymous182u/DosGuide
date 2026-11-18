@@ -1,0 +1,31 @@
+{
+  "plans": [
+    {
+      "target": "V1",
+      "signals": [
+        {
+          "name": "equalsCount",
+          "quantity": "number of ConnectionSource.equals(Object) invocations during one fuzz execution",
+          "aggregation": "count",
+          "locations": [
+            "ConnectionSource#equals"
+          ],
+          "technique": "bytecode",
+          "storage": "static AtomicLong in V1Counters (bootstrap classloader)",
+          "reset": "V1Counters.reset() called in V1Guidance.getInput() before each execution",
+          "read": "V1Counters.getEqualsCount() called in V1Guidance.handleResult()"
+        }
+      ],
+      "retention": "Primary: retain inputs whose equalsCount exceeds 90% of the global best; always retain new global bests. Secondary (flat-signal / growth phase): retain inputs that are longer than any previously retained input, to grow toward input_bytes.",
+      "retention_signals": [
+        "equalsCount"
+      ],
+      "mutation": [
+        "diversify-all-records: for every record in the input, independently randomize each non-overlapping 2-byte atom by a random delta that preserves the base-31 polynomial contribution (31*a+b=C), converting duplicate records into distinct connection IDs sharing the same hash bucket; produces up to 9^5=59049 unique colliding IDs for 10-byte IDs",
+        "hash-preserving byte-pair: change one 2-byte atom in one random record by (+delta, -31*delta) for fine-grained variation",
+        "whole-input doubling: concatenate input with itself for rapid size growth toward input_bytes",
+        "record repetition: duplicate a random length-prefixed record 4-64 times for density growth"
+      ]
+    }
+  ]
+}
